@@ -1,12 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://dss1w1wv5xvq1"]
+[gd_scene load_steps=7 format=3 uid="uid://dss1w1wv5xvq1"]
 
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="1"]
 [ext_resource type="Script" uid="uid://ty44l5afcwx4" path="res://src/Player/Player.gd" id="2"]
-[ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="3"]
-[ext_resource type="AudioStream" uid="uid://cdftql8bh2ubw" path="res://assets/sounds/Player/spawn/spawn1.wav" id="4"]
-[ext_resource type="AudioStream" uid="uid://ba1vnr0wa8k01" path="res://assets/sounds/Player/spawn/spawn0.wav" id="5"]
-[ext_resource type="AudioStream" uid="uid://b4bcome7y8keg" path="res://assets/sounds/Player/spawn/spawn2.wav" id="6"]
-[ext_resource type="AudioStream" uid="uid://shb47hd4iaj2" path="res://assets/sounds/Player/spawn/spawn3.wav" id="7"]
 
 [sub_resource type="AtlasTexture" id="3"]
 atlas = ExtResource("1")
@@ -44,17 +39,7 @@ shape = SubResource("1")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-target_desired_distance = 20.0
-path_max_distance = 60.0
-avoidance_enabled = true
-
 [node name="SoundFx" type="Node" parent="."]
-
-[node name="SpawnSound" type="AudioStreamPlayer" parent="SoundFx"]
-bus = &"SFX"
-script = ExtResource("3")
-sounds = Array[AudioStream]([ExtResource("5"), ExtResource("4"), ExtResource("6"), ExtResource("7")])
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
