@@ -46,15 +46,20 @@ func _air_shotgun_routine() -> void:
 		await get_tree().process_frame
 
 	_is_gravity_enabled = false
-	var freeze_timer := get_tree().create_timer(0.5)
-	await freeze_timer.timeout
-	_is_gravity_enabled = true
+	await get_tree().create_timer(0.3).timeout
 	
 	#TODO: get player position
 	var player_position = Vector2(150.0, 150.0)
-	var bullet_direction = player_position - _body.position
-	_spawn_bullet(_body.position, bullet_direction, 200.0)
-	
+	var bullet_direction = (player_position - _body.position).normalized()
+
+	var angles = [-15, 0, 15]
+	for angle in angles:
+		var dir = bullet_direction.rotated(deg_to_rad(angle))
+		_spawn_bullet(_body.position, dir, 400.0)
+
+	await get_tree().create_timer(0.3).timeout
+		
+	_is_gravity_enabled = true
 
 func _on_idle_timer_timeout() -> void:
 	var new_state: BillionaireState = _get_new_state()
