@@ -22,6 +22,7 @@ var _state_to_routine: Dictionary[BillionaireState, Callable] = {
 @onready var _body: CharacterBody2D = $BillionaireBody
 @onready var _bullets: Node2D = $Bullets
 @onready var _player: Player = $"../Player"
+@onready var _shoot_sound: AudioBankPlayer = $SFX/ShootSound
 
 
 # Return a random attack pattern
@@ -106,6 +107,7 @@ func _air_shotgun_routine() -> void:
 	for angle in angles:
 		var dir = bullet_direction.rotated(deg_to_rad(angle))
 		_spawn_bullet(_body.position, dir, 400.0)
+	_shoot_sound.play_sound()
 
 	# Freeze
 	await get_tree().create_timer(0.3).timeout

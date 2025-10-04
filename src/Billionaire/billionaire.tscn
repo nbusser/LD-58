@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=7 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="1_2y8rh"]
 [ext_resource type="Script" uid="uid://odtd74p3t1y6" path="res://src/Billionaire/billionaire.gd" id="1_xg0jg"]
+[ext_resource type="AudioStream" uid="uid://b03od8jukmoux" path="res://assets/sounds/shoot.wav" id="3_img2r"]
+[ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="4_lryld"]
+[ext_resource type="AudioStream" uid="uid://dj3q3o4kb0c2i" path="res://assets/sounds/placeholder.ogg" id="5_lryld"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0jg"]
 
@@ -22,5 +25,12 @@ scale = Vector2(0.064986736, 0.064986736)
 texture = ExtResource("1_2y8rh")
 
 [node name="Bullets" type="Node2D" parent="."]
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="SFX"]
+script = ExtResource("4_lryld")
+sounds = Array[AudioStream]([ExtResource("3_img2r"), ExtResource("5_lryld")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
