@@ -1,10 +1,47 @@
-[gd_scene load_steps=4 format=3 uid="uid://d4jbk3nol7b6l"]
+[gd_scene load_steps=7 format=3 uid="uid://d4jbk3nol7b6l"]
 
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="1_fhmag"]
 [ext_resource type="Script" uid="uid://biihm0tbcvcxe" path="res://src/Coin/coin.gd" id="1_ljt3x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ljt3x"]
 radius = 5.0
+
+[sub_resource type="Animation" id="Animation_l12om"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Graphics:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fuia6"]
+resource_name = "new_animation"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Graphics:modulate")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.9666667, 3.4333334, 3.6666667, 4.0333333, 4.266667, 4.5333333, 4.766667, 4.9666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3pku8"]
+_data = {
+&"RESET": SubResource("Animation_l12om"),
+&"blink": SubResource("Animation_fuia6")
+}
 
 [node name="Coin" type="RigidBody2D" groups=["coin"]]
 collision_layer = 2
@@ -42,5 +79,11 @@ texture = ExtResource("1_fhmag")
 rotation = 0.03125167
 scale = Vector2(0.049041506, 0.029961262)
 texture = ExtResource("1_fhmag")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+deterministic = true
+libraries = {
+&"": SubResource("AnimationLibrary_3pku8")
+}
 
 [connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]
