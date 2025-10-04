@@ -47,6 +47,8 @@ var previous_down_dash = 0
 var previous_melee = 0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+var prev_velocity = Vector2(0, 0)
+
 @onready var _hurt_sound = $SoundFx/HurtSound
 @onready var _billionaire: CharacterBody2D = $"../Billionaire/BillionaireBody"
 @onready var _punch_area: Area2D = $PunchArea
@@ -153,6 +155,10 @@ func _physics_process(delta):
 			)
 
 	velocity = clamp(velocity, Vector2(-3000, -600), Vector2(3000, 600))
+
+	if (prev_velocity.y > 1000 && is_on_floor()):
+		_camera.apply_noise_shake()
+	prev_velocity = velocity
 
 	move_and_slide()
 
