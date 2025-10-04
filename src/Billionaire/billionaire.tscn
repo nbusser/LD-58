@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjp6oj1o86afi"]
+
+[ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="1_2y8rh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0jg"]
+
+[node name="Billionaire" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.064986736, 0.064986736)
+texture = ExtResource("1_2y8rh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xg0jg")
