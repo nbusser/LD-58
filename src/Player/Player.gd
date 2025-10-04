@@ -19,6 +19,10 @@ const DIRECTIONS_MODIFIERS = [-1, 1]
 # Jumps
 @export var max_input_jump_time = .4
 @export var jump_force = 8000
+# Walls stickiness
+@export var wall_stickiness = 500
+@export var wall_jump_force = 450
+@export var wall_jump_cooldown = .7
 # Billionaire contact
 @export var billionaire_head_bounce = 450
 @export var billionaire_knockback = 450
@@ -115,6 +119,15 @@ func _physics_process(delta):
 		is_down_dashing = false
 		velocity.y -= down_dash_speed
 
+	# Wall sticking behavior
+	if is_on_wall():
+		if velocity.y > 0:
+			velocity.y -= wall_stickiness * delta
+		# Wall jumping
+		if now - jump_load_start > wall_jump_cooldown && Input.is_action_pressed("jump"):
+			vt_velocity = -wall_jump_force
+			jump_load_start = now
+
 	hz_velocity = (
 		velocity.x - (16 * delta * velocity.x)
 		if abs(velocity.x) > abs(hz_velocity)
@@ -164,8 +177,7 @@ func get_hurt(knockback_force):
 		(1. - clamp((abs(knockback_force.x)) / 2000., 0., .2)) * .24,
 		(1. - clamp((abs(knockback_force.y)) / 2000., 0., .2)) * .24
 	)
-	print(scale)
-	print(knockback_force)
+
 	# Red glow on hit
 	_hurt_sound.play_sound()
 	modulate = Color(1, 0, 0)
