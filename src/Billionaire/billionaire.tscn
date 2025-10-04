@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bjp6oj1o86afi"]
 
-[ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/Billionaire.gd" id="1_gpq05"]
+[ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="2_y3yri"]
 [ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="3_bqgkp"]
 [ext_resource type="AudioStream" uid="uid://b03od8jukmoux" path="res://assets/sounds/shoot.wav" id="4_kdd1f"]
@@ -47,6 +47,6 @@ attack_name = "Money Shot !"
 
 [node name="Rain" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Make it rain !"
-cooldown = 100.0
+cooldown = 30.0
 
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]

@@ -5,6 +5,9 @@ extends Node2D
 const _JUMP_VELOCITY = -600
 const _GRAVITY: float = 1200.0
 
+# Interval range between two attacks, in seconds
+@export var idle_range_seconds: Vector2 = Vector2(0.5, 1.0)
+
 var health = 100
 
 var _is_gravity_enabled: bool = true
@@ -27,8 +30,19 @@ func _ready() -> void:
 
 
 # Return a random attack pattern
-func _get_attack_pattern() -> AttackPattern:
-	return _attack_patterns.get_child(randi() % len(_attack_patterns.get_children()))
+func _get_attack_pattern():
+	var available_attacks = _attack_patterns.get_children().filter(
+		func(attack_pattern: AttackPattern):
+			return (
+				attack_pattern.enabled
+				and attack_pattern.is_ready()
+				and health <= attack_pattern.health_threshold
+			)
+	)
+	if available_attacks.size() == 0:
+		print("NO ATTACK AVAILABLE !")
+		return null
+	return available_attacks[randi() % len(available_attacks)]
 
 
 func _physics_process(delta: float) -> void:
@@ -136,5 +150,9 @@ func _rain_routine() -> void:
 
 
 func _on_idle_timer_timeout() -> void:
-	await _get_attack_pattern().call_routine()
-	_idle_timer.start()
+	var attack = _get_attack_pattern()
+	if attack != null:
+		print("Attack name: ", (attack as AttackPattern).attack_name)
+		await (attack as AttackPattern).call_routine()
+
+	_idle_timer.start(randf_range(idle_range_seconds.x, idle_range_seconds.y))
