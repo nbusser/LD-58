@@ -142,12 +142,12 @@ func get_hurt():
 
 
 func _on_punch_area_area_entered(area):
-	if area.is_in_group("billionaire"):
+	if area.is_in_group("Billionaire"):
 		emit_signal("billionaire_punched", punch_damage)
 
 
 func _on_soft_hitbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("billionaire"):
+	if body.is_in_group("Billionaire"):
 		is_in_billionaire = true
 	elif body.is_in_group("coin"):
 		body.queue_free()
@@ -155,7 +155,7 @@ func _on_soft_hitbox_body_entered(body: Node2D) -> void:
 
 
 func _on_soft_hitbox_body_exited(body: Node2D) -> void:
-	if body.is_in_group("billionaire"):
+	if body.is_in_group("Billionaire"):
 		is_in_billionaire = false
 
 
