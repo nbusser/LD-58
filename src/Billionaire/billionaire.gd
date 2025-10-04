@@ -26,6 +26,7 @@ var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
 
 func _ready() -> void:
 	$AttackPatterns/AirShotgun.routine = _air_shotgun_routine
+	$AttackPatterns/MintingPlate.routine = _minting_plate_routine
 	$AttackPatterns/Rain.routine = _rain_routine
 
 
@@ -144,6 +145,22 @@ func _air_shotgun_routine() -> void:
 
 	# Fall
 	_is_gravity_enabled = true
+
+
+func _minting_plate_routine() -> void:
+	# Maybe run
+	if Globals.coin_flip():
+		await _random_run()
+
+	$SFX/MintingPlateFocusSound.play_sound()
+	await get_tree().create_timer(1.2).timeout
+
+	$SFX/MintingPlateSound.play_sound()
+	var nb_bullets = 10
+	for _i in range(nb_bullets):
+		var bullet_direction = (_player.global_position - _body.global_position).normalized()
+		_spawn_bullet(_body.position, bullet_direction, 600.0)
+		await get_tree().create_timer(0.1).timeout
 
 
 func _rain_routine() -> void:
