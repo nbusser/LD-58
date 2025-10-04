@@ -2,10 +2,10 @@ class_name Billionaire
 
 extends Node2D
 
-var health = 100
-
 const _JUMP_VELOCITY = -600
 const _GRAVITY: float = 1200.0
+
+var health = 100
 
 var _is_gravity_enabled: bool = true
 
@@ -20,9 +20,11 @@ var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
 
 @onready var _attack_patterns: Node = $AttackPatterns
 
+
 func _ready() -> void:
 	$AttackPatterns/AirShotgun.routine = _air_shotgun_routine
 	$AttackPatterns/Rain.routine = _rain_routine
+
 
 # Return a random attack pattern
 func _get_attack_pattern() -> AttackPattern:

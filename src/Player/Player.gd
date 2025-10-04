@@ -1,6 +1,9 @@
 class_name Player
 extends CharacterBody2D
 
+const DIRECTIONS = ["move_left", "move_right"]
+const DIRECTIONS_MODIFIERS = [-1, 1]
+
 @export var speed = 400
 @export var dash_cooldown = 1.0
 @export var dash_window = .2
@@ -9,17 +12,18 @@ extends CharacterBody2D
 
 var jump_load_start = null
 var is_actively_jumping = false
-const DIRECTIONS = ["move_left", "move_right"]
-const DIRECTIONS_MODIFIERS = [-1, 1]
-var previous_dir = [0, 0] # left, right
+
+var previous_dir = [0, 0]  # left, right
 var previous_dash = 0
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var _hurt_sound = $SoundFx/HurtSound
-var GRAVITY = ProjectSettings.get_setting("physics/2d/default_gravity")
+
 
 func _ready() -> void:
 	# Waits for Game.gd to run randomize()
 	await get_tree().process_frame
+
 
 func _physics_process(delta):
 	var input_direction = Input.get_axis("move_left", "move_right")
@@ -32,13 +36,20 @@ func _physics_process(delta):
 		is_actively_jumping = true
 		jump_load_start = now
 
-	var time_since_jump = now - (jump_load_start if jump_load_start != null else +INF)
-	if is_actively_jumping && Input.is_action_pressed("jump") && time_since_jump < max_input_jump_time:
+	var time_since_jump = now - (jump_load_start if jump_load_start != null else INF)
+	if (
+		is_actively_jumping
+		&& Input.is_action_pressed("jump")
+		&& time_since_jump < max_input_jump_time
+	):
 		var timer_proportion = (
-			1 - clamp(time_since_jump, 0, max_input_jump_time) / max_input_jump_time
-		) ** 4
+			(1 - clamp(time_since_jump, 0, max_input_jump_time) / max_input_jump_time) ** 4
+		)
 		vt_velocity = -jump_force * delta * timer_proportion
-	elif is_actively_jumping && (time_since_jump > max_input_jump_time || Input.is_action_just_released("jump")):
+	elif (
+		is_actively_jumping
+		&& (time_since_jump > max_input_jump_time || Input.is_action_just_released("jump"))
+	):
 		is_actively_jumping = false
 
 	# Dashing
@@ -55,7 +66,7 @@ func _physics_process(delta):
 		if abs(velocity.x) > abs(hz_velocity)
 		else hz_velocity
 	)
-	velocity = Vector2(hz_velocity, velocity.y + vt_velocity + GRAVITY * delta)
+	velocity = Vector2(hz_velocity, velocity.y + vt_velocity + gravity * delta)
 	move_and_slide()
 
 
