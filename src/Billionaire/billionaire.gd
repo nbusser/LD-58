@@ -20,6 +20,7 @@ var _state_to_routine: Dictionary[BillionaireState, Callable] = {
 @onready var _idle_timer: Timer = $IdleTimer
 @onready var _body: CharacterBody2D = $BillionaireBody
 @onready var _bullets: Node2D = $Bullets
+@onready var _player: Player = $"../Player"
 
 
 # Return a random attack pattern
@@ -55,9 +56,7 @@ func _air_shotgun_routine() -> void:
 	_is_gravity_enabled = false
 	await get_tree().create_timer(0.3).timeout
 
-	#TODO: get player position
-	var player_position = Vector2(150.0, 150.0)
-	var bullet_direction = (player_position - _body.position).normalized()
+	var bullet_direction = (_player.position - _body.position).normalized()
 
 	var angles = [-15, 0, 15]
 	for angle in angles:

@@ -1,5 +1,6 @@
 class_name Player
 extends CharacterBody2D
+
 @export var speed = 400
 @export var dash_cooldown = 1.0
 @export var dash_window = .2
@@ -38,7 +39,7 @@ func _physics_process(delta):
 			var timer_proportion = (
 				.5 + 5. / 2. * clamp(Time.get_unix_time_from_system() - jump_load_start, 0, .2)
 			)
-			vt_velocity = -speed * timer_proportion
+			vt_velocity = - speed * timer_proportion
 	else:
 		is_loading_jump = false
 		hz_velocity = velocity.x - (.1 * delta * velocity.x)
