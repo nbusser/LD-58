@@ -15,5 +15,9 @@ func _ready():
 
 
 func play_sound():
+	if sounds.size() == 0:
+		print(name, " PLACEHOLDER SOUND")
+		return
+
 	stream = sounds[randi() % len(sounds)]
 	super.play()

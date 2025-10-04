@@ -2,10 +2,7 @@ class_name Billionaire
 
 extends Node2D
 
-enum BillionaireState {
-	IDLE = 0,
-	AIR_SHOTGUN = 1,
-}
+enum BillionaireState { IDLE = 0, AIR_SHOTGUN = 1, RAIN = 2 }
 
 const _JUMP_VELOCITY = -600
 const _GRAVITY: float = 1200.0
@@ -15,7 +12,7 @@ var _is_gravity_enabled: bool = true
 var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
 
 var _state_to_routine: Dictionary[BillionaireState, Callable] = {
-	BillionaireState.AIR_SHOTGUN: _air_shotgun_routine
+	BillionaireState.AIR_SHOTGUN: _air_shotgun_routine, BillionaireState.RAIN: _rain_routine
 }
 
 @onready var _idle_timer: Timer = $IdleTimer
@@ -23,6 +20,7 @@ var _state_to_routine: Dictionary[BillionaireState, Callable] = {
 @onready var _bullets: Node2D = $Bullets
 @onready var _player: Player = $"../Player"
 @onready var _shoot_sound: AudioBankPlayer = $SFX/ShootSound
+@onready var _rain_focus_sound: AudioBankPlayer = $SFX/RainFocusSound
 
 
 # Return a random attack pattern
@@ -114,6 +112,30 @@ func _air_shotgun_routine() -> void:
 
 	# Fall
 	_is_gravity_enabled = true
+
+
+func _rain_routine() -> void:
+	var spawn_rain_coroutine = func() -> void:
+		var rain_nb_waves: int = 10
+		var rain_nb_bullets_per_waves: int = 3
+		var rain_bullet_speed: float = 200.0
+		var rain_bullet_interval_duration: float = 0.3
+		var rain_bullet_interval_x: int = 10
+
+		for wave in range(rain_nb_waves):
+			for bullet in range(rain_nb_bullets_per_waves):
+				var bullet_slot = (randi() % 60) - 30
+				var bullet_position_x = bullet_slot * rain_bullet_interval_x
+
+				var bullet_position = Vector2(bullet_position_x, -300)
+				_spawn_bullet(bullet_position, Vector2.DOWN, rain_bullet_speed)
+			await get_tree().create_timer(rain_bullet_interval_duration).timeout
+
+	_rain_focus_sound.play_sound()
+	var focus_duration: float = 2.0
+	await get_tree().create_timer(focus_duration).timeout
+
+	await spawn_rain_coroutine.call()
 
 
 func _on_idle_timer_timeout() -> void:
