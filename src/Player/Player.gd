@@ -36,7 +36,6 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var punch_area: Area2D = $PunchArea
 @onready var hud: HUD = $"../../UI/HUD"
 
-
 func _ready() -> void:
 	# Waits for Game.gd to run randomize()
 	await get_tree().process_frame
@@ -49,7 +48,7 @@ func _physics_process(delta):
 
 	# Horizontal movement
 	var input_direction = Input.get_axis("move_left", "move_right")
-	hz_velocity = input_direction * (ground_speed if is_on_floor() else air_speed)
+	hz_velocity = input_direction * (ground_speed if self.is_on_floor() else air_speed)
 	if is_on_floor() && !is_actively_jumping && Input.is_action_pressed("jump"):
 		is_actively_jumping = true
 		jump_load_start = now
@@ -145,11 +144,16 @@ func _on_punch_area_area_entered(area):
 	if area.is_in_group("billionaire"):
 		emit_signal("billionaire_punched", punch_damage)
 
-func _on_soft_hitbox_body_entered(_body: Node2D) -> void:
-	is_in_billionaire = true
+func _on_soft_hitbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("billionaire"):
+		is_in_billionaire = true
+	elif body.is_in_group("coin"):
+		body.queue_free()
 
-func _on_soft_hitbox_body_exited(_body: Node2D) -> void:
-	is_in_billionaire = false
+
+func _on_soft_hitbox_body_exited(body: Node2D) -> void:
+	if body.is_in_group("billionaire"):
+		is_in_billionaire = false
 
 func _on_feet_body_entered(_body: Node2D) -> void:
 	is_on_top_of_billionaire = true

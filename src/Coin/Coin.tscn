@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://d4jbk3nol7b6l"]
+
+[ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="1_fhmag"]
+[ext_resource type="Script" uid="uid://biihm0tbcvcxe" path="res://src/Coin/coin.gd" id="1_ljt3x"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ljt3x"]
+radius = 5.0
+
+[node name="Coin" type="RigidBody2D" groups=["coin"]]
+collision_layer = 2
+gravity_scale = 0.642
+script = ExtResource("1_ljt3x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.7574806
+shape = SubResource("CircleShape2D_ljt3x")
+
+[node name="DespawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Graphics" type="Node2D" parent="."]
+scale = Vector2(0.41834936, 0.38940817)
+
+[node name="Sprite2D" type="Sprite2D" parent="Graphics"]
+rotation = 2.2461565
+scale = Vector2(0.049041506, 0.029961264)
+texture = ExtResource("1_fhmag")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Graphics"]
+rotation = 1.710799
+scale = Vector2(0.049041502, 0.029961262)
+texture = ExtResource("1_fhmag")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Graphics"]
+rotation = 0.4596746
+scale = Vector2(0.049041502, 0.029961262)
+texture = ExtResource("1_fhmag")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Graphics"]
+rotation = 0.03125167
+scale = Vector2(0.049041506, 0.029961262)
+texture = ExtResource("1_fhmag")
+
+[connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]

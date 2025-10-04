@@ -84,3 +84,5 @@ shape = SubResource("WorldBoundaryShape2D_wqubw")
 
 [node name="Billionaire" parent="." instance=ExtResource("3_e037b")]
 position = Vector2(76, -69)
+
+[node name="Coins" type="Node2D" parent="."]

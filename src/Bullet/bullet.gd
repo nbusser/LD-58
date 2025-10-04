@@ -8,7 +8,9 @@ var _speed: float
 var _initialized = false
 
 @onready var _sprite = $Sprite2D
+@onready var coins = $"../../../Coins"
 
+var _coin_scene = preload("res://src/Coin/Coin.tscn")
 
 func init(start_position: Vector2, direction: Vector2, speed: float = 100) -> void:
 	_initialized = true
@@ -29,4 +31,7 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]):
 		(body as Player).get_hurt()
+	var cs = _coin_scene.instantiate()
+	cs.init(self.global_position)
+	coins.call_deferred("add_child", cs)
 	queue_free()
