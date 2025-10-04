@@ -1,14 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=17 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="2_y3yri"]
 [ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="3_bqgkp"]
-[ext_resource type="AudioStream" uid="uid://b03od8jukmoux" path="res://assets/sounds/shoot.wav" id="4_kdd1f"]
-[ext_resource type="AudioStream" uid="uid://dj3q3o4kb0c2i" path="res://assets/sounds/placeholder.ogg" id="5_38hbp"]
 [ext_resource type="AudioStream" uid="uid://ckvwc0wlnic18" path="res://assets/sounds/rain.wav" id="6_7xygs"]
-[ext_resource type="AudioStream" uid="uid://doxdscth7q0pa" path="res://assets/sounds/minting_plate_focus.wav" id="6_bqgkp"]
+[ext_resource type="AudioStream" uid="uid://dj4nwmkxwucqt" path="res://assets/sounds/jump_cone_shoot.wav" id="6_qa6ra"]
 [ext_resource type="PackedScene" uid="uid://c6gdmgoo58hb7" path="res://src/Billionaire/AttackPattern.tscn" id="7_y3yri"]
+[ext_resource type="AudioStream" uid="uid://ne2y63b0451" path="res://assets/sounds/machinegun_focus.wav" id="8_d2xww"]
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="9_kdd1f"]
+[ext_resource type="AudioStream" uid="uid://cl4rktl331388" path="res://assets/sounds/repulsive_wave_focus.wav" id="9_qa6ra"]
+[ext_resource type="AudioStream" uid="uid://d1i6r2bm01r4v" path="res://assets/sounds/repulsive_wave_column.wav" id="11_tafn6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0jg"]
 size = Vector2(24, 24)
@@ -132,8 +133,6 @@ texture = ExtResource("9_kdd1f")
 [node name="Bullets" type="Node2D" parent="."]
 position = Vector2(0, -1)
 
-[node name="SFX" type="Node" parent="."]
-
 [node name="AttackPatterns" type="Node" parent="."]
 
 [node name="JumpConeBullets" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
@@ -141,7 +140,7 @@ attack_name = "Money Shot !"
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="AttackPatterns/JumpConeBullets"]
 script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("4_kdd1f"), ExtResource("5_38hbp")])
+sounds = Array[AudioStream]([ExtResource("6_qa6ra")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="Machinegun" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
@@ -150,7 +149,7 @@ cooldown = 5.0
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/Machinegun"]
 script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("6_bqgkp")])
+sounds = Array[AudioStream]([ExtResource("8_d2xww")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="AttackPatterns/Machinegun"]
@@ -172,12 +171,12 @@ cooldown = 10.0
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/RepulsiveWave"]
 script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("6_bqgkp")])
+sounds = Array[AudioStream]([ExtResource("9_qa6ra")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="ColumnSound" type="AudioStreamPlayer" parent="AttackPatterns/RepulsiveWave"]
 script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("5_38hbp")])
+sounds = Array[AudioStream]([ExtResource("11_tafn6")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
