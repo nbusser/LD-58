@@ -15,9 +15,32 @@ texture = ExtResource("2_hlp16")
 [node name="Player" parent="." instance=ExtResource("2")]
 position = Vector2(0, -67)
 
-[node name="Ground" type="StaticBody2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+[node name="Ground" type="StaticBody2D" parent="Node2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Ground"]
+shape = SubResource("WorldBoundaryShape2D_wqubw")
+
+[node name="Ceiling" type="StaticBody2D" parent="Node2D"]
+position = Vector2(0, -274)
+scale = Vector2(-1, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Ceiling"]
+shape = SubResource("WorldBoundaryShape2D_wqubw")
+
+[node name="WallL" type="StaticBody2D" parent="Node2D"]
+position = Vector2(-576, -82)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/WallL"]
+shape = SubResource("WorldBoundaryShape2D_wqubw")
+
+[node name="WallR" type="StaticBody2D" parent="Node2D"]
+position = Vector2(168, -82)
+rotation = 4.712389
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/WallR"]
 shape = SubResource("WorldBoundaryShape2D_wqubw")
 
 [node name="Billionaire" parent="." instance=ExtResource("3_e037b")]
