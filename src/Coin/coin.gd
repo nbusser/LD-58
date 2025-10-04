@@ -1,7 +1,6 @@
 class_name Coin
 extends RigidBody2D
 
-
 var impulse_force := Vector2(0, 0)
 
 

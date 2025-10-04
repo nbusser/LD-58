@@ -161,10 +161,12 @@ func _physics_process(delta):
 		_camera.apply_noise_shake()
 		for body in _smash_area.get_overlapping_bodies():
 			if body.is_in_group("Billionaire"):
-				body.velocity.y -= 200 * (1.0 - ((body.global_position - global_position).length()/100.)**2)
+				body.velocity.y -= (
+					200 * (1.0 - ((body.global_position - global_position).length() / 100.) ** 2)
+				)
 			elif body.is_in_group("coin"):
 				body.propulse_up(
-					1.0 - ((body.global_position - global_position).length()/100.)**2
+					1.0 - ((body.global_position - global_position).length() / 100.) ** 2
 				)
 	prev_velocity = velocity
 
@@ -178,8 +180,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("melee") && now - previous_melee > melee_cooldown:
 		in_melee = true
 	elif (
-		in_melee && (Input.is_action_just_pressed("melee")
-		|| now - previous_melee > melee_duration)
+		in_melee && (Input.is_action_just_pressed("melee") || now - previous_melee > melee_duration)
 	):
 		in_melee = false
 	if in_melee && billionaire_in_melee_reach:
