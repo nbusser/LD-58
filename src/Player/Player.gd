@@ -115,8 +115,8 @@ func _physics_process(delta):
 			if sign(velocity.x) != sign(knockback.x):
 				velocity.x = 0
 			velocity += Vector2(
-				knockback.x if abs(knockback.x) > 10 else sign(knockback.x)*100,
-				knockback.y if abs(velocity.y) < 500 else 0
+				knockback.x if abs(knockback.x) > 100 else sign(knockback.x)*100,
+				knockback.y
 			)
 	
 	velocity = clamp(velocity, Vector2(-2000, -600), Vector2(2000, 600))
