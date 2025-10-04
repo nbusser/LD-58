@@ -156,7 +156,7 @@ func _physics_process(delta):
 
 	velocity = clamp(velocity, Vector2(-3000, -600), Vector2(3000, 600))
 
-	if (prev_velocity.y > 1000 && is_on_floor()):
+	if prev_velocity.y > 1000 && is_on_floor():
 		_camera.apply_noise_shake()
 	prev_velocity = velocity
 
