@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw6igwix0v8lt"]
+
+[ext_resource type="Script" uid="uid://se5xxijidgr3" path="res://src/UpgradeSelector/upgrade_selector.gd" id="1_2fgo5"]
+
+[node name="UpgradeSelector" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2fgo5")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Choose your upgrade"
