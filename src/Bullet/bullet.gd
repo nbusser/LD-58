@@ -4,6 +4,7 @@ extends Area2D
 
 var _direction: Vector2
 var _speed: float
+var _knockback_force: float
 
 var _initialized = false
 
@@ -13,11 +14,15 @@ var _coin_scene = preload("res://src/Coin/Coin.tscn")
 @onready var _coins = $"../../../Coins"
 
 
-func init(start_position: Vector2, direction: Vector2, speed: float = 100) -> void:
+func init(
+	start_position: Vector2, direction: Vector2, knockback_force: float,
+	speed: float = 100
+) -> void:
 	_initialized = true
 	position = start_position
 	_direction = direction.normalized()
 	_speed = speed
+	_knockback_force = knockback_force
 
 
 func _ready() -> void:
@@ -31,7 +36,9 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]):
-		(body as Player).get_hurt()
+		(body as Player).get_hurt(
+			_knockback_force*_direction.normalized()
+		)
 	else:
 		var cs = _coin_scene.instantiate()
 		cs.init(self.global_position)

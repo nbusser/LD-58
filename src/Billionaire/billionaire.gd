@@ -56,10 +56,11 @@ func _physics_process(delta: float) -> void:
 
 
 func _spawn_bullet(
-	bullet_position: Vector2, bullet_direction: Vector2, bullet_speed: float = 100.0
+	bullet_position: Vector2, bullet_direction: Vector2,
+	bullet_knockback: float, bullet_speed: float = 100.0
 ) -> void:
 	var bullet: Bullet = _bullet_scene.instantiate()
-	bullet.init(bullet_position, bullet_direction, bullet_speed)
+	bullet.init(bullet_position, bullet_direction, bullet_knockback, bullet_speed)
 	_bullets.add_child(bullet)
 
 
@@ -139,7 +140,7 @@ func _air_shotgun_routine() -> void:
 	var angles = [-15, 0, 15]
 	for angle in angles:
 		var dir = bullet_direction.rotated(deg_to_rad(angle))
-		_spawn_bullet(_body.position, dir, 400.0)
+		_spawn_bullet(_body.position, dir, 2000, 400.0)
 	$AttackPatterns/JumpConeBullets/ShootSound.play_sound()
 
 	# Freeze
@@ -161,7 +162,7 @@ func _minting_plate_routine() -> void:
 	var nb_bullets = 10
 	for _i in range(nb_bullets):
 		var bullet_direction = (_player.global_position - _body.global_position).normalized()
-		_spawn_bullet(_body.position, bullet_direction, 600.0)
+		_spawn_bullet(_body.position, bullet_direction, 50, 600.0)
 		await get_tree().create_timer(0.1).timeout
 
 
@@ -179,7 +180,7 @@ func _rain_routine() -> void:
 				var bullet_position_x = bullet_slot * rain_bullet_interval_x
 
 				var bullet_position = Vector2(bullet_position_x, -300)
-				_spawn_bullet(bullet_position, Vector2.DOWN, rain_bullet_speed)
+				_spawn_bullet(bullet_position, Vector2.DOWN, 50, rain_bullet_speed)
 			await get_tree().create_timer(rain_bullet_interval_duration).timeout
 
 	$AttackPatterns/Rain/FocusSound.play_sound()
@@ -192,7 +193,7 @@ func _rain_routine() -> void:
 func _init_repulse_wave():
 	var on_hit = func(body: Node2D) -> void:
 		if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]):
-			_player.get_hurt()
+			_player.get_hurt(Vector2(0, 0))
 
 	for column: Area2D in _repulse_wave.get_children():
 		column.visible = false

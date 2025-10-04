@@ -133,7 +133,9 @@ func _physics_process(delta):
 		_punch_area.scale.x = -1.0
 
 
-func get_hurt():
+func get_hurt(knockback_force):
+	# Get knocked back
+	velocity += knockback_force
 	# Red glow on hit
 	_hurt_sound.play_sound()
 	modulate = Color(1, 0, 0)
