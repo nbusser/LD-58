@@ -97,7 +97,7 @@ func _physics_process(delta):
 		else hz_velocity
 	)
 	velocity = Vector2(hz_velocity, velocity.y + vt_velocity + gravity * delta)
-	velocity.y = clamp(velocity.y, -300, 300)
+	velocity.y = clamp(velocity.y, -300, 600)
 	move_and_slide()
 
 
