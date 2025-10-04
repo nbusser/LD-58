@@ -28,7 +28,6 @@ const DIRECTIONS_MODIFIERS = [-1, 1]
 @export var melee_duration = .1
 @export var is_melee_one_shot = true
 
-
 var jump_load_start = null
 var is_actively_jumping = false
 var is_down_dashing = false
@@ -37,7 +36,6 @@ var is_in_billionaire = false
 var is_on_top_of_billionaire = false
 var billionaire_in_melee_reach = false
 var in_melee = false
-
 
 var previous_dir = [0, 0]  # left, right
 var previous_dash = 0
@@ -146,17 +144,10 @@ func _physics_process(delta):
 		_punch_area.scale.x = 1.0
 	elif velocity.x < 0:
 		_punch_area.scale.x = -1.0
-	if (
-		Input.is_action_just_pressed("melee")
-		&& now - previous_melee > melee_cooldown
-	):
+	if Input.is_action_just_pressed("melee") && now - previous_melee > melee_cooldown:
 		in_melee = true
 	elif (
-		in_melee
-		&& (
-			Input.is_action_just_pressed("melee")
-			|| now - previous_melee > melee_duration
-		)
+		in_melee && (Input.is_action_just_pressed("melee") || now - previous_melee > melee_duration)
 	):
 		in_melee = false
 	if in_melee && billionaire_in_melee_reach:
@@ -174,7 +165,6 @@ func get_hurt(knockback_force):
 	await get_tree().create_timer(1.0).timeout
 	modulate = Color(1, 1, 1, 1)
 
-		
 
 func _on_soft_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Billionaire"):
