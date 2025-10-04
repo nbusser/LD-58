@@ -127,10 +127,7 @@ func _physics_process(delta):
 		# Wall jumping
 		if (
 			Input.is_action_pressed("jump")
-			&& (
-				jump_load_start == null
-				|| now - jump_load_start > wall_jump_cooldown
-			)
+			&& (jump_load_start == null || now - jump_load_start > wall_jump_cooldown)
 		):
 			vt_velocity = -wall_jump_force
 			jump_load_start = now
