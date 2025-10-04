@@ -6,7 +6,8 @@ signal billionaire_punched(damage: int)
 const DIRECTIONS = ["move_left", "move_right"]
 const DIRECTIONS_MODIFIERS = [-1, 1]
 
-@export var speed = 400
+@export var ground_speed = 450
+@export var air_speed = 300
 @export var dash_cooldown = 1.0
 @export var dash_window = .2
 @export var max_input_jump_time = .4
@@ -14,11 +15,15 @@ const DIRECTIONS_MODIFIERS = [-1, 1]
 @export var down_dash_speed = 1600
 @export var down_dash_duration = 0.08
 @export var punch_damage = 100
+@export var billionaire_head_bounce = 450
+@export var billionaire_knockback = 450
 
 var jump_load_start = null
 var is_actively_jumping = false
 var is_down_dashing = false
 var can_down_dash = false
+var is_in_billionaire = false
+var is_on_top_of_billionaire = false
 
 var previous_dir = [0, 0]  # left, right
 var previous_dash = 0
@@ -26,6 +31,7 @@ var previous_down_dash = 0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var _hurt_sound = $SoundFx/HurtSound
+@onready var billionaire: CharacterBody2D = $"../Billionaire/BillionaireBody"
 
 
 func _ready() -> void:
@@ -34,17 +40,18 @@ func _ready() -> void:
 
 
 func _physics_process(delta):
-	var input_direction = Input.get_axis("move_left", "move_right")
 	var vt_velocity = 0.
 	var hz_velocity = 0.
-
-	# Jumping + walking on floor
 	var now = Time.get_unix_time_from_system()
-	hz_velocity = input_direction * speed
+
+	# Horizontal movement
+	var input_direction = Input.get_axis("move_left", "move_right")
+	hz_velocity = input_direction * (ground_speed if is_on_floor() else air_speed)
 	if is_on_floor() && !is_actively_jumping && Input.is_action_pressed("jump"):
 		is_actively_jumping = true
 		jump_load_start = now
 
+	# Jump
 	var time_since_jump = now - (jump_load_start if jump_load_start != null else INF)
 	if (
 		is_actively_jumping
@@ -61,7 +68,7 @@ func _physics_process(delta):
 	):
 		is_actively_jumping = false
 
-	# Dashing
+	# Horizontal dash
 	for dir in range(2):
 		if Input.is_action_just_pressed(DIRECTIONS[dir]):
 			if now - previous_dash > dash_cooldown:
@@ -70,7 +77,7 @@ func _physics_process(delta):
 					hz_velocity = DIRECTIONS_MODIFIERS[dir] * 3000
 				previous_dir[dir] = now
 
-	# Down dashing
+	# Down dash
 	if is_on_floor():
 		can_down_dash = true
 		is_down_dashing = false
@@ -97,7 +104,23 @@ func _physics_process(delta):
 		else hz_velocity
 	)
 	velocity = Vector2(hz_velocity, velocity.y + vt_velocity + gravity * delta)
-	velocity.y = clamp(velocity.y, -300, 600)
+	
+	# Billionaire knockback and head bounce
+	if is_in_billionaire:
+		if is_on_top_of_billionaire:
+			velocity.y = -billionaire_head_bounce
+		else:
+			var to_billionaire_n = (global_position - billionaire.global_position).normalized()
+			var knockback = billionaire_knockback*to_billionaire_n
+			if sign(velocity.x) != sign(knockback.x):
+				velocity.x = 0
+			velocity += Vector2(
+				knockback.x if abs(knockback.x) > 10 else sign(knockback.x)*100,
+				knockback.y if abs(velocity.y) < 500 else 0
+			)
+	
+	velocity = clamp(velocity, Vector2(-2000, -600), Vector2(2000, 600))
+	
 	move_and_slide()
 
 
@@ -113,8 +136,14 @@ func _on_punch_area_area_entered(area):
 	if area.is_in_group("billionaire"):
 		emit_signal("billionaire_punched", punch_damage)
 
+func _on_soft_hitbox_body_entered(_body: Node2D) -> void:
+	is_in_billionaire = true
 
-func _on_soft_hitbox_body_entered(body: Node2D) -> void:
-	var to_billionaire = global_position - body.global_position
-	var base_punch = 1500*to_billionaire.normalized()
-	velocity += Vector2(base_punch.x, base_punch.y)
+func _on_soft_hitbox_body_exited(_body: Node2D) -> void:
+	is_in_billionaire = false
+
+func _on_feet_body_entered(_body: Node2D) -> void:
+	is_on_top_of_billionaire = true
+
+func _on_feet_body_exited(_body: Node2D) -> void:
+	is_on_top_of_billionaire = false
