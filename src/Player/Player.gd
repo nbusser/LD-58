@@ -36,6 +36,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var _punch_area: Area2D = $PunchArea
 @onready var _hud: HUD = $"../../UI/HUD"
 
+
 func _ready() -> void:
 	# Waits for Game.gd to run randomize()
 	await get_tree().process_frame

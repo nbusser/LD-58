@@ -7,10 +7,11 @@ var _speed: float
 
 var _initialized = false
 
-@onready var _sprite = $Sprite2D
-@onready var coins = $"../../../Coins"
-
 var _coin_scene = preload("res://src/Coin/Coin.tscn")
+
+@onready var _sprite = $Sprite2D
+@onready var _coins = $"../../../Coins"
+
 
 func init(start_position: Vector2, direction: Vector2, speed: float = 100) -> void:
 	_initialized = true
@@ -33,5 +34,5 @@ func _on_body_entered(body: Node2D) -> void:
 		(body as Player).get_hurt()
 	var cs = _coin_scene.instantiate()
 	cs.init(self.global_position)
-	coins.call_deferred("add_child", cs)
+	_coins.call_deferred("add_child", cs)
 	queue_free()
