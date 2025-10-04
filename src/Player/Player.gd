@@ -52,6 +52,7 @@ var prev_velocity = Vector2(0, 0)
 @onready var _hurt_sound = $SoundFx/HurtSound
 @onready var _billionaire: CharacterBody2D = $"../Billionaire/BillionaireBody"
 @onready var _punch_area: Area2D = $PunchArea
+@onready var _smash_area: Area2D = $SmashArea
 @onready var _hud: HUD = $"../../UI/HUD"
 @onready var _level: Node = $"../.."
 @onready var _camera: Node = $"../Camera2D"
@@ -158,6 +159,13 @@ func _physics_process(delta):
 
 	if prev_velocity.y > 1000 && is_on_floor():
 		_camera.apply_noise_shake()
+		for body in _smash_area.get_overlapping_bodies():
+			if body.is_in_group("Billionaire"):
+				body.velocity.y -= 200 * (1.0 - ((body.global_position - global_position).length()/100.)**2)
+			elif body.is_in_group("coin"):
+				body.propulse_up(
+					1.0 - ((body.global_position - global_position).length()/100.)**2
+				)
 	prev_velocity = velocity
 
 	move_and_slide()
@@ -170,7 +178,8 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("melee") && now - previous_melee > melee_cooldown:
 		in_melee = true
 	elif (
-		in_melee && (Input.is_action_just_pressed("melee") || now - previous_melee > melee_duration)
+		in_melee && (Input.is_action_just_pressed("melee")
+		|| now - previous_melee > melee_duration)
 	):
 		in_melee = false
 	if in_melee && billionaire_in_melee_reach:

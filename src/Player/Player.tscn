@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dss1w1wv5xvq1"]
+[gd_scene load_steps=13 format=3 uid="uid://dss1w1wv5xvq1"]
 
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="1"]
 [ext_resource type="Script" uid="uid://ty44l5afcwx4" path="res://src/Player/Player.gd" id="2"]
@@ -36,6 +36,9 @@ size = Vector2(68.33322, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gilji"]
 size = Vector2(126.66644, 37.94113)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dd31a"]
+radius = 500.06845
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 scale = Vector2(0.24000047, 0.24000047)
@@ -88,6 +91,13 @@ rotation = 1.5707964
 scale = Vector2(1.4231023, 7.414305)
 shape = SubResource("RectangleShape2D_gilji")
 debug_color = Color(0.770535, 0.29701513, 0.8292172, 0.41960785)
+
+[node name="SmashArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 34
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SmashArea"]
+shape = SubResource("CircleShape2D_dd31a")
 
 [connection signal="body_entered" from="Feet" to="." method="_on_feet_body_entered"]
 [connection signal="body_exited" from="Feet" to="." method="_on_feet_body_exited"]
