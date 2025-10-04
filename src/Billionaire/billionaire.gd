@@ -56,8 +56,10 @@ func _physics_process(delta: float) -> void:
 
 
 func _spawn_bullet(
-	bullet_position: Vector2, bullet_direction: Vector2,
-	bullet_knockback: float, bullet_speed: float = 100.0
+	bullet_position: Vector2,
+	bullet_direction: Vector2,
+	bullet_knockback: float,
+	bullet_speed: float = 100.0
 ) -> void:
 	var bullet: Bullet = _bullet_scene.instantiate()
 	bullet.init(bullet_position, bullet_direction, bullet_knockback, bullet_speed)

@@ -15,8 +15,7 @@ var _coin_scene = preload("res://src/Coin/Coin.tscn")
 
 
 func init(
-	start_position: Vector2, direction: Vector2, knockback_force: float,
-	speed: float = 100
+	start_position: Vector2, direction: Vector2, knockback_force: float, speed: float = 100
 ) -> void:
 	_initialized = true
 	position = start_position
@@ -36,9 +35,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]):
-		(body as Player).get_hurt(
-			_knockback_force*_direction.normalized()
-		)
+		(body as Player).get_hurt(_knockback_force * _direction.normalized())
 	else:
 		var cs = _coin_scene.instantiate()
 		cs.init(self.global_position)
