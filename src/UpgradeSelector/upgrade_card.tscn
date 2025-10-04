@@ -17,7 +17,7 @@ effects = Dictionary[int, int]({
 metadata/_custom_type_script = "uid://yeevmoyvkx8e"
 
 [node name="UpgradeCard" type="Control"]
-custom_minimum_size = Vector2(200, 300)
+custom_minimum_size = Vector2(200, 320)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 200.0
@@ -56,15 +56,17 @@ stretch_mode = 5
 
 [node name="DescriptionLabel" type="Label" parent="Panel/VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 text = "Description of test card. This is a long description"
 autowrap_mode = 3
 
 [node name="EffectsLabel" type="Label" parent="Panel/VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 size_flags_vertical = 6
-text = "Damage: 2, Heal: -1"
+text = "+2 damage, -1 heal"
 autowrap_mode = 3
 
 [node name="RarityLabel" type="Label" parent="Panel/VBoxContainer"]
@@ -72,6 +74,10 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Common"
 horizontal_alignment = 1
+
+[node name="SelectButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Select"
 
 [node name="LevelLabel" type="Label" parent="."]
 unique_name_in_owner = true
@@ -91,3 +97,5 @@ layout_mode = 1
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Attack"
+
+[connection signal="button_up" from="Panel/VBoxContainer/SelectButton" to="." method="_on_select_button_button_up"]

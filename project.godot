@@ -19,6 +19,7 @@ config/icon="res://assets/sprites/player.png"
 [autoload]
 
 Globals="*res://src/Globals.gd"
+PlayerState="*res://src/player_state.gd"
 
 [editor_plugins]
 

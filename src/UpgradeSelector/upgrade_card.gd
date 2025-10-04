@@ -1,6 +1,8 @@
 @tool
 extends Control
 
+signal card_selected(card_data: UpgradeCardData)
+
 @export_tool_button("Update Display") var update_display_action = _update_display
 
 @export var card_data: UpgradeCardData:
@@ -45,3 +47,7 @@ func _format_effects(effects: Dictionary) -> String:
 		)
 		effects_str.append("%+d %s" % [value, effect_name])
 	return ", ".join(effects_str)
+
+
+func _on_select_button_button_up() -> void:
+	emit_signal("card_selected", card_data)

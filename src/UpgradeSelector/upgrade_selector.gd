@@ -1,8 +1,8 @@
 extends Control
 
-signal card_selected
-
 const ICON_TEXTURE = preload("res://assets/sprites/icon.png")
+
+const UpgradeCard = preload("res://src/UpgradeSelector/upgrade_card.gd")
 
 @export var available_cards: Array[UpgradeCardData] = [
 	UpgradeCardData.new(
@@ -64,14 +64,19 @@ func _pick_cards(nb_cards: int) -> Array[UpgradeCardData]:
 
 	var cards: Array[UpgradeCardData] = []
 
+	var legal_card_pool: Array[UpgradeCardData] = _card_pool.filter(
+		func(card: UpgradeCardData) -> bool: return PlayerState.is_upgrade_applicable(card)
+	)
+
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 
 	for i in range(nb_cards):
-		if _card_pool.size() == 0:
+		if legal_card_pool.size() == 0:
 			break
-		var index = rng.randi_range(0, _card_pool.size() - 1)
-		cards.append(_card_pool.pop_at(index))
+		var index = rng.randi_range(0, legal_card_pool.size() - 1)
+		_card_pool.erase(legal_card_pool[index])
+		cards.append(legal_card_pool.pop_at(index))
 
 	selectable_cards = cards
 	_update_cards_display()
@@ -79,12 +84,17 @@ func _pick_cards(nb_cards: int) -> Array[UpgradeCardData]:
 
 
 func _ready():
+	for child in card_container.get_children():
+		if child is UpgradeCard:
+			child.card_selected.connect(_on_card_selected.bind(child.get_index()))
 	_pick_cards(3)
 
 
-func _on_card_selected(index: int) -> void:
-	var card = selectable_cards[index]
-	emit_signal("card_selected", card)
+func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
+	print("Selected card index: %d" % index)
+	var applied = PlayerState.apply_upgrade(card_data)
+	if not applied:
+		return
 	selectable_cards.pop_at(index)
 	_reset_selectable_cards()
 
