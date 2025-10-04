@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=16 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="2_y3yri"]
@@ -8,11 +8,27 @@
 [ext_resource type="AudioStream" uid="uid://ckvwc0wlnic18" path="res://assets/sounds/rain.wav" id="6_7xygs"]
 [ext_resource type="AudioStream" uid="uid://doxdscth7q0pa" path="res://assets/sounds/minting_plate_focus.wav" id="6_bqgkp"]
 [ext_resource type="PackedScene" uid="uid://c6gdmgoo58hb7" path="res://src/Billionaire/AttackPattern.tscn" id="7_y3yri"]
+[ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="9_kdd1f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0jg"]
 size = Vector2(24, 24)
 
-[node name="Billionaire2" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bqgkp"]
+size = Vector2(42, 67.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdd1f"]
+size = Vector2(42, 67.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_38hbp"]
+size = Vector2(24, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7xygs"]
+size = Vector2(76.5, 145)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1qyaf"]
+size = Vector2(103.1875, 205.6875)
+
+[node name="Billionaire" type="Node2D"]
 script = ExtResource("1_gpq05")
 
 [node name="IdleTimer" type="Timer" parent="."]
@@ -38,6 +54,81 @@ monitoring = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/Hitbox" groups=["billionaire"]]
 shape = SubResource("RectangleShape2D_xg0jg")
 
+[node name="RepulseWave" type="Node2D" parent="BillionaireBody"]
+visible = false
+
+[node name="Column1" type="Area2D" parent="BillionaireBody/RepulseWave"]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column1"]
+position = Vector2(33, -21.25)
+shape = SubResource("RectangleShape2D_bqgkp")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column1"]
+position = Vector2(-33, -21)
+shape = SubResource("RectangleShape2D_kdd1f")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column1"]
+shape = SubResource("RectangleShape2D_38hbp")
+
+[node name="Sprite2D" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column1"]
+position = Vector2(32.94001, -21.809996)
+scale = Vector2(0.6581247, 1.0684376)
+texture = ExtResource("9_kdd1f")
+
+[node name="Sprite2D2" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column1"]
+position = Vector2(-33.43081, -21.210484)
+scale = Vector2(0.64278716, 1.0559223)
+texture = ExtResource("9_kdd1f")
+
+[node name="Column2" type="Area2D" parent="BillionaireBody/RepulseWave"]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column2"]
+position = Vector2(93, -60)
+shape = SubResource("RectangleShape2D_7xygs")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column2"]
+position = Vector2(-92.75, -59.5)
+shape = SubResource("RectangleShape2D_7xygs")
+
+[node name="Sprite2D" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column2"]
+position = Vector2(-94.22001, -60.28)
+scale = Vector2(1.2431245, 2.24125)
+texture = ExtResource("9_kdd1f")
+
+[node name="Sprite2D2" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column2"]
+position = Vector2(92.7154, -60.35525)
+scale = Vector2(1.1651436, 2.270148)
+texture = ExtResource("9_kdd1f")
+
+[node name="Column3" type="Area2D" parent="BillionaireBody/RepulseWave"]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column3"]
+position = Vector2(184, -94)
+shape = SubResource("RectangleShape2D_1qyaf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column3"]
+position = Vector2(-184, -91)
+shape = SubResource("RectangleShape2D_1qyaf")
+
+[node name="Sprite2D2" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column3"]
+position = Vector2(185, -94.088806)
+scale = Vector2(1.6294464, 3.247224)
+texture = ExtResource("9_kdd1f")
+
+[node name="Sprite2D3" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column3"]
+position = Vector2(-185.02505, -91.75073)
+scale = Vector2(1.5617173, 3.2265396)
+texture = ExtResource("9_kdd1f")
+
 [node name="Bullets" type="Node2D" parent="."]
 position = Vector2(0, -1)
 
@@ -62,6 +153,16 @@ script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("6_7xygs")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
+[node name="RepulseWaveFocusSound" type="AudioStreamPlayer" parent="SFX"]
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("6_bqgkp")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
+[node name="RepulseWaveSound" type="AudioStreamPlayer" parent="SFX"]
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("5_38hbp")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
 [node name="AttackPatterns" type="Node" parent="."]
 
 [node name="AirShotgun" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
@@ -74,5 +175,9 @@ cooldown = 5.0
 [node name="Rain" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Make it rain !"
 cooldown = 30.0
+
+[node name="RepulseWave" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
+attack_name = "N.D.A"
+cooldown = 10.0
 
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]

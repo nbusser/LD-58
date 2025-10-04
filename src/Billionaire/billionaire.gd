@@ -20,6 +20,7 @@ var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
 @onready var _player: Player = $"../Player"
 @onready var _shoot_sound: AudioBankPlayer = $SFX/ShootSound
 @onready var _rain_focus_sound: AudioBankPlayer = $SFX/RainFocusSound
+@onready var _repulse_wave: Node2D = $BillionaireBody/RepulseWave
 
 @onready var _attack_patterns: Node = $AttackPatterns
 
@@ -28,6 +29,9 @@ func _ready() -> void:
 	$AttackPatterns/AirShotgun.routine = _air_shotgun_routine
 	$AttackPatterns/MintingPlate.routine = _minting_plate_routine
 	$AttackPatterns/Rain.routine = _rain_routine
+	$AttackPatterns/RepulseWave.routine = _repulse_wave_routine
+
+	_init_repulse_wave()
 
 
 # Return a random attack pattern
@@ -185,6 +189,38 @@ func _rain_routine() -> void:
 	await get_tree().create_timer(focus_duration).timeout
 
 	await spawn_rain_coroutine.call()
+
+
+func _init_repulse_wave():
+	var on_hit = func(body: Node2D) -> void:
+		if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]):
+			_player.get_hurt()
+
+	for column: Area2D in _repulse_wave.get_children():
+		column.visible = false
+		column.monitoring = false
+		column.monitorable = false
+		column.connect("body_entered", on_hit)
+
+	_repulse_wave.visible = true
+
+
+func _repulse_wave_routine():
+	var focus_duration: float = 2.0
+	$SFX/RepulseWaveFocusSound.play_sound()
+	await get_tree().create_timer(focus_duration).timeout
+
+	for column: Area2D in _repulse_wave.get_children():
+		column.visible = true
+		column.monitoring = true
+		$SFX/RepulseWaveSound.play_sound()
+		await get_tree().create_timer(0.8).timeout
+
+	await get_tree().create_timer(1.0).timeout
+
+	for column: Area2D in _repulse_wave.get_children():
+		column.visible = false
+		column.monitoring = false
 
 
 func _on_idle_timer_timeout() -> void:
