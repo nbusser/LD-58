@@ -32,7 +32,8 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]):
 		(body as Player).get_hurt()
-	var cs = _coin_scene.instantiate()
-	cs.init(self.global_position)
-	_coins.call_deferred("add_child", cs)
+	else:
+		var cs = _coin_scene.instantiate()
+		cs.init(self.global_position)
+		_coins.call_deferred("add_child", cs)
 	queue_free()
