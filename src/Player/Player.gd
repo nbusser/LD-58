@@ -11,13 +11,18 @@ const DIRECTIONS_MODIFIERS = [-1, 1]
 @export var dash_window = .2
 @export var max_input_jump_time = .4
 @export var jump_force = 8000
+@export var down_dash_speed = 1600
+@export var down_dash_duration = 0.08
 @export var punch_damage = 100
 
 var jump_load_start = null
 var is_actively_jumping = false
+var is_down_dashing = false
+var can_down_dash = false
 
 var previous_dir = [0, 0]  # left, right
 var previous_dash = 0
+var previous_down_dash = 0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var _hurt_sound = $SoundFx/HurtSound
@@ -64,6 +69,21 @@ func _physics_process(delta):
 					previous_dash = now
 					hz_velocity = DIRECTIONS_MODIFIERS[dir] * 3000
 				previous_dir[dir] = now
+
+	# Down dashing
+	if is_on_floor():
+		can_down_dash = true
+		is_down_dashing = false
+
+	if Input.is_action_just_pressed("dash_down") && can_down_dash && !is_on_floor() && !is_down_dashing && now - previous_down_dash > dash_cooldown:
+		previous_down_dash = now
+		is_down_dashing = true
+		is_actively_jumping = false
+		jump_load_start = null
+		velocity.y += down_dash_speed
+	if is_down_dashing && now - previous_down_dash > down_dash_duration:
+		is_down_dashing = false
+		velocity.y -= down_dash_speed
 
 	hz_velocity = (
 		velocity.x - (16 * delta * velocity.x)
