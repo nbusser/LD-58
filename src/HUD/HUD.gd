@@ -18,6 +18,7 @@ var billionaire_net_worth:
 @onready var coins_label: Label = $VBoxContainer/VBoxContainer/CoinNumber/CoinNumberValue
 @onready var level_name_label: Label = $VBoxContainer/CenterContainer/LevelNameValue
 @onready var net_worth_label: Label = $VBoxContainer/VBoxContainer/NetWorth/NetWorthValue
+@onready var dash_progress_bar: ProgressBar = $VBoxContainer/VBoxContainer/DashCooldown/ProgressBar
 @onready var fadein_pane: ColorRect = $FadeinPane
 
 
@@ -35,6 +36,10 @@ func set_level_number(value: int) -> void:
 
 func set_billionaire_net_worth(value: int) -> void:
 	net_worth_label.text = str(value)
+
+
+func set_dash_cooldown(value: int) -> void:
+	dash_progress_bar.value = value
 
 
 func init(level_state: LevelState) -> void:

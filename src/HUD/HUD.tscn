@@ -75,6 +75,18 @@ text = "Net Worth: "
 layout_mode = 2
 text = "/"
 
+[node name="DashCooldown" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/DashCooldown"]
+layout_mode = 2
+text = "Dash:"
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/VBoxContainer/DashCooldown"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
 [node name="FadeinPane" type="ColorRect" parent="."]
 visible = false
 layout_mode = 1

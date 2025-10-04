@@ -9,6 +9,7 @@ const DIRECTIONS_MODIFIERS = [-1, 1]
 @export var ground_speed = 450
 @export var air_speed = 300
 @export var dash_cooldown = 1.0
+@export var dash_speed = 3000
 @export var dash_window = .2
 @export var max_input_jump_time = .4
 @export var jump_force = 8000
@@ -33,6 +34,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var _hurt_sound = $SoundFx/HurtSound
 @onready var billionaire: CharacterBody2D = $"../Billionaire/BillionaireBody"
 @onready var punch_area: Area2D = $PunchArea
+@onready var hud: HUD = $"../../UI/HUD"
+
 
 func _ready() -> void:
 	# Waits for Game.gd to run randomize()
@@ -74,8 +77,9 @@ func _physics_process(delta):
 			if now - previous_dash > dash_cooldown:
 				if now - previous_dir[dir] < dash_window:
 					previous_dash = now
-					hz_velocity = DIRECTIONS_MODIFIERS[dir] * 3000
+					hz_velocity = DIRECTIONS_MODIFIERS[dir] * dash_speed
 				previous_dir[dir] = now
+	hud.set_dash_cooldown(100.*clamp((now - previous_dash)/dash_cooldown, 0., 100.))
 
 	# Down dash
 	if is_on_floor():
@@ -119,7 +123,7 @@ func _physics_process(delta):
 				knockback.y
 			)
 	
-	velocity = clamp(velocity, Vector2(-2000, -600), Vector2(2000, 600))
+	velocity = clamp(velocity, Vector2(-3000, -600), Vector2(3000, 600))
 	
 	move_and_slide()
 	
