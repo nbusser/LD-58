@@ -6,18 +6,28 @@ signal billionaire_punched(damage: int)
 const DIRECTIONS = ["move_left", "move_right"]
 const DIRECTIONS_MODIFIERS = [-1, 1]
 
+# Movement
 @export var ground_speed = 450
 @export var air_speed = 300
+# Horizontal dash
 @export var dash_cooldown = 1.0
 @export var dash_speed = 3000
 @export var dash_window = .2
-@export var max_input_jump_time = .4
-@export var jump_force = 8000
+# Vertical dash
 @export var down_dash_speed = 1600
 @export var down_dash_duration = 0.08
-@export var punch_damage = 100
+# Jumps
+@export var max_input_jump_time = .4
+@export var jump_force = 8000
+# Billionaire contact
 @export var billionaire_head_bounce = 450
 @export var billionaire_knockback = 450
+# Combat
+@export var melee_damage = 100
+@export var melee_cooldown = .3
+@export var melee_duration = .1
+@export var is_melee_one_shot = true
+
 
 var jump_load_start = null
 var is_actively_jumping = false
@@ -25,10 +35,14 @@ var is_down_dashing = false
 var can_down_dash = false
 var is_in_billionaire = false
 var is_on_top_of_billionaire = false
+var billionaire_in_melee_reach = false
+var in_melee = false
+
 
 var previous_dir = [0, 0]  # left, right
 var previous_dash = 0
 var previous_down_dash = 0
+var previous_melee = 0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var _hurt_sound = $SoundFx/HurtSound
@@ -127,10 +141,28 @@ func _physics_process(delta):
 
 	move_and_slide()
 
+	# Combat
 	if velocity.x > 0:
 		_punch_area.scale.x = 1.0
 	elif velocity.x < 0:
 		_punch_area.scale.x = -1.0
+	if (
+		Input.is_action_just_pressed("melee")
+		&& now - previous_melee > melee_cooldown
+	):
+		in_melee = true
+	elif (
+		in_melee
+		&& (
+			Input.is_action_just_pressed("melee")
+			|| now - previous_melee > melee_duration
+		)
+	):
+		in_melee = false
+	if in_melee && billionaire_in_melee_reach:
+		emit_signal("billionaire_punched", melee_damage)
+		if is_melee_one_shot:
+			in_melee = false
 
 
 func get_hurt(knockback_force):
@@ -142,11 +174,7 @@ func get_hurt(knockback_force):
 	await get_tree().create_timer(1.0).timeout
 	modulate = Color(1, 1, 1, 1)
 
-
-func _on_punch_area_area_entered(area):
-	if area.is_in_group("Billionaire"):
-		emit_signal("billionaire_punched", punch_damage)
-
+		
 
 func _on_soft_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Billionaire"):
@@ -167,3 +195,13 @@ func _on_feet_body_entered(_body: Node2D) -> void:
 
 func _on_feet_body_exited(_body: Node2D) -> void:
 	is_on_top_of_billionaire = false
+
+
+func _on_punch_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("Billionaire"):
+		billionaire_in_melee_reach = true
+
+
+func _on_punch_area_body_exited(body: Node2D) -> void:
+	if body.is_in_group("Billionaire"):
+		billionaire_in_melee_reach = false
