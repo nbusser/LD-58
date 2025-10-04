@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://btohiqrak4tcf"]
 
+[ext_resource type="Texture2D" uid="uid://cq5d404kyef8c" path="res://assets/sprites/honte.png" id="1_e037b"]
 [ext_resource type="PackedScene" uid="uid://dss1w1wv5xvq1" path="res://src/Player/Player.tscn" id="2"]
-[ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="2_hlp16"]
 [ext_resource type="PackedScene" uid="uid://bjp6oj1o86afi" path="res://src/Billionaire/billionaire.tscn" id="3_e037b"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wqubw"]
@@ -9,8 +9,9 @@
 [node name="Map" type="Node2D"]
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(-3, 57)
-texture = ExtResource("2_hlp16")
+position = Vector2(-204, -266.5)
+scale = Vector2(0.484375, 0.70214844)
+texture = ExtResource("1_e037b")
 
 [node name="Player" parent="." instance=ExtResource("2")]
 position = Vector2(0, -67)
