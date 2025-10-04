@@ -66,8 +66,6 @@ collision_mask = 34
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SoftHitbox"]
 shape = SubResource("1")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
 [node name="SoundFx" type="Node" parent="."]
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="SoundFx"]
