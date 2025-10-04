@@ -35,6 +35,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var _billionaire: CharacterBody2D = $"../Billionaire/BillionaireBody"
 @onready var _punch_area: Area2D = $PunchArea
 @onready var _hud: HUD = $"../../UI/HUD"
+@onready var _level: Node = $"../.."
 
 
 func _ready() -> void:
@@ -150,6 +151,7 @@ func _on_soft_hitbox_body_entered(body: Node2D) -> void:
 		is_in_billionaire = true
 	elif body.is_in_group("coin"):
 		body.queue_free()
+		_level.on_coin_collected()
 
 
 func _on_soft_hitbox_body_exited(body: Node2D) -> void:

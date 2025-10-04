@@ -2,8 +2,8 @@ class_name Coin
 extends RigidBody2D
 
 
-func init(position):
-	self.global_position = position
+func init(spawn_position):
+	self.global_position = spawn_position
 
 
 func _on_despawn_timer_timeout() -> void:

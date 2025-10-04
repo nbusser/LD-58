@@ -46,3 +46,8 @@ func _on_Timer_timeout():
 func _on_player_billionaire_punched(amount: int) -> void:
 	var remaining_net_worth: int = change_net_worth(amount)
 	billionaire_hit.emit(amount, remaining_net_worth)
+
+
+func on_coin_collected():
+	level_state.nb_coins += 1
+	hud.set_nb_coins(level_state.nb_coins)
