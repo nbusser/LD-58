@@ -2,9 +2,6 @@ class_name LevelSelector
 
 extends Control
 
-signal level_selected(level: int)
-signal back
-
 var levels: Array[LevelData]
 
 @onready var level_list = $PanelContainer/HBoxContainer/VBoxContainer/LevelList
