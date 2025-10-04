@@ -30,3 +30,6 @@ const SAMPLE_GLOBAL_VARIABLE: int = 1
 
 func end_scene(status: EndSceneStatus, params: Dictionary = {}) -> void:
 	scene_ended.emit(status, params)
+
+func coin_flip() -> bool:
+	return randi() % 2
