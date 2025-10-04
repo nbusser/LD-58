@@ -159,11 +159,19 @@ func _physics_process(delta):
 func get_hurt(knockback_force):
 	# Get knocked back
 	velocity += knockback_force
+	# Get deformed
+	scale = Vector2(
+		(1. - clamp((abs(knockback_force.x)) / 2000., 0., .2)) * .24,
+		(1. - clamp((abs(knockback_force.y)) / 2000., 0., .2)) * .24
+	)
+	print(scale)
+	print(knockback_force)
 	# Red glow on hit
 	_hurt_sound.play_sound()
 	modulate = Color(1, 0, 0)
 	await get_tree().create_timer(1.0).timeout
 	modulate = Color(1, 1, 1, 1)
+	scale = Vector2(.24, .24)
 
 
 func _on_soft_hitbox_body_entered(body: Node2D) -> void:
