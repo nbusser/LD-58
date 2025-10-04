@@ -20,6 +20,7 @@ autostart = true
 
 [node name="BillionaireBody" type="CharacterBody2D" parent="." groups=["Billionaire"]]
 collision_layer = 32
+collision_mask = 65
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody"]
 shape = SubResource("RectangleShape2D_xg0jg")
