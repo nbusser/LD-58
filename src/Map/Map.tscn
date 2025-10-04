@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dss1w1wv5xvq1" path="res://src/Player/Player.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="2_hlp16"]
-[ext_resource type="PackedScene" uid="uid://bjp6oj1o86afi" path="res://src/Billionaire/billionaire.tscn" id="3_e037b"]
+[ext_resource type="PackedScene" uid="uid://bjp6oj1o86afi" path="res://src/Billionaire/Billionaire.tscn" id="3_e037b"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wqubw"]
 
@@ -14,7 +14,6 @@ texture = ExtResource("2_hlp16")
 
 [node name="Player" parent="." instance=ExtResource("2")]
 position = Vector2(0, -67)
-speed = 400
 
 [node name="Ground" type="StaticBody2D" parent="."]
 

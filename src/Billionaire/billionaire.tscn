@@ -1,16 +1,16 @@
 [gd_scene load_steps=8 format=3 uid="uid://bjp6oj1o86afi"]
 
-[ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="1_2y8rh"]
-[ext_resource type="Script" uid="uid://odtd74p3t1y6" path="res://src/Billionaire/billionaire.gd" id="1_xg0jg"]
-[ext_resource type="AudioStream" uid="uid://b03od8jukmoux" path="res://assets/sounds/shoot.wav" id="3_img2r"]
-[ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="4_lryld"]
-[ext_resource type="AudioStream" uid="uid://dj3q3o4kb0c2i" path="res://assets/sounds/placeholder.ogg" id="5_lryld"]
-[ext_resource type="AudioStream" uid="uid://ckvwc0wlnic18" path="res://assets/sounds/rain.wav" id="6_qe6gk"]
+[ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/Billionaire.gd" id="1_gpq05"]
+[ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="2_y3yri"]
+[ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="3_bqgkp"]
+[ext_resource type="AudioStream" uid="uid://b03od8jukmoux" path="res://assets/sounds/shoot.wav" id="4_kdd1f"]
+[ext_resource type="AudioStream" uid="uid://dj3q3o4kb0c2i" path="res://assets/sounds/placeholder.ogg" id="5_38hbp"]
+[ext_resource type="AudioStream" uid="uid://ckvwc0wlnic18" path="res://assets/sounds/rain.wav" id="6_7xygs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0jg"]
 
 [node name="Billionaire" type="Node2D"]
-script = ExtResource("1_xg0jg")
+script = ExtResource("1_gpq05")
 
 [node name="IdleTimer" type="Timer" parent="."]
 one_shot = true
@@ -23,20 +23,20 @@ shape = SubResource("RectangleShape2D_xg0jg")
 
 [node name="Sprite2D" type="Sprite2D" parent="BillionaireBody"]
 scale = Vector2(0.064986736, 0.064986736)
-texture = ExtResource("1_2y8rh")
+texture = ExtResource("2_y3yri")
 
 [node name="Bullets" type="Node2D" parent="."]
 
 [node name="SFX" type="Node" parent="."]
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="SFX"]
-script = ExtResource("4_lryld")
-sounds = Array[AudioStream]([ExtResource("3_img2r"), ExtResource("5_lryld")])
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("4_kdd1f"), ExtResource("5_38hbp")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="RainFocusSound" type="AudioStreamPlayer" parent="SFX"]
-script = ExtResource("4_lryld")
-sounds = Array[AudioStream]([ExtResource("6_qe6gk")])
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("6_7xygs")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
