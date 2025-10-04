@@ -32,7 +32,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var _hurt_sound = $SoundFx/HurtSound
 @onready var billionaire: CharacterBody2D = $"../Billionaire/BillionaireBody"
-
+@onready var punch_area: Area2D = $PunchArea
 
 func _ready() -> void:
 	# Waits for Game.gd to run randomize()
@@ -122,6 +122,11 @@ func _physics_process(delta):
 	velocity = clamp(velocity, Vector2(-2000, -600), Vector2(2000, 600))
 	
 	move_and_slide()
+	
+	if velocity.x > 0:
+		punch_area.scale.x = 1.0
+	elif velocity.x < 0:
+		punch_area.scale.x = -1.0
 
 
 func get_hurt():
