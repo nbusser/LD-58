@@ -97,6 +97,7 @@ func _physics_process(delta):
 		else hz_velocity
 	)
 	velocity = Vector2(hz_velocity, velocity.y + vt_velocity + gravity * delta)
+	velocity.y = clamp(velocity.y, -300, 300)
 	move_and_slide()
 
 
@@ -111,3 +112,9 @@ func get_hurt():
 func _on_punch_area_area_entered(area):
 	if area.is_in_group("billionaire"):
 		emit_signal("billionaire_punched", punch_damage)
+
+
+func _on_soft_hitbox_body_entered(body: Node2D) -> void:
+	var to_billionaire = global_position - body.global_position
+	var base_punch = 1500*to_billionaire.normalized()
+	velocity += Vector2(base_punch.x, base_punch.y)

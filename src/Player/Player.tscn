@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dss1w1wv5xvq1"]
+[gd_scene load_steps=12 format=3 uid="uid://dss1w1wv5xvq1"]
 
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="1"]
 [ext_resource type="Script" uid="uid://ty44l5afcwx4" path="res://src/Player/Player.gd" id="2"]
@@ -31,6 +31,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(126, 128)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dd31a"]
+size = Vector2(158.33302, 158.33302)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dd31a"]
 radius = 62.5
 height = 200.0
@@ -46,6 +49,14 @@ frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("1")
+
+[node name="SoftHitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SoftHitbox"]
+position = Vector2(1.7384654e-06, 2.483522e-06)
+shape = SubResource("RectangleShape2D_dd31a")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -70,4 +81,5 @@ position = Vector2(83.33317, 0)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_dd31a")
 
+[connection signal="body_entered" from="SoftHitbox" to="." method="_on_soft_hitbox_body_entered"]
 [connection signal="area_entered" from="PunchArea" to="." method="_on_punch_area_area_entered"]
