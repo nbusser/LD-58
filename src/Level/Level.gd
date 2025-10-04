@@ -26,6 +26,10 @@ func _ready():
 func init(level_number_p: int, level_data_p: LevelData, nb_coins_p: int):
 	level_state = LevelState.new(level_number_p, level_data_p, nb_coins_p)
 
+func change_net_worth(damount: int):
+	var remaining_net_worth: int = level_state.change_billionaire_net_worth(damount)
+	hud.billionaire_net_worth = remaining_net_worth
+	return remaining_net_worth
 
 func _on_Timer_timeout():
 	# Simulates game state change
@@ -38,5 +42,5 @@ func _on_Timer_timeout():
 
 
 func _on_player_billionaire_punched(amount: int) -> void:
-	var remaining_net_worth: int = level_state.reduce_billionaire_net_worth(amount)
+	var remaining_net_worth: int = change_net_worth(amount)
 	billionaire_hit.emit(amount, remaining_net_worth)

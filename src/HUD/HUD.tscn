@@ -64,6 +64,17 @@ text = "Coins: "
 layout_mode = 2
 text = "/"
 
+[node name="NetWorth" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/NetWorth"]
+layout_mode = 2
+text = "Net Worth: "
+
+[node name="NetWorthValue" type="Label" parent="VBoxContainer/VBoxContainer/NetWorth"]
+layout_mode = 2
+text = "/"
+
 [node name="FadeinPane" type="ColorRect" parent="."]
 visible = false
 layout_mode = 1

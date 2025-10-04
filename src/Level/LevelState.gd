@@ -21,8 +21,8 @@ func _init(level_number_p: int, level_data_p: LevelData, nb_coins_p: int):
 	self.billionaire_net_worth = self.billionaire_initial_net_worth
 
 
-func reduce_billionaire_net_worth(amount: int) -> int:
-	billionaire_net_worth = max(0, billionaire_net_worth - amount)
+func change_billionaire_net_worth(damount: int) -> int:
+	billionaire_net_worth = max(0, billionaire_net_worth - damount)
 	return billionaire_net_worth
 
 
