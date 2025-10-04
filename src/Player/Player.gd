@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+signal billionaire_punched(damage: int)
+
 const DIRECTIONS = ["move_left", "move_right"]
 const DIRECTIONS_MODIFIERS = [-1, 1]
 
@@ -9,6 +11,7 @@ const DIRECTIONS_MODIFIERS = [-1, 1]
 @export var dash_window = .2
 @export var max_input_jump_time = .4
 @export var jump_force = 8000
+@export var punch_damage = 100
 
 var jump_load_start = null
 var is_actively_jumping = false
@@ -77,3 +80,7 @@ func get_hurt():
 	modulate = Color(1, 0, 0)
 	await get_tree().create_timer(1.0).timeout
 	modulate = Color(1, 1, 1, 1)
+
+func _on_punch_area_area_entered(area):
+	if area.is_in_group("billionaire"):
+		emit_signal("billionaire_punched", punch_damage)

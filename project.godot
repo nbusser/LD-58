@@ -24,6 +24,10 @@ Globals="*res://src/Globals.gd"
 
 enabled=PackedStringArray()
 
+[global_group]
+
+billionaire=""
+
 [input]
 
 move_right={

@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c6gdmgoo58hb7" path="res://src/Billionaire/AttackPattern.tscn" id="7_y3yri"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0jg"]
+size = Vector2(24, 24)
 
 [node name="Billionaire" type="Node2D"]
 script = ExtResource("1_gpq05")
@@ -25,6 +26,14 @@ shape = SubResource("RectangleShape2D_xg0jg")
 [node name="Sprite2D" type="Sprite2D" parent="BillionaireBody"]
 scale = Vector2(0.064986736, 0.064986736)
 texture = ExtResource("2_y3yri")
+
+[node name="Hitbox" type="Area2D" parent="BillionaireBody" groups=["billionaire"]]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/Hitbox" groups=["billionaire"]]
+shape = SubResource("RectangleShape2D_xg0jg")
 
 [node name="Bullets" type="Node2D" parent="."]
 position = Vector2(0, -1)

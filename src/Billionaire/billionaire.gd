@@ -156,3 +156,6 @@ func _on_idle_timer_timeout() -> void:
 		await (attack as AttackPattern).call_routine()
 
 	_idle_timer.start(randf_range(idle_range_seconds.x, idle_range_seconds.y))
+
+func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
+	health = max(0, health - amount)
