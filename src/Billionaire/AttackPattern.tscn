@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6gdmgoo58hb7"]
+
+[ext_resource type="Script" uid="uid://bnpu5oypbbgo7" path="res://src/Billionaire/AttackPattern.gd" id="1_5wnyt"]
+
+[node name="AttackPattern" type="Node"]
+script = ExtResource("1_5wnyt")
+
+[node name="Cooldown" type="Timer" parent="."]
+one_shot = true

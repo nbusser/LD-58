@@ -2,7 +2,7 @@ class_name Billionaire
 
 extends Node2D
 
-enum BillionaireState { IDLE = 0, AIR_SHOTGUN = 1, RAIN = 2 }
+var health = 100
 
 const _JUMP_VELOCITY = -600
 const _GRAVITY: float = 1200.0
@@ -11,10 +11,6 @@ var _is_gravity_enabled: bool = true
 
 var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
 
-var _state_to_routine: Dictionary[BillionaireState, Callable] = {
-	BillionaireState.AIR_SHOTGUN: _air_shotgun_routine, BillionaireState.RAIN: _rain_routine
-}
-
 @onready var _idle_timer: Timer = $IdleTimer
 @onready var _body: CharacterBody2D = $BillionaireBody
 @onready var _bullets: Node2D = $Bullets
@@ -22,16 +18,15 @@ var _state_to_routine: Dictionary[BillionaireState, Callable] = {
 @onready var _shoot_sound: AudioBankPlayer = $SFX/ShootSound
 @onready var _rain_focus_sound: AudioBankPlayer = $SFX/RainFocusSound
 
-
-# Return a random attack pattern
-func _get_new_state() -> BillionaireState:
-	var state = randi() % (BillionaireState.size() - 1) + 1 as BillionaireState
-	assert(state != BillionaireState.IDLE)
-	return state
-
+@onready var _attack_patterns: Node = $AttackPatterns
 
 func _ready() -> void:
-	pass
+	$AttackPatterns/AirShotgun.routine = _air_shotgun_routine
+	$AttackPatterns/Rain.routine = _rain_routine
+
+# Return a random attack pattern
+func _get_attack_pattern() -> AttackPattern:
+	return _attack_patterns.get_child(randi() % len(_attack_patterns.get_children()))
 
 
 func _physics_process(delta: float) -> void:
@@ -139,7 +134,5 @@ func _rain_routine() -> void:
 
 
 func _on_idle_timer_timeout() -> void:
-	var new_state: BillionaireState = _get_new_state()
-	var routine: Callable = _state_to_routine.get(new_state)
-	await routine.call()
+	await _get_attack_pattern().call_routine()
 	_idle_timer.start()

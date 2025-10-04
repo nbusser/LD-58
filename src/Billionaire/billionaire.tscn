@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=9 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/Billionaire.gd" id="1_gpq05"]
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="2_y3yri"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://b03od8jukmoux" path="res://assets/sounds/shoot.wav" id="4_kdd1f"]
 [ext_resource type="AudioStream" uid="uid://dj3q3o4kb0c2i" path="res://assets/sounds/placeholder.ogg" id="5_38hbp"]
 [ext_resource type="AudioStream" uid="uid://ckvwc0wlnic18" path="res://assets/sounds/rain.wav" id="6_7xygs"]
+[ext_resource type="PackedScene" uid="uid://c6gdmgoo58hb7" path="res://src/Billionaire/AttackPattern.tscn" id="7_y3yri"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0jg"]
 
@@ -38,5 +39,14 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("6_7xygs")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
+[node name="AttackPatterns" type="Node" parent="."]
+
+[node name="AirShotgun" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
+attack_name = "Money Shot !"
+
+[node name="Rain" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
+attack_name = "Make it rain !"
+cooldown = 100.0
 
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
