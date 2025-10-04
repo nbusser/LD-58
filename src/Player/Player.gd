@@ -75,7 +75,13 @@ func _physics_process(delta):
 		can_down_dash = true
 		is_down_dashing = false
 
-	if Input.is_action_just_pressed("dash_down") && can_down_dash && !is_on_floor() && !is_down_dashing && now - previous_down_dash > dash_cooldown:
+	if (
+		Input.is_action_just_pressed("dash_down")
+		&& can_down_dash
+		&& !is_on_floor()
+		&& !is_down_dashing
+		&& now - previous_down_dash > dash_cooldown
+	):
 		previous_down_dash = now
 		is_down_dashing = true
 		is_actively_jumping = false
@@ -100,6 +106,7 @@ func get_hurt():
 	modulate = Color(1, 0, 0)
 	await get_tree().create_timer(1.0).timeout
 	modulate = Color(1, 1, 1, 1)
+
 
 func _on_punch_area_area_entered(area):
 	if area.is_in_group("billionaire"):

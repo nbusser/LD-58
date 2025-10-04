@@ -28,9 +28,7 @@ enum EndSceneStatus {
 enum Groups { BULLET, PLAYER, BILLIONAIRE }
 
 const GROUPS_DICT: Dictionary[Groups, String] = {
-	Groups.BULLET: "Bullet",
-	Groups.PLAYER: "Player",
-	Groups.BILLIONAIRE: "Billionaire"
+	Groups.BULLET: "Bullet", Groups.PLAYER: "Player", Groups.BILLIONAIRE: "Billionaire"
 }
 
 const SAMPLE_GLOBAL_VARIABLE: int = 1
