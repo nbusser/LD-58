@@ -18,8 +18,6 @@ var _state_to_routine: Dictionary[BillionaireState, Callable] = {
 	BillionaireState.AIR_SHOTGUN: _air_shotgun_routine
 }
 
-const FRICTION: float = -50.0
-
 @onready var _idle_timer: Timer = $IdleTimer
 @onready var _body: CharacterBody2D = $BillionaireBody
 @onready var _bullets: Node2D = $Bullets
@@ -51,6 +49,7 @@ func _spawn_bullet(
 	bullet.init(bullet_position, bullet_direction, bullet_speed)
 	_bullets.add_child(bullet)
 
+
 func _air_shotgun_routine() -> void:
 	# Maybe run
 	if Globals.coin_flip():
@@ -62,22 +61,36 @@ func _air_shotgun_routine() -> void:
 		var should_stop_before_jump: bool = Globals.coin_flip() as bool
 
 		# Acceleration
-		await get_tree().create_tween().tween_property(_body, "velocity:x", run_direction * run_speed, run_accel_duration).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT).finished
+		await (
+			get_tree()
+			. create_tween()
+			. tween_property(_body, "velocity:x", run_direction * run_speed, run_accel_duration)
+			. set_trans(Tween.TRANS_LINEAR)
+			. set_ease(Tween.EASE_IN_OUT)
+			. finished
+		)
 
 		# Constant and speed deceleration in a single coroutine
-		var _run_constant_then_decelerate = func():
+		var run_constant_then_decelerate = func():
 			# Constant speed
 			await get_tree().create_timer(run_constant_speed_duration).timeout
 			# Deceleration
-			await get_tree().create_tween().tween_property(_body, "velocity:x", 0.0, run_decel_duration).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT).finished
+			await (
+				get_tree()
+				. create_tween()
+				. tween_property(_body, "velocity:x", 0.0, run_decel_duration)
+				. set_trans(Tween.TRANS_LINEAR)
+				. set_ease(Tween.EASE_IN_OUT)
+				. finished
+			)
 
 		if should_stop_before_jump:
 			# Wait to be totally stopped to jump
-			await _run_constant_then_decelerate.call()
+			await run_constant_then_decelerate.call()
 		else:
 			# Starts jumping while running
-			_run_constant_then_decelerate.call()
-	
+			run_constant_then_decelerate.call()
+
 	# Jump
 	_body.velocity.y = _JUMP_VELOCITY
 	while _body.velocity.y < 0:
