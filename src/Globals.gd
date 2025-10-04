@@ -25,9 +25,13 @@ enum EndSceneStatus {
 	CREDITS_BACK,
 }
 
-enum Groups { BULLET, PLAYER }
+enum Groups { BULLET, PLAYER, BILLIONAIRE }
 
-const GROUPS_DICT: Dictionary[Groups, String] = {Groups.BULLET: "Bullet", Groups.PLAYER: "Player"}
+const GROUPS_DICT: Dictionary[Groups, String] = {
+	Groups.BULLET: "Bullet",
+	Groups.PLAYER: "Player",
+	Groups.BILLIONAIRE: "Billionaire"
+}
 
 const SAMPLE_GLOBAL_VARIABLE: int = 1
 

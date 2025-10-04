@@ -29,6 +29,7 @@ func _physics_process(delta):
 	var input_direction = Input.get_axis("move_left", "move_right")
 	var vt_velocity = 0.
 	var hz_velocity = 0.
+
 	# Jumping + walking on floor
 	var now = Time.get_unix_time_from_system()
 	hz_velocity = input_direction * speed

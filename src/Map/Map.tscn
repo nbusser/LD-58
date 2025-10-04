@@ -18,12 +18,13 @@ position = Vector2(0, -67)
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="Ground" type="StaticBody2D" parent="Node2D"]
+position = Vector2(1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Ground"]
 shape = SubResource("WorldBoundaryShape2D_wqubw")
 
 [node name="Ceiling" type="StaticBody2D" parent="Node2D"]
-position = Vector2(0, -274)
+position = Vector2(0, -394)
 scale = Vector2(-1, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Ceiling"]

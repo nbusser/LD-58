@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://dcp75mk4cpk11"]
 
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="1_el2we"]
-[ext_resource type="Script" uid="uid://clioqy0tcrlw0" path="res://src/Bullet/Bullet.gd" id="1_v1s1s"]
+[ext_resource type="Script" uid="uid://clioqy0tcrlw0" path="res://src/Bullet/bullet.gd" id="1_v1s1s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_el2we"]
 
 [node name="Bullet" type="Area2D" groups=["Bullet"]]
 collision_layer = 0
-collision_mask = 8
+collision_mask = 9
 script = ExtResource("1_v1s1s")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

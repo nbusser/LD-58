@@ -17,7 +17,7 @@ script = ExtResource("1_gpq05")
 one_shot = true
 autostart = true
 
-[node name="BillionaireBody" type="CharacterBody2D" parent="."]
+[node name="BillionaireBody" type="CharacterBody2D" parent="." groups=["Billionaire"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody"]
 shape = SubResource("RectangleShape2D_xg0jg")
@@ -27,6 +27,7 @@ scale = Vector2(0.064986736, 0.064986736)
 texture = ExtResource("2_y3yri")
 
 [node name="Bullets" type="Node2D" parent="."]
+position = Vector2(0, -1)
 
 [node name="SFX" type="Node" parent="."]
 
