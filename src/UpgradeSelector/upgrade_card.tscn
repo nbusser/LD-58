@@ -1,0 +1,93 @@
+[gd_scene load_steps=5 format=3 uid="uid://b042ulb2eqxpg"]
+
+[ext_resource type="Script" uid="uid://b5nh2h0ywhfv" path="res://src/UpgradeSelector/upgrade_card.gd" id="1_8s5m4"]
+[ext_resource type="Script" uid="uid://yeevmoyvkx8e" path="res://src/UpgradeSelector/upgrade_card_data.gd" id="2_tr77e"]
+[ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="2_wuml4"]
+
+[sub_resource type="Resource" id="Resource_wuml4"]
+script = ExtResource("2_tr77e")
+category_level = 2
+title = "Test Card"
+description = "Description of test card. This is a long description"
+icon = ExtResource("2_wuml4")
+effects = Dictionary[int, int]({
+0: 2,
+1: -1
+})
+metadata/_custom_type_script = "uid://yeevmoyvkx8e"
+
+[node name="UpgradeCard" type="Control"]
+custom_minimum_size = Vector2(200, 300)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 300.0
+script = ExtResource("1_8s5m4")
+card_data = SubResource("Resource_wuml4")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Test Card"
+horizontal_alignment = 1
+
+[node name="IconTextureRect" type="TextureRect" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+texture = ExtResource("2_wuml4")
+stretch_mode = 5
+
+[node name="DescriptionLabel" type="Label" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Description of test card. This is a long description"
+autowrap_mode = 3
+
+[node name="EffectsLabel" type="Label" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 6
+text = "Damage: 2, Heal: -1"
+autowrap_mode = 3
+
+[node name="RarityLabel" type="Label" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Common"
+horizontal_alignment = 1
+
+[node name="LevelLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "2"
+horizontal_alignment = 2
+
+[node name="TypeLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Attack"

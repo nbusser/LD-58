@@ -5,6 +5,7 @@ enum CardType {
 	ATTACK,
 	DEFENSE,
 	UTILITY,
+	KNOWLEDGE,
 }
 
 enum Rarity {
@@ -17,6 +18,8 @@ enum EffectType {
 	DAMAGE,
 	HEAL,
 	SHIELD,
+	SPEED,
+	CRYPTO_CURRENCY,
 }
 
 @export var card_type: CardType
@@ -27,7 +30,7 @@ enum EffectType {
 @export var category_level: int
 
 @export var title: String
-@export var description_lines: PackedStringArray
+@export var description: String
 
 @export var icon: Texture2D
 
@@ -35,20 +38,20 @@ enum EffectType {
 
 
 func _init(
-	p_card_type = CardType.ATTACK,
-	p_rarity = Rarity.COMMON,
-	p_category = "default_category",
-	p_category_level = 0,
-	p_title = "Card Title",
-	p_description_lines = [],
-	p_icon = null,
-	p_effects = {}
+	p_card_type: CardType = CardType.ATTACK,
+	p_rarity: Rarity = Rarity.COMMON,
+	p_category: String = "default_category",
+	p_category_level: int = 0,
+	p_title: String = "Card Title",
+	p_description: String = "",
+	p_icon: Texture2D = null,
+	p_effects: Dictionary[EffectType, int] = {}
 ):
 	card_type = p_card_type
 	rarity = p_rarity
 	category = p_category
 	category_level = p_category_level
 	title = p_title
-	description_lines = p_description_lines
+	description = p_description
 	icon = p_icon
 	effects = p_effects

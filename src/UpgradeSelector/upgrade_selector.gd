@@ -2,15 +2,61 @@ extends Control
 
 signal card_selected
 
-@export var available_cards: Array[UpgradeCardData] = []
+const ICON_TEXTURE = preload("res://assets/sprites/icon.png")
+
+@export var available_cards: Array[UpgradeCardData] = [
+	UpgradeCardData.new(
+		UpgradeCardData.CardType.UTILITY,
+		UpgradeCardData.Rarity.COMMON,
+		"speed",
+		1,
+		"Smooth Shoes",
+		"1-year ROI",
+		ICON_TEXTURE,
+		{UpgradeCardData.EffectType.SPEED: 2}
+	),
+	UpgradeCardData.new(
+		UpgradeCardData.CardType.UTILITY,
+		UpgradeCardData.Rarity.UNCOMMON,
+		"speed",
+		2,
+		"Swift Sneakers",
+		"2-year ROI",
+		ICON_TEXTURE,
+		{UpgradeCardData.EffectType.SPEED: 3}
+	),
+	UpgradeCardData.new(
+		UpgradeCardData.CardType.KNOWLEDGE,
+		UpgradeCardData.Rarity.UNCOMMON,
+		"crypto",
+		1,
+		"Crypto Crash Course",
+		"Avoiding scams made easy",
+		ICON_TEXTURE,
+		{UpgradeCardData.EffectType.CRYPTO_CURRENCY: 1}
+	),
+	UpgradeCardData.new(
+		UpgradeCardData.CardType.DEFENSE,
+		UpgradeCardData.Rarity.COMMON,
+		"shield",
+		1,
+		"Basic Firewall",
+		"Blocks minor threats",
+		ICON_TEXTURE,
+		{UpgradeCardData.EffectType.SHIELD: 3}
+	),
+]
 
 var selectable_cards: Array[UpgradeCardData] = []
 var _card_pool: Array[UpgradeCardData] = available_cards.duplicate_deep()
+
+@onready var card_container: Control = %CardContainer
 
 
 func _reset_selectable_cards() -> void:
 	_card_pool.append_array(selectable_cards)
 	selectable_cards.clear()
+	_update_cards_display()
 
 
 func _pick_cards(nb_cards: int) -> Array[UpgradeCardData]:
@@ -27,11 +73,13 @@ func _pick_cards(nb_cards: int) -> Array[UpgradeCardData]:
 		var index = rng.randi_range(0, _card_pool.size() - 1)
 		cards.append(_card_pool.pop_at(index))
 
+	selectable_cards = cards
+	_update_cards_display()
 	return cards
 
 
 func _ready():
-	selectable_cards = _pick_cards(3)
+	_pick_cards(3)
 
 
 func _on_card_selected(index: int) -> void:
@@ -39,3 +87,19 @@ func _on_card_selected(index: int) -> void:
 	emit_signal("card_selected", card)
 	selectable_cards.pop_at(index)
 	_reset_selectable_cards()
+
+
+func _on_redraw_button_up() -> void:
+	_pick_cards(3)
+
+
+func _update_cards_display() -> void:
+	for i in range(3):
+		var card_control = card_container.get_child(i)
+		if card_control == null:
+			continue
+		if i < selectable_cards.size():
+			card_control.card_data = selectable_cards[i]
+			card_control.visible = true
+		else:
+			card_control.visible = false

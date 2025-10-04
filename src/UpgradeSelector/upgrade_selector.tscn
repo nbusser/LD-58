@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bw6igwix0v8lt"]
+[gd_scene load_steps=3 format=3 uid="uid://bw6igwix0v8lt"]
 
 [ext_resource type="Script" uid="uid://se5xxijidgr3" path="res://src/UpgradeSelector/upgrade_selector.gd" id="1_2fgo5"]
+[ext_resource type="PackedScene" uid="uid://b042ulb2eqxpg" path="res://src/UpgradeSelector/upgrade_card.tscn" id="2_og7cp"]
 
 [node name="UpgradeSelector" type="Control"]
 layout_mode = 3
@@ -16,3 +17,40 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Choose your upgrade"
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardContainer" type="HBoxContainer" parent="CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="UpgradeCard" parent="CenterContainer/CardContainer" instance=ExtResource("2_og7cp")]
+layout_mode = 2
+
+[node name="UpgradeCard2" parent="CenterContainer/CardContainer" instance=ExtResource("2_og7cp")]
+layout_mode = 2
+
+[node name="UpgradeCard3" parent="CenterContainer/CardContainer" instance=ExtResource("2_og7cp")]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 8.0
+grow_vertical = 0
+text = "Redraw"
+
+[connection signal="button_up" from="Button" to="." method="_on_redraw_button_up"]
