@@ -5,18 +5,22 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0jg"]
 
-[node name="Billionaire" type="CharacterBody2D"]
+[node name="Billionaire" type="Node2D"]
 script = ExtResource("1_xg0jg")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.064986736, 0.064986736)
-texture = ExtResource("1_2y8rh")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_xg0jg")
 
 [node name="IdleTimer" type="Timer" parent="."]
 one_shot = true
 autostart = true
+
+[node name="BillionaireBody" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody"]
+shape = SubResource("RectangleShape2D_xg0jg")
+
+[node name="Sprite2D" type="Sprite2D" parent="BillionaireBody"]
+scale = Vector2(0.064986736, 0.064986736)
+texture = ExtResource("1_2y8rh")
+
+[node name="Bullets" type="Node2D" parent="."]
 
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
