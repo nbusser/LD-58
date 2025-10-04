@@ -79,7 +79,7 @@ func _physics_process(delta):
 					previous_dash = now
 					hz_velocity = DIRECTIONS_MODIFIERS[dir] * dash_speed
 				previous_dir[dir] = now
-	_hud.set_dash_cooldown(100.*clamp((now - previous_dash)/dash_cooldown, 0., 100.))
+	_hud.set_dash_cooldown(100. * clamp((now - previous_dash) / dash_cooldown, 0., 100.))
 
 	# Down dash
 	if is_on_floor():
@@ -121,9 +121,9 @@ func _physics_process(delta):
 			velocity += Vector2(
 				knockback.x if abs(knockback.x) > 100 else sign(knockback.x) * 100, knockback.y
 			)
-	
+
 	velocity = clamp(velocity, Vector2(-3000, -600), Vector2(3000, 600))
-	
+
 	move_and_slide()
 
 	if velocity.x > 0:
