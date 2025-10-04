@@ -18,18 +18,16 @@ var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
 @onready var _body: CharacterBody2D = $BillionaireBody
 @onready var _bullets: Node2D = $Bullets
 @onready var _player: Player = $"../Player"
-@onready var _shoot_sound: AudioBankPlayer = $SFX/ShootSound
-@onready var _rain_focus_sound: AudioBankPlayer = $SFX/RainFocusSound
 @onready var _repulse_wave: Node2D = $BillionaireBody/RepulseWave
 
 @onready var _attack_patterns: Node = $AttackPatterns
 
 
 func _ready() -> void:
-	$AttackPatterns/AirShotgun.routine = _air_shotgun_routine
-	$AttackPatterns/MintingPlate.routine = _minting_plate_routine
+	$AttackPatterns/JumpConeBullets.routine = _air_shotgun_routine
+	$AttackPatterns/Machinegun.routine = _minting_plate_routine
 	$AttackPatterns/Rain.routine = _rain_routine
-	$AttackPatterns/RepulseWave.routine = _repulse_wave_routine
+	$AttackPatterns/RepulsiveWave.routine = _repulse_wave_routine
 
 	_init_repulse_wave()
 
@@ -142,7 +140,7 @@ func _air_shotgun_routine() -> void:
 	for angle in angles:
 		var dir = bullet_direction.rotated(deg_to_rad(angle))
 		_spawn_bullet(_body.position, dir, 400.0)
-	_shoot_sound.play_sound()
+	$AttackPatterns/JumpConeBullets/ShootSound.play_sound()
 
 	# Freeze
 	await get_tree().create_timer(0.3).timeout
@@ -156,10 +154,10 @@ func _minting_plate_routine() -> void:
 	if Globals.coin_flip():
 		await _random_run()
 
-	$SFX/MintingPlateFocusSound.play_sound()
+	$AttackPatterns/Machinegun/FocusSound.play_sound()
 	await get_tree().create_timer(1.2).timeout
 
-	$SFX/MintingPlateSound.play_sound()
+	$AttackPatterns/Machinegun/ShootSound.play_sound()
 	var nb_bullets = 10
 	for _i in range(nb_bullets):
 		var bullet_direction = (_player.global_position - _body.global_position).normalized()
@@ -184,7 +182,7 @@ func _rain_routine() -> void:
 				_spawn_bullet(bullet_position, Vector2.DOWN, rain_bullet_speed)
 			await get_tree().create_timer(rain_bullet_interval_duration).timeout
 
-	_rain_focus_sound.play_sound()
+	$AttackPatterns/Rain/FocusSound.play_sound()
 	var focus_duration: float = 2.0
 	await get_tree().create_timer(focus_duration).timeout
 
@@ -207,13 +205,13 @@ func _init_repulse_wave():
 
 func _repulse_wave_routine():
 	var focus_duration: float = 2.0
-	$SFX/RepulseWaveFocusSound.play_sound()
+	$AttackPatterns/RepulsiveWave/FocusSound.play_sound()
 	await get_tree().create_timer(focus_duration).timeout
 
 	for column: Area2D in _repulse_wave.get_children():
 		column.visible = true
 		column.monitoring = true
-		$SFX/RepulseWaveSound.play_sound()
+		$AttackPatterns/RepulsiveWave/ColumnSound.play_sound()
 		await get_tree().create_timer(0.8).timeout
 
 	await get_tree().create_timer(1.0).timeout

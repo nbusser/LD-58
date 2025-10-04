@@ -134,50 +134,50 @@ position = Vector2(0, -1)
 
 [node name="SFX" type="Node" parent="."]
 
-[node name="ShootSound" type="AudioStreamPlayer" parent="SFX"]
+[node name="AttackPatterns" type="Node" parent="."]
+
+[node name="JumpConeBullets" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
+attack_name = "Money Shot !"
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="AttackPatterns/JumpConeBullets"]
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("4_kdd1f"), ExtResource("5_38hbp")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
-[node name="MintingPlateFocusSound" type="AudioStreamPlayer" parent="SFX"]
-script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("6_bqgkp")])
-metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
-
-[node name="MintingPlateSound" type="AudioStreamPlayer" parent="SFX"]
-script = ExtResource("3_bqgkp")
-metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
-
-[node name="RainFocusSound" type="AudioStreamPlayer" parent="SFX"]
-script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("6_7xygs")])
-metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
-
-[node name="RepulseWaveFocusSound" type="AudioStreamPlayer" parent="SFX"]
-script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("6_bqgkp")])
-metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
-
-[node name="RepulseWaveSound" type="AudioStreamPlayer" parent="SFX"]
-script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("5_38hbp")])
-metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
-
-[node name="AttackPatterns" type="Node" parent="."]
-
-[node name="AirShotgun" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
-attack_name = "Money Shot !"
-
-[node name="MintingPlate" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
+[node name="Machinegun" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Minting Plate !"
 cooldown = 5.0
+
+[node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/Machinegun"]
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("6_bqgkp")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="AttackPatterns/Machinegun"]
+script = ExtResource("3_bqgkp")
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="Rain" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Make it rain !"
 cooldown = 30.0
 
-[node name="RepulseWave" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
+[node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/Rain"]
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("6_7xygs")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
+[node name="RepulsiveWave" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "N.D.A"
 cooldown = 10.0
+
+[node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/RepulsiveWave"]
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("6_bqgkp")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
+[node name="ColumnSound" type="AudioStreamPlayer" parent="AttackPatterns/RepulsiveWave"]
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("5_38hbp")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
