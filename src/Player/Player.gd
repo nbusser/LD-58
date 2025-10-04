@@ -52,6 +52,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var _punch_area: Area2D = $PunchArea
 @onready var _hud: HUD = $"../../UI/HUD"
 @onready var _level: Node = $"../.."
+@onready var _camera: Node = $"../Camera2D"
 
 
 func _ready() -> void:
@@ -177,6 +178,7 @@ func get_hurt(knockback_force):
 		(1. - clamp((abs(knockback_force.x)) / 2000., 0., .2)) * .24,
 		(1. - clamp((abs(knockback_force.y)) / 2000., 0., .2)) * .24
 	)
+	_camera.apply_noise_shake()
 
 	# Red glow on hit
 	_hurt_sound.play_sound()
