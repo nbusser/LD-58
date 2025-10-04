@@ -11,6 +11,8 @@ var previous_left = 0
 var previous_right = 0
 var previous_dash = 0
 
+@onready var _hurt_sound = $SoundFx/HurtSound
+
 
 func _ready() -> void:
 	# Waits for Game.gd to run randomize()
@@ -65,3 +67,11 @@ func _physics_process(delta):
 	)
 	velocity = Vector2(hz_velocity, velocity.y + vt_velocity + 980 * delta)
 	move_and_slide()
+
+
+func get_hurt():
+	# Red glow on hit
+	_hurt_sound.play_sound()
+	modulate = Color(1, 0, 0)
+	await get_tree().create_timer(1.0).timeout
+	modulate = Color(1, 1, 1, 1)

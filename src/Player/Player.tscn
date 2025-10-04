@@ -1,7 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dss1w1wv5xvq1"]
+[gd_scene load_steps=10 format=3 uid="uid://dss1w1wv5xvq1"]
 
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="1"]
 [ext_resource type="Script" uid="uid://ty44l5afcwx4" path="res://src/Player/Player.gd" id="2"]
+[ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="3_vy1tf"]
+[ext_resource type="AudioStream" uid="uid://6u1f8h66ppko" path="res://assets/sounds/hurt.wav" id="4_dd31a"]
+[ext_resource type="AudioStream" uid="uid://jrns7idjix3g" path="res://assets/sounds/hurt2.wav" id="5_gilji"]
 
 [sub_resource type="AtlasTexture" id="3"]
 atlas = ExtResource("1")
@@ -26,8 +29,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(126, 128)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_layer = 9
 script = ExtResource("2")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
@@ -40,6 +45,11 @@ shape = SubResource("1")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="SoundFx" type="Node" parent="."]
+
+[node name="HurtSound" type="AudioStreamPlayer" parent="SoundFx"]
+script = ExtResource("3_vy1tf")
+sounds = Array[AudioStream]([ExtResource("4_dd31a"), ExtResource("5_gilji")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
