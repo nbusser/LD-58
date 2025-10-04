@@ -133,7 +133,7 @@ func _air_shotgun_routine() -> void:
 	await get_tree().create_timer(0.3).timeout
 
 	# Shoot bullets to the player
-	var bullet_direction = (_player.position - _body.position).normalized()
+	var bullet_direction = (_player.global_position - _body.global_position).normalized()
 	var angles = [-15, 0, 15]
 	for angle in angles:
 		var dir = bullet_direction.rotated(deg_to_rad(angle))
