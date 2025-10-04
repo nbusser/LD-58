@@ -9,8 +9,9 @@ extends CharacterBody2D
 
 var jump_load_start = null
 var is_actively_jumping = false
-var previous_left = 0
-var previous_right = 0
+const DIRECTIONS = ["move_left", "move_right"]
+const DIRECTIONS_MODIFIERS = [-1, 1]
+var previous_dir = [0, 0] # left, right
 var previous_dash = 0
 
 @onready var _hurt_sound = $SoundFx/HurtSound
@@ -41,20 +42,14 @@ func _physics_process(delta):
 		is_actively_jumping = false
 
 	# Dashing
-	if Input.is_action_just_pressed("move_left"):
-		var ts = Time.get_unix_time_from_system()
-		if ts - previous_dash > dash_cooldown:
-			if ts - previous_left < dash_window:
-				previous_dash = ts
-				hz_velocity = -3000
-			previous_left = ts
-	elif Input.is_action_just_pressed("move_right"):
-		var ts = Time.get_unix_time_from_system()
-		if ts - previous_dash > dash_cooldown:
-			if ts - previous_right < dash_window:
-				previous_dash = ts
-				hz_velocity = 3000
-			previous_right = ts
+	for dir in range(2):
+		if Input.is_action_just_pressed(DIRECTIONS[dir]):
+			if now - previous_dash > dash_cooldown:
+				if now - previous_dir[dir] < dash_window:
+					previous_dash = now
+					hz_velocity = DIRECTIONS_MODIFIERS[dir] * 3000
+				previous_dir[dir] = now
+
 	hz_velocity = (
 		velocity.x - (16 * delta * velocity.x)
 		if abs(velocity.x) > abs(hz_velocity)
