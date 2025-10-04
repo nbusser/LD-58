@@ -60,46 +60,67 @@ func _spawn_bullet(
 	_bullets.add_child(bullet)
 
 
-func _air_shotgun_routine() -> void:
-	# Maybe run
-	if Globals.coin_flip():
-		var run_direction: float = -1.0 if Globals.coin_flip() else 1.0
-		var run_speed: float = 200.0
-		var run_accel_duration: float = 0.2
-		var run_constant_speed_duration: float = randf_range(0.3, 0.6)
-		var run_decel_duration: float = 0.6
-		var should_stop_before_jump: bool = Globals.coin_flip() as bool
+func _run(
+	run_direction: float = 1.0,
+	run_speed: float = 200.0,
+	run_accel_duration: float = 0.2,
+	run_constant_speed_duration: float = 0.5,
+	run_decel_duration = 0.6,
+	wait_until_stopped: bool = false
+) -> void:
+	# Acceleration
+	await (
+		get_tree()
+		. create_tween()
+		. tween_property(_body, "velocity:x", run_direction * run_speed, run_accel_duration)
+		. set_trans(Tween.TRANS_LINEAR)
+		. set_ease(Tween.EASE_IN_OUT)
+		. finished
+	)
 
-		# Acceleration
+	# Constant and speed deceleration in a single coroutine
+	var run_constant_then_decelerate = func():
+		# Constant speed
+		await get_tree().create_timer(run_constant_speed_duration).timeout
+		# Deceleration
 		await (
 			get_tree()
 			. create_tween()
-			. tween_property(_body, "velocity:x", run_direction * run_speed, run_accel_duration)
+			. tween_property(_body, "velocity:x", 0.0, run_decel_duration)
 			. set_trans(Tween.TRANS_LINEAR)
 			. set_ease(Tween.EASE_IN_OUT)
 			. finished
 		)
 
-		# Constant and speed deceleration in a single coroutine
-		var run_constant_then_decelerate = func():
-			# Constant speed
-			await get_tree().create_timer(run_constant_speed_duration).timeout
-			# Deceleration
-			await (
-				get_tree()
-				. create_tween()
-				. tween_property(_body, "velocity:x", 0.0, run_decel_duration)
-				. set_trans(Tween.TRANS_LINEAR)
-				. set_ease(Tween.EASE_IN_OUT)
-				. finished
-			)
+	if wait_until_stopped:
+		# Wait to be totally stopped to jump
+		await run_constant_then_decelerate.call()
+	else:
+		# Starts jumping while running
+		run_constant_then_decelerate.call()
 
-		if should_stop_before_jump:
-			# Wait to be totally stopped to jump
-			await run_constant_then_decelerate.call()
-		else:
-			# Starts jumping while running
-			run_constant_then_decelerate.call()
+
+func _random_run():
+	var run_direction: float = -1.0 if Globals.coin_flip() else 1.0
+	var run_speed: float = 200.0
+	var run_accel_duration: float = 0.2
+	var run_constant_speed_duration: float = randf_range(0.3, 0.6)
+	var run_decel_duration: float = 0.6
+	var wait_until_stopped: bool = Globals.coin_flip() as bool
+	await _run(
+		run_direction,
+		run_speed,
+		run_accel_duration,
+		run_constant_speed_duration,
+		run_decel_duration,
+		wait_until_stopped
+	)
+
+
+func _air_shotgun_routine() -> void:
+	# Maybe run
+	if Globals.coin_flip():
+		await _random_run()
 
 	# Jump
 	_body.velocity.y = _JUMP_VELOCITY

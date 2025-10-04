@@ -32,9 +32,9 @@ var previous_down_dash = 0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var _hurt_sound = $SoundFx/HurtSound
-@onready var billionaire: CharacterBody2D = $"../Billionaire/BillionaireBody"
-@onready var punch_area: Area2D = $PunchArea
-@onready var hud: HUD = $"../../UI/HUD"
+@onready var _billionaire: CharacterBody2D = $"../Billionaire/BillionaireBody"
+@onready var _punch_area: Area2D = $PunchArea
+@onready var _hud: HUD = $"../../UI/HUD"
 
 
 func _ready() -> void:
@@ -79,7 +79,7 @@ func _physics_process(delta):
 					previous_dash = now
 					hz_velocity = DIRECTIONS_MODIFIERS[dir] * dash_speed
 				previous_dir[dir] = now
-	hud.set_dash_cooldown(100.*clamp((now - previous_dash)/dash_cooldown, 0., 100.))
+	_hud.set_dash_cooldown(100.*clamp((now - previous_dash)/dash_cooldown, 0., 100.))
 
 	# Down dash
 	if is_on_floor():
@@ -108,29 +108,28 @@ func _physics_process(delta):
 		else hz_velocity
 	)
 	velocity = Vector2(hz_velocity, velocity.y + vt_velocity + gravity * delta)
-	
+
 	# Billionaire knockback and head bounce
 	if is_in_billionaire:
 		if is_on_top_of_billionaire:
 			velocity.y = -billionaire_head_bounce
 		else:
-			var to_billionaire_n = (global_position - billionaire.global_position).normalized()
-			var knockback = billionaire_knockback*to_billionaire_n
+			var to_billionaire_n = (global_position - _billionaire.global_position).normalized()
+			var knockback = billionaire_knockback * to_billionaire_n
 			if sign(velocity.x) != sign(knockback.x):
 				velocity.x = 0
 			velocity += Vector2(
-				knockback.x if abs(knockback.x) > 100 else sign(knockback.x)*100,
-				knockback.y
+				knockback.x if abs(knockback.x) > 100 else sign(knockback.x) * 100, knockback.y
 			)
 	
 	velocity = clamp(velocity, Vector2(-3000, -600), Vector2(3000, 600))
 	
 	move_and_slide()
-	
+
 	if velocity.x > 0:
-		punch_area.scale.x = 1.0
+		_punch_area.scale.x = 1.0
 	elif velocity.x < 0:
-		punch_area.scale.x = -1.0
+		_punch_area.scale.x = -1.0
 
 
 func get_hurt():
@@ -145,14 +144,18 @@ func _on_punch_area_area_entered(area):
 	if area.is_in_group("billionaire"):
 		emit_signal("billionaire_punched", punch_damage)
 
+
 func _on_soft_hitbox_body_entered(_body: Node2D) -> void:
 	is_in_billionaire = true
+
 
 func _on_soft_hitbox_body_exited(_body: Node2D) -> void:
 	is_in_billionaire = false
 
+
 func _on_feet_body_entered(_body: Node2D) -> void:
 	is_on_top_of_billionaire = true
+
 
 func _on_feet_body_exited(_body: Node2D) -> void:
 	is_on_top_of_billionaire = false
