@@ -143,6 +143,7 @@ func _air_shotgun_routine() -> void:
 		await _random_run()
 
 	# Jump
+	$BillionaireBody/Sprite2D.play("jump")
 	_body.velocity.y = _JUMP_VELOCITY
 	while _body.velocity.y < 0:
 		await get_tree().process_frame
@@ -291,3 +292,7 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 		_knockback_velocity.y = knockback_direction.y * knockback_force_y
 
 	knockback_routine.call()
+
+
+func _on_sprite_2d_animation_finished() -> void:
+	$BillionaireBody/Sprite2D.play("default")

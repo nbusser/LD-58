@@ -51,7 +51,6 @@ shape = SubResource("RectangleShape2D_qa6ra")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="BillionaireBody"]
 scale = Vector2(0.064986736, 0.064986736)
 sprite_frames = ExtResource("2_d2xww")
-frame_progress = 0.5187279
 
 [node name="Hitbox" type="Area2D" parent="BillionaireBody" groups=["billionaire"]]
 collision_layer = 4
@@ -193,3 +192,4 @@ sounds = Array[AudioStream]([ExtResource("11_d2xww")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
+[connection signal="animation_finished" from="BillionaireBody/Sprite2D" to="." method="_on_sprite_2d_animation_finished"]
