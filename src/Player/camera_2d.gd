@@ -95,7 +95,6 @@ func _process(delta):
 		var zoom_level = clamp(1.0 - player.velocity.length() / 400 + .3, .3, 1.8)
 		zoom_level += 2.4
 		zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 2 * delta)
-		var rect = get_camera_rect_shrunk_a_bit()
 		var col_pt = collision(get_camera_rect_shrunk_a_bit(), billionaire.global_position)
 		if col_pt != null:
 			boss_indicator.visible = true
