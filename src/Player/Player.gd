@@ -50,8 +50,11 @@ var previous_down_dash = 0
 var previous_melee = 0
 var previous_head_bounce = 0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var current_nb_jumps = 0
+
+var current_nb_jumps_left = 2
 var max_nb_jumps = 2
+
+var has_extra_jump_on_air_strike = true
 
 var prev_velocity = Vector2(0, 0)
 
@@ -76,7 +79,7 @@ func _physics_process(delta):
 	var now = Time.get_unix_time_from_system()
 
 	if is_on_floor():
-		current_nb_jumps = 0
+		current_nb_jumps_left = max_nb_jumps
 
 	if _can_move():
 		# Horizontal movement
@@ -89,12 +92,12 @@ func _physics_process(delta):
 		hz_velocity = input_direction * (ground_speed if self.is_on_floor() else air_speed)
 		if (
 			not is_keep_pressing_jump_button  # No automatic jump when space is kept pressed
-			and current_nb_jumps < max_nb_jumps  # As long as we have remaining jumps
+			and current_nb_jumps_left > 0  # As long as we have remaining jumps
 			and Input.is_action_pressed("jump")
 		):
 			# Cleans up gravity
 			velocity.y = 0
-			current_nb_jumps += 1
+			current_nb_jumps_left -= 1
 			is_actively_jumping = true
 			jump_load_start = now
 
@@ -285,3 +288,14 @@ func _on_feet_body_entered(_body: Node2D) -> void:
 
 func _on_feet_body_exited(_body: Node2D) -> void:
 	is_on_top_of_billionaire = false
+
+
+# When the billiognaire is punched from the air, we grant an extra jump to the player (it they are out of jumps)
+func _on_attack_manager_punch_has_connected(attack: AttackManager.Attack) -> void:
+	emit_signal("billionaire_punched", melee_damage)
+	if (
+		attack == AttackManager.Attack.AIR
+		and has_extra_jump_on_air_strike
+		and current_nb_jumps_left == 0
+	):
+		current_nb_jumps_left += 1

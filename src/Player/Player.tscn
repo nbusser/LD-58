@@ -103,6 +103,7 @@ collision_mask = 34
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SmashArea"]
 shape = SubResource("CircleShape2D_dd31a")
 
+[connection signal="punch_has_connected" from="AttackManager" to="." method="_on_attack_manager_punch_has_connected"]
 [connection signal="animation_changed" from="Sprite" to="AttackManager" method="_on_sprite_animation_changed"]
 [connection signal="animation_finished" from="Sprite" to="AttackManager" method="_on_sprite_animation_finished"]
 [connection signal="body_entered" from="Feet" to="." method="_on_feet_body_entered"]

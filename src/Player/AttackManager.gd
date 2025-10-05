@@ -2,6 +2,8 @@ class_name AttackManager
 
 extends Node
 
+signal punch_has_connected(attack: Attack)
+
 # Logic state machine:
 # Not attacking:
 #	- any other animation is playing
@@ -126,7 +128,7 @@ func try_attack() -> bool:
 
 
 func _punch_billionaire() -> void:
-	_player.emit_signal("billionaire_punched", _player.melee_damage)
+	punch_has_connected.emit(_current_attack)
 	_billionaire_was_punched_in_current_attack = true
 	$PunchSound.play_sound()
 
