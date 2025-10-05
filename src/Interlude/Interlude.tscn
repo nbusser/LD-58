@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://13ldbpvp21wo"]
+[gd_scene load_steps=5 format=3 uid="uid://13ldbpvp21wo"]
 
 [ext_resource type="SpriteFrames" uid="uid://cr415b4hp2y1r" path="res://src/Player/PlayerAnimations.tres" id="1_kq2do"]
 [ext_resource type="Script" uid="uid://casgxbyvs3j7c" path="res://src/Interlude/interlude.gd" id="1_tccgx"]
+[ext_resource type="PackedScene" uid="uid://df1s8j1ir7sb" path="res://src/Interlude/statement_line.tscn" id="2_esflg"]
 [ext_resource type="PackedScene" uid="uid://bw6igwix0v8lt" path="res://src/UpgradeSelector/upgrade_selector.tscn" id="3_o8ror"]
 
 [node name="Interlude" type="Control"]
@@ -15,22 +16,106 @@ script = ExtResource("1_tccgx")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Panel" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_left = 527.0
-offset_top = 284.0
-offset_right = 683.0
-offset_bottom = 334.0
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel"]
 layout_mode = 2
-text = "Ct cool lol, je l'ai bien niké"
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+text = "STATEMENT OF ACCOUNT"
 horizontal_alignment = 1
 
-[node name="ClickToContinue" type="Label" parent="Panel/VBoxContainer"]
+[node name="SubtitleLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Fun subtitle"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="StatementLine" type="HBoxContainer" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ITEM"
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="UnitValueLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "UNIT VALUE"
+horizontal_alignment = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="QuantityLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "QTY"
+horizontal_alignment = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="ValueLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "VALUE"
+horizontal_alignment = 2
+
+[node name="StatementLinesContainer" type="VBoxContainer" parent="CenterContainer/Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="StatementLine" parent="CenterContainer/Panel/VBoxContainer/StatementLinesContainer" instance=ExtResource("2_esflg")]
+layout_mode = 2
+
+[node name="StatementLine2" type="HBoxContainer" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatementLine2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TOTAL"
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer/StatementLine2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="TotalValueLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatementLine2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "$123"
+horizontal_alignment = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ClickToContinue" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
 layout_mode = 2
 text = "< Click to continue >"
 horizontal_alignment = 1
