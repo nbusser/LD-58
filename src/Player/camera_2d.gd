@@ -17,6 +17,7 @@ var noise_i: float = 0.0
 var shake_strength: float = 0.0
 
 @onready var player = $"../Player"
+@onready var billionaire = $"../Billionaire/BillionaireBody"
 @onready var rand = RandomNumberGenerator.new()
 @onready var noise = FastNoiseLite.new()
 
@@ -47,10 +48,16 @@ func get_noise_offset(delta: float) -> Vector2:
 func _process(delta):
 	# TODO the code below is framerate dependent, see
 	# https://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/
-	position = lerp(position, player.position + Vector2(0, -35), 6 * delta)
-	var zoom_level = clamp(1.0 - player.velocity.length() / 400 + .3, .3, 1.8)
-	zoom_level += 2.4
-	zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 2 * delta)
+	var player_billionaire_dist = billionaire.global_position - player.global_position
+	if player_billionaire_dist.length() < 200:
+		global_position = lerp(position, billionaire.global_position - player_billionaire_dist/2, 6 * delta)
+		var zoom_level = 2.4 - clamp(player_billionaire_dist.length()/200, 0., 1.)
+		zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 2 * delta)
+	else:
+		position = lerp(position, player.position + Vector2(0, -35), 6 * delta)
+		var zoom_level = clamp(1.0 - player.velocity.length() / 400 + .3, .3, 1.8)
+		zoom_level += 2.4
+		zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 2 * delta)
 
 	# Fade out the intensity over time
 	shake_strength = lerp(shake_strength, 0., shake_decay_rate * delta)
