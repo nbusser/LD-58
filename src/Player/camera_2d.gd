@@ -22,6 +22,11 @@ var shake_strength: float = 0.0
 @onready var rand = RandomNumberGenerator.new()
 @onready var noise = FastNoiseLite.new()
 
+@onready var ground = $"../Borders/Ground/CollisionShape2D"
+@onready var ceiling = $"../Borders/Ceiling/CollisionShape2D"
+@onready var wall_l = $"../Borders/WallL/CollisionShape2D"
+@onready var wall_r = $"../Borders/WallR/CollisionShape2D"
+
 
 func _ready() -> void:
 	rand.randomize()
@@ -30,7 +35,11 @@ func _ready() -> void:
 	# Period affects how quickly the noise changes values
 	noise.frequency = 0.2
 	apply_noise_shake()
-
+	limit_left = wall_l.global_position.x
+	limit_right = wall_r.global_position.x
+	limit_top = ceiling.global_position.y
+	limit_bottom = ground.global_position.y + 25
+	print(limit_bottom, " ", limit_top, " ", limit_left, " ", limit_right, " ")
 
 func apply_noise_shake() -> void:
 	shake_strength = noise_shake_strength
