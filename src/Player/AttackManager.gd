@@ -43,13 +43,13 @@ class AttackAnimation:
 const MAX_CANCELS = 3
 
 # If billionaire is hit, allows an attack cancel
-var _billionaire_was_punched_in_current_attack = false
-var _cancel_counter = 0
+var _billionaire_was_punched_in_current_attack: bool = false
+var _cancel_counter: int = 0
 
-var _billionaire_in_melee_reach = false
+var _billionaire_in_melee_reach: bool = false
 
-var _attack_state = AttackState.NOT_ATTACKING
-var _current_attack = Attack.UNSPECIFIED
+var _attack_state: AttackState = AttackState.NOT_ATTACKING
+var _current_attack: Attack = Attack.UNSPECIFIED
 
 # Associates an attack type with its animation labels
 var _attacks_dict: Dictionary[Attack, AttackAnimation] = {
@@ -57,8 +57,8 @@ var _attacks_dict: Dictionary[Attack, AttackAnimation] = {
 	Attack.AIR: AttackAnimation.new("air_attack_windup", "air_attack_active", "air_attack_recover"),
 }
 
-@onready var _player = $".."
-@onready var _sprite = $"../Sprite"
+@onready var _player: Player = $".."
+@onready var _sprite: AnimatedSprite2D = $"../Sprite"
 
 
 # Billionaire was hit in current attack and we did not reached max combo
@@ -70,7 +70,7 @@ func can_attack() -> bool:
 	return _attack_state == AttackState.NOT_ATTACKING or _can_cancel_current_attack()
 
 
-func is_attacking():
+func is_attacking() -> bool:
 	return _attack_state != AttackState.NOT_ATTACKING
 
 
@@ -90,7 +90,7 @@ func _process(_delta: float) -> void:
 		_attack_finished_cleanup()
 
 
-func _attack_finished_cleanup():
+func _attack_finished_cleanup() -> void:
 	_attack_state = AttackState.NOT_ATTACKING
 	_current_attack = Attack.UNSPECIFIED
 	_billionaire_was_punched_in_current_attack = false
@@ -98,7 +98,7 @@ func _attack_finished_cleanup():
 	_sprite.play("default")
 
 
-func _attack():
+func _attack() -> void:
 	# Do NOT change attack style during combo
 	# i.e, GROUND attack, hit, jump, cancel attack mid-air -> will throw another GROUND attack
 	if _cancel_counter == 0:
@@ -117,7 +117,7 @@ func try_attack() -> bool:
 	return false
 
 
-func _punch_billionaire():
+func _punch_billionaire() -> void:
 	_player.emit_signal("billionaire_punched", _player.melee_damage)
 	_billionaire_was_punched_in_current_attack = true
 	$PunchSound.play_sound()
