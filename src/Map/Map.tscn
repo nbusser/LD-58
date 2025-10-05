@@ -18,6 +18,7 @@ texture = ExtResource("1_e037b")
 position = Vector2(0, -67)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 1)
 script = ExtResource("3_13lp4")
 
 [node name="Borders" type="Node2D" parent="."]
