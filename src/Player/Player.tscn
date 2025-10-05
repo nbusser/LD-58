@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dss1w1wv5xvq1"]
+[gd_scene load_steps=12 format=3 uid="uid://dss1w1wv5xvq1"]
 
 [ext_resource type="Script" uid="uid://ty44l5afcwx4" path="res://src/Player/Player.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://cehi4sgm55qe3" path="res://assets/sprites/player/idle.png" id="2_dd31a"]
@@ -18,16 +18,19 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="1"]
-size = Vector2(126, 128)
+size = Vector2(29.166615, 79.16651)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dd31a"]
-size = Vector2(68.33322, 20)
+size = Vector2(30, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_31ddy"]
+size = Vector2(12.499975, 62.499878)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gilji"]
-size = Vector2(126.66644, 37.94113)
+size = Vector2(55.62953, 11.239515)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dd31a"]
-radius = 750.07
+radius = 400.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 scale = Vector2(0.24000047, 0.24000047)
@@ -35,27 +38,33 @@ collision_layer = 16
 script = ExtResource("2")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -20.833292)
 sprite_frames = SubResource("2")
+offset = Vector2(0, -20.833288)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.083331, -39.583256)
 shape = SubResource("1")
 
 [node name="Feet" type="Area2D" parent="."]
+position = Vector2(0, -54.166557)
 collision_layer = 0
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Feet"]
-position = Vector2(0, 59.833344)
+position = Vector2(0, 51.5)
 scale = Vector2(1.4, 1)
 shape = SubResource("RectangleShape2D_dd31a")
 debug_color = Color(0.7114656, 0.48113203, 0.18397781, 0.41960785)
 
 [node name="SoftHitbox" type="Area2D" parent="."]
+position = Vector2(0, -41.66658)
 collision_layer = 0
 collision_mask = 34
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SoftHitbox"]
-shape = SubResource("1")
+position = Vector2(-2.0833292, 10.416641)
+shape = SubResource("RectangleShape2D_31ddy")
 
 [node name="SoundFx" type="Node" parent="."]
 
@@ -69,18 +78,20 @@ wait_time = 0.1
 autostart = true
 
 [node name="PunchArea" type="Area2D" parent="."]
+position = Vector2(0, -41.66658)
 collision_layer = 0
 collision_mask = 48
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PunchArea"]
-position = Vector2(112.499756, 0)
+position = Vector2(41.66658, 2.0833244)
 rotation = 1.5707964
-scale = Vector2(1.4231023, 7.414305)
+scale = Vector2(1.4231023, 7.414303)
 shape = SubResource("RectangleShape2D_gilji")
 debug_color = Color(0.770535, 0.29701513, 0.8292172, 0.41960785)
 
 [node name="SmashArea" type="Area2D" parent="."]
+position = Vector2(0, -41.66658)
 collision_layer = 0
 collision_mask = 34
 

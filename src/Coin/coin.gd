@@ -14,4 +14,4 @@ func _on_despawn_timer_timeout() -> void:
 
 
 func propulse_up(dist_proportion):
-	apply_impulse(dist_proportion * Vector2(0, -250))
+	apply_impulse(dist_proportion * Vector2(0, -150))
