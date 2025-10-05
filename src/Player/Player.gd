@@ -50,6 +50,7 @@ var previous_dir = [0, 0]  # left, right
 var previous_dash = 0
 var previous_down_dash = 0
 var previous_melee = 0
+var previous_head_bounce = 0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var prev_velocity = Vector2(0, 0)
@@ -134,7 +135,8 @@ func _physics_process(delta):
 			dash_slow_mo()
 		if is_down_dashing && now - previous_down_dash > down_dash_duration:
 			is_down_dashing = false
-			velocity.y -= down_dash_speed
+			if velocity.y > 0:
+				velocity.y -= min(down_dash_speed/2., velocity.y)
 
 	# Wall sticking behavior
 	if is_on_wall():
@@ -158,7 +160,13 @@ func _physics_process(delta):
 	# Billionaire knockback and head bounce
 	if is_in_billionaire:
 		if is_on_top_of_billionaire:
-			velocity.y = -billionaire_head_bounce
+			if now - previous_head_bounce > .1:
+				if velocity.y > 0:
+					velocity.y = -velocity.y/6.
+				else:
+					velocity.y = 0
+				velocity.y -= billionaire_head_bounce
+				previous_head_bounce = now
 		else:
 			var to_billionaire_n = (global_position - _billionaire.global_position).normalized()
 			var knockback = billionaire_knockback * to_billionaire_n
@@ -181,6 +189,7 @@ func _physics_process(delta):
 				body.propulse_up(
 					1.0 - ((body.global_position - global_position).length() / 100.) ** 2
 				)
+
 	prev_velocity = velocity
 	move_and_slide()
 
