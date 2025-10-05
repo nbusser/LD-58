@@ -15,6 +15,11 @@ position = Vector2(-20.499998, -265.99997)
 scale = Vector2(0.8834635, 0.70117193)
 texture = ExtResource("1_e037b")
 
+[node name="Billionaire" parent="." instance=ExtResource("3_e037b")]
+position = Vector2(76, -69)
+idle_range_seconds = null
+coins_per_damage = null
+
 [node name="Player" parent="." instance=ExtResource("2")]
 position = Vector2(-184, -67)
 
@@ -95,11 +100,6 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBorders/WallR"]
 position = Vector2(0, -40)
 shape = SubResource("WorldBoundaryShape2D_wqubw")
-
-[node name="Billionaire" parent="." instance=ExtResource("3_e037b")]
-position = Vector2(76, -69)
-idle_range_seconds = null
-coins_per_damage = null
 
 [node name="Coins" type="Node2D" parent="."]
 
