@@ -280,19 +280,20 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 	glow_routine.call()
 
 	var knockback_routine = func():
-		var min_distance = 15.0
-		var max_distance = 35.0
+		var min_distance = 100.0
+		var max_distance = 200.0
 
 		var distance = _body.global_position.distance_to(_player.global_position)
+		print(distance)
 		distance = clamp(distance, min_distance, max_distance)
 		var t = (distance - min_distance) / (max_distance - min_distance)
 
-		var min_force_x = 70.0
-		var max_force_x = 200.0
+		var min_force_x = 100.0
+		var max_force_x = 400.0
 		var knockback_force_x = lerp(max_force_x, min_force_x, t)
 
-		var min_force_y = 10.0
-		var max_force_y = 60.0
+		var min_force_y = 50.0
+		var max_force_y = 80.0
 		var knockback_force_y = lerp(max_force_y, min_force_y, t)
 
 		var knockback_direction = (_body.global_position - _player.global_position).normalized()
