@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=30 format=3 uid="uid://cr415b4hp2y1r"]
+[gd_resource type="SpriteFrames" load_steps=31 format=3 uid="uid://cr415b4hp2y1r"]
 
 [ext_resource type="Texture2D" uid="uid://b4m1dths42sq0" path="res://assets/sprites/player/attack.png" id="1_eao7d"]
 [ext_resource type="Texture2D" uid="uid://12sud46mogw6" path="res://assets/sprites/player/air_attack.png" id="1_njq6p"]
@@ -30,13 +30,17 @@ region = Rect2(384, 0, 128, 96)
 atlas = ExtResource("1_eao7d")
 region = Rect2(512, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_480to"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_uq5nc"]
 atlas = ExtResource("1_eao7d")
 region = Rect2(640, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_p48pj"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_480to"]
 atlas = ExtResource("1_eao7d")
 region = Rect2(768, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p48pj"]
+atlas = ExtResource("1_eao7d")
+region = Rect2(896, 0, 128, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eao7d"]
 atlas = ExtResource("1_eao7d")
@@ -137,6 +141,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_845qb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uq5nc")
 }],
 "loop": false,
 "name": &"attack_active",
