@@ -21,7 +21,7 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var dash_slow_time = 0.3
 # Vertical dash
 @export var down_dash_speed = 1500
-@export var down_dash_duration = 0.08
+@export var down_dash_duration = 0.12
 # Jumps
 @export var max_input_jump_time = .4
 @export var jump_force = 7000
@@ -201,11 +201,11 @@ func _physics_process(delta):
 		for body in _smash_area.get_overlapping_bodies():
 			if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.BILLIONAIRE]):
 				body.velocity.y -= (
-					200 * (1.0 - ((body.global_position - global_position).length() / 100.) ** 2)
+					200 * (1.0 - ((body.global_position - global_position).length() / 200.) ** 2)
 				)
 			elif body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.COIN]):
 				body.propulse_up(
-					1.0 - ((body.global_position - global_position).length() / 100.) ** 2
+					1.0 - ((body.global_position - global_position).length() / 200.) ** 3
 				)
 
 	prev_velocity = velocity

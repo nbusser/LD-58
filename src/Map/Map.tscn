@@ -16,7 +16,7 @@ scale = Vector2(0.8834635, 0.70117193)
 texture = ExtResource("1_e037b")
 
 [node name="Player" parent="." instance=ExtResource("2")]
-position = Vector2(0, -67)
+position = Vector2(-184, -67)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("3_13lp4")

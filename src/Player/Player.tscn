@@ -21,8 +21,9 @@ size = Vector2(12.499975, 62.499878)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gilji"]
 size = Vector2(73.19675, 15.735322)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_dd31a"]
-radius = 654.58
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4rl4y"]
+radius = 18.0
+height = 614.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 16
@@ -101,11 +102,13 @@ debug_color = Color(0.770535, 0.29701513, 0.8292172, 0.41960785)
 
 [node name="SmashArea" type="Area2D" parent="."]
 position = Vector2(0, -41.66658)
+rotation = -1.5707964
 collision_layer = 0
 collision_mask = 34
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SmashArea"]
-shape = SubResource("CircleShape2D_dd31a")
+position = Vector2(-39.66658, -2.0000017)
+shape = SubResource("CapsuleShape2D_4rl4y")
 
 [connection signal="punch_has_connected" from="AttackManager" to="." method="_on_attack_manager_punch_has_connected"]
 [connection signal="animation_changed" from="Sprite" to="AttackManager" method="_on_sprite_animation_changed"]
