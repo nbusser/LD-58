@@ -70,7 +70,7 @@ func _pick_cards(nb_cards: int) -> Array[UpgradeCardData]:
 	var cards: Array[UpgradeCardData] = []
 
 	var legal_card_pool: Array[UpgradeCardData] = _card_pool.filter(
-		func(card: UpgradeCardData) -> bool: return PlayerState.is_upgrade_applicable(card)
+		func(card: UpgradeCardData) -> bool: return GameState.is_upgrade_applicable(card)
 	)
 
 	var rng = RandomNumberGenerator.new()
@@ -97,7 +97,7 @@ func _ready():
 
 func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
 	print("Selected card index: %d" % index)
-	var applied = PlayerState.apply_upgrade(card_data)
+	var applied = GameState.apply_upgrade(card_data)
 	if not applied:
 		return
 	selectable_cards.pop_at(index)
