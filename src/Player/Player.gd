@@ -57,6 +57,7 @@ var max_nb_jumps = 2
 var has_extra_jump_on_air_strike = true
 
 var prev_velocity = Vector2(0, 0)
+var play_jump_start_ts = 0
 
 @onready var _hurt_sound = $SoundFx/HurtSound
 @onready var _billionaire: CharacterBody2D = $"../Billionaire/BillionaireBody"
@@ -113,6 +114,9 @@ func _physics_process(delta):
 				(1 - clamp(time_since_jump, 0, max_input_jump_time) / max_input_jump_time) ** 4
 			)
 			vt_velocity = -jump_force * delta * timer_proportion
+			# Show animation for double jump
+			if !is_on_floor():
+				play_jump_start_ts = now
 		elif (
 			is_actively_jumping
 			&& (time_since_jump > max_input_jump_time || Input.is_action_just_released("jump"))
@@ -229,12 +233,13 @@ func _physics_process(delta):
 				$Sprite.play("walk")
 		else:
 			# Jump animations
-			if velocity.y <= 0:
-				$Sprite.play("jump_start")
-			elif velocity.y < 140:
-				$Sprite.play("jump_middle")
-			else:
+			if velocity.y >= 140 || now - play_jump_start_ts < .05:
 				$Sprite.play("jump_end")
+			elif velocity.y <= 0:
+				$Sprite.play("jump_start")
+			else:
+				$Sprite.play("jump_middle")
+
 
 
 func dash_slow_mo():
