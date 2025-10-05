@@ -3,7 +3,6 @@ class_name Level
 extends Node
 
 signal billionaire_hit(amount: int, remaining_net_worth: int)
-signal billionaire_punched(damage: int)
 
 var level_state: LevelState
 
@@ -18,7 +17,7 @@ func _ready():
 	hud.init(level_state)
 
 	if is_instance_valid(_player):
-		billionaire_punched.connect(_on_player_billionaire_punched)
+		_player.billionaire_punched.connect(_on_player_billionaire_punched)
 
 	if is_instance_valid(_billionaire):
 		billionaire_hit.connect(_billionaire.on_level_billionaire_hit)

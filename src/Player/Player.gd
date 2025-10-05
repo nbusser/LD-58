@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+signal billionaire_punched(damage: int)
+
 enum Direction { LEFT = -1, RIGHT = 1 }
 
 const DIRECTIONS = ["move_left", "move_right"]
