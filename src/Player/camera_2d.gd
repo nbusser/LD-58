@@ -10,9 +10,13 @@ extends Camera2D
 # Multiplier for lerping the shake strength to zero
 @export var shake_decay_rate: float = 5.0
 
+@export var noise_bg_shake_speed = 2
+@export var noise_bg_shake_strength = 120.0
+
 # Used to keep track of where we are in the noise
 # so that we can smoothly move through it
 var noise_i: float = 0.0
+var noise_bg_i: float = 0.0
 
 var shake_strength: float = 0.0
 
@@ -21,6 +25,7 @@ var shake_strength: float = 0.0
 @onready var boss_indicator = $"../BossIndicator"
 @onready var rand = RandomNumberGenerator.new()
 @onready var noise = FastNoiseLite.new()
+@onready var noise_bg = FastNoiseLite.new()
 
 @onready var ground = $"../Borders/Ground/CollisionShape2D"
 @onready var ceiling = $"../Borders/Ceiling/CollisionShape2D"
@@ -32,6 +37,7 @@ func _ready() -> void:
 	rand.randomize()
 	# Randomize the generated noise
 	noise.seed = rand.randi()
+	noise_bg.seed = rand.randi()
 	# Period affects how quickly the noise changes values
 	noise.frequency = 0.2
 	apply_noise_shake()
@@ -42,19 +48,17 @@ func _ready() -> void:
 
 
 func apply_noise_shake() -> void:
-	noise_shake_speed = 30.0
-	noise_shake_strength = 60.0
-	shake_decay_rate = 5.0
 	shake_strength = noise_shake_strength
 
 
 func get_noise_offset(delta: float) -> Vector2:
 	noise_i += delta * noise_shake_speed
+	noise_bg_i += delta * noise_bg_shake_speed
 	# Set the x values of each call to 'get_noise_2d' to a different value
 	# so that our x and y vectors will be reading from unrelated areas of noise
 	return Vector2(
-		noise.get_noise_2d(1, noise_i) * shake_strength,
-		noise.get_noise_2d(100, noise_i) * shake_strength
+		noise.get_noise_2d(1, noise_i) * shake_strength + noise_bg.get_noise_2d(1, noise_bg_i) * noise_bg_shake_strength,
+		noise.get_noise_2d(100, noise_i) * shake_strength + noise_bg.get_noise_2d(100, noise_bg_i) * noise_bg_shake_strength
 	)
 
 
