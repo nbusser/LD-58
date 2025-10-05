@@ -289,11 +289,11 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 		var t = (distance - min_distance) / (max_distance - min_distance)
 
 		var min_force_x = 100.0
-		var max_force_x = 400.0
+		var max_force_x = 600.0
 		var knockback_force_x = lerp(max_force_x, min_force_x, t)
 
-		var min_force_y = 50.0
-		var max_force_y = 80.0
+		var min_force_y = 45.0
+		var max_force_y = 75.0
 		var knockback_force_y = lerp(max_force_y, min_force_y, t)
 
 		var knockback_direction = (_body.global_position - _player.global_position).normalized()
