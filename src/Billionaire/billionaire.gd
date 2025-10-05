@@ -7,7 +7,7 @@ const _GRAVITY: float = 900.0
 
 # Interval range between two attacks, in seconds
 @export var idle_range_seconds: Vector2 = Vector2(0.5, 1.0)
-@export var coins_per_damage: float = 0.05
+@export var coins_per_damage: float = 0.1
 
 var _is_gravity_enabled: bool = true
 var _run_velocity: Vector2 = Vector2.ZERO
@@ -269,7 +269,11 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 				(
 					[
 						Collectible.CollectibleType.DOLLAR_COIN,
-						Collectible.CollectibleType.DOLLAR_BILL
+						Collectible.CollectibleType.DOLLAR_COIN,
+						Collectible.CollectibleType.DOLLAR_COIN,
+						Collectible.CollectibleType.DOLLAR_BILL,
+						Collectible.CollectibleType.DOLLAR_BILL,
+						Collectible.CollectibleType.BUNDLE_OF_CASH
 					]
 					. pick_random()
 				)

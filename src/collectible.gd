@@ -51,5 +51,7 @@ func get_collectible_texture(collectible_type: CollectibleType) -> Texture2D:
 			return preload("res://assets/sprites/collectibles/dollar_coin.png")
 		CollectibleType.DOLLAR_BILL:
 			return preload("res://assets/sprites/collectibles/dollar_bill.png")
+		CollectibleType.BUNDLE_OF_CASH:
+			return preload("res://assets/sprites/collectibles/dollar_wad.png")
 		_:
 			return preload("res://assets/sprites/icon.png")
