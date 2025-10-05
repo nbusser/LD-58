@@ -2,9 +2,9 @@ class_name AttackManager
 
 extends Node
 
-enum MeleeState { NOT_ATTACKING, WINDUP, ACTIVE, RECOVER }
+enum MeleeState { NOT_ATTACKING, WINDUP, ACTIVE, RECOVER, FINISHED }
 
-enum Attack { GROUND = 0, AIR = 1 }
+enum Attack { UNSPECIFIED, GROUND, AIR }
 
 
 class AttackAnimation:
@@ -29,7 +29,7 @@ var _attacks_dict: Dictionary[Attack, AttackAnimation] = {
 	Attack.AIR: AttackAnimation.new("air_attack_windup", "air_attack_active", "air_attack_recover"),
 }
 
-var _current_attack: AttackAnimation = null
+var _current_attack: Attack
 
 @onready var _player = $".."
 @onready var _sprite = $"../Sprite"
@@ -44,12 +44,17 @@ func can_attack() -> bool:
 
 
 func _process(_delta: float) -> void:
+	if _current_attack == Attack.AIR and _player.is_on_floor():
+		_melee_state = MeleeState.FINISHED
+
 	if _melee_state == MeleeState.WINDUP:
-		_sprite.play(_current_attack.windup)
+		_sprite.play(_attacks_dict[_current_attack].windup)
 	elif _melee_state == MeleeState.ACTIVE:
-		_sprite.play(_current_attack.active)
+		_sprite.play(_attacks_dict[_current_attack].active)
 	elif _melee_state == MeleeState.RECOVER:
-		_sprite.play(_current_attack.recover)
+		_sprite.play(_attacks_dict[_current_attack].recover)
+	elif _melee_state == MeleeState.FINISHED:
+		_attack_finished_cleanup()
 
 
 func _attack_finished_cleanup():
@@ -62,7 +67,7 @@ func _attack_finished_cleanup():
 func _attack():
 	# Do NOT change attack style during combo
 	if _combo_counter == 0:
-		_current_attack = _attacks_dict[Attack.GROUND if _player.is_on_floor() else Attack.AIR]
+		_current_attack = Attack.GROUND if _player.is_on_floor() else Attack.AIR
 
 	_billionaire_was_punched_in_current_attack = false
 	_combo_counter += 1
@@ -95,21 +100,26 @@ func is_attacking():
 
 
 func _on_sprite_animation_changed() -> void:
+	if not is_attacking:
+		return
 	if (
-		_sprite.animation != _current_attack.windup
-		and _sprite.animation != _current_attack.active
-		and _sprite.animation != _current_attack.recover
+		_sprite.animation != _attacks_dict[_current_attack].windup
+		and _sprite.animation != _attacks_dict[_current_attack].active
+		and _sprite.animation != _attacks_dict[_current_attack].recover
 	):
 		_melee_state = MeleeState.NOT_ATTACKING
 
 
 func _on_sprite_animation_finished() -> void:
-	if _sprite.animation == _current_attack.windup:
+	if not is_attacking:
+		return
+
+	if _sprite.animation == _attacks_dict[_current_attack].windup:
 		_melee_state = MeleeState.ACTIVE
-	elif _sprite.animation == _current_attack.active:
+	elif _sprite.animation == _attacks_dict[_current_attack].active:
 		_melee_state = MeleeState.RECOVER
-	elif _sprite.animation == _current_attack.recover:
-		_attack_finished_cleanup()
+	elif _sprite.animation == _attacks_dict[_current_attack].recover:
+		_melee_state = MeleeState.FINISHED
 	_try_punch_billionaire()
 
 
