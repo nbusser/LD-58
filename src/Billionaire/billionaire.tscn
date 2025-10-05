@@ -1,9 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=19 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="SpriteFrames" uid="uid://cwedgk16x5d4h" path="res://src/Billionaire/BillionaireAnimations.tres" id="2_d2xww"]
 [ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="3_bqgkp"]
-[ext_resource type="PackedScene" path="res://src/Billionaire/LaserSweep.tscn" id="4_tafn6"]
 [ext_resource type="AudioStream" uid="uid://ckvwc0wlnic18" path="res://assets/sounds/rain.wav" id="6_7xygs"]
 [ext_resource type="AudioStream" uid="uid://dj4nwmkxwucqt" path="res://assets/sounds/jump_cone_shoot.wav" id="6_qa6ra"]
 [ext_resource type="PackedScene" uid="uid://c6gdmgoo58hb7" path="res://src/Billionaire/AttackPattern.tscn" id="7_y3yri"]
@@ -206,18 +205,21 @@ script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("6_7xygs")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
+[node name="LaserSweep" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
+attack_name = "LaserSweep"
+net_worth_percent_threshold = 50.0
+cooldown = 8.0
+
+[node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/LaserSweep"]
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("6_7xygs")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
 [node name="LaserWarning" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "LaserWarning"
 net_worth_percent_threshold = 80.0
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/LaserWarning"]
-script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("6_7xygs")])
-metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
-
-[node name="LaserSweep" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
-
-[node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/LaserSweep"]
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("6_7xygs")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
