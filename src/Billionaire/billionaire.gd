@@ -11,6 +11,8 @@ const _GRAVITY: float = 600.0
 var health = 100
 
 var _is_gravity_enabled: bool = true
+var _run_velocity: Vector2 = Vector2.ZERO
+var _knockback_velocity: Vector2 = Vector2.ZERO
 
 var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
 
@@ -52,6 +54,13 @@ func _physics_process(delta: float) -> void:
 	if _is_gravity_enabled:
 		_body.velocity.y += _GRAVITY * delta
 
+	var knockback_decay = Vector2(700.0, 1000.0)
+	_knockback_velocity.x = move_toward(_knockback_velocity.x, 0.0, knockback_decay.x * delta)
+	_knockback_velocity.y = move_toward(_knockback_velocity.y, 0.0, knockback_decay.y * delta)
+
+	_body.velocity.x = _run_velocity.x + _knockback_velocity.x
+	_body.velocity.y += _knockback_velocity.y
+
 	_body.move_and_slide()
 
 
@@ -78,7 +87,7 @@ func _run(
 	await (
 		get_tree()
 		. create_tween()
-		. tween_property(_body, "velocity:x", run_direction * run_speed, run_accel_duration)
+		. tween_property(self, "_run_velocity:x", run_direction * run_speed, run_accel_duration)
 		. set_trans(Tween.TRANS_LINEAR)
 		. set_ease(Tween.EASE_IN_OUT)
 		. finished
@@ -92,7 +101,7 @@ func _run(
 		await (
 			get_tree()
 			. create_tween()
-			. tween_property(_body, "velocity:x", 0.0, run_decel_duration)
+			. tween_property(self, "_run_velocity:x", 0.0, run_decel_duration)
 			. set_trans(Tween.TRANS_LINEAR)
 			. set_ease(Tween.EASE_IN_OUT)
 			. finished
@@ -236,8 +245,34 @@ func _on_idle_timer_timeout() -> void:
 func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 	health = max(0, health - amount)
 
-	# Red glow on hit
 	$SFX/HurtSound.play_sound()
-	modulate = Color(1, 0, 0)
-	await get_tree().create_timer(1.0).timeout
-	modulate = Color(1, 1, 1, 1)
+
+	# Red glow on hit
+	var glow_routine = func():
+		modulate = Color(1, 0, 0)
+		await get_tree().create_timer(1.0).timeout
+		modulate = Color(1, 1, 1, 1)
+	glow_routine.call()
+
+	var knockback_routine = func():
+		var min_distance = 15.0
+		var max_distance = 35.0
+
+		var distance = _body.global_position.distance_to(_player.global_position)
+		distance = clamp(distance, min_distance, max_distance)
+		var t = (distance - min_distance) / (max_distance - min_distance)
+
+		var min_force_x = 70.0
+		var max_force_x = 200.0
+		var knockback_force_x = lerp(max_force_x, min_force_x, t)
+
+		var min_force_y = 10.0
+		var max_force_y = 60.0
+		var knockback_force_y = lerp(max_force_y, min_force_y, t)
+
+		var knockback_direction = (_body.global_position - _player.global_position).normalized()
+		_knockback_velocity.x = knockback_direction.x * knockback_force_x
+		_knockback_velocity.y = knockback_direction.y * knockback_force_y
+		print(_knockback_velocity)
+
+	knockback_routine.call()

@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Rends l'argent"
+config/name="Rend l'argent !"
 config/description="Ludum Dare 58"
 run/main_scene="res://src/SceneManager/SceneManager.tscn"
 config/features=PackedStringArray("4.5")
