@@ -31,7 +31,7 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var wall_jump_cooldown = .7
 # Billionaire contact
 @export var billionaire_head_bounce = 250
-@export var billionaire_knockback = 400
+@export var billionaire_knockback = 200
 # Combat
 @export var melee_damage = 100
 @export var melee_cooldown = .3
@@ -191,7 +191,7 @@ func _physics_process(delta):
 			if sign(velocity.x) != sign(knockback.x):
 				velocity.x = 0
 			velocity += Vector2(
-				knockback.x if abs(knockback.x) > 100 else sign(knockback.x) * 100, knockback.y
+				knockback.x*100 if abs(knockback.x) > 100 else sign(knockback.x) * 100, knockback.y
 			)
 
 	velocity = clamp(velocity, Vector2(-3000, -600), Vector2(3000, 600))
