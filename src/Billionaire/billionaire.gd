@@ -7,12 +7,14 @@ const _GRAVITY: float = 600.0
 
 # Interval range between two attacks, in seconds
 @export var idle_range_seconds: Vector2 = Vector2(0.5, 1.0)
+@export var coins_per_damage: float = 0.05
 
 var _is_gravity_enabled: bool = true
 var _run_velocity: Vector2 = Vector2.ZERO
 var _knockback_velocity: Vector2 = Vector2.ZERO
 
 var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
+var _coin_scene = preload("res://src/Coin/Coin.tscn")
 
 @onready var _idle_timer: Timer = $IdleTimer
 @onready var _body: CharacterBody2D = $BillionaireBody
@@ -22,6 +24,7 @@ var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
 
 @onready var _attack_patterns: Node = $AttackPatterns
 @onready var _level: Level = $"../.."
+@onready var _coins: Node2D = $"../Coins"
 
 
 func _ready() -> void:
@@ -244,8 +247,21 @@ func _on_idle_timer_timeout() -> void:
 	_idle_timer.start(randf_range(idle_range_seconds.x, idle_range_seconds.y))
 
 
-func on_level_billionaire_hit(_amount: int, _remaining_net_worth: int) -> void:
+func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 	$SFX/HurtSound.play_sound()
+
+	if amount >= 0:
+		var coins_to_spawn = max(1, int(round(amount * coins_per_damage)))
+		for _i in range(coins_to_spawn):
+			var coin: Coin = _coin_scene.instantiate()
+			var spawn_offset := Vector2(randf_range(-12.0, 12.0), randf_range(-8.0, 0.0))
+			coin.init(_body.global_position + spawn_offset)
+			var angle := randf_range(-PI / 3, PI / 3)
+			var impulse_direction := Vector2.UP.rotated(angle)
+			var impulse_speed := randf_range(160.0, 260.0)
+			coin.set_deferred("linear_velocity", impulse_direction * impulse_speed)
+			coin.set_deferred("angular_velocity", randf_range(-6.0, 6.0))
+			_coins.call_deferred("add_child", coin)
 
 	# Red glow on hit
 	var glow_routine = func():
