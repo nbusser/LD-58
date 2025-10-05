@@ -12,6 +12,8 @@ var player_cash: int = 0  # Coins collected from the beggining of game
 var billionaire_initial_net_worth: int = 0
 var billionaire_net_worth: int = 0
 
+var collected_items: Dictionary[Collectible.CollectibleType, int] = {}
+
 
 func _init(
 	level_number_p: int, level_data_p: LevelData, player_cash_p: int, billionaire_cash_p: int
@@ -36,3 +38,18 @@ func change_billionaire_net_worth(damount: int) -> int:
 func _compute_initial_billionaire_net_worth(level_number_p: int) -> int:
 	# Simple progression curve that scales with the level index
 	return 1000 * (level_number_p + 1)
+
+
+func collect_item(collectible_type: Collectible.CollectibleType) -> void:
+	if collectible_type in collected_items:
+		collected_items[collectible_type] += 1
+	else:
+		collected_items[collectible_type] = 1
+
+
+func get_value_of_collected_items() -> int:
+	var total_value: int = 0
+	for item_type in collected_items.keys():
+		var quantity: int = collected_items[item_type]
+		total_value += quantity * Collectible.get_collectible_value(item_type)
+	return total_value

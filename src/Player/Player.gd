@@ -272,9 +272,10 @@ func get_hurt(knockback_force):
 func _on_soft_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Billionaire"):
 		is_in_billionaire = true
-	elif body.is_in_group("coin"):
+	elif body is Coin:
+		# elif body.is_in_group("coin"):
+		_level.on_coin_collected(body.get_collectible_type())
 		body.queue_free()
-		_level.on_coin_collected()
 
 
 func _on_soft_hitbox_body_exited(body: Node2D) -> void:

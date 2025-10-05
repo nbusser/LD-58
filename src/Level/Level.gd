@@ -24,9 +24,7 @@ func _ready():
 
 
 func init(level_number_p: int, level_data_p: LevelData):
-	level_state = LevelState.new(
-		level_number_p, level_data_p, GameState.player_cash, GameState.billionaire_cash
-	)
+	level_state = LevelState.new(level_number_p, level_data_p, 0, GameState.billionaire_cash)
 
 
 func change_net_worth(damount: int):
@@ -37,12 +35,14 @@ func change_net_worth(damount: int):
 
 func _on_Timer_timeout():
 	# Globals.end_scene(Globals.EndSceneStatus.LEVEL_GAME_OVER)
-	Globals.end_scene(
-		Globals.EndSceneStatus.LEVEL_END,
-		{
-			"player_cash": level_state.player_cash,
-			"billionaire_cash": level_state.billionaire_net_worth
-		}
+	(
+		Globals
+		. end_scene(
+			Globals.EndSceneStatus.LEVEL_END,
+			{
+				"level_state": level_state,
+			}
+		)
 	)
 
 
@@ -51,6 +51,8 @@ func _on_player_billionaire_punched(amount: int) -> void:
 	billionaire_hit.emit(amount, remaining_net_worth)
 
 
-func on_coin_collected():
-	level_state.player_cash += 1
-	hud.set_nb_coins(level_state.player_cash)
+func on_coin_collected(collectible_type: Collectible.CollectibleType) -> void:
+	level_state.collect_item(collectible_type)
+	var value_of_collected_items = level_state.get_value_of_collected_items()
+	level_state.player_cash = GameState.player_cash + value_of_collected_items
+	hud.set_nb_coins(value_of_collected_items)

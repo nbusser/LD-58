@@ -89,10 +89,11 @@ func _run_level_selector() -> void:
 	self.current_scene = scene
 
 
-func _on_end_of_level(player_cash_p: int, billionaire_cash_p: int) -> void:
+func _on_end_of_level(level_state: LevelState) -> void:
 	# Update game state depending on level result
-	GameState.player_cash = player_cash_p
-	GameState.billionaire_cash = billionaire_cash_p
+	GameState.latest_level_state = level_state
+	GameState.player_cash = level_state.player_cash
+	GameState.billionaire_cash = level_state.billionaire_net_worth
 	# _load_score_screen()
 	_run_interlude()
 
@@ -155,9 +156,8 @@ func _on_end_scene(status: Globals.EndSceneStatus, params: Dictionary = {}) -> v
 		Globals.EndSceneStatus.MAIN_MENU_CLICK_QUIT:
 			_quit_game()
 		Globals.EndSceneStatus.LEVEL_END:
-			var player_cash_p: int = params["player_cash"]
-			var billionaire_cash_p: int = params["billionaire_cash"]
-			_on_end_of_level(player_cash_p, billionaire_cash_p)
+			var level_state: LevelState = params["level_state"]
+			_on_end_of_level(level_state)
 		Globals.EndSceneStatus.LEVEL_GAME_OVER:
 			_on_game_over()
 		Globals.EndSceneStatus.LEVEL_RESTART:
