@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://btohiqrak4tcf"]
 
 [ext_resource type="Texture2D" uid="uid://cq5d404kyef8c" path="res://assets/sprites/honte.png" id="1_e037b"]
-[ext_resource type="PackedScene" uid="uid://dss1w1wv5xvq1" path="res://src/Player/Player.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://bxrm1laqwt3cm" path="res://src/Player/Player.tscn" id="2"]
 [ext_resource type="Script" uid="uid://crkhemgnnguer" path="res://src/Player/camera_2d.gd" id="3_13lp4"]
 [ext_resource type="PackedScene" uid="uid://bjp6oj1o86afi" path="res://src/Billionaire/billionaire.tscn" id="3_e037b"]
 
