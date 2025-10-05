@@ -49,33 +49,32 @@ func get_noise_offset(delta: float) -> Vector2:
 func get_camera_rect_shrunk_a_bit() -> Rect2:
 	var camera_center = get_screen_center_position()
 	var screen_size = get_viewport().get_visible_rect().size
-	screen_size = (screen_size/zoom)/2
-	var rec = Rect2(camera_center - screen_size, 2*screen_size)
-	return rec # TODO Actually shrink
+	screen_size = (screen_size / zoom) / 2
+	var rec = Rect2(camera_center - screen_size, 2 * screen_size)
+	return rec  # TODO Actually shrink
 
 
 func collision(r: Rect2, l_to: Vector2) -> Variant:
 	var l_from = r.get_center() + Vector2(0, 25)
-	var top = Geometry2D.segment_intersects_segment(r.position, Vector2(r.end.x, r.position.y), l_from, l_to)
-	var bottom = Geometry2D.segment_intersects_segment(Vector2(r.position.x, r.end.y), r.end, l_from, l_to)
-	var left = Geometry2D.segment_intersects_segment(r.position, Vector2(r.position.x, r.end.y), l_from, l_to)
-	var right = Geometry2D.segment_intersects_segment(r.end, Vector2(r.end.x, r.position.y), l_from, l_to)
+	var top = Geometry2D.segment_intersects_segment(
+		r.position, Vector2(r.end.x, r.position.y), l_from, l_to
+	)
+	var bottom = Geometry2D.segment_intersects_segment(
+		Vector2(r.position.x, r.end.y), r.end, l_from, l_to
+	)
+	var left = Geometry2D.segment_intersects_segment(
+		r.position, Vector2(r.position.x, r.end.y), l_from, l_to
+	)
+	var right = Geometry2D.segment_intersects_segment(
+		r.end, Vector2(r.end.x, r.position.y), l_from, l_to
+	)
 	var best = top
 	var pos = player.global_position
-	if (
-		best == null
-		|| (bottom != null && (bottom - pos).length() < (best - pos).length())
-	):
+	if best == null || (bottom != null && (bottom - pos).length() < (best - pos).length()):
 		best = bottom
-	if (
-		best == null
-		|| (left != null && (left - pos).length() < (best - pos).length())
-	):
+	if best == null || (left != null && (left - pos).length() < (best - pos).length()):
 		best = left
-	if (
-		best == null
-		|| (right != null && (right - pos).length() < (best - pos).length())
-	):
+	if best == null || (right != null && (right - pos).length() < (best - pos).length()):
 		best = right
 	return best
 
@@ -97,15 +96,12 @@ func _process(delta):
 		zoom_level += 2.4
 		zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 2 * delta)
 		var rect = get_camera_rect_shrunk_a_bit()
-		var col_pt = (
-			collision(get_camera_rect_shrunk_a_bit(), billionaire.global_position)
-		)
+		var col_pt = collision(get_camera_rect_shrunk_a_bit(), billionaire.global_position)
 		if col_pt != null:
 			boss_indicator.visible = true
 			boss_indicator.global_position = col_pt
 		else:
 			boss_indicator.visible = false
-
 
 	# Fade out the intensity over time
 	shake_strength = lerp(shake_strength, 0., shake_decay_rate * delta)
