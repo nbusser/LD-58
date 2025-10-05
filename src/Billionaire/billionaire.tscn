@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=18 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="SpriteFrames" uid="uid://cwedgk16x5d4h" path="res://src/Billionaire/BillionaireAnimations.tres" id="2_d2xww"]
@@ -19,16 +19,13 @@ size = Vector2(162, 236)
 size = Vector2(163, 237)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bqgkp"]
-size = Vector2(42, 67.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdd1f"]
-size = Vector2(42, 67.5)
+size = Vector2(81, 71.375)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_38hbp"]
-size = Vector2(24, 24)
+size = Vector2(162, 236)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7xygs"]
-size = Vector2(76.5, 145)
+size = Vector2(77.25, 116.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1qyaf"]
 size = Vector2(103.1875, 205.6875)
@@ -62,7 +59,6 @@ position = Vector2(-0.5, -0.5)
 shape = SubResource("RectangleShape2D_xg0jg")
 
 [node name="RepulseWave" type="Node2D" parent="BillionaireBody"]
-visible = false
 
 [node name="Column1" type="Area2D" parent="BillionaireBody/RepulseWave"]
 collision_layer = 0
@@ -70,24 +66,25 @@ collision_mask = 16
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column1"]
-position = Vector2(33, -21.25)
+position = Vector2(123.5, 83.375)
 shape = SubResource("RectangleShape2D_bqgkp")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column1"]
-position = Vector2(-33, -21)
-shape = SubResource("RectangleShape2D_kdd1f")
-
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column1"]
+position = Vector2(1, -1)
 shape = SubResource("RectangleShape2D_38hbp")
 
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column1"]
+position = Vector2(-124, 81.6875)
+shape = SubResource("RectangleShape2D_bqgkp")
+
 [node name="Sprite2D" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column1"]
-position = Vector2(32.94001, -21.809996)
-scale = Vector2(0.6581247, 1.0684376)
+position = Vector2(123, 82.5)
+scale = Vector2(1.2978122, 1.109375)
 texture = ExtResource("9_kdd1f")
 
 [node name="Sprite2D2" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column1"]
-position = Vector2(-33.43081, -21.210484)
-scale = Vector2(0.64278716, 1.0559223)
+position = Vector2(-124.99999, 83)
+scale = Vector2(1.298, 1.162875)
 texture = ExtResource("9_kdd1f")
 
 [node name="Column2" type="Area2D" parent="BillionaireBody/RepulseWave"]
@@ -96,21 +93,21 @@ collision_mask = 16
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column2"]
-position = Vector2(93, -60)
+position = Vector2(204, 58.25)
 shape = SubResource("RectangleShape2D_7xygs")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column2"]
-position = Vector2(-92.75, -59.5)
+position = Vector2(-204.375, 61)
 shape = SubResource("RectangleShape2D_7xygs")
 
 [node name="Sprite2D" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column2"]
-position = Vector2(-94.22001, -60.28)
-scale = Vector2(1.2431245, 2.24125)
+position = Vector2(-207, 60.999985)
+scale = Vector2(1.2431245, 1.7924999)
 texture = ExtResource("9_kdd1f")
 
 [node name="Sprite2D2" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column2"]
-position = Vector2(92.7154, -60.35525)
-scale = Vector2(1.1651436, 2.270148)
+position = Vector2(204.99998, 58.822365)
+scale = Vector2(1.1651436, 1.8069491)
 texture = ExtResource("9_kdd1f")
 
 [node name="Column3" type="Area2D" parent="BillionaireBody/RepulseWave"]
@@ -119,20 +116,20 @@ collision_mask = 16
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column3"]
-position = Vector2(184, -94)
+position = Vector2(296, 16)
 shape = SubResource("RectangleShape2D_1qyaf")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column3"]
-position = Vector2(-184, -91)
+position = Vector2(-298, 16)
 shape = SubResource("RectangleShape2D_1qyaf")
 
 [node name="Sprite2D2" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column3"]
-position = Vector2(185, -94.088806)
+position = Vector2(295.00003, 12.999985)
 scale = Vector2(1.6294464, 3.247224)
 texture = ExtResource("9_kdd1f")
 
 [node name="Sprite2D3" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column3"]
-position = Vector2(-185.02505, -91.75073)
+position = Vector2(-297, 15)
 scale = Vector2(1.5617173, 3.2265396)
 texture = ExtResource("9_kdd1f")
 
