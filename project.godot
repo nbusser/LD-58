@@ -34,6 +34,10 @@ enabled=PackedStringArray()
 
 billionaire=""
 
+[gui]
+
+theme/custom="uid://ciubrukaih6sc"
+
 [input]
 
 move_right={
