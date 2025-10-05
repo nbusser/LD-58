@@ -59,6 +59,8 @@ var has_extra_jump_on_air_strike = true
 var prev_velocity = Vector2(0, 0)
 var play_jump_start_ts = 0
 
+var health = 10
+
 @onready var _hurt_sound = $SoundFx/HurtSound
 @onready var _billionaire: CharacterBody2D = $"../Billionaire/BillionaireBody"
 @onready var _punch_area: Area2D = $PunchArea
@@ -72,6 +74,7 @@ var play_jump_start_ts = 0
 func _ready() -> void:
 	# Waits for Game.gd to run randomize()
 	await get_tree().process_frame
+	_hud.update_life(health)
 
 
 func _physics_process(delta):
@@ -263,8 +266,13 @@ func get_hurt(knockback_force):
 		scale *= Vector2(1. - clamp((abs(knockback_force.x)) / 2000., 0., .1), 1.)
 	elif abs(knockback_force.y) > 1.2 * abs(knockback_force.x):
 		scale *= Vector2(1., 1. - clamp((abs(knockback_force.x)) / 2000., 0., .1))
+	# Shake
 	_camera.apply_noise_shake()
-
+	# Health
+	health = health - 1
+	_hud.update_life(health)
+	if health <= 0:
+		print("TODO death")
 	# Red glow on hit
 	_hurt_sound.play_sound()
 	modulate = Color(1, 0, 0)

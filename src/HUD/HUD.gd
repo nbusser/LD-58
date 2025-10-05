@@ -20,6 +20,8 @@ var billionaire_net_worth:
 @onready var net_worth_label: Label = $VBoxContainer/VBoxContainer/NetWorth/NetWorthValue
 @onready var dash_progress_bar: ProgressBar = $VBoxContainer/VBoxContainer/DashCooldown/ProgressBar
 @onready var fadein_pane: ColorRect = $FadeinPane
+@onready var hearts_container := $VBoxContainer/CenterContainer2/HeartsContainer
+@onready var Heart := preload("res://src/Hearts/Heart.tscn")
 
 
 func set_level_name(value: String) -> void:
@@ -40,6 +42,18 @@ func set_billionaire_net_worth(value: int) -> void:
 
 func set_dash_cooldown(value: int) -> void:
 	dash_progress_bar.value = value
+
+
+func update_life(health):
+	for heart in hearts_container.get_children():
+		if health >= 2:
+			heart.value = 1
+			health -= 2
+		elif health ==  1:
+			heart.value = .5
+			health -= 1
+		else:
+			heart.value = 0
 
 
 func init(level_state: LevelState) -> void:
