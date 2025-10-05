@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
-[ext_resource type="SpriteFrames" uid="uid://dh6yn65py8wfy" path="res://src/Billionaire/BillionaireAnimations.tres" id="2_d2xww"]
+[ext_resource type="SpriteFrames" uid="uid://cwedgk16x5d4h" path="res://src/Billionaire/BillionaireAnimations.tres" id="2_d2xww"]
 [ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="3_bqgkp"]
 [ext_resource type="AudioStream" uid="uid://ckvwc0wlnic18" path="res://assets/sounds/rain.wav" id="6_7xygs"]
 [ext_resource type="AudioStream" uid="uid://dj4nwmkxwucqt" path="res://assets/sounds/jump_cone_shoot.wav" id="6_qa6ra"]
@@ -13,10 +13,10 @@
 [ext_resource type="AudioStream" uid="uid://d1i6r2bm01r4v" path="res://assets/sounds/repulsive_wave_column.wav" id="11_tafn6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qa6ra"]
-size = Vector2(14, 19)
+size = Vector2(162, 236)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0jg"]
-size = Vector2(28, 27)
+size = Vector2(163, 237)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bqgkp"]
 size = Vector2(42, 67.5)
@@ -41,17 +41,16 @@ one_shot = true
 autostart = true
 
 [node name="BillionaireBody" type="CharacterBody2D" parent="." groups=["Billionaire"]]
+position = Vector2(0, -119)
 collision_layer = 32
 collision_mask = 65
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody"]
-position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_qa6ra")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="BillionaireBody"]
-scale = Vector2(0.064986736, 0.064986736)
 sprite_frames = ExtResource("2_d2xww")
-frame_progress = 0.75009066
+animation = &"focus"
 
 [node name="Hitbox" type="Area2D" parent="BillionaireBody" groups=["billionaire"]]
 collision_layer = 4
@@ -59,6 +58,7 @@ collision_mask = 0
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/Hitbox" groups=["billionaire"]]
+position = Vector2(-0.5, -0.5)
 shape = SubResource("RectangleShape2D_xg0jg")
 
 [node name="RepulseWave" type="Node2D" parent="BillionaireBody"]
