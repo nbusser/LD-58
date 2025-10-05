@@ -11,7 +11,7 @@ extends Camera2D
 @export var shake_decay_rate: float = 5.0
 
 @export var noise_bg_shake_speed = 2
-@export var noise_bg_shake_strength = 120.0
+@export var noise_bg_shake_strength = 30.0
 
 # Used to keep track of where we are in the noise
 # so that we can smoothly move through it
@@ -45,6 +45,7 @@ func _ready() -> void:
 	limit_right = wall_r.global_position.x
 	limit_top = ceiling.global_position.y
 	limit_bottom = ground.global_position.y + 25
+	zoom = Vector2(1., 1.)
 
 
 func apply_noise_shake() -> void:
@@ -104,14 +105,12 @@ func collision(r: Rect2, l_to: Vector2) -> Variant:
 func _process(delta):
 	# TODO the code below is framerate dependent, see
 	# https://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/
-	var player_billionaire_dist = player.global_position - billionaire.global_position
+	#var player_billionaire_dist = player.global_position - billionaire.global_position
 	# if player_billionaire_dist.length() < 800:
 	boss_indicator.visible = false
-	global_position = lerp(
-		position, player.global_position - player_billionaire_dist / 2, 100 * delta
-	)
-	var zoom_level = 2 - 1.4 * clamp(player_billionaire_dist.length() / 1000, 0., 1.)
-	zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 10 * delta)
+	global_position = lerp(position, player.global_position, 100 * delta)
+	#var zoom_level = 2 - 1.4 * clamp(player_billionaire_dist.length() / 1000, 0., 1.)
+	#zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 10 * delta)
 	#else:
 	#position = lerp(position, player.position + Vector2(0, -35), 12 * delta)
 	#var zoom_level = clamp(1.0 - player.velocity.length() / 400 + .3, .3, 1.8)
