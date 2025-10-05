@@ -40,6 +40,7 @@ const DASH_SLOWMO_NAME := "player_dash"
 
 var jump_load_start = null
 var is_actively_jumping = false
+var is_keep_pressing_jump_button = false
 var is_down_dashing = false
 var can_down_dash = false
 var is_in_billionaire = false
@@ -53,6 +54,8 @@ var previous_down_dash = 0
 var previous_melee = 0
 var previous_head_bounce = 0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var current_nb_jumps = 0
+var max_nb_jumps = 2
 
 var prev_velocity = Vector2(0, 0)
 
@@ -75,6 +78,9 @@ func _physics_process(delta):
 	var hz_velocity = 0.
 	var now = Time.get_unix_time_from_system()
 
+	if is_on_floor():
+		current_nb_jumps = 0
+
 	if _can_move():
 		# Horizontal movement
 		var input_direction = Input.get_axis("move_left", "move_right")
@@ -84,7 +90,14 @@ func _physics_process(delta):
 		($Sprite as AnimatedSprite2D).flip_h = direction == Direction.LEFT
 
 		hz_velocity = input_direction * (ground_speed if self.is_on_floor() else air_speed)
-		if is_on_floor() && !is_actively_jumping && Input.is_action_pressed("jump"):
+		if (
+			not is_keep_pressing_jump_button  # No automatic jump when space is kept pressed
+			and current_nb_jumps < max_nb_jumps  # As long as we have remaining jumps
+			and Input.is_action_pressed("jump")
+		):
+			# Cleans up gravity
+			velocity.y = 0
+			current_nb_jumps += 1
 			is_actively_jumping = true
 			jump_load_start = now
 
@@ -95,6 +108,7 @@ func _physics_process(delta):
 			&& Input.is_action_pressed("jump")
 			&& time_since_jump < max_input_jump_time
 		):
+			is_keep_pressing_jump_button = true
 			var timer_proportion = (
 				(1 - clamp(time_since_jump, 0, max_input_jump_time) / max_input_jump_time) ** 4
 			)
@@ -104,6 +118,9 @@ func _physics_process(delta):
 			&& (time_since_jump > max_input_jump_time || Input.is_action_just_released("jump"))
 		):
 			is_actively_jumping = false
+
+		if Input.is_action_just_released("jump"):
+			is_keep_pressing_jump_button = false
 
 		# Horizontal dash
 		for dir in range(2):
