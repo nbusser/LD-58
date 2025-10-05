@@ -1,27 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://dss1w1wv5xvq1"]
+[gd_scene load_steps=11 format=3 uid="uid://dss1w1wv5xvq1"]
 
-[ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="1"]
 [ext_resource type="Script" uid="uid://ty44l5afcwx4" path="res://src/Player/Player.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://cehi4sgm55qe3" path="res://assets/sprites/player/idle.png" id="2_dd31a"]
 [ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="3_vy1tf"]
 [ext_resource type="AudioStream" uid="uid://6u1f8h66ppko" path="res://assets/sounds/hurt.wav" id="4_dd31a"]
 [ext_resource type="AudioStream" uid="uid://jrns7idjix3g" path="res://assets/sounds/hurt2.wav" id="5_gilji"]
-
-[sub_resource type="AtlasTexture" id="3"]
-atlas = ExtResource("1")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="4"]
-atlas = ExtResource("1")
-region = Rect2(128, 0, 128, 128)
 
 [sub_resource type="SpriteFrames" id="2"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("3")
-}, {
-"duration": 1.0,
-"texture": SubResource("4")
+"texture": ExtResource("2_dd31a")
 }],
 "loop": true,
 "name": &"default",
@@ -47,7 +36,6 @@ script = ExtResource("2")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("2")
-frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("1")
