@@ -7,25 +7,25 @@ const DIRECTIONS = ["move_left", "move_right"]
 const DIRECTIONS_MODIFIERS = [-1, 1]
 
 # Movement
-@export var ground_speed = 450
-@export var air_speed = 300
+@export var ground_speed = 200
+@export var air_speed = 120
 # Horizontal dash
 @export var dash_cooldown = 1.0
-@export var dash_speed = 3000
+@export var dash_speed = 1500
 @export var dash_window = .2
 # Vertical dash
-@export var down_dash_speed = 1600
+@export var down_dash_speed = 1500
 @export var down_dash_duration = 0.08
 # Jumps
 @export var max_input_jump_time = .4
-@export var jump_force = 8000
+@export var jump_force = 5000
 # Walls stickiness
 @export var wall_stickiness = 500
 @export var wall_jump_force = 450
 @export var wall_jump_cooldown = .7
 # Billionaire contact
-@export var billionaire_head_bounce = 450
-@export var billionaire_knockback = 450
+@export var billionaire_head_bounce = 250
+@export var billionaire_knockback = 400
 # Combat
 @export var melee_damage = 100
 @export var melee_cooldown = .3
