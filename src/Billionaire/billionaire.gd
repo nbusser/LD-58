@@ -264,7 +264,16 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 		for _i in range(coins_to_spawn):
 			var coin: Coin = _coin_scene.instantiate()
 			var spawn_offset := Vector2(randf_range(-12.0, 12.0), randf_range(-8.0, 0.0))
-			coin.init(_body.global_position + spawn_offset)
+			coin.init(
+				_body.global_position + spawn_offset,
+				(
+					[
+						Collectible.CollectibleType.DOLLAR_COIN,
+						Collectible.CollectibleType.DOLLAR_BILL
+					]
+					. pick_random()
+				)
+			)
 			var angle := randf_range(-PI / 3, PI / 3)
 			var impulse_direction := Vector2.UP.rotated(angle)
 			var impulse_speed := randf_range(160.0, 260.0)
