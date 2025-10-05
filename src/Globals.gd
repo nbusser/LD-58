@@ -38,6 +38,8 @@ const GROUPS_DICT: Dictionary[Groups, String] = {
 
 const SAMPLE_GLOBAL_VARIABLE: int = 1
 
+var slowmos: Dictionary[String, float] = {}
+
 
 func end_scene(status: EndSceneStatus, params: Dictionary = {}) -> void:
 	scene_ended.emit(status, params)
@@ -45,9 +47,6 @@ func end_scene(status: EndSceneStatus, params: Dictionary = {}) -> void:
 
 func coin_flip() -> bool:
 	return randi() % 2
-
-
-var slowmos: Dictionary[String, float] = {}
 
 
 func create_slowmo(name: String, factor: float) -> void:

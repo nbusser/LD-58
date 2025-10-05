@@ -50,8 +50,10 @@ func _process(delta):
 	# https://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/
 	var player_billionaire_dist = billionaire.global_position - player.global_position
 	if player_billionaire_dist.length() < 200:
-		global_position = lerp(position, billionaire.global_position - player_billionaire_dist/2, 6 * delta)
-		var zoom_level = 2.4 - clamp(player_billionaire_dist.length()/200, 0., 1.)
+		global_position = lerp(
+			position, billionaire.global_position - player_billionaire_dist / 2, 6 * delta
+		)
+		var zoom_level = 2.4 - clamp(player_billionaire_dist.length() / 200, 0., 1.)
 		zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 2 * delta)
 	else:
 		position = lerp(position, player.position + Vector2(0, -35), 6 * delta)
