@@ -44,7 +44,7 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -24.999954)
 sprite_frames = ExtResource("6_4rl4y")
-animation = &"attack_recover"
+animation = &"hurt"
 offset = Vector2(0, -20.833288)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

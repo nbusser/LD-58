@@ -1,7 +1,9 @@
-[gd_resource type="SpriteFrames" load_steps=31 format=3 uid="uid://cr415b4hp2y1r"]
+[gd_resource type="SpriteFrames" load_steps=35 format=3 uid="uid://cr415b4hp2y1r"]
 
 [ext_resource type="Texture2D" uid="uid://b4m1dths42sq0" path="res://assets/sprites/player/attack.png" id="1_eao7d"]
 [ext_resource type="Texture2D" uid="uid://12sud46mogw6" path="res://assets/sprites/player/air_attack.png" id="1_njq6p"]
+[ext_resource type="Texture2D" uid="uid://lo2uwg2wxsgb" path="res://assets/sprites/player/hurt.png" id="4_0eh7s"]
+[ext_resource type="Texture2D" uid="uid://ej28mql36bjg" path="res://assets/sprites/player/coin.png" id="6_l2o1i"]
 [ext_resource type="Texture2D" uid="uid://cehi4sgm55qe3" path="res://assets/sprites/player/idle.png" id="7_m5ddx"]
 [ext_resource type="Texture2D" uid="uid://debp773ns8ugc" path="res://assets/sprites/player/jump.png" id="8_e00yh"]
 [ext_resource type="Texture2D" uid="uid://dtx6rwj5bt14o" path="res://assets/sprites/player/walk.png" id="8_l2o1i"]
@@ -78,6 +80,10 @@ region = Rect2(320, 0, 64, 96)
 atlas = ExtResource("7_m5ddx")
 region = Rect2(384, 0, 64, 96)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcjxi"]
+atlas = ExtResource("4_0eh7s")
+region = Rect2(0, 0, 96, 112)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5ddx"]
 atlas = ExtResource("8_e00yh")
 region = Rect2(192, 0, 96, 96)
@@ -89,6 +95,10 @@ region = Rect2(96, 0, 96, 96)
 [sub_resource type="AtlasTexture" id="AtlasTexture_gd1rk"]
 atlas = ExtResource("8_e00yh")
 region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vx3w"]
+atlas = ExtResource("6_l2o1i")
+region = Rect2(0, 0, 80, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e00yh"]
 atlas = ExtResource("8_l2o1i")
@@ -199,6 +209,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_bcjxi")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_m5ddx")
 }],
 "loop": true,
@@ -219,6 +237,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"jump_start",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vx3w")
+}],
+"loop": true,
+"name": &"parry",
 "speed": 5.0
 }, {
 "frames": [{
