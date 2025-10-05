@@ -55,12 +55,12 @@ func get_noise_offset(delta: float) -> Vector2:
 	)
 
 
-func get_camera_rect_shrunk_a_bit() -> Rect2:
+func get_camera_rect() -> Rect2:
 	var camera_center = get_screen_center_position()
 	var screen_size = get_viewport().get_visible_rect().size
 	screen_size = (screen_size / zoom) / 2
 	var rec = Rect2(camera_center - screen_size, 2 * screen_size)
-	return rec  # TODO Actually shrink
+	return rec
 
 
 func collision(r: Rect2, l_to: Vector2) -> Variant:
@@ -92,19 +92,19 @@ func _process(delta):
 	# TODO the code below is framerate dependent, see
 	# https://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/
 	var player_billionaire_dist = player.global_position - billionaire.global_position
-	if player_billionaire_dist.length() < 200:
+	if player_billionaire_dist.length() < 800:
 		boss_indicator.visible = false
 		global_position = lerp(
-			position, player.global_position - player_billionaire_dist / 2, 6 * delta
+			position, player.global_position - player_billionaire_dist / 2, 100 * delta
 		)
-		var zoom_level = 4.6 - 2 * clamp(player_billionaire_dist.length() / 200, 0., 1.)
+		var zoom_level = 2 - 1.2 * clamp(player_billionaire_dist.length() / 800, 0., 1.)
 		zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 2 * delta)
 	else:
-		position = lerp(position, player.position + Vector2(0, -35), 6 * delta)
+		position = lerp(position, player.position + Vector2(0, -35), 12 * delta)
 		var zoom_level = clamp(1.0 - player.velocity.length() / 400 + .3, .3, 1.8)
 		zoom_level += 2.4
 		zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 2 * delta)
-		var col_pt = collision(get_camera_rect_shrunk_a_bit(), billionaire.global_position)
+		var col_pt = collision(get_camera_rect(), billionaire.global_position)
 		if col_pt != null:
 			boss_indicator.visible = true
 			boss_indicator.global_position = col_pt
