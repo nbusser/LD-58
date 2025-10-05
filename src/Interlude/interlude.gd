@@ -47,8 +47,6 @@ func _ready():
 	$Panel.visible = false
 	$UpgradeSelector.visible = false
 
-	$UpgradeSelector.init(GameState.player_cash)
-
 	await _cutscene()
 
 	Globals.end_scene(Globals.EndSceneStatus.INTERLUDE_END)
