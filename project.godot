@@ -22,6 +22,10 @@ Globals="*res://src/Globals.gd"
 GameState="*res://src/game_state.gd"
 Collectible="*res://src/collectible.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [editor_plugins]
 
 enabled=PackedStringArray()
