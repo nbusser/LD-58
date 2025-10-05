@@ -14,7 +14,7 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var air_speed = 290
 # Horizontal dash
 @export var dash_cooldown = 1.0
-@export var dash_speed = 2000
+@export var dash_speed = 5000
 @export var dash_window = .3
 # Dash slow motion
 @export var dash_slow_factor = 0.6
@@ -194,7 +194,7 @@ func _physics_process(delta):
 				knockback.x if abs(knockback.x) > 100 else sign(knockback.x) * 100, knockback.y
 			)
 
-	velocity = clamp(velocity, Vector2(-3000, -600), Vector2(3000, 600))
+	velocity = clamp(velocity, Vector2(-8000, -600), Vector2(8000, 600))
 
 	if prev_velocity.y > 1000 && is_on_floor():
 		_camera.apply_noise_shake()

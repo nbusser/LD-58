@@ -42,6 +42,9 @@ func _ready() -> void:
 
 
 func apply_noise_shake() -> void:
+	noise_shake_speed = 30.0
+	noise_shake_strength = 60.0
+	shake_decay_rate = 5.0
 	shake_strength = noise_shake_strength
 
 

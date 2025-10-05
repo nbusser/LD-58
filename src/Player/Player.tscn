@@ -43,7 +43,7 @@ sounds = Array[AudioStream]([ExtResource("5_477y8")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -24.999954)
+position = Vector2(0, -25.999954)
 sprite_frames = ExtResource("6_4rl4y")
 animation = &"attack_active"
 offset = Vector2(0, -20.833288)
