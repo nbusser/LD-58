@@ -255,9 +255,9 @@ func get_hurt(knockback_force):
 	# Get knocked back
 	velocity += knockback_force
 	# Get deformed
-	if abs(knockback_force.x) > 1.2*abs(knockback_force.y):
+	if abs(knockback_force.x) > 1.2 * abs(knockback_force.y):
 		scale *= Vector2(1. - clamp((abs(knockback_force.x)) / 2000., 0., .1), 1.)
-	elif abs(knockback_force.y) > 1.2*abs(knockback_force.x):
+	elif abs(knockback_force.y) > 1.2 * abs(knockback_force.x):
 		scale *= Vector2(1., 1. - clamp((abs(knockback_force.x)) / 2000., 0., .1))
 	_camera.apply_noise_shake()
 
