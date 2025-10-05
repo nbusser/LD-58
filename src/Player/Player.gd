@@ -199,9 +199,9 @@ func _physics_process(delta):
 
 
 func dash_slow_mo():
-	Globals.create_slowmo("dash", dash_slow_factor)
-	await get_tree().create_timer(dash_slow_time).timeout
-	Globals.cancel_slowmo_if_exists("dash")
+	if Globals.create_slowmo("dash", dash_slow_factor):
+		await get_tree().create_timer(dash_slow_time).timeout
+		Globals.cancel_slowmo_if_exists("dash")
 
 
 func _exit_tree() -> void:

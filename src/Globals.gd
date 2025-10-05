@@ -49,9 +49,12 @@ func coin_flip() -> bool:
 	return randi() % 2
 
 
-func create_slowmo(slowmo_name: String, factor: float) -> void:
+func create_slowmo(slowmo_name: String, factor: float) -> bool:
+	if slowmo_name in slowmos:
+		return false
 	slowmos[slowmo_name] = factor
 	Engine.time_scale *= factor
+	return true
 
 
 func cancel_slowmo_if_exists(slowmo_name: String) -> void:
