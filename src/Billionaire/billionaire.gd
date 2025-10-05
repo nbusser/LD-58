@@ -2,8 +2,8 @@ class_name Billionaire
 
 extends Node2D
 
-const _JUMP_VELOCITY = -250
-const _GRAVITY: float = 600.0
+const _JUMP_VELOCITY = -650
+const _GRAVITY: float = 900.0
 
 # Interval range between two attacks, in seconds
 @export var idle_range_seconds: Vector2 = Vector2(0.5, 1.0)
@@ -284,7 +284,6 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 		var max_distance = 200.0
 
 		var distance = _body.global_position.distance_to(_player.global_position)
-		print(distance)
 		distance = clamp(distance, min_distance, max_distance)
 		var t = (distance - min_distance) / (max_distance - min_distance)
 
