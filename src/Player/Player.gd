@@ -7,6 +7,7 @@ enum Direction { LEFT = -1, RIGHT = 1 }
 
 const DIRECTIONS = ["move_left", "move_right"]
 const DIRECTIONS_MODIFIERS = [-1, 1]
+const DASH_SLOWMO_NAME := "player_dash"
 
 # Movement
 @export var ground_speed = 200
@@ -201,13 +202,13 @@ func _physics_process(delta):
 
 
 func dash_slow_mo():
-	if Globals.create_slowmo("dash", dash_slow_factor):
+	if Globals.create_slowmo(DASH_SLOWMO_NAME, dash_slow_factor):
 		await get_tree().create_timer(dash_slow_time).timeout
-		Globals.cancel_slowmo_if_exists("dash")
+		Globals.cancel_slowmo_if_exists(DASH_SLOWMO_NAME)
 
 
 func _exit_tree() -> void:
-	Globals.cancel_slowmo_if_exists("dash")
+	Globals.cancel_slowmo_if_exists(DASH_SLOWMO_NAME)
 
 
 func _can_move():

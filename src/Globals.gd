@@ -1,6 +1,7 @@
 extends Node
 
 signal scene_ended(status: EndSceneStatus, params: Dictionary)
+signal slowmo_state_changed(active: bool)
 # Status sent along with signal end_scene()
 enum EndSceneStatus {
 	# Main meu
@@ -54,12 +55,15 @@ func create_slowmo(slowmo_name: String, factor: float) -> bool:
 		return false
 	slowmos[slowmo_name] = factor
 	Engine.time_scale *= factor
+	slowmo_state_changed.emit(true)
 	return true
 
 
 func cancel_slowmo_if_exists(slowmo_name: String) -> void:
-	if slowmo_name in slowmos:
-		Engine.time_scale /= slowmos[slowmo_name]
-		if abs(Engine.time_scale - 1.0) < 0.01:
-			Engine.time_scale = 1.0
-		slowmos.erase(slowmo_name)
+	if slowmo_name not in slowmos:
+		return
+	Engine.time_scale /= slowmos[slowmo_name]
+	slowmos.erase(slowmo_name)
+	if slowmos.size() == 0:
+		Engine.time_scale = 1.0
+	slowmo_state_changed.emit(false)
