@@ -2,11 +2,32 @@ class_name AttackManager
 
 extends Node
 
-enum MeleeState { NOT_ATTACKING, WINDUP, ACTIVE, RECOVER, FINISHED }
+# Logic state machine:
+# Not attacking:
+#	- any other animation is playing
+# Windup:
+#	- startup frame of the attack
+#	- no active hitbox
+#	- cannot be canceled
+# Active:
+#	- active frames of the attack
+#	- billionaire takes damage (once) if he enters hitbox
+#	- as soon as billionaire is hit, can be canceled
+# Recover:
+#	- recover frames
+#	- no active hitbox
+#	- if billionaire was hit during active phase, can be canceled
+# Finished:
+#	- no associated animation
+#	- waiting for cleanup by _process()
+enum AttackState { NOT_ATTACKING, WINDUP, ACTIVE, RECOVER, FINISHED }
 
+# Type of attack we are throwing
+# UNSPECIFIED -> empty state
 enum Attack { UNSPECIFIED, GROUND, AIR }
 
 
+# struct collecting the three animation names for each attack phase
 class AttackAnimation:
 	var windup: String
 	var active: String
@@ -18,60 +39,74 @@ class AttackAnimation:
 		recover = recover_animation
 
 
-var _billionaire_was_punched_in_current_attack = false
-var _combo_counter = 0
+# Max consecutive cancels
+const MAX_CANCELS = 3
 
-var _melee_state = MeleeState.NOT_ATTACKING
+# If billionaire is hit, allows an attack cancel
+var _billionaire_was_punched_in_current_attack = false
+var _cancel_counter = 0
+
 var _billionaire_in_melee_reach = false
 
+var _attack_state = AttackState.NOT_ATTACKING
+var _current_attack = Attack.UNSPECIFIED
+
+# Associates an attack type with its animation labels
 var _attacks_dict: Dictionary[Attack, AttackAnimation] = {
 	Attack.GROUND: AttackAnimation.new("attack_windup", "attack_active", "attack_recover"),
 	Attack.AIR: AttackAnimation.new("air_attack_windup", "air_attack_active", "air_attack_recover"),
 }
 
-var _current_attack: Attack
-
 @onready var _player = $".."
 @onready var _sprite = $"../Sprite"
 
 
-func can_cancel_current_attack() -> bool:
-	return _billionaire_was_punched_in_current_attack and _combo_counter < 3
+# Billionaire was hit in current attack and we did not reached max combo
+func _can_cancel_current_attack() -> bool:
+	return _billionaire_was_punched_in_current_attack and _cancel_counter < MAX_CANCELS
 
 
 func can_attack() -> bool:
-	return _melee_state == MeleeState.NOT_ATTACKING or can_cancel_current_attack()
+	return _attack_state == AttackState.NOT_ATTACKING or _can_cancel_current_attack()
+
+
+func is_attacking():
+	return _attack_state != AttackState.NOT_ATTACKING
 
 
 func _process(_delta: float) -> void:
+	# Cancels air attack if we just landed
 	if _current_attack == Attack.AIR and _player.is_on_floor():
-		_melee_state = MeleeState.FINISHED
+		_attack_state = AttackState.FINISHED
 
-	if _melee_state == MeleeState.WINDUP:
+	# Plays animation matching the current logical state
+	if _attack_state == AttackState.WINDUP:
 		_sprite.play(_attacks_dict[_current_attack].windup)
-	elif _melee_state == MeleeState.ACTIVE:
+	elif _attack_state == AttackState.ACTIVE:
 		_sprite.play(_attacks_dict[_current_attack].active)
-	elif _melee_state == MeleeState.RECOVER:
+	elif _attack_state == AttackState.RECOVER:
 		_sprite.play(_attacks_dict[_current_attack].recover)
-	elif _melee_state == MeleeState.FINISHED:
+	elif _attack_state == AttackState.FINISHED:
 		_attack_finished_cleanup()
 
 
 func _attack_finished_cleanup():
-	_melee_state = MeleeState.NOT_ATTACKING
+	_attack_state = AttackState.NOT_ATTACKING
+	_current_attack = Attack.UNSPECIFIED
 	_billionaire_was_punched_in_current_attack = false
-	_combo_counter = 0
+	_cancel_counter = 0
 	_sprite.play("default")
 
 
 func _attack():
 	# Do NOT change attack style during combo
-	if _combo_counter == 0:
+	# i.e, GROUND attack, hit, jump, cancel attack mid-air -> will throw another GROUND attack
+	if _cancel_counter == 0:
 		_current_attack = Attack.GROUND if _player.is_on_floor() else Attack.AIR
 
 	_billionaire_was_punched_in_current_attack = false
-	_combo_counter += 1
-	_melee_state = MeleeState.WINDUP
+	_cancel_counter += 1
+	_attack_state = AttackState.WINDUP
 	$AttackSound.play_sound()
 
 
@@ -89,37 +124,38 @@ func _punch_billionaire():
 
 
 func _try_punch_billionaire() -> bool:
-	if _melee_state == MeleeState.ACTIVE and _billionaire_in_melee_reach:
+	if (
+		_attack_state == AttackState.ACTIVE
+		and _billionaire_in_melee_reach
+		and not _billionaire_was_punched_in_current_attack
+	):
 		_punch_billionaire()
 		return true
 	return false
 
 
-func is_attacking():
-	return _melee_state != MeleeState.NOT_ATTACKING
-
-
 func _on_sprite_animation_changed() -> void:
-	if not is_attacking:
+	if not is_attacking():
 		return
 	if (
 		_sprite.animation != _attacks_dict[_current_attack].windup
 		and _sprite.animation != _attacks_dict[_current_attack].active
 		and _sprite.animation != _attacks_dict[_current_attack].recover
 	):
-		_melee_state = MeleeState.NOT_ATTACKING
+		_attack_state = AttackState.NOT_ATTACKING
 
 
+# Go to next attack state
 func _on_sprite_animation_finished() -> void:
-	if not is_attacking:
+	if not is_attacking():
 		return
 
 	if _sprite.animation == _attacks_dict[_current_attack].windup:
-		_melee_state = MeleeState.ACTIVE
+		_attack_state = AttackState.ACTIVE
 	elif _sprite.animation == _attacks_dict[_current_attack].active:
-		_melee_state = MeleeState.RECOVER
+		_attack_state = AttackState.RECOVER
 	elif _sprite.animation == _attacks_dict[_current_attack].recover:
-		_melee_state = MeleeState.FINISHED
+		_attack_state = AttackState.FINISHED
 	_try_punch_billionaire()
 
 
