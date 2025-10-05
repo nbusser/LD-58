@@ -37,18 +37,26 @@ scale = Vector2(-1, -1)
 shape = SubResource("WorldBoundaryShape2D_wqubw")
 
 [node name="WallL" type="StaticBody2D" parent="Borders"]
-position = Vector2(-830, -82)
+position = Vector2(-667, -82)
 rotation = 1.5707964
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/WallL"]
+position = Vector2(0, 14)
 shape = SubResource("WorldBoundaryShape2D_wqubw")
 
+[node name="CamMarker" type="Node2D" parent="Borders/WallL"]
+position = Vector2(0, 32)
+
 [node name="WallR" type="StaticBody2D" parent="Borders"]
-position = Vector2(830, -82)
+position = Vector2(626, -82)
 rotation = 4.712389
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/WallR"]
+position = Vector2(0, 16)
 shape = SubResource("WorldBoundaryShape2D_wqubw")
+
+[node name="CamMarker" type="Node2D" parent="Borders/WallR"]
+position = Vector2(0, 32)
 
 [node name="BillionaireBorders" type="Node2D" parent="."]
 
@@ -70,7 +78,7 @@ collision_mask = 0
 shape = SubResource("WorldBoundaryShape2D_wqubw")
 
 [node name="WallL" type="StaticBody2D" parent="BillionaireBorders"]
-position = Vector2(-700, -82)
+position = Vector2(-634, -82)
 rotation = 1.5707964
 collision_layer = 64
 collision_mask = 0
@@ -79,7 +87,7 @@ collision_mask = 0
 shape = SubResource("WorldBoundaryShape2D_wqubw")
 
 [node name="WallR" type="StaticBody2D" parent="BillionaireBorders"]
-position = Vector2(700, -82)
+position = Vector2(640, -82)
 rotation = 4.712389
 collision_layer = 64
 collision_mask = 0

@@ -24,8 +24,8 @@ var shake_strength: float = 0.0
 
 @onready var ground = $"../Borders/Ground/CollisionShape2D"
 @onready var ceiling = $"../Borders/Ceiling/CollisionShape2D"
-@onready var wall_l = $"../Borders/WallL/CollisionShape2D"
-@onready var wall_r = $"../Borders/WallR/CollisionShape2D"
+@onready var wall_l = $"../Borders/WallL/CamMarker"
+@onready var wall_r = $"../Borders/WallR/CamMarker"
 
 
 func _ready() -> void:

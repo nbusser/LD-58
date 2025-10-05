@@ -10,7 +10,7 @@ const DIRECTIONS_MODIFIERS = [-1, 1]
 const DASH_SLOWMO_NAME := "player_dash"
 
 # Movement
-@export var ground_speed = 350
+@export var ground_speed = 450
 @export var air_speed = 290
 # Horizontal dash
 @export var dash_cooldown = 1.0
@@ -24,7 +24,7 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var down_dash_duration = 0.08
 # Jumps
 @export var max_input_jump_time = .4
-@export var jump_force = 6000
+@export var jump_force = 7000
 # Walls stickiness
 @export var wall_stickiness = 500
 @export var wall_jump_force = 450
