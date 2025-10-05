@@ -5,10 +5,6 @@ extends Control
 # Settings of all levels. To be configured from the editor
 @export var levels: Array[LevelData]
 
-# State of the game
-var current_level_number := 0
-var nb_coins := 0
-
 var current_audio_player: AudioStreamPlayer
 
 var current_scene:
@@ -18,6 +14,7 @@ var current_scene:
 
 @onready var main_menu = preload("res://src/MainMenu/MainMenu.tscn")
 @onready var level = preload("res://src/Level/Level.tscn")
+@onready var interlude = preload("res://src/Interlude/Interlude.tscn")
 @onready var score_screen = preload("res://src/ScoreScreen/ScoreScreen.tscn")
 @onready var level_selector = preload("res://src/LevelSelector/LevelSelector.tscn")
 @onready var credits = preload("res://src/Credits/Credits.tscn")
@@ -48,8 +45,7 @@ func _process(_delta: float) -> void:
 
 
 func _reset_game_state() -> void:
-	current_level_number = 0
-	nb_coins = 0
+	GameState.reset()
 
 
 func _quit_game() -> void:
@@ -71,15 +67,20 @@ func _start_game() -> void:
 func _run_level() -> void:
 	var scene: Level = level.instantiate()
 	# Provies its settings to the level
-	scene.init(current_level_number, levels[current_level_number], nb_coins)
+	scene.init(GameState.current_level_number, levels[GameState.current_level_number])
 	# Play level music
-	change_music_track(music_players[current_level_number % len(music_players)])
+	change_music_track(music_players[GameState.current_level_number % len(music_players)])
 	self.current_scene = scene
 
 
 func _run_selected_level(level_i: int) -> void:
-	current_level_number = level_i
+	GameState.current_level_number = level_i
 	_run_level()
+
+
+func _run_interlude() -> void:
+	var scene: Interlude = interlude.instantiate()
+	self.current_scene = scene
 
 
 func _run_level_selector() -> void:
@@ -88,10 +89,16 @@ func _run_level_selector() -> void:
 	self.current_scene = scene
 
 
-func _on_end_of_level(new_nb_coins: int) -> void:
+func _on_end_of_level(player_cash_p: int, billionaire_cash_p: int) -> void:
 	# Update game state depending on level result
-	nb_coins = new_nb_coins
-	_load_score_screen()
+	GameState.player_cash = player_cash_p
+	GameState.billionaire_cash = billionaire_cash_p
+	# _load_score_screen()
+	_run_interlude()
+
+
+func _on_end_of_interlude() -> void:
+	_run_next_level()
 
 
 func _on_game_over() -> void:
@@ -105,14 +112,14 @@ func _restart_level() -> void:
 
 func _load_score_screen() -> void:
 	var scene: ScoreScreen = score_screen.instantiate()
-	scene.init(current_level_number, nb_coins)
+	scene.init(GameState.current_level_number, GameState.player_cash)
 	self.current_scene = scene
 
 
 func _run_next_level() -> void:
-	current_level_number += 1
+	GameState.current_level_number += 1
 
-	if current_level_number >= levels.size():
+	if GameState.current_level_number >= levels.size():
 		# No more levels, end of the game
 		_run_credits(false)
 	else:
@@ -148,12 +155,15 @@ func _on_end_scene(status: Globals.EndSceneStatus, params: Dictionary = {}) -> v
 		Globals.EndSceneStatus.MAIN_MENU_CLICK_QUIT:
 			_quit_game()
 		Globals.EndSceneStatus.LEVEL_END:
-			var new_nb_coins: int = params["new_nb_coins"]
-			_on_end_of_level(new_nb_coins)
+			var player_cash_p: int = params["player_cash"]
+			var billionaire_cash_p: int = params["billionaire_cash"]
+			_on_end_of_level(player_cash_p, billionaire_cash_p)
 		Globals.EndSceneStatus.LEVEL_GAME_OVER:
 			_on_game_over()
 		Globals.EndSceneStatus.LEVEL_RESTART:
 			_restart_level()
+		Globals.EndSceneStatus.INTERLUDE_END:
+			_on_end_of_interlude()
 		Globals.EndSceneStatus.GAME_OVER_RESTART:
 			_restart_level()
 		Globals.EndSceneStatus.GAME_OVER_QUIT:

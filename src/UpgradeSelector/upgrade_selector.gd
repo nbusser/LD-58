@@ -1,4 +1,8 @@
+class_name UpgradeSelector
+
 extends Control
+
+signal close
 
 const ICON_TEXTURE = preload("res://assets/sprites/icon.png")
 
@@ -48,6 +52,7 @@ const UpgradeCard = preload("res://src/UpgradeSelector/upgrade_card.gd")
 ]
 
 var selectable_cards: Array[UpgradeCardData] = []
+
 var _card_pool: Array[UpgradeCardData] = available_cards.duplicate_deep()
 
 @onready var card_container: Control = %CardContainer
@@ -97,6 +102,7 @@ func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
 		return
 	selectable_cards.pop_at(index)
 	_reset_selectable_cards()
+	emit_signal("close")
 
 
 func _on_redraw_button_up() -> void:

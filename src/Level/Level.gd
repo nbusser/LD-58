@@ -23,8 +23,10 @@ func _ready():
 		billionaire_hit.connect(_billionaire.on_level_billionaire_hit)
 
 
-func init(level_number_p: int, level_data_p: LevelData, nb_coins_p: int):
-	level_state = LevelState.new(level_number_p, level_data_p, nb_coins_p)
+func init(level_number_p: int, level_data_p: LevelData):
+	level_state = LevelState.new(
+		level_number_p, level_data_p, GameState.player_cash, GameState.billionaire_cash
+	)
 
 
 func change_net_worth(damount: int):
@@ -34,13 +36,14 @@ func change_net_worth(damount: int):
 
 
 func _on_Timer_timeout():
-	# Simulates game state change
-	level_state.nb_coins += randi() % 100
-
-	if randi() % 4:
-		Globals.end_scene(Globals.EndSceneStatus.LEVEL_GAME_OVER)
-	else:
-		Globals.end_scene(Globals.EndSceneStatus.LEVEL_END, {"new_nb_coins": level_state.nb_coins})
+	# Globals.end_scene(Globals.EndSceneStatus.LEVEL_GAME_OVER)
+	Globals.end_scene(
+		Globals.EndSceneStatus.LEVEL_END,
+		{
+			"player_cash": level_state.player_cash,
+			"billionaire_cash": level_state.billionaire_net_worth
+		}
+	)
 
 
 func _on_player_billionaire_punched(amount: int) -> void:
@@ -49,5 +52,5 @@ func _on_player_billionaire_punched(amount: int) -> void:
 
 
 func on_coin_collected():
-	level_state.nb_coins += 1
-	hud.set_nb_coins(level_state.nb_coins)
+	level_state.player_cash += 1
+	hud.set_nb_coins(level_state.player_cash)

@@ -45,7 +45,7 @@ func set_dash_cooldown(value: int) -> void:
 func init(level_state: LevelState) -> void:
 	level_name = level_state.level_data.name
 	level_number = level_state.level_number
-	nb_coins = level_state.nb_coins
+	nb_coins = level_state.player_cash
 	billionaire_net_worth = level_state.billionaire_net_worth
 
 

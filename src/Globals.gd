@@ -12,6 +12,8 @@ enum EndSceneStatus {
 	LEVEL_END,
 	LEVEL_GAME_OVER,
 	LEVEL_RESTART,
+	# Interlude
+	INTERLUDE_END,
 	# Game over screen
 	GAME_OVER_RESTART,
 	GAME_OVER_QUIT,

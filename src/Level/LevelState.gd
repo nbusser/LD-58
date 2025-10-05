@@ -8,16 +8,19 @@ extends Resource
 var level_number: int = 0
 var level_data: LevelData  # Config of the level
 
-var nb_coins: int = 0  # Coins collected from the beggining of game
+var player_cash: int = 0  # Coins collected from the beggining of game
 var billionaire_initial_net_worth: int = 0
 var billionaire_net_worth: int = 0
 
 
-func _init(level_number_p: int, level_data_p: LevelData, nb_coins_p: int):
+func _init(
+	level_number_p: int, level_data_p: LevelData, player_cash_p: int, billionaire_cash_p: int
+):
 	self.level_number = level_number_p
 	self.level_data = level_data_p
-	self.nb_coins = nb_coins_p
-	self.billionaire_initial_net_worth = _compute_initial_billionaire_net_worth(level_number_p)
+	self.player_cash = player_cash_p
+	# self.billionaire_initial_net_worth = _compute_initial_billionaire_net_worth(level_number_p)
+	self.billionaire_initial_net_worth = billionaire_cash_p
 	self.billionaire_net_worth = self.billionaire_initial_net_worth
 
 
