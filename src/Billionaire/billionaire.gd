@@ -165,6 +165,7 @@ func _air_shotgun_routine() -> void:
 
 	# Fall
 	_is_gravity_enabled = true
+	await get_tree().create_timer(0.5).timeout
 
 
 func _minting_plate_routine() -> void:
