@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7cvats3bj8oc"
-path="res://.godot/imported/attack_windup.png-5ccdccc2043ca0b1b6ad4a28198096e1.ctex"
+uid="uid://12sud46mogw6"
+path="res://.godot/imported/air_attack.png-b82a1c1607f5ecc598e615e85f9a1bbb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/player/attack_windup.png"
-dest_files=["res://.godot/imported/attack_windup.png-5ccdccc2043ca0b1b6ad4a28198096e1.ctex"]
+source_file="res://assets/sprites/player/air_attack.png"
+dest_files=["res://.godot/imported/air_attack.png-b82a1c1607f5ecc598e615e85f9a1bbb.ctex"]
 
 [params]
 

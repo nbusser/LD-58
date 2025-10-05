@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwgsbl1j11hek"
-path="res://.godot/imported/air_strike_recover.png-44b8f89bb3b2b1abc3a2721f20f052c1.ctex"
+uid="uid://b4m1dths42sq0"
+path="res://.godot/imported/attack.png-297458346acc0dc550be95872f2d685c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/player/air_strike_recover.png"
-dest_files=["res://.godot/imported/air_strike_recover.png-44b8f89bb3b2b1abc3a2721f20f052c1.ctex"]
+source_file="res://assets/sprites/player/attack.png"
+dest_files=["res://.godot/imported/attack.png-297458346acc0dc550be95872f2d685c.ctex"]
 
 [params]
 

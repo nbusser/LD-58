@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bn1xwcak8mavn"
-path="res://.godot/imported/air_strike_windup.png-c6570364af53a35e8bfc9bb69846343b.ctex"
+uid="uid://cr8cuavjirv8j"
+path="res://.godot/imported/laser.png-f7d5bec963abdad2e3c4b8e843826439.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/player/air_strike_windup.png"
-dest_files=["res://.godot/imported/air_strike_windup.png-c6570364af53a35e8bfc9bb69846343b.ctex"]
+source_file="res://assets/sprites/billionaire/laser.png"
+dest_files=["res://.godot/imported/laser.png-f7d5bec963abdad2e3c4b8e843826439.ctex"]
 
 [params]
 
