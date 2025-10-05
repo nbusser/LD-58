@@ -204,9 +204,10 @@ func _rain_routine() -> void:
 	$BillionaireBody/Sprite2D.play("focus")
 	var focus_duration: float = 2.0
 	await get_tree().create_timer(focus_duration).timeout
-	$BillionaireBody/Sprite2D.play("default")
 
+	$BillionaireBody/Sprite2D.play("laugh")
 	await spawn_rain_coroutine.call()
+	$BillionaireBody/Sprite2D.play("default")
 
 
 func _init_repulse_wave():
@@ -229,7 +230,7 @@ func _repulse_wave_routine():
 
 	$BillionaireBody/Sprite2D.play("focus")
 	await get_tree().create_timer(focus_duration).timeout
-	$BillionaireBody/Sprite2D.play("default")
+	$BillionaireBody/Sprite2D.play("laugh")
 
 	for column: Area2D in _repulse_wave.get_children():
 		column.visible = true
@@ -238,6 +239,8 @@ func _repulse_wave_routine():
 		await get_tree().create_timer(0.8).timeout
 
 	await get_tree().create_timer(1.0).timeout
+
+	$BillionaireBody/Sprite2D.play("default")
 
 	for column: Area2D in _repulse_wave.get_children():
 		column.visible = false

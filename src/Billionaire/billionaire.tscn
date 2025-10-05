@@ -47,7 +47,7 @@ shape = SubResource("RectangleShape2D_qa6ra")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="BillionaireBody"]
 sprite_frames = ExtResource("2_d2xww")
-animation = &"focus"
+animation = &"laugh"
 
 [node name="Hitbox" type="Area2D" parent="BillionaireBody" groups=["billionaire"]]
 collision_layer = 4

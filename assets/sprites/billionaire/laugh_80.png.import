@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvuq10b16x1o6"
-path="res://.godot/imported/active_80.png-58ad7e54d331114fd8df8579d7223191.ctex"
+uid="uid://20j46dwg2qdy"
+path="res://.godot/imported/laugh_80.png-b5a0dc742a1e37bdd00f1468798f2da7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/billionaire/active_80.png"
-dest_files=["res://.godot/imported/active_80.png-58ad7e54d331114fd8df8579d7223191.ctex"]
+source_file="res://assets/sprites/billionaire/laugh_80.png"
+dest_files=["res://.godot/imported/laugh_80.png-b5a0dc742a1e37bdd00f1468798f2da7.ctex"]
 
 [params]
 
