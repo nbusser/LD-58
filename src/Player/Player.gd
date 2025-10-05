@@ -201,11 +201,11 @@ func _physics_process(delta):
 		for body in _smash_area.get_overlapping_bodies():
 			if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.BILLIONAIRE]):
 				body.velocity.y -= (
-					200 * (1.0 - ((body.global_position - global_position).length() / 200.) ** 2)
+					200 * (1.0 - ((body.global_position - global_position).length() / 250.) ** 2)
 				)
 			elif body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.COIN]):
 				body.propulse_up(
-					1.0 - ((body.global_position - global_position).length() / 200.) ** 3
+					1.0 - ((body.global_position - global_position).length() / 250.) ** 3
 				)
 
 	prev_velocity = velocity

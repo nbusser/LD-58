@@ -68,8 +68,7 @@ debug_color = Color(0.7114656, 0.48113203, 0.18397781, 0.41960785)
 [node name="SoftHitbox" type="Area2D" parent="."]
 position = Vector2(0, -41.66658)
 collision_layer = 0
-collision_mask = 34
-monitoring = false
+collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SoftHitbox"]
