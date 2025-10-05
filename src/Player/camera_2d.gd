@@ -100,16 +100,16 @@ func _process(delta):
 	var zoom_level = 2 - 1.4 * clamp(player_billionaire_dist.length() / 1000, 0., 1.)
 	zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 10 * delta)
 	#else:
-		#position = lerp(position, player.position + Vector2(0, -35), 12 * delta)
-		#var zoom_level = clamp(1.0 - player.velocity.length() / 400 + .3, .3, 1.8)
-		#zoom_level += 2.4
-		#zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 2 * delta)
-		#var col_pt = collision(get_camera_rect(), billionaire.global_position)
-		#if col_pt != null:
-			#boss_indicator.visible = true
-			#boss_indicator.global_position = col_pt
-		#else:
-			#boss_indicator.visible = false
+	#position = lerp(position, player.position + Vector2(0, -35), 12 * delta)
+	#var zoom_level = clamp(1.0 - player.velocity.length() / 400 + .3, .3, 1.8)
+	#zoom_level += 2.4
+	#zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 2 * delta)
+	#var col_pt = collision(get_camera_rect(), billionaire.global_position)
+	#if col_pt != null:
+	#boss_indicator.visible = true
+	#boss_indicator.global_position = col_pt
+	#else:
+	#boss_indicator.visible = false
 
 	# Fade out the intensity over time
 	shake_strength = lerp(shake_strength, 0., shake_decay_rate * delta)
