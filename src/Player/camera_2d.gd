@@ -39,7 +39,6 @@ func _ready() -> void:
 	limit_right = wall_r.global_position.x
 	limit_top = ceiling.global_position.y
 	limit_bottom = ground.global_position.y + 25
-	print(limit_bottom, " ", limit_top, " ", limit_left, " ", limit_right, " ")
 
 
 func apply_noise_shake() -> void:
