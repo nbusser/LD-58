@@ -41,6 +41,7 @@ func _ready() -> void:
 	limit_bottom = ground.global_position.y + 25
 	print(limit_bottom, " ", limit_top, " ", limit_left, " ", limit_right, " ")
 
+
 func apply_noise_shake() -> void:
 	shake_strength = noise_shake_strength
 
