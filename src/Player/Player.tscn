@@ -22,7 +22,7 @@ size = Vector2(12.499975, 62.499878)
 size = Vector2(73.19675, 15.735322)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dd31a"]
-radius = 400.0
+radius = 654.58
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 scale = Vector2(0.24000047, 0.24000047)
@@ -43,6 +43,7 @@ sounds = Array[AudioStream]([ExtResource("5_477y8")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -24.999954)
 sprite_frames = ExtResource("6_4rl4y")
 offset = Vector2(0, -20.833288)
 

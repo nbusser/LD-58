@@ -16,7 +16,7 @@ const DIRECTIONS_MODIFIERS = [-1, 1]
 @export var dash_speed = 1500
 @export var dash_window = .2
 # Vertical dash
-@export var down_dash_speed = 1500
+@export var down_dash_speed = 1000
 @export var down_dash_duration = 0.08
 # Jumps
 @export var max_input_jump_time = .4
@@ -168,8 +168,9 @@ func _physics_process(delta):
 		_camera.apply_noise_shake()
 		for body in _smash_area.get_overlapping_bodies():
 			if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.BILLIONAIRE]):
+				print("B ", 1.0 - ((body.global_position - global_position).length() / 100.) ** 2)
 				body.velocity.y -= (
-					200 * (1.0 - ((body.global_position - global_position).length() / 550.) ** 2)
+					200 * (1.0 - ((body.global_position - global_position).length() / 100.) ** 2)
 				)
 			elif body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.COIN]):
 				body.propulse_up(
