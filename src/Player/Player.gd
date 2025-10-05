@@ -255,10 +255,10 @@ func get_hurt(knockback_force):
 	# Get knocked back
 	velocity += knockback_force
 	# Get deformed
-	scale *= Vector2(
-		1. - clamp((abs(knockback_force.x)) / 2000., 0., .2),
-		1. - clamp((abs(knockback_force.y)) / 2000., 0., .2)
-	)
+	if abs(knockback_force.x) > 1.2*abs(knockback_force.y):
+		scale *= Vector2(1. - clamp((abs(knockback_force.x)) / 2000., 0., .1), 1.)
+	elif abs(knockback_force.y) > 1.2*abs(knockback_force.x):
+		scale *= Vector2(1., 1. - clamp((abs(knockback_force.x)) / 2000., 0., .1))
 	_camera.apply_noise_shake()
 
 	# Red glow on hit
