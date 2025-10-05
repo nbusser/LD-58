@@ -1,6 +1,7 @@
-[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://cwedgk16x5d4h"]
+[gd_resource type="SpriteFrames" load_steps=9 format=3 uid="uid://cwedgk16x5d4h"]
 
 [ext_resource type="Texture2D" uid="uid://dj654g8ge38qt" path="res://assets/sprites/billionaire/idle.png" id="1_vpf0r"]
+[ext_resource type="Texture2D" uid="uid://cc1ncp1daaf2s" path="res://assets/sprites/billionaire/phone.png" id="2_82bc1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_82bc1"]
 atlas = ExtResource("1_vpf0r")
@@ -9,6 +10,22 @@ region = Rect2(0, 0, 272, 304)
 [sub_resource type="AtlasTexture" id="AtlasTexture_3yasf"]
 atlas = ExtResource("1_vpf0r")
 region = Rect2(272, 0, 272, 304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6op37"]
+atlas = ExtResource("2_82bc1")
+region = Rect2(0, 0, 272, 304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3s7sa"]
+atlas = ExtResource("2_82bc1")
+region = Rect2(272, 0, 272, 304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_83ai8"]
+atlas = ExtResource("2_82bc1")
+region = Rect2(544, 0, 272, 304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fg0cj"]
+atlas = ExtResource("2_82bc1")
+region = Rect2(816, 0, 272, 304)
 
 [resource]
 animations = [{
@@ -31,6 +48,23 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6op37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3s7sa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_83ai8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fg0cj")
+}],
+"loop": true,
+"name": &"focus",
+"speed": 5.0
 }, {
 "frames": [],
 "loop": false,

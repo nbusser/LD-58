@@ -174,7 +174,6 @@ func _minting_plate_routine() -> void:
 
 	$AttackPatterns/Machinegun/FocusSound.play_sound()
 	await get_tree().create_timer(1.2).timeout
-
 	$AttackPatterns/Machinegun/ShootSound.play_sound()
 	var nb_bullets = 10
 	for _i in range(nb_bullets):
@@ -201,8 +200,11 @@ func _rain_routine() -> void:
 			await get_tree().create_timer(rain_bullet_interval_duration).timeout
 
 	$AttackPatterns/Rain/FocusSound.play_sound()
+
+	$BillionaireBody/Sprite2D.play("focus")
 	var focus_duration: float = 2.0
 	await get_tree().create_timer(focus_duration).timeout
+	$BillionaireBody/Sprite2D.play("default")
 
 	await spawn_rain_coroutine.call()
 
@@ -224,7 +226,10 @@ func _init_repulse_wave():
 func _repulse_wave_routine():
 	var focus_duration: float = 2.0
 	$AttackPatterns/RepulsiveWave/FocusSound.play_sound()
+
+	$BillionaireBody/Sprite2D.play("focus")
 	await get_tree().create_timer(focus_duration).timeout
+	$BillionaireBody/Sprite2D.play("default")
 
 	for column: Area2D in _repulse_wave.get_children():
 		column.visible = true
