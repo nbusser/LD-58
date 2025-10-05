@@ -11,8 +11,8 @@
 [node name="Map" type="Node2D"]
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(-204, -266.5)
-scale = Vector2(0.484375, 0.70214844)
+position = Vector2(-20.499998, -265.99997)
+scale = Vector2(0.8834635, 0.70117193)
 texture = ExtResource("1_e037b")
 
 [node name="Player" parent="." instance=ExtResource("2")]
@@ -37,14 +37,14 @@ scale = Vector2(-1, -1)
 shape = SubResource("WorldBoundaryShape2D_wqubw")
 
 [node name="WallL" type="StaticBody2D" parent="Borders"]
-position = Vector2(-576, -82)
+position = Vector2(-830, -82)
 rotation = 1.5707964
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/WallL"]
 shape = SubResource("WorldBoundaryShape2D_wqubw")
 
 [node name="WallR" type="StaticBody2D" parent="Borders"]
-position = Vector2(168, -82)
+position = Vector2(830, -82)
 rotation = 4.712389
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/WallR"]
@@ -70,7 +70,7 @@ collision_mask = 0
 shape = SubResource("WorldBoundaryShape2D_wqubw")
 
 [node name="WallL" type="StaticBody2D" parent="BillionaireBorders"]
-position = Vector2(-528, -82)
+position = Vector2(-700, -82)
 rotation = 1.5707964
 collision_layer = 64
 collision_mask = 0
@@ -79,7 +79,7 @@ collision_mask = 0
 shape = SubResource("WorldBoundaryShape2D_wqubw")
 
 [node name="WallR" type="StaticBody2D" parent="BillionaireBorders"]
-position = Vector2(168, -82)
+position = Vector2(700, -82)
 rotation = 4.712389
 collision_layer = 64
 collision_mask = 0
@@ -90,6 +90,8 @@ shape = SubResource("WorldBoundaryShape2D_wqubw")
 
 [node name="Billionaire" parent="." instance=ExtResource("3_e037b")]
 position = Vector2(76, -69)
+idle_range_seconds = null
+coins_per_damage = null
 
 [node name="Coins" type="Node2D" parent="."]
 
