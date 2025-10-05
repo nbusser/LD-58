@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=18 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="Texture2D" uid="uid://dj654g8ge38qt" path="res://assets/sprites/billionaire/idle.png" id="2_qa6ra"]
@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="9_kdd1f"]
 [ext_resource type="AudioStream" uid="uid://cl4rktl331388" path="res://assets/sounds/repulsive_wave_focus.wav" id="9_qa6ra"]
 [ext_resource type="AudioStream" uid="uid://d1i6r2bm01r4v" path="res://assets/sounds/repulsive_wave_column.wav" id="11_tafn6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qa6ra"]
+size = Vector2(14, 19)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0jg"]
 size = Vector2(24, 24)
@@ -41,7 +44,8 @@ collision_layer = 32
 collision_mask = 65
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody"]
-shape = SubResource("RectangleShape2D_xg0jg")
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_qa6ra")
 
 [node name="Sprite2D" type="Sprite2D" parent="BillionaireBody"]
 scale = Vector2(0.064986736, 0.064986736)
