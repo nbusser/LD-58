@@ -255,9 +255,10 @@ func get_hurt(knockback_force):
 	# Get knocked back
 	velocity += knockback_force
 	# Get deformed
-	scale = Vector2(
-		(1. - clamp((abs(knockback_force.x)) / 2000., 0., .2)) * .24,
-		(1. - clamp((abs(knockback_force.y)) / 2000., 0., .2)) * .24
+	var original_scale = scale
+	scale *= Vector2(
+		1. - clamp((abs(knockback_force.x)) / 2000., 0., .2),
+		1. - clamp((abs(knockback_force.y)) / 2000., 0., .2)
 	)
 	_camera.apply_noise_shake()
 
@@ -266,7 +267,7 @@ func get_hurt(knockback_force):
 	modulate = Color(1, 0, 0)
 	await get_tree().create_timer(1.0).timeout
 	modulate = Color(1, 1, 1, 1)
-	scale = Vector2(.24, .24)
+	scale = original_scale
 
 
 func _on_soft_hitbox_body_entered(body: Node2D) -> void:
