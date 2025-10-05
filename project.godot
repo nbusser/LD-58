@@ -33,6 +33,8 @@ enabled=PackedStringArray()
 [global_group]
 
 billionaire=""
+player=""
+laser_surface=""
 
 [gui]
 

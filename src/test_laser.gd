@@ -6,6 +6,7 @@ var time: float = 0.0
 var laser_positions: PackedVector2Array
 var laser_states: PackedFloat32Array
 
+
 func _ready():
 	get_viewport().size_changed.connect(_on_viewport_size_changed)
 	_on_viewport_size_changed()
@@ -13,11 +14,13 @@ func _ready():
 	laser_positions.resize(16)
 	laser_states.resize(8)
 
+
 func _on_viewport_size_changed():
 	var viewport_size: Vector2i = get_viewport().size
 	if laser_surface:
 		laser_surface.scale = viewport_size
 		laser_surface.material.set_shader_parameter("resolution", viewport_size * .5)
+
 
 func _process(delta):
 	time += delta
@@ -36,17 +39,17 @@ func _process(delta):
 
 	laser_positions[6] = Vector2(0.5 + sin(time * 0.7) * 0.3, 0.0)
 	laser_positions[7] = Vector2(0.5 + cos(time * 0.9) * 0.2, 1.0)
-	
+
 	# Animate laser states
 	# Laser 0: cycles through warning phase
 	laser_states[0] = fmod(time * 0.5, 1.0)
-	
+
 	# Laser 1: always active
 	laser_states[1] = 1.0
-	
+
 	# Laser 2: cycles through full lifecycle (warning -> active -> dying)
 	laser_states[2] = fmod(time * 0.3, 2.0)
-	
+
 	# Laser 3: pulses between active and dying
 	laser_states[3] = 1.0 + abs(sin(time * 2.0)) * 0.5
 

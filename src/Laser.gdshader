@@ -1,25 +1,26 @@
 shader_type canvas_item;
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 
 uniform int laser_count : hint_range(0, 8) = 2;
 uniform vec2 resolution = vec2(256, 256);
-uniform vec2 laser_points[16];
-uniform float laser_states[8];
+uniform vec2 laser_points[24];
+uniform float laser_states[12];
 uniform float laser_hue : hint_range(0.0, 360.0) = 0.0;
-uniform float intensity : hint_range(0.0, .3) = 2.5;
-uniform float beam_width : hint_range(0.0, 1.0) = 0.5;
-uniform float core_width : hint_range(0.0, 1.0) = 0.2;
+uniform float intensity : hint_range(0.0, .3) = .2;
+uniform float beam_width : hint_range(0.0, 1.0) = 0.71;
+uniform float core_width : hint_range(0.0, 1.0) = 0.17;
 uniform float edge_softness : hint_range(0.01, 0.5) = 0.15;
-uniform float pulse_speed : hint_range(0.0, 10.0) = 2.0;
-uniform float pulse_amplitude : hint_range(0.0, 1.0) = 0.3;
-uniform float noise_scale : hint_range(0.0, 50.0) = 10.0;
-uniform float noise_speed : hint_range(0.0, 10.0) = 3.0;
-uniform float noise_intensity : hint_range(0.0, 1.0) = 0.2;
-uniform float energy_flow_speed : hint_range(0.0, 10.0) = 4.0;
-uniform float glow_radius : hint_range(0.0, 2.0) = 0.8;
-uniform float distortion_amount : hint_range(0.0, 0.2) = 0.05;
-uniform vec4 distortion_freqs : source_color = vec4(.9);
+uniform float pulse_speed : hint_range(0.0, 10.0) = .85;
+uniform float pulse_amplitude : hint_range(0.0, 1.0) = 0.12;
+uniform float noise_scale : hint_range(0.0, 50.0) = 17.0;
+uniform float noise_speed : hint_range(0.0, 10.0) = 4.67;
+uniform float noise_intensity : hint_range(0.0, 1.0) = 1.0;
+uniform float energy_flow_speed : hint_range(0.0, 10.0) = 8.0;
+uniform float glow_radius : hint_range(0.0, 2.0) = 1.55;
+uniform float distortion_amount : hint_range(0.0, 0.2) = 0.11;
+uniform vec4 distortion_freqs : source_color = vec4(0.47058824, 0.14901961, 0.36078432, 0.64705884);
 uniform float flicker_speed : hint_range(0.0, 20.0) = 8.0;
-uniform float flicker_intensity : hint_range(0.0, 1.0) = 0.1;
+uniform float flicker_intensity : hint_range(0.0, 1.0) = 0.2;
 
 float random(vec2 st) {
     return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
@@ -199,6 +200,10 @@ void fragment() {
 
 	final_color.rgb = oklch_to_rgb(final_color.xyz);
 
-    COLOR = final_color;
-    COLOR.a = clamp(COLOR.a, 0.0, 1.0);
+    // COLOR = final_color;
+    // COLOR.a = clamp(COLOR.a, 0.0, 1.0);
+
+    vec4 screen_color = texture(screen_texture, UV);
+    // COLOR = mix(screen_color, final_color, final_color.a);
+    COLOR = screen_color + (final_color * final_color.a);
 }

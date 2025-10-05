@@ -25,6 +25,7 @@ var _coin_scene = preload("res://src/Coin/Coin.tscn")
 @onready var _attack_patterns: Node = $AttackPatterns
 @onready var _level: Level = $"../.."
 @onready var _coins: Node2D = $"../Coins"
+@onready var _lasers: Node2D = %Lasers
 
 
 func _ready() -> void:
@@ -32,6 +33,14 @@ func _ready() -> void:
 	$AttackPatterns/Machinegun.routine = _minting_plate_routine
 	$AttackPatterns/Rain.routine = _rain_routine
 	$AttackPatterns/RepulsiveWave.routine = _repulse_wave_routine
+
+	# Setup laser attack patterns if they exist
+	if has_node("AttackPatterns/LaserWarning"):
+		$AttackPatterns/LaserWarning.routine = _laser_warning_routine
+	if has_node("AttackPatterns/LaserSweep"):
+		$AttackPatterns/LaserSweep.routine = _laser_sweep_routine
+	if has_node("AttackPatterns/LaserCage"):
+		$AttackPatterns/LaserCage.routine = _laser_cage_routine
 
 	_init_repulse_wave()
 
@@ -314,6 +323,63 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 		_knockback_velocity.y = knockback_direction.y * knockback_force_y
 
 	knockback_routine.call()
+
+
+func _laser_warning_routine() -> void:
+	# Maybe run to reposition
+	if Globals.coin_flip():
+		await _random_run()
+
+	# Focus animation
+	$AttackPatterns/LaserWarning/FocusSound.play_sound()
+	$BillionaireBody/Sprite2D.play("focus")
+	await get_tree().create_timer(1.0).timeout
+
+	# Fire lasers at player position
+	$BillionaireBody/Sprite2D.play("laugh")
+	await _lasers.laser_warning_pattern(3, 0.4)
+
+	# Wait for lasers to finish
+	await get_tree().create_timer(2.0).timeout
+	$BillionaireBody/Sprite2D.play("default")
+
+
+func _laser_sweep_routine() -> void:
+	# Determine sweep direction based on player position
+	var sweep_direction = 1 if _player.global_position.x < _body.global_position.x else -1
+
+	# Focus animation
+	$AttackPatterns/LaserSweep/FocusSound.play_sound()
+	$BillionaireBody/Sprite2D.play("focus")
+	await get_tree().create_timer(1.2).timeout
+
+	# Fire sweeping laser
+	$BillionaireBody/Sprite2D.play("laugh")
+	_lasers.laser_sweep_pattern(sweep_direction, 0.4)
+
+	# Wait for laser to finish
+	await get_tree().create_timer(4.0).timeout
+	$BillionaireBody/Sprite2D.play("default")
+
+
+func _laser_cage_routine() -> void:
+	# Run towards center
+	var center_direction = sign(0.0 - _body.global_position.x)
+	if abs(_body.global_position.x) > 100:
+		await _run(center_direction, 200.0, 0.2, 0.3, 0.4, true)
+
+	# Focus animation
+	$AttackPatterns/LaserCage/FocusSound.play_sound()
+	$BillionaireBody/Sprite2D.play("focus")
+	await get_tree().create_timer(1.5).timeout
+
+	# Create laser cage
+	$BillionaireBody/Sprite2D.play("laugh")
+	await _lasers.laser_cage_pattern()
+
+	# Wait for cage to finish
+	await get_tree().create_timer(4.0).timeout
+	$BillionaireBody/Sprite2D.play("default")
 
 
 func _on_sprite_2d_animation_finished() -> void:
