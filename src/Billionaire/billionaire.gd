@@ -235,3 +235,9 @@ func _on_idle_timer_timeout() -> void:
 
 func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 	health = max(0, health - amount)
+
+	# Red glow on hit
+	$SFX/HurtSound.play_sound()
+	modulate = Color(1, 0, 0)
+	await get_tree().create_timer(1.0).timeout
+	modulate = Color(1, 1, 1, 1)

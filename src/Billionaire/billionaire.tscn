@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=19 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="Texture2D" uid="uid://dj654g8ge38qt" path="res://assets/sprites/billionaire/idle.png" id="2_qa6ra"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://ne2y63b0451" path="res://assets/sounds/machinegun_focus.wav" id="8_d2xww"]
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="9_kdd1f"]
 [ext_resource type="AudioStream" uid="uid://cl4rktl331388" path="res://assets/sounds/repulsive_wave_focus.wav" id="9_qa6ra"]
+[ext_resource type="AudioStream" uid="uid://6u1f8h66ppko" path="res://assets/sounds/hurt.wav" id="11_d2xww"]
 [ext_resource type="AudioStream" uid="uid://d1i6r2bm01r4v" path="res://assets/sounds/repulsive_wave_column.wav" id="11_tafn6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qa6ra"]
@@ -181,6 +182,13 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 [node name="ColumnSound" type="AudioStreamPlayer" parent="AttackPatterns/RepulsiveWave"]
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("11_tafn6")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="HurtSound" type="AudioStreamPlayer" parent="SFX"]
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("11_d2xww")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
