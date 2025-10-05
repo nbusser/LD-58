@@ -1,13 +1,83 @@
-[gd_scene load_steps=12 format=3 uid="uid://dss1w1wv5xvq1"]
+[gd_scene load_steps=24 format=3 uid="uid://dss1w1wv5xvq1"]
 
 [ext_resource type="Script" uid="uid://ty44l5afcwx4" path="res://src/Player/Player.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://cehi4sgm55qe3" path="res://assets/sprites/player/idle.png" id="2_dd31a"]
+[ext_resource type="Script" uid="uid://0ol0gfmf4qyv" path="res://src/Player/AttackManager.gd" id="2_ub20b"]
+[ext_resource type="Texture2D" uid="uid://bs4hbjk5me66l" path="res://assets/sprites/player/attack_active.png" id="3_fnhyv"]
+[ext_resource type="Texture2D" uid="uid://bepp51emmfl5j" path="res://assets/sprites/player/attack_recover.png" id="3_ub20b"]
 [ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="3_vy1tf"]
 [ext_resource type="AudioStream" uid="uid://6u1f8h66ppko" path="res://assets/sounds/hurt.wav" id="4_dd31a"]
+[ext_resource type="AudioStream" uid="uid://cfh85dw30ostv" path="res://assets/sounds/attack.wav" id="4_fnhyv"]
+[ext_resource type="AudioStream" uid="uid://c3p0l877cnqyw" path="res://assets/sounds/punch.wav" id="5_477y8"]
 [ext_resource type="AudioStream" uid="uid://jrns7idjix3g" path="res://assets/sounds/hurt2.wav" id="5_gilji"]
+[ext_resource type="Texture2D" uid="uid://b7cvats3bj8oc" path="res://assets/sprites/player/attack_windup.png" id="5_nrcd8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_477y8"]
+atlas = ExtResource("3_fnhyv")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vy57f"]
+atlas = ExtResource("3_fnhyv")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r54fd"]
+atlas = ExtResource("3_ub20b")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dlqko"]
+atlas = ExtResource("3_ub20b")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vi1r3"]
+atlas = ExtResource("3_ub20b")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdx0i"]
+atlas = ExtResource("5_nrcd8")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rxnr"]
+atlas = ExtResource("5_nrcd8")
+region = Rect2(100, 0, 100, 100)
 
 [sub_resource type="SpriteFrames" id="2"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_477y8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vy57f")
+}],
+"loop": false,
+"name": &"attack_active",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r54fd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dlqko")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vi1r3")
+}],
+"loop": false,
+"name": &"attack_recover",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdx0i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rxnr")
+}],
+"loop": false,
+"name": &"attack_windup",
+"speed": 6.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_dd31a")
@@ -37,8 +107,20 @@ scale = Vector2(0.24000047, 0.24000047)
 collision_layer = 16
 script = ExtResource("2")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -20.833292)
+[node name="AttackManager" type="Node" parent="."]
+script = ExtResource("2_ub20b")
+
+[node name="AttackSound" type="AudioStreamPlayer" parent="AttackManager"]
+script = ExtResource("3_vy1tf")
+sounds = Array[AudioStream]([ExtResource("4_fnhyv")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
+[node name="PunchSound" type="AudioStreamPlayer" parent="AttackManager"]
+script = ExtResource("3_vy1tf")
+sounds = Array[AudioStream]([ExtResource("5_477y8")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("2")
 offset = Vector2(0, -20.833288)
 
@@ -73,9 +155,9 @@ script = ExtResource("3_vy1tf")
 sounds = Array[AudioStream]([ExtResource("4_dd31a"), ExtResource("5_gilji")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.1
-autostart = true
+[node name="PunchCooldownTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 
 [node name="PunchArea" type="Area2D" parent="."]
 position = Vector2(0, -41.66658)
@@ -98,9 +180,11 @@ collision_mask = 34
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SmashArea"]
 shape = SubResource("CircleShape2D_dd31a")
 
+[connection signal="animation_changed" from="Sprite" to="AttackManager" method="_on_sprite_animation_changed"]
+[connection signal="animation_finished" from="Sprite" to="AttackManager" method="_on_sprite_animation_finished"]
 [connection signal="body_entered" from="Feet" to="." method="_on_feet_body_entered"]
 [connection signal="body_exited" from="Feet" to="." method="_on_feet_body_exited"]
 [connection signal="body_entered" from="SoftHitbox" to="." method="_on_soft_hitbox_body_entered"]
 [connection signal="body_exited" from="SoftHitbox" to="." method="_on_soft_hitbox_body_exited"]
-[connection signal="body_entered" from="PunchArea" to="." method="_on_punch_area_body_entered"]
-[connection signal="body_exited" from="PunchArea" to="." method="_on_punch_area_body_exited"]
+[connection signal="body_entered" from="PunchArea" to="AttackManager" method="_on_punch_area_body_entered"]
+[connection signal="body_exited" from="PunchArea" to="AttackManager" method="_on_punch_area_body_exited"]

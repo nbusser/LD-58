@@ -160,11 +160,11 @@ func _physics_process(delta):
 	if prev_velocity.y > 1000 && is_on_floor():
 		_camera.apply_noise_shake()
 		for body in _smash_area.get_overlapping_bodies():
-			if body.is_in_group("Billionaire"):
+			if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.BILLIONAIRE]):
 				body.velocity.y -= (
 					200 * (1.0 - ((body.global_position - global_position).length() / 550.) ** 2)
 				)
-			elif body.is_in_group("coin"):
+			elif body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.COIN]):
 				body.propulse_up(
 					1.0 - ((body.global_position - global_position).length() / 100.) ** 2
 				)
@@ -177,16 +177,9 @@ func _physics_process(delta):
 		_punch_area.scale.x = 1.0
 	elif velocity.x < 0:
 		_punch_area.scale.x = -1.0
-	if Input.is_action_just_pressed("melee") && now - previous_melee > melee_cooldown:
-		in_melee = true
-	elif (
-		in_melee && (Input.is_action_just_pressed("melee") || now - previous_melee > melee_duration)
-	):
-		in_melee = false
-	if in_melee && billionaire_in_melee_reach:
-		emit_signal("billionaire_punched", melee_damage)
-		if is_melee_one_shot:
-			in_melee = false
+
+	if Input.is_action_just_pressed("melee"):
+		$AttackManager.try_attack()
 
 
 func get_hurt(knockback_force):
