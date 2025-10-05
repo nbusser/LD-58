@@ -57,8 +57,14 @@ func get_noise_offset(delta: float) -> Vector2:
 	# Set the x values of each call to 'get_noise_2d' to a different value
 	# so that our x and y vectors will be reading from unrelated areas of noise
 	return Vector2(
-		noise.get_noise_2d(1, noise_i) * shake_strength + noise_bg.get_noise_2d(1, noise_bg_i) * noise_bg_shake_strength,
-		noise.get_noise_2d(100, noise_i) * shake_strength + noise_bg.get_noise_2d(100, noise_bg_i) * noise_bg_shake_strength
+		(
+			noise.get_noise_2d(1, noise_i) * shake_strength
+			+ noise_bg.get_noise_2d(1, noise_bg_i) * noise_bg_shake_strength
+		),
+		(
+			noise.get_noise_2d(100, noise_i) * shake_strength
+			+ noise_bg.get_noise_2d(100, noise_bg_i) * noise_bg_shake_strength
+		)
 	)
 
 
