@@ -217,7 +217,6 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="LaserWarning" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "LaserWarning"
-net_worth_percent_threshold = 80.0
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/LaserWarning"]
 script = ExtResource("3_bqgkp")

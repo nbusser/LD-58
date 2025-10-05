@@ -176,15 +176,18 @@ func clear_all_lasers():
 # Attack pattern: Warning lasers at player position
 func laser_warning_pattern(num_lasers: int = 3, delay_between: float = 0.3):
 	var base_x = player.global_position.x
+	var dir = sign(player.velocity.x)
+	# Predictive aiming based on player velocity
 	if player.velocity.x != 0:
 		base_x += player.velocity.x * 0.3  # Predict ~0.3 seconds ahead
-	base_x = base_x + randf_range(-150.0, -50.0)
+	base_x = base_x + randf_range(-150.0, -50.0) * dir
 	base_x = clamp(
 		base_x, limits.position.x + laser_size, limits.position.x + limits.size.x - laser_size
 	)
 	var interval = randf_range(80.0, 150.0)
 	for i in range(num_lasers):
-		var x = base_x + i * interval
+		var x = base_x + i * interval * dir
+		# Ensure lasers are within limits
 		if x < limits.position.x + laser_size or x > limits.position.x + limits.size.x - laser_size:
 			continue  # Skip lasers outside limits
 
