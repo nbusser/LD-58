@@ -10,7 +10,7 @@
 [ext_resource type="SpriteFrames" uid="uid://cr415b4hp2y1r" path="res://src/Player/PlayerAnimations.tres" id="6_4rl4y"]
 
 [sub_resource type="RectangleShape2D" id="1"]
-size = Vector2(29.166615, 79.16651)
+size = Vector2(40, 68)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dd31a"]
 size = Vector2(30, 8)
@@ -44,11 +44,11 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -24.999954)
 sprite_frames = ExtResource("6_4rl4y")
-animation = &"hurt"
+animation = &"walk"
 offset = Vector2(0, -20.833288)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2.083331, -39.583256)
+position = Vector2(-1.000001, -37)
 shape = SubResource("1")
 
 [node name="Feet" type="Area2D" parent="."]
