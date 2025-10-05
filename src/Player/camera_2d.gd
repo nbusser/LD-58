@@ -1,25 +1,24 @@
 extends Camera2D
 
-@onready var player = $"../Player"
-
 # Screen shaking effect adapted from
 # https://shaggydev.com/2022/02/23/screen-shake-godot/
 # How quickly to move through the noise
-@export var NOISE_SHAKE_SPEED: float = 30.0
+@export const NOISE_SHAKE_SPEED: float = 30.0
 # Noise returns values in the range (-1, 1)
 # So this is how much to multiply the returned value by
-@export var NOISE_SHAKE_STRENGTH: float = 60.0
+@export const NOISE_SHAKE_STRENGTH: float = 60.0
 # Multiplier for lerping the shake strength to zero
-@export var SHAKE_DECAY_RATE: float = 5.0
-
-@onready var rand = RandomNumberGenerator.new()
-@onready var noise = FastNoiseLite.new()
+@export const SHAKE_DECAY_RATE: float = 5.0
 
 # Used to keep track of where we are in the noise
 # so that we can smoothly move through it
 var noise_i: float = 0.0
 
 var shake_strength: float = 0.0
+
+@onready var player = $"../Player"
+@onready var rand = RandomNumberGenerator.new()
+@onready var noise = FastNoiseLite.new()
 
 
 func _ready() -> void:
