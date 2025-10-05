@@ -45,3 +45,19 @@ func end_scene(status: EndSceneStatus, params: Dictionary = {}) -> void:
 
 func coin_flip() -> bool:
 	return randi() % 2
+
+
+var slowmos: Dictionary[String, float] = {}
+
+
+func create_slowmo(name: String, factor: float) -> void:
+	slowmos[name] = factor
+	Engine.time_scale *= factor
+
+
+func cancel_slowmo_if_exists(name: String) -> void:
+	if name in slowmos:
+		Engine.time_scale /= slowmos[name]
+		if abs(Engine.time_scale - 1.0) < 0.01:
+			Engine.time_scale = 1.0
+		slowmos.erase(name)

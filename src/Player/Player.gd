@@ -15,6 +15,9 @@ const DIRECTIONS_MODIFIERS = [-1, 1]
 @export var dash_cooldown = 1.0
 @export var dash_speed = 1500
 @export var dash_window = .2
+# Dash slow motion
+@export var dash_slow_factor = 0.6
+@export var dash_slow_time = 0.3
 # Vertical dash
 @export var down_dash_speed = 1000
 @export var down_dash_duration = 0.08
@@ -107,6 +110,7 @@ func _physics_process(delta):
 					if now - previous_dir[dir] < dash_window:
 						previous_dash = now
 						hz_velocity = DIRECTIONS_MODIFIERS[dir] * dash_speed
+						dash_slow_mo()
 					previous_dir[dir] = now
 		_hud.set_dash_cooldown(100. * clamp((now - previous_dash) / dash_cooldown, 0., 100.))
 
@@ -127,6 +131,7 @@ func _physics_process(delta):
 			is_actively_jumping = false
 			jump_load_start = null
 			velocity.y += down_dash_speed
+			dash_slow_mo()
 		if is_down_dashing && now - previous_down_dash > down_dash_duration:
 			is_down_dashing = false
 			velocity.y -= down_dash_speed
@@ -184,6 +189,16 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("melee"):
 		$AttackManager.try_attack()
+
+
+func dash_slow_mo():
+	Globals.create_slowmo("dash", dash_slow_factor)
+	await get_tree().create_timer(dash_slow_time).timeout
+	Globals.cancel_slowmo_if_exists("dash")
+
+
+func _exit_tree() -> void:
+	Globals.cancel_slowmo_if_exists("dash")
 
 
 func _can_move():
