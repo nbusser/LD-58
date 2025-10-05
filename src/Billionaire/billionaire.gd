@@ -33,14 +33,9 @@ func _ready() -> void:
 	$AttackPatterns/Machinegun.routine = _minting_plate_routine
 	$AttackPatterns/Rain.routine = _rain_routine
 	$AttackPatterns/RepulsiveWave.routine = _repulse_wave_routine
-
-	# Setup laser attack patterns if they exist
-	if has_node("AttackPatterns/LaserWarning"):
-		$AttackPatterns/LaserWarning.routine = _laser_warning_routine
-	if has_node("AttackPatterns/LaserSweep"):
-		$AttackPatterns/LaserSweep.routine = _laser_sweep_routine
-	if has_node("AttackPatterns/LaserCage"):
-		$AttackPatterns/LaserCage.routine = _laser_cage_routine
+	$AttackPatterns/LaserWarning.routine = _laser_warning_routine
+	$AttackPatterns/LaserSweep.routine = _laser_sweep_routine
+	$AttackPatterns/LaserCage.routine = _laser_cage_routine
 
 	_init_repulse_wave()
 
