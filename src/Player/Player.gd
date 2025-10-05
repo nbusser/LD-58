@@ -81,6 +81,12 @@ func _physics_process(delta):
 		if input_direction != 0:
 			direction = Direction.LEFT if input_direction == -1 else Direction.RIGHT
 
+		if not $AttackManager.is_attacking() and not is_on_floor():
+			if input_direction == 0:
+				$Sprite.play("default")
+			else:
+				$Sprite.play("walk")
+
 		($Sprite as AnimatedSprite2D).flip_h = direction == Direction.LEFT
 
 		hz_velocity = input_direction * (ground_speed if self.is_on_floor() else air_speed)
