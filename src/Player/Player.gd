@@ -212,9 +212,9 @@ func _physics_process(delta):
 				$Sprite.play("walk")
 		else:
 			# Jump animations
-			if velocity.y <= -5:
+			if velocity.y <= 0:
 				$Sprite.play("jump_start")
-			elif velocity.y > -5 and velocity.y < 10:
+			elif velocity.y < 140:
 				$Sprite.play("jump_middle")
 			else:
 				$Sprite.play("jump_end")

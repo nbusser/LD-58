@@ -39,10 +39,10 @@ class AttackAnimation:
 		recover = recover_animation
 
 
-# Max consecutive cancels
+# Max consecutive cancels (ground only)
 const MAX_CANCELS = 3
 
-# If billionaire is hit, allows an attack cancel
+# If billionaire is hit, allows an attack cancel (ground only)
 var _billionaire_was_punched_in_current_attack: bool = false
 var _cancel_counter: int = 0
 
@@ -63,7 +63,11 @@ var _attacks_dict: Dictionary[Attack, AttackAnimation] = {
 
 # Billionaire was hit in current attack and we did not reached max combo
 func _can_cancel_current_attack() -> bool:
-	return _billionaire_was_punched_in_current_attack and _cancel_counter < MAX_CANCELS
+	return (
+		_current_attack == Attack.GROUND
+		and _billionaire_was_punched_in_current_attack
+		and _cancel_counter < MAX_CANCELS
+	)
 
 
 func can_attack() -> bool:
