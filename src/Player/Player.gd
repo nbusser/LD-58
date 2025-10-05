@@ -136,7 +136,7 @@ func _physics_process(delta):
 		if is_down_dashing && now - previous_down_dash > down_dash_duration:
 			is_down_dashing = false
 			if velocity.y > 0:
-				velocity.y -= min(down_dash_speed/2., velocity.y)
+				velocity.y -= min(down_dash_speed / 2., velocity.y)
 
 	# Wall sticking behavior
 	if is_on_wall():
@@ -162,7 +162,7 @@ func _physics_process(delta):
 		if is_on_top_of_billionaire:
 			if now - previous_head_bounce > .1:
 				if velocity.y > 0:
-					velocity.y = -velocity.y/6.
+					velocity.y = -velocity.y / 6.
 				else:
 					velocity.y = 0
 				velocity.y -= billionaire_head_bounce
