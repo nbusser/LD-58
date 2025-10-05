@@ -139,6 +139,8 @@ texture = ExtResource("9_kdd1f")
 [node name="HeadTop" type="Area2D" parent="BillionaireBody"]
 collision_layer = 256
 collision_mask = 0
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/HeadTop"]
 position = Vector2(0, -94)

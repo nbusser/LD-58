@@ -55,6 +55,8 @@ shape = SubResource("1")
 position = Vector2(0, -54.166557)
 collision_layer = 0
 collision_mask = 256
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Feet"]
 position = Vector2(0, 51.5)
@@ -66,6 +68,8 @@ debug_color = Color(0.7114656, 0.48113203, 0.18397781, 0.41960785)
 position = Vector2(0, -41.66658)
 collision_layer = 0
 collision_mask = 34
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SoftHitbox"]
 position = Vector2(-2.0833292, 10.416641)
