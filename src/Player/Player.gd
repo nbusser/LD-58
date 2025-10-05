@@ -10,17 +10,17 @@ const DIRECTIONS_MODIFIERS = [-1, 1]
 const DASH_SLOWMO_NAME := "player_dash"
 
 # Movement
-@export var ground_speed = 300
-@export var air_speed = 240
+@export var ground_speed = 350
+@export var air_speed = 290
 # Horizontal dash
 @export var dash_cooldown = 1.0
 @export var dash_speed = 2000
-@export var dash_window = .2
+@export var dash_window = .3
 # Dash slow motion
 @export var dash_slow_factor = 0.6
 @export var dash_slow_time = 0.3
 # Vertical dash
-@export var down_dash_speed = 1000
+@export var down_dash_speed = 1500
 @export var down_dash_duration = 0.08
 # Jumps
 @export var max_input_jump_time = .4
@@ -32,11 +32,7 @@ const DASH_SLOWMO_NAME := "player_dash"
 # Billionaire contact
 @export var billionaire_head_bounce = 250
 @export var billionaire_knockback = 800
-# Combat
 @export var melee_damage = 100
-@export var melee_cooldown = .3
-@export var melee_duration = .1
-@export var is_melee_one_shot = true
 
 var jump_load_start = null
 var is_actively_jumping = false

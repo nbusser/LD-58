@@ -157,7 +157,7 @@ func _air_shotgun_routine() -> void:
 	var angles = [-15, 0, 15]
 	for angle in angles:
 		var dir = bullet_direction.rotated(deg_to_rad(angle))
-		_spawn_bullet(_body.position, dir, 800, 400.0)
+		_spawn_bullet(_body.position, dir, 800, 500.0)
 	$AttackPatterns/JumpConeBullets/ShootSound.play_sound()
 
 	# Freeze
@@ -288,7 +288,7 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 		var t = (distance - min_distance) / (max_distance - min_distance)
 
 		var min_force_x = 100.0
-		var max_force_x = 600.0
+		var max_force_x = 650.0
 		var knockback_force_x = lerp(max_force_x, min_force_x, t)
 
 		var min_force_y = 45.0
