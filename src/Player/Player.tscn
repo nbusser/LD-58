@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bxrm1laqwt3cm"]
+[gd_scene load_steps=28 format=3 uid="uid://bxrm1laqwt3cm"]
 
 [ext_resource type="Script" uid="uid://ty44l5afcwx4" path="res://src/Player/Player.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://cehi4sgm55qe3" path="res://assets/sprites/player/idle.png" id="2_dd31a"]
@@ -12,6 +12,8 @@
 [ext_resource type="AudioStream" uid="uid://jrns7idjix3g" path="res://assets/sounds/hurt2.wav" id="5_gilji"]
 [ext_resource type="Texture2D" uid="uid://b7cvats3bj8oc" path="res://assets/sprites/player/attack_windup.png" id="5_nrcd8"]
 [ext_resource type="Texture2D" uid="uid://be0hh7leurg6t" path="res://assets/sprites/player/strike.png" id="6_477y8"]
+[ext_resource type="Texture2D" uid="uid://dwgsbl1j11hek" path="res://assets/sprites/player/air_strike_recover.png" id="7_r54fd"]
+[ext_resource type="Texture2D" uid="uid://bn1xwcak8mavn" path="res://assets/sprites/player/air_strike_windup.png" id="8_dlqko"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_477y8"]
 atlas = ExtResource("3_fnhyv")
@@ -56,10 +58,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_477y8")
+"texture": ExtResource("7_r54fd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_477y8")
+"texture": ExtResource("7_r54fd")
 }],
 "loop": false,
 "name": &"air_attack_recover",
@@ -67,14 +69,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_477y8")
+"texture": ExtResource("8_dlqko")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_477y8")
+"texture": ExtResource("8_dlqko")
 }],
 "loop": false,
 "name": &"air_attack_windup",
-"speed": 12.0
+"speed": 16.0
 }, {
 "frames": [{
 "duration": 1.0,
