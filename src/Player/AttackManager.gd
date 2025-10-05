@@ -43,6 +43,15 @@ func can_attack() -> bool:
 	return _melee_state == MeleeState.NOT_ATTACKING or can_cancel_current_attack()
 
 
+func _process(_delta: float) -> void:
+	if _melee_state == MeleeState.WINDUP:
+		_sprite.play(_current_attack.windup)
+	elif _melee_state == MeleeState.ACTIVE:
+		_sprite.play(_current_attack.active)
+	elif _melee_state == MeleeState.RECOVER:
+		_sprite.play(_current_attack.recover)
+
+
 func _attack_finished_cleanup():
 	_melee_state = MeleeState.NOT_ATTACKING
 	_billionaire_was_punched_in_current_attack = false
@@ -59,7 +68,6 @@ func _attack():
 	_combo_counter += 1
 	_melee_state = MeleeState.WINDUP
 	$AttackSound.play_sound()
-	_sprite.play(_current_attack.windup)
 
 
 func try_attack() -> bool:
@@ -98,10 +106,8 @@ func _on_sprite_animation_changed() -> void:
 func _on_sprite_animation_finished() -> void:
 	if _sprite.animation == _current_attack.windup:
 		_melee_state = MeleeState.ACTIVE
-		_sprite.play(_current_attack.active)
 	elif _sprite.animation == _current_attack.active:
 		_melee_state = MeleeState.RECOVER
-		_sprite.play(_current_attack.recover)
 	elif _sprite.animation == _current_attack.recover:
 		_attack_finished_cleanup()
 	_try_punch_billionaire()
