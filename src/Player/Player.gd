@@ -241,7 +241,6 @@ func _physics_process(delta):
 				$Sprite.play("jump_middle")
 
 
-
 func dash_slow_mo():
 	if Globals.create_slowmo(DASH_SLOWMO_NAME, dash_slow_factor):
 		await get_tree().create_timer(dash_slow_time).timeout
