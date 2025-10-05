@@ -21,6 +21,10 @@ func _init(level_number_p: int, level_data_p: LevelData, nb_coins_p: int):
 	self.billionaire_net_worth = self.billionaire_initial_net_worth
 
 
+func get_percentage_net_worth_remaining() -> float:
+	return (billionaire_net_worth * 100.0) / billionaire_initial_net_worth
+
+
 func change_billionaire_net_worth(damount: int) -> int:
 	billionaire_net_worth = max(0, billionaire_net_worth - damount)
 	return billionaire_net_worth

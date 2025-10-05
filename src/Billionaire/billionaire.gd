@@ -8,8 +8,6 @@ const _GRAVITY: float = 600.0
 # Interval range between two attacks, in seconds
 @export var idle_range_seconds: Vector2 = Vector2(0.5, 1.0)
 
-var health = 100
-
 var _is_gravity_enabled: bool = true
 var _run_velocity: Vector2 = Vector2.ZERO
 var _knockback_velocity: Vector2 = Vector2.ZERO
@@ -23,6 +21,7 @@ var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
 @onready var _repulse_wave: Node2D = $BillionaireBody/RepulseWave
 
 @onready var _attack_patterns: Node = $AttackPatterns
+@onready var _level: Level = $"../.."
 
 
 func _ready() -> void:
@@ -41,7 +40,10 @@ func _get_attack_pattern():
 			return (
 				attack_pattern.enabled
 				and attack_pattern.is_ready()
-				and health <= attack_pattern.health_threshold
+				and (
+					_level.level_state.get_percentage_net_worth_remaining()
+					<= attack_pattern.net_worth_percent_threshold
+				)
 			)
 	)
 	if available_attacks.size() == 0:
@@ -242,9 +244,7 @@ func _on_idle_timer_timeout() -> void:
 	_idle_timer.start(randf_range(idle_range_seconds.x, idle_range_seconds.y))
 
 
-func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
-	health = max(0, health - amount)
-
+func on_level_billionaire_hit(_amount: int, _remaining_net_worth: int) -> void:
 	$SFX/HurtSound.play_sound()
 
 	# Red glow on hit

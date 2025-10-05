@@ -3,7 +3,7 @@ class_name AttackPattern
 extends Node
 
 @export var attack_name: String
-@export var health_threshold: float = 100.0
+@export var net_worth_percent_threshold: float = 100.0
 @export var cooldown: float = 0.0
 @export var enabled: bool = true
 
