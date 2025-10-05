@@ -74,6 +74,10 @@ func is_attacking() -> bool:
 	return _attack_state != AttackState.NOT_ATTACKING
 
 
+func is_attacking_ground() -> bool:
+	return is_attacking() and _current_attack == Attack.GROUND
+
+
 func _process(_delta: float) -> void:
 	# Cancels air attack if we just landed
 	if _current_attack == Attack.AIR and _player.is_on_floor():

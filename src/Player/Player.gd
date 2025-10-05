@@ -70,65 +70,66 @@ func _physics_process(delta):
 	var hz_velocity = 0.
 	var now = Time.get_unix_time_from_system()
 
-	# Horizontal movement
-	var input_direction = Input.get_axis("move_left", "move_right")
-	if input_direction != 0:
-		direction = Direction.LEFT if input_direction == -1 else Direction.RIGHT
+	if _can_move():
+		# Horizontal movement
+		var input_direction = Input.get_axis("move_left", "move_right")
+		if input_direction != 0:
+			direction = Direction.LEFT if input_direction == -1 else Direction.RIGHT
 
-	($Sprite as AnimatedSprite2D).flip_h = direction == Direction.LEFT
+		($Sprite as AnimatedSprite2D).flip_h = direction == Direction.LEFT
 
-	hz_velocity = input_direction * (ground_speed if self.is_on_floor() else air_speed)
-	if is_on_floor() && !is_actively_jumping && Input.is_action_pressed("jump"):
-		is_actively_jumping = true
-		jump_load_start = now
+		hz_velocity = input_direction * (ground_speed if self.is_on_floor() else air_speed)
+		if is_on_floor() && !is_actively_jumping && Input.is_action_pressed("jump"):
+			is_actively_jumping = true
+			jump_load_start = now
 
-	# Jump
-	var time_since_jump = now - (jump_load_start if jump_load_start != null else INF)
-	if (
-		is_actively_jumping
-		&& Input.is_action_pressed("jump")
-		&& time_since_jump < max_input_jump_time
-	):
-		var timer_proportion = (
-			(1 - clamp(time_since_jump, 0, max_input_jump_time) / max_input_jump_time) ** 4
-		)
-		vt_velocity = -jump_force * delta * timer_proportion
-	elif (
-		is_actively_jumping
-		&& (time_since_jump > max_input_jump_time || Input.is_action_just_released("jump"))
-	):
-		is_actively_jumping = false
+		# Jump
+		var time_since_jump = now - (jump_load_start if jump_load_start != null else INF)
+		if (
+			is_actively_jumping
+			&& Input.is_action_pressed("jump")
+			&& time_since_jump < max_input_jump_time
+		):
+			var timer_proportion = (
+				(1 - clamp(time_since_jump, 0, max_input_jump_time) / max_input_jump_time) ** 4
+			)
+			vt_velocity = -jump_force * delta * timer_proportion
+		elif (
+			is_actively_jumping
+			&& (time_since_jump > max_input_jump_time || Input.is_action_just_released("jump"))
+		):
+			is_actively_jumping = false
 
-	# Horizontal dash
-	for dir in range(2):
-		if Input.is_action_just_pressed(DIRECTIONS[dir]):
-			if now - previous_dash > dash_cooldown:
-				if now - previous_dir[dir] < dash_window:
-					previous_dash = now
-					hz_velocity = DIRECTIONS_MODIFIERS[dir] * dash_speed
-				previous_dir[dir] = now
-	_hud.set_dash_cooldown(100. * clamp((now - previous_dash) / dash_cooldown, 0., 100.))
+		# Horizontal dash
+		for dir in range(2):
+			if Input.is_action_just_pressed(DIRECTIONS[dir]):
+				if now - previous_dash > dash_cooldown:
+					if now - previous_dir[dir] < dash_window:
+						previous_dash = now
+						hz_velocity = DIRECTIONS_MODIFIERS[dir] * dash_speed
+					previous_dir[dir] = now
+		_hud.set_dash_cooldown(100. * clamp((now - previous_dash) / dash_cooldown, 0., 100.))
 
-	# Down dash
-	if is_on_floor():
-		can_down_dash = true
-		is_down_dashing = false
+		# Down dash
+		if is_on_floor():
+			can_down_dash = true
+			is_down_dashing = false
 
-	if (
-		Input.is_action_just_pressed("dash_down")
-		&& can_down_dash
-		&& !is_on_floor()
-		&& !is_down_dashing
-		&& now - previous_down_dash > dash_cooldown
-	):
-		previous_down_dash = now
-		is_down_dashing = true
-		is_actively_jumping = false
-		jump_load_start = null
-		velocity.y += down_dash_speed
-	if is_down_dashing && now - previous_down_dash > down_dash_duration:
-		is_down_dashing = false
-		velocity.y -= down_dash_speed
+		if (
+			Input.is_action_just_pressed("dash_down")
+			&& can_down_dash
+			&& !is_on_floor()
+			&& !is_down_dashing
+			&& now - previous_down_dash > dash_cooldown
+		):
+			previous_down_dash = now
+			is_down_dashing = true
+			is_actively_jumping = false
+			jump_load_start = null
+			velocity.y += down_dash_speed
+		if is_down_dashing && now - previous_down_dash > down_dash_duration:
+			is_down_dashing = false
+			velocity.y -= down_dash_speed
 
 	# Wall sticking behavior
 	if is_on_wall():
@@ -177,7 +178,6 @@ func _physics_process(delta):
 					1.0 - ((body.global_position - global_position).length() / 100.) ** 2
 				)
 	prev_velocity = velocity
-
 	move_and_slide()
 
 	# Combat
@@ -185,6 +185,10 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("melee"):
 		$AttackManager.try_attack()
+
+
+func _can_move():
+	return not $AttackManager.is_attacking_ground()
 
 
 func get_hurt(knockback_force):
