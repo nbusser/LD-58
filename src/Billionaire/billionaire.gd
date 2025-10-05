@@ -249,9 +249,9 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 
 	# Red glow on hit
 	var glow_routine = func():
-		modulate = Color(1, 0, 0)
+		_body.modulate = Color(1, 0, 0)
 		await get_tree().create_timer(1.0).timeout
-		modulate = Color(1, 1, 1, 1)
+		_body.modulate = Color(1, 1, 1, 1)
 	glow_routine.call()
 
 	var knockback_routine = func():
@@ -273,6 +273,5 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 		var knockback_direction = (_body.global_position - _player.global_position).normalized()
 		_knockback_velocity.x = knockback_direction.x * knockback_force_x
 		_knockback_velocity.y = knockback_direction.y * knockback_force_y
-		print(_knockback_velocity)
 
 	knockback_routine.call()
