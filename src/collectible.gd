@@ -45,7 +45,7 @@ func get_collectible_name(collectible_type: CollectibleType) -> String:
 			return "Unknown"
 
 
-func get_collectible_texture(collectible_type: CollectibleType) -> Texture2D:
+func get_collectible_icon(collectible_type: CollectibleType) -> Texture2D:
 	match collectible_type:
 		CollectibleType.DOLLAR_COIN:
 			return preload("res://assets/sprites/collectibles/dollar_coin.png")
@@ -53,5 +53,11 @@ func get_collectible_texture(collectible_type: CollectibleType) -> Texture2D:
 			return preload("res://assets/sprites/collectibles/dollar_bill.png")
 		CollectibleType.BUNDLE_OF_CASH:
 			return preload("res://assets/sprites/collectibles/dollar_wad.png")
+		CollectibleType.MONEY_BAG:
+			return preload("res://assets/sprites/collectibles/money_bag.png")
+		CollectibleType.GOLD_BAR:
+			return preload("res://assets/sprites/collectibles/gold_bar_icon.png")
+		CollectibleType.BITCOIN:
+			return preload("res://assets/sprites/collectibles/bitcoin_coin.png")
 		_:
 			return preload("res://assets/sprites/icon.png")
