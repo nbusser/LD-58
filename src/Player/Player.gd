@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 signal billionaire_punched(damage: int)
 
+enum Direction { LEFT = -1, RIGHT = 1 }
+
 const DIRECTIONS = ["move_left", "move_right"]
 const DIRECTIONS_MODIFIERS = [-1, 1]
 
@@ -38,8 +40,8 @@ var is_down_dashing = false
 var can_down_dash = false
 var is_in_billionaire = false
 var is_on_top_of_billionaire = false
-var billionaire_in_melee_reach = false
-var in_melee = false
+
+var direction = Direction.RIGHT
 
 var previous_dir = [0, 0]  # left, right
 var previous_dash = 0
@@ -70,6 +72,11 @@ func _physics_process(delta):
 
 	# Horizontal movement
 	var input_direction = Input.get_axis("move_left", "move_right")
+	if input_direction != 0:
+		direction = Direction.LEFT if input_direction == -1 else Direction.RIGHT
+
+	($Sprite as AnimatedSprite2D).flip_h = direction == Direction.LEFT
+
 	hz_velocity = input_direction * (ground_speed if self.is_on_floor() else air_speed)
 	if is_on_floor() && !is_actively_jumping && Input.is_action_pressed("jump"):
 		is_actively_jumping = true
@@ -173,10 +180,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 	# Combat
-	if velocity.x > 0:
-		_punch_area.scale.x = 1.0
-	elif velocity.x < 0:
-		_punch_area.scale.x = -1.0
+	_punch_area.scale.x = -1.0 if direction == Direction.LEFT else 1.0
 
 	if Input.is_action_just_pressed("melee"):
 		$AttackManager.try_attack()
@@ -219,13 +223,3 @@ func _on_feet_body_entered(_body: Node2D) -> void:
 
 func _on_feet_body_exited(_body: Node2D) -> void:
 	is_on_top_of_billionaire = false
-
-
-func _on_punch_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Billionaire"):
-		billionaire_in_melee_reach = true
-
-
-func _on_punch_area_body_exited(body: Node2D) -> void:
-	if body.is_in_group("Billionaire"):
-		billionaire_in_melee_reach = false

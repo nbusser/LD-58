@@ -2,8 +2,8 @@ class_name Billionaire
 
 extends Node2D
 
-const _JUMP_VELOCITY = -600
-const _GRAVITY: float = 1200.0
+const _JUMP_VELOCITY = -250
+const _GRAVITY: float = 600.0
 
 # Interval range between two attacks, in seconds
 @export var idle_range_seconds: Vector2 = Vector2(0.5, 1.0)

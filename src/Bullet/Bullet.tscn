@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://clioqy0tcrlw0" path="res://src/Bullet/bullet.gd" id="1_v1s1s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_el2we"]
+size = Vector2(10, 10)
 
 [node name="Bullet" type="Area2D" groups=["Bullet"]]
 collision_layer = 0
@@ -11,7 +12,8 @@ collision_mask = 17
 script = ExtResource("1_v1s1s")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.054376658, 0.054376658)
+position = Vector2(4.7683716e-07, -4.7683716e-07)
+scale = Vector2(0.027188329, 0.027188329)
 texture = ExtResource("1_el2we")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

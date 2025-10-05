@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dss1w1wv5xvq1"]
+[gd_scene load_steps=25 format=3 uid="uid://bxrm1laqwt3cm"]
 
 [ext_resource type="Script" uid="uid://ty44l5afcwx4" path="res://src/Player/Player.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://cehi4sgm55qe3" path="res://assets/sprites/player/idle.png" id="2_dd31a"]
@@ -97,7 +97,7 @@ size = Vector2(30, 8)
 size = Vector2(12.499975, 62.499878)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gilji"]
-size = Vector2(55.62953, 11.239515)
+size = Vector2(73.19675, 15.735322)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dd31a"]
 radius = 400.0
@@ -166,7 +166,7 @@ collision_mask = 48
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PunchArea"]
-position = Vector2(41.66658, 2.0833244)
+position = Vector2(58.333218, 14.583302)
 rotation = 1.5707964
 scale = Vector2(1.4231023, 7.414303)
 shape = SubResource("RectangleShape2D_gilji")
