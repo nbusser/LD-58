@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://btohiqrak4tcf"]
+[gd_scene load_steps=7 format=3 uid="uid://btohiqrak4tcf"]
 
 [ext_resource type="Texture2D" uid="uid://cq5d404kyef8c" path="res://assets/sprites/honte.png" id="1_e037b"]
 [ext_resource type="PackedScene" uid="uid://bxrm1laqwt3cm" path="res://src/Player/Player.tscn" id="2"]
 [ext_resource type="Script" uid="uid://crkhemgnnguer" path="res://src/Player/camera_2d.gd" id="3_13lp4"]
 [ext_resource type="PackedScene" uid="uid://bjp6oj1o86afi" path="res://src/Billionaire/billionaire.tscn" id="3_e037b"]
+[ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="5_lrvju"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wqubw"]
 
@@ -18,7 +19,6 @@ texture = ExtResource("1_e037b")
 position = Vector2(0, -67)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, 1)
 script = ExtResource("3_13lp4")
 
 [node name="Borders" type="Node2D" parent="."]
@@ -92,3 +92,11 @@ shape = SubResource("WorldBoundaryShape2D_wqubw")
 position = Vector2(76, -69)
 
 [node name="Coins" type="Node2D" parent="."]
+
+[node name="BossIndicator" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="BossIndicator"]
+self_modulate = Color(0, 1, 0, 0.45490196)
+rotation = 0.024128424
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("5_lrvju")
