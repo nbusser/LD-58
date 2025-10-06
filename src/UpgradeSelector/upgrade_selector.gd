@@ -10,6 +10,8 @@ const UpgradeCard = preload("res://src/UpgradeSelector/upgrade_card.gd")
 
 @export var available_cards: Array[UpgradeCardData] = [
 	UpgradeCardData.new(
+		"speed_1",
+		[],
 		UpgradeCardData.CardType.UTILITY,
 		UpgradeCardData.Rarity.COMMON,
 		"speed",
@@ -21,6 +23,8 @@ const UpgradeCard = preload("res://src/UpgradeSelector/upgrade_card.gd")
 		{UpgradeCardData.EffectType.SPEED: 2}
 	),
 	UpgradeCardData.new(
+		"speed_2",
+		["speed_1"],
 		UpgradeCardData.CardType.UTILITY,
 		UpgradeCardData.Rarity.UNCOMMON,
 		"speed",
@@ -32,6 +36,8 @@ const UpgradeCard = preload("res://src/UpgradeSelector/upgrade_card.gd")
 		{UpgradeCardData.EffectType.SPEED: 3}
 	),
 	UpgradeCardData.new(
+		"crypto_1",
+		[],
 		UpgradeCardData.CardType.KNOWLEDGE,
 		UpgradeCardData.Rarity.UNCOMMON,
 		"crypto",
@@ -43,6 +49,8 @@ const UpgradeCard = preload("res://src/UpgradeSelector/upgrade_card.gd")
 		{UpgradeCardData.EffectType.CRYPTO_CURRENCY: 1}
 	),
 	UpgradeCardData.new(
+		"shield_1",
+		[],
 		UpgradeCardData.CardType.DEFENSE,
 		UpgradeCardData.Rarity.COMMON,
 		"shield",

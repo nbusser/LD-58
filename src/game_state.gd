@@ -37,6 +37,15 @@ func is_upgrade_applicable(card: UpgradeCardData) -> bool:
 	if card == null:
 		return false
 
+	for dependency in card.dependencies:
+		var dependency_met = false
+		for existing_card in active_upgrades:
+			if existing_card.id == dependency:
+				dependency_met = true
+				break
+		if not dependency_met:
+			return false
+
 	var category_exists = false
 	for existing_card in active_upgrades:
 		if existing_card.category == card.category:

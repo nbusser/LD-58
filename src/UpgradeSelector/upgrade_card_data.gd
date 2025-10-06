@@ -22,6 +22,9 @@ enum EffectType {
 	CRYPTO_CURRENCY,
 }
 
+@export var id: String = "default_id"
+@export var dependencies: Array[String] = []
+
 @export var card_type: CardType
 @export var rarity: Rarity
 
@@ -39,6 +42,8 @@ enum EffectType {
 
 
 func _init(
+	p_id: String = "default_id",
+	p_dependencies: Array[String] = [],
 	p_card_type: CardType = CardType.ATTACK,
 	p_rarity: Rarity = Rarity.COMMON,
 	p_category: String = "default_category",
@@ -49,6 +54,8 @@ func _init(
 	p_icon: Texture2D = null,
 	p_effects: Dictionary[EffectType, int] = {}
 ):
+	id = p_id
+	dependencies = p_dependencies
 	card_type = p_card_type
 	rarity = p_rarity
 	category = p_category
