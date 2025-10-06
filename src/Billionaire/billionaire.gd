@@ -606,14 +606,15 @@ func _schlassage_routine():
 	$Sprite2D.play("focus")
 	var focus_duration: float = 1.5 - 1.0 * (GameState.difficulty_factor - 1.0)
 	await get_tree().create_timer(focus_duration).timeout
-	$Sprite2D.play("laugh")
 
 	_schlass.visible = true
 	_schlass.monitoring = true
 	if global_position.x - _player.global_position.x > 0:  # Left
 		_schlass.scale.x = 1
+		$Sprite2D.play("schlass_l")
 	else:  # Right
 		_schlass.scale.x = -1
+		$Sprite2D.play("schlass_r")
 
 	$AttackPatterns/Schlassage/AttackSound.play_sound()
 

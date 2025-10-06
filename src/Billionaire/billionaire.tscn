@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=35 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="SpriteFrames" uid="uid://cwedgk16x5d4h" path="res://src/Billionaire/BillionaireAnimations.tres" id="2_d2xww"]
@@ -16,7 +16,6 @@
 [ext_resource type="AudioStream" uid="uid://c3p0l877cnqyw" path="res://assets/sounds/punch.wav" id="11_3bth7"]
 [ext_resource type="AudioStream" uid="uid://brkosi4q2bqda" path="res://assets/sounds/woosh/who_var_05.wav" id="11_dvqb2"]
 [ext_resource type="AudioStream" uid="uid://d1i6r2bm01r4v" path="res://assets/sounds/repulsive_wave_column.wav" id="11_tafn6"]
-[ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="11_wpliv"]
 [ext_resource type="AudioStream" uid="uid://cfh85dw30ostv" path="res://assets/sounds/attack.wav" id="12_3bth7"]
 [ext_resource type="SpriteFrames" uid="uid://bvi1idvrvrbb2" path="res://src/Billionaire/bubble_100.tres" id="15_327hu"]
 [ext_resource type="SpriteFrames" uid="uid://dgoanvtm3rx52" path="res://src/Billionaire/bubble_200.tres" id="16_jeg63"]
@@ -325,11 +324,6 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPatterns/Schlassage/Foot"]
 position = Vector2(-80, -1)
 shape = SubResource("CircleShape2D_tafn6")
-
-[node name="ColorRect" type="Sprite2D" parent="AttackPatterns/Schlassage/Foot"]
-position = Vector2(-81, 0)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("11_wpliv")
 
 [node name="SFX" type="Node2D" parent="."]
 
