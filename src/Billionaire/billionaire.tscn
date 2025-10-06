@@ -159,6 +159,7 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 [node name="RainCarpetBomb" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Hedge fund !"
 cooldown = 20.0
+minimum_difficulty_factor = 3.0
 minimum_distance_x = 0.15
 prefered_distance_x = 0.7
 prefered_distance_tolerance_x = 0.25
