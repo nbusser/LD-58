@@ -241,6 +241,7 @@ func _physics_process(delta):
 				body.velocity.y -= (
 					200 * (1.0 - ((body.global_position - global_position).length() / 250.) ** 2)
 				)
+				body.spawn_coins(3)
 			elif body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.COIN]):
 				body.propulse_up(
 					1.0 - ((body.global_position - global_position).length() / 250.) ** 3

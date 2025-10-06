@@ -482,40 +482,44 @@ func _on_idle_timer_timeout() -> void:
 	_idle_timer.start(randf_range(idle_range_seconds.x, idle_range_seconds.y))
 
 
+func spawn_coins(amount: int):
+	var coins_to_spawn = max(1, int(round(amount * coins_per_damage)))
+	var total_value_spawned = 0
+	for _i in range(coins_to_spawn):
+		var coin: Coin = _coin_scene.instantiate()
+		var spawn_offset := Vector2(randf_range(-12.0, 12.0), randf_range(-8.0, 0.0))
+		var collectible_type = (
+			[
+				Collectible.CollectibleType.DOLLAR_COIN,
+				Collectible.CollectibleType.DOLLAR_COIN,
+				Collectible.CollectibleType.DOLLAR_COIN,
+				Collectible.CollectibleType.DOLLAR_BILL,
+				Collectible.CollectibleType.DOLLAR_BILL,
+				Collectible.CollectibleType.BUNDLE_OF_CASH
+			]
+			. pick_random()
+		)
+		coin.init(global_position + spawn_offset, collectible_type)
+		var angle := randf_range(-PI / 3, PI / 3)
+		var impulse_direction := Vector2.UP.rotated(angle)
+		var impulse_speed := randf_range(160.0, 260.0)
+		coin.set_deferred("linear_velocity", impulse_direction * impulse_speed)
+		coin.set_deferred("angular_velocity", randf_range(-6.0, 6.0))
+		_coins.call_deferred("add_child", coin)
+
+		# Add the value of this collectible to track total value spawned
+		total_value_spawned += Collectible.get_collectible_value(collectible_type)
+
+	# Reduce billionaire's net worth by the value of spawned collectibles
+	if total_value_spawned > 0:
+		_level.change_net_worth(total_value_spawned)
+
+
 func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 	$SFX/HurtSound.play()
 
 	if amount >= 0:
-		var coins_to_spawn = max(1, int(round(amount * coins_per_damage)))
-		var total_value_spawned = 0
-		for _i in range(coins_to_spawn):
-			var coin: Coin = _coin_scene.instantiate()
-			var spawn_offset := Vector2(randf_range(-12.0, 12.0), randf_range(-8.0, 0.0))
-			var collectible_type = (
-				[
-					Collectible.CollectibleType.DOLLAR_COIN,
-					Collectible.CollectibleType.DOLLAR_COIN,
-					Collectible.CollectibleType.DOLLAR_COIN,
-					Collectible.CollectibleType.DOLLAR_BILL,
-					Collectible.CollectibleType.DOLLAR_BILL,
-					Collectible.CollectibleType.BUNDLE_OF_CASH
-				]
-				. pick_random()
-			)
-			coin.init(global_position + spawn_offset, collectible_type)
-			var angle := randf_range(-PI / 3, PI / 3)
-			var impulse_direction := Vector2.UP.rotated(angle)
-			var impulse_speed := randf_range(160.0, 260.0)
-			coin.set_deferred("linear_velocity", impulse_direction * impulse_speed)
-			coin.set_deferred("angular_velocity", randf_range(-6.0, 6.0))
-			_coins.call_deferred("add_child", coin)
-
-			# Add the value of this collectible to track total value spawned
-			total_value_spawned += Collectible.get_collectible_value(collectible_type)
-
-		# Reduce billionaire's net worth by the value of spawned collectibles
-		if total_value_spawned > 0:
-			_level.change_net_worth(total_value_spawned)
+		spawn_coins(amount)
 
 	# Red glow on hit
 	var glow_routine = func():
