@@ -72,7 +72,7 @@ func apply_upgrade(card: UpgradeCardData) -> bool:
 			UpgradeCardData.EffectType.BULLET_TIME:
 				player_stats.unlocked_on_demand_bullet_time = true
 			UpgradeCardData.EffectType.COMBO_MULTIPLIER:
-				player_stats.combo_base *= player_stats.combo_base
+				player_stats.combo_base += .1
 			UpgradeCardData.EffectType.JUMP_HEIGHT:
 				player_stats.jump_force = 7000
 			UpgradeCardData.EffectType.MOVEMENT_SPEED:
