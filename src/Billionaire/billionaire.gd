@@ -77,10 +77,11 @@ func _spawn_bullet(
 	bullet_position: Vector2,
 	bullet_direction: Vector2,
 	bullet_knockback: float,
-	bullet_speed: float = 100.0
+	bullet_speed: float = 100.0,
+	bullet_scale_factor: float = 1.0
 ) -> void:
 	var bullet: Bullet = _bullet_scene.instantiate()
-	bullet.init(bullet_position, bullet_direction, bullet_knockback, bullet_speed)
+	bullet.init(bullet_position, bullet_direction, bullet_knockback, bullet_speed, bullet_scale_factor)
 	_bullets.add_child(bullet)
 
 
@@ -190,10 +191,11 @@ func _minting_plate_routine() -> void:
 func _rain_routine() -> void:
 	var spawn_rain_coroutine = func() -> void:
 		var rain_nb_waves: int = 10
-		var rain_nb_bullets_per_waves: int = 30
-		var rain_bullet_speed: float = 100.0
-		var rain_bullet_interval_duration: float = 0.3
-		var rain_bullet_interval_x: int = 15
+		var rain_nb_bullets_per_waves: int = 4
+		var rain_bullet_speed: float = 200.0
+		var rain_bullet_interval_duration: float = 0.6
+		var rain_bullet_interval_x: int = 70
+		var rain_bullet_random_interval_y: int = 15
 
 		var spawn_y = $"../BillionaireBorders/Ceiling".position.y + 10
 		var min_x = $"../Borders/WallL".position.x + 10
@@ -215,9 +217,10 @@ func _rain_routine() -> void:
 				var bullet_slot = shuffled_slots[slot_index]
 				slot_index += 1
 				var bullet_position_x = min_x + (bullet_slot * rain_bullet_interval_x)
+				var bullet_position_y = spawn_y + randi() % rain_bullet_random_interval_y
 
-				var bullet_position = Vector2(bullet_position_x, spawn_y)
-				_spawn_bullet(bullet_position, Vector2.DOWN, 50, rain_bullet_speed)
+				var bullet_position = Vector2(bullet_position_x, bullet_position_y)
+				_spawn_bullet(bullet_position, Vector2.DOWN, 50, rain_bullet_speed, 1.0)
 			await get_tree().create_timer(rain_bullet_interval_duration).timeout
 
 	$AttackPatterns/Rain/FocusSound.play_sound()

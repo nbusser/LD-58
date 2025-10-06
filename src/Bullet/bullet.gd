@@ -20,12 +20,14 @@ func init(
 	direction: Vector2,
 	knockback_force: float,
 	speed: float = 100,
+	bullet_scale_factor: float = 1.0,
 	collectible_type: Collectible.CollectibleType = Collectible.CollectibleType.DOLLAR_COIN
 ) -> void:
 	_initialized = true
 	position = start_position
 	_direction = direction.normalized()
 	_speed = speed
+	scale *= bullet_scale_factor
 	_knockback_force = knockback_force
 	_collectible_type = collectible_type
 
