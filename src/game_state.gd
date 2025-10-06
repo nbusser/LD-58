@@ -67,6 +67,32 @@ func apply_upgrade(card: UpgradeCardData) -> bool:
 	active_upgrades.append(card)
 	print("Applied upgrade: %s" % card.title)
 	print("Current stats: %s" % str(get_upgrade_stats()))
+	for upgr in get_upgrade_stats():
+		match upgr:
+			UpgradeCardData.EffectType.BULLET_TIME:
+				player_stats.unlocked_on_demand_bullet_time = true
+			UpgradeCardData.EffectType.COMBO_MULTIPLIER:
+				player_stats.combo_base *= player_stats.combo_base
+			UpgradeCardData.EffectType.JUMP_HEIGHT:
+				player_stats.jump_force = 7000
+			UpgradeCardData.EffectType.MOVEMENT_SPEED:
+				player_stats.ground_speed = 450
+			UpgradeCardData.EffectType.AIR_CONTROL:
+				player_stats.air_speed = 290
+			UpgradeCardData.EffectType.LOOT_QUANTITY:
+				print("TODO")
+			UpgradeCardData.EffectType.LOOT_VALUE:
+				print("TODO")
+			UpgradeCardData.EffectType.BITCOIN_VALUE:
+				print("TODO")
+			UpgradeCardData.EffectType.ABILITY_DASH_DOWN:
+				player_stats.unlocked_dash_down = true
+				player_stats.unlocked_dash_glide = true
+			UpgradeCardData.EffectType.ABILITY_DASH:
+				player_stats.unlocked_dash = true
+				player_stats.unlocked_dash_bullet_time = true
+			UpgradeCardData.EffectType.ABILITY_DOUBLE_JUMP:
+				player_stats.max_nb_jumps = 2
 	return true
 
 
