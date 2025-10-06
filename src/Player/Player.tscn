@@ -187,6 +187,10 @@ _data = {
 collision_layer = 16
 script = ExtResource("2")
 
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+position = Vector2(0, -50)
+current = true
+
 [node name="AttackManager" type="Node" parent="."]
 script = ExtResource("2_ub20b")
 

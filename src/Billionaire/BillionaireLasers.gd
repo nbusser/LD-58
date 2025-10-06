@@ -11,6 +11,11 @@ var laser_states: PackedFloat32Array
 var active_lasers: Array[Dictionary] = []
 var limits: Rect2 = Rect2()
 
+var focus_sounds: Array[AudioStreamPlayer2D] = []
+var beam_sounds: Array[AudioStreamPlayer2D] = []
+var focus_audio_streams: Array[AudioStream] = []
+var beam_audio_streams: Array[AudioStream] = []
+
 @onready var player: Player = get_tree().get_first_node_in_group("player")
 @onready var laser_surface: ColorRect = get_tree().get_first_node_in_group("laser_surface")
 @onready var ground = $"../Borders/Ground/CollisionShape2D"
@@ -25,6 +30,31 @@ func _ready():
 
 	for i in range(8):
 		laser_states[i] = 2.0  # All off initially
+
+	# Load audio streams
+	for i in range(1, 6):
+		var path = "res://assets/sounds/laser_focus/focus_var_0%d.ogg" % i
+		focus_audio_streams.append(load(path))
+
+	for i in range(3):
+		var path = "res://assets/sounds/laser_beam/beam_%d.ogg" % i
+		beam_audio_streams.append(load(path))
+
+	# Create audio players for each laser slot
+	for i in range(max_lasers):
+		var focus_player = AudioStreamPlayer2D.new()
+		focus_player.name = "FocusSound%d" % i
+		focus_player.bus = "SFX"
+		focus_player.max_distance = 1500
+		add_child(focus_player)
+		focus_sounds.append(focus_player)
+
+		var beam_player = AudioStreamPlayer2D.new()
+		beam_player.name = "BeamSound%d" % i
+		beam_player.bus = "SFX"
+		beam_player.max_distance = 1500
+		add_child(beam_player)
+		beam_sounds.append(beam_player)
 
 	# Set up limits based on level boundaries
 	if wall_l and wall_r and ground and ceiling:
@@ -59,6 +89,7 @@ func _physics_process(delta):
 			print("Max lasers reached, skipping additional lasers", i)
 			break
 
+		var prev_timer = laser.timer
 		laser.timer += delta
 
 		# Update positions
@@ -68,10 +99,25 @@ func _physics_process(delta):
 		laser_positions[i * 2] = laser.start
 		laser_positions[i * 2 + 1] = laser.end
 
+		# Update sound positions
+		if i < focus_sounds.size():
+			focus_sounds[i].global_position = laser.start
+		if i < beam_sounds.size():
+			var center = (laser.start + laser.end) / 2.0
+			beam_sounds[i].global_position = center
+
 		var laser_progress = laser.timer / laser.warning_duration
 		# Update state based on timer
 		if laser_progress < progress_before_flash:
 			laser_states[i] = laser_progress
+			# Play focus sound at the beginning of warning
+			if prev_timer == 0 and not laser.get("focus_played", false):
+				if i < focus_sounds.size() and focus_audio_streams.size() > 0:
+					focus_sounds[i].stream = focus_audio_streams[
+						randi() % focus_audio_streams.size()
+					]
+					focus_sounds[i].play()
+					laser.focus_played = true
 		elif laser_progress < progress_flash:
 			laser_states[i] = laser_progress
 
@@ -88,6 +134,12 @@ func _physics_process(delta):
 			laser_states[i] = laser_progress
 		elif laser.timer < laser.warning_duration + laser.active_duration:
 			laser_states[i] = 1.0
+			# Play beam sound when laser becomes active
+			if prev_timer < laser.warning_duration and not laser.get("beam_played", false):
+				if i < beam_sounds.size() and beam_audio_streams.size() > 0:
+					beam_sounds[i].stream = beam_audio_streams[randi() % beam_audio_streams.size()]
+					beam_sounds[i].play()
+					laser.beam_played = true
 			# Check collision with player during active phase
 			if not laser.has_hit and is_laser_hitting_player(laser.start, laser.end):
 				player.get_hurt(Vector2.ZERO)
@@ -103,6 +155,11 @@ func _physics_process(delta):
 
 			if progress > 1.0:
 				laser.finished = true
+				# Stop sounds when laser finishes
+				if i < focus_sounds.size() and focus_sounds[i].playing:
+					focus_sounds[i].stop()
+				if i < beam_sounds.size() and beam_sounds[i].playing:
+					beam_sounds[i].stop()
 		i += 1
 
 	# Clear finished lasers
@@ -170,6 +227,11 @@ func clear_all_lasers():
 	active_lasers.clear()
 	for i in range(max_lasers):
 		laser_states[i] = 2.0
+		# Stop all sounds
+		if i < focus_sounds.size() and focus_sounds[i].playing:
+			focus_sounds[i].stop()
+		if i < beam_sounds.size() and beam_sounds[i].playing:
+			beam_sounds[i].stop()
 
 
 # Attack pattern: Warning lasers at player position

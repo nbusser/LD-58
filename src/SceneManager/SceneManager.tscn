@@ -77,7 +77,8 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1152, 648)
+audio_listener_enable_2d = true
+size = Vector2i(1600, 900)
 render_target_update_mode = 4
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
