@@ -83,6 +83,7 @@ shape = SubResource("RectangleShape2D_qa6ra")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_d2xww")
+frame_progress = 0.52552783
 
 [node name="Hitbox" type="Area2D" parent="." groups=["billionaire"]]
 collision_layer = 4

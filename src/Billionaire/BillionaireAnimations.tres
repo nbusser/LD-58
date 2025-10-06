@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=45 format=3 uid="uid://cwedgk16x5d4h"]
+[gd_resource type="SpriteFrames" load_steps=52 format=3 uid="uid://cwedgk16x5d4h"]
 
 [ext_resource type="Texture2D" uid="uid://bn6ucip7nxf3i" path="res://assets/sprites/billionaire/idle_80.png" id="1_82bc1"]
 [ext_resource type="Texture2D" uid="uid://rjwopq1e7m7t" path="res://assets/sprites/billionaire/phone_80.png" id="2_82bc1"]
@@ -162,6 +162,34 @@ region = Rect2(6272, 0, 224, 256)
 atlas = ExtResource("5_3s7sa")
 region = Rect2(6496, 0, 224, 256)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ig7qo"]
+atlas = ExtResource("5_3s7sa")
+region = Rect2(0, 0, 224, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ln46d"]
+atlas = ExtResource("5_3s7sa")
+region = Rect2(224, 0, 224, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jo467"]
+atlas = ExtResource("5_3s7sa")
+region = Rect2(448, 0, 224, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2a1d"]
+atlas = ExtResource("5_3s7sa")
+region = Rect2(672, 0, 224, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enxdo"]
+atlas = ExtResource("5_3s7sa")
+region = Rect2(896, 0, 224, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fluo"]
+atlas = ExtResource("5_3s7sa")
+region = Rect2(1120, 0, 224, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mio22"]
+atlas = ExtResource("5_3s7sa")
+region = Rect2(1344, 0, 224, 256)
+
 [resource]
 animations = [{
 "frames": [{
@@ -315,5 +343,31 @@ animations = [{
 }],
 "loop": true,
 "name": &"machinegun",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ig7qo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ln46d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jo467")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2a1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enxdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fluo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mio22")
+}],
+"loop": true,
+"name": &"machinegun_windup",
 "speed": 12.0
 }]
