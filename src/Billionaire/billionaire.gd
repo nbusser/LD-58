@@ -356,7 +356,7 @@ func _machinegun_routine() -> void:
 		await _random_run()
 
 	$Sprite2D.play("machinegun_windup")
-	$AttackPatterns/Rain/FocusSound.play()
+	$AttackPatterns/Machinegun/FocusSound.play()
 	var focus_time: float = 2.0 - 0.12 * (GameState.difficulty_factor - 1.0)
 	await get_tree().create_timer(focus_time).timeout
 	$Sprite2D.play("machinegun")
