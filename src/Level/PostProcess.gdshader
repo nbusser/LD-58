@@ -27,12 +27,12 @@ void compute_bloom_and_blur(vec2 uv, out vec3 bloom, out vec3 horizontal_blur) {
 	bloom /= 9.0;
 	horizontal_blur /= 3.0;
 }
-const vec2 resolution = vec2(800.0, 450.0);
+// const vec2 resolution = vec2(800.0, 450.0);
 void fragment() {
 	vec2 uv = SCREEN_UV;
 
 	// Pixelate
-	uv = floor(uv * resolution) / resolution;
+	// uv = floor(uv * resolution) / resolution;
 
 	vec4 src = texture(screen_texture, uv);
 	float gray = dot(src.rgb, vec3(0.299, 0.587, 0.114));
