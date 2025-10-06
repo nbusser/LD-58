@@ -1,3 +1,12 @@
-[gd_resource type="Theme" load_steps=0 format=3 uid="uid://ciubrukaih6sc"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://ciubrukaih6sc"]
+
+[ext_resource type="FontFile" uid="uid://dv8t8nn0k76a0" path="res://assets/fonts/LinLibertine_aBL.ttf" id="1_qew4h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qew4h"]
+bg_color = Color(0.9411765, 0.92941177, 0.91764706, 1)
 
 [resource]
+default_font = ExtResource("1_qew4h")
+default_font_size = 50
+Label/colors/font_color = Color(0.02745098, 0.003921569, 0.007843138, 1)
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_qew4h")

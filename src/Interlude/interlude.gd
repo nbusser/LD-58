@@ -8,6 +8,8 @@ var statement_line_scene = preload("res://src/Interlude/statement_line.tscn")
 @onready var panel = $CenterContainer/Panel
 @onready var subtitle_label: Label = %SubtitleLabel
 @onready var total_value_label: Label = %TotalValueLabel
+@onready var losses_label: Label = %LossesLabel
+@onready var remaining_net_worth_label: Label = %RemainingNetWorthLabel
 
 
 func _blocking_dialog(text: String):
@@ -30,7 +32,7 @@ func _cutscene():
 		. finished
 	)
 
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(1).timeout
 	await _blocking_dialog("Je l'ai bien schlassé")
 
 	$UpgradeSelector.visible = true
@@ -86,3 +88,9 @@ func _setup_statement_lines():
 		statement_lines_container.add_child(statement_line)
 
 	total_value_label.text = "$%d" % GameState.latest_level_state.get_value_of_collected_items()
+
+	losses_label.text = "$%d" % GameState.latest_level_state.get_value_of_collected_items()
+	var remaining_net_worth = (
+		GameState.billionaire_cash - GameState.latest_level_state.get_value_of_collected_items()
+	)
+	remaining_net_worth_label.text = "$%d" % remaining_net_worth

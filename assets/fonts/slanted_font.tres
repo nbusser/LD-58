@@ -1,0 +1,8 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://boxigvia40f4m"]
+
+[ext_resource type="FontFile" uid="uid://dv8t8nn0k76a0" path="res://assets/fonts/LinLibertine_aBL.ttf" id="1_6fuwv"]
+
+[resource]
+base_font = ExtResource("1_6fuwv")
+variation_transform = Transform2D(0.9, -0.6, 0, 1, 0, 0)
+spacing_glyph = -5
