@@ -10,34 +10,6 @@ const DIRECTIONS_MODIFIERS = [-1, 1]
 const DASH_SLOWMO_NAME := "player_dash"
 const BULLET_PROXIMITY_SLOWMO_NAME := "bullet_proximity"
 
-# Movement
-@export var ground_speed = 450
-@export var air_speed = 290
-# Horizontal dash
-@export var dash_cooldown = 1.0
-@export var dash_speed = 3700
-@export var dash_window = .3
-# Dash slow motion
-@export var dash_slow_factor = 0.6
-@export var dash_slow_time = 0.3
-# Vertical dash
-@export var down_dash_speed = 1500
-@export var down_dash_duration = 0.20
-# Jumps
-@export var max_input_jump_time = .4
-@export var jump_force = 7000
-# Walls stickiness
-@export var wall_stickiness = 450
-@export var wall_jump_force = 450
-@export var wall_jump_cooldown = .7
-# Billionaire contact
-@export var billionaire_head_bounce = 150
-@export var billionaire_knockback = 800
-@export var melee_damage = 100
-# Dash glide
-@export var dash_glide_window = .1
-@export var glide_force = 3800
-
 @export var is_dead_animation_playing = false
 @export var enable_gravity = true
 
@@ -122,7 +94,7 @@ func _physics_process(delta):
 
 		($Sprite as AnimatedSprite2D).flip_h = direction == Direction.LEFT
 
-		hz_velocity = input_direction * (ground_speed if self.is_on_floor() else air_speed)
+		hz_velocity = input_direction * (ps.ground_speed if self.is_on_floor() else ps.air_speed)
 
 		# Jump
 		if (
@@ -139,19 +111,19 @@ func _physics_process(delta):
 		if (
 			is_actively_jumping
 			&& Input.is_action_pressed("jump")
-			&& time_since_jump < max_input_jump_time
+			&& time_since_jump < ps.max_input_jump_time
 		):
 			is_keep_pressing_jump_button = true
 			var timer_proportion = (
-				(1 - clamp(time_since_jump, 0, max_input_jump_time) / max_input_jump_time) ** 4
+				(1 - clamp(time_since_jump, 0, ps.max_input_jump_time) / ps.max_input_jump_time) ** 4
 			)
-			vt_velocity = -jump_force * delta * timer_proportion
+			vt_velocity = -ps.jump_force * delta * timer_proportion
 			# Show animation for double jump
 			if !is_on_floor():
 				play_jump_start_ts = now
 		elif (
 			is_actively_jumping
-			&& (time_since_jump > max_input_jump_time || Input.is_action_just_released("jump"))
+			&& (time_since_jump > ps.max_input_jump_time || Input.is_action_just_released("jump"))
 		):
 			is_actively_jumping = false
 
@@ -162,14 +134,14 @@ func _physics_process(delta):
 		if ps.unlocked_dash:
 			for dir in range(2):
 				if Input.is_action_just_pressed(DIRECTIONS[dir]):
-					if now - previous_dash > dash_cooldown:
-						if now - previous_dir[dir] < dash_window:
+					if now - previous_dash > ps.dash_cooldown:
+						if now - previous_dir[dir] < ps.dash_window:
 							previous_dash = now
-							hz_velocity = DIRECTIONS_MODIFIERS[dir] * dash_speed
+							hz_velocity = DIRECTIONS_MODIFIERS[dir] * ps.dash_speed
 							if ps.unlocked_dash_bullet_time:
 								dash_slow_mo()
 						previous_dir[dir] = now
-			_hud.set_dash_cooldown(100. * clamp((now - previous_dash) / dash_cooldown, 0., 100.))
+			_hud.set_dash_cooldown(100. * clamp((now - previous_dash) / ps.dash_cooldown, 0., 100.))
 
 		# Down dash
 		if ps.unlocked_dash_down:
@@ -182,38 +154,38 @@ func _physics_process(delta):
 				&& can_down_dash
 				&& !is_on_floor()
 				&& !is_down_dashing
-				&& now - previous_down_dash > dash_cooldown
+				&& now - previous_down_dash > ps.dash_cooldown
 			):
 				previous_down_dash = now
 				is_down_dashing = true
 				is_actively_jumping = false
 				jump_load_start = null
-				velocity.y += down_dash_speed
+				velocity.y += ps.down_dash_speed
 				if ps.unlocked_dash_bullet_time:
 					dash_slow_mo()
-			if is_down_dashing && now - previous_down_dash > down_dash_duration:
+			if is_down_dashing && now - previous_down_dash > ps.down_dash_duration:
 				is_down_dashing = false
 				if velocity.y > 0:
-					velocity.y -= min(down_dash_speed / 2., velocity.y)
-			if ps.unlocked_dash_glide && now - dash_glide_window_start < dash_glide_window:
+					velocity.y -= min(ps.down_dash_speed / 2., velocity.y)
+			if ps.unlocked_dash_glide && now - dash_glide_window_start < ps.dash_glide_window:
 				if Input.is_action_just_pressed("move_left"):
-					velocity.x -= glide_force
+					velocity.x -= ps.glide_force
 					dash_glide_window_start = 0
 				elif Input.is_action_just_pressed("move_right"):
-					velocity.x += glide_force
+					velocity.x += ps.glide_force
 					dash_glide_window_start = 0
 
 	# Wall sticking behavior
 	if ps.unlocked_wall_climbing:
 		if is_on_wall():
 			if velocity.y > 0:
-				velocity.y -= wall_stickiness * delta
+				velocity.y -= ps.wall_stickiness * delta
 			# Wall jumping
 			if (
 				Input.is_action_pressed("jump")
-				&& (jump_load_start == null || now - jump_load_start > wall_jump_cooldown)
+				&& (jump_load_start == null || now - jump_load_start > ps.wall_jump_cooldown)
 			):
-				vt_velocity = -wall_jump_force
+				vt_velocity = -ps.wall_jump_force
 				jump_load_start = now
 
 	# Gravity
@@ -233,7 +205,7 @@ func _physics_process(delta):
 				velocity.y = -velocity.y / 6.
 			else:
 				velocity.y = 0
-			velocity.y -= billionaire_head_bounce
+			velocity.y -= ps.billionaire_head_bounce
 			if abs(velocity.x) < 500:
 				velocity.x = sign(velocity.x) * 500
 			previous_head_bounce = now
@@ -292,8 +264,8 @@ func _physics_process(delta):
 
 
 func dash_slow_mo():
-	if Globals.create_slowmo(DASH_SLOWMO_NAME, dash_slow_factor):
-		await get_tree().create_timer(dash_slow_time).timeout
+	if Globals.create_slowmo(DASH_SLOWMO_NAME, ps.dash_slow_factor):
+		await get_tree().create_timer(ps.dash_slow_time).timeout
 		Globals.cancel_slowmo_if_exists(DASH_SLOWMO_NAME)
 
 
@@ -371,7 +343,7 @@ func _on_soft_hitbox_body_exited(body: Node2D) -> void:
 
 # When the billionaire is punched from the air, we grant an extra jump to the player (it they are out of jumps)
 func _on_attack_manager_punch_has_connected(attack: AttackManager.Attack) -> void:
-	emit_signal("billionaire_punched", melee_damage)
+	emit_signal("billionaire_punched", ps.melee_damage)
 	if (
 		attack == AttackManager.Attack.AIR
 		and ps.unlocked_bonus_jump_after_airhit
