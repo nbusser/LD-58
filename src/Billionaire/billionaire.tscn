@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=36 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="SpriteFrames" uid="uid://cwedgk16x5d4h" path="res://src/Billionaire/BillionaireAnimations.tres" id="2_d2xww"]
@@ -18,6 +18,9 @@
 [ext_resource type="AudioStream" uid="uid://d1i6r2bm01r4v" path="res://assets/sounds/repulsive_wave_column.wav" id="11_tafn6"]
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="11_wpliv"]
 [ext_resource type="AudioStream" uid="uid://cfh85dw30ostv" path="res://assets/sounds/attack.wav" id="12_3bth7"]
+[ext_resource type="SpriteFrames" uid="uid://bvi1idvrvrbb2" path="res://src/Billionaire/bubble_100.tres" id="15_327hu"]
+[ext_resource type="SpriteFrames" uid="uid://dgoanvtm3rx52" path="res://src/Billionaire/bubble_200.tres" id="16_jeg63"]
+[ext_resource type="SpriteFrames" uid="uid://bfujddc8s3ueg" path="res://src/Billionaire/bubble_300.tres" id="17_wh08u"]
 [ext_resource type="AudioStream" uid="uid://cllgjdbpyommg" path="res://assets/sounds/Ennemy/growl1.ogg" id="19_60pqq"]
 [ext_resource type="AudioStream" uid="uid://nxluy60n7c6d" path="res://assets/sounds/Ennemy/growl5.ogg" id="20_dvqb2"]
 [ext_resource type="AudioStream" uid="uid://ddawsibvxuljf" path="res://assets/sounds/Ennemy/ouille.ogg" id="21_0ym8j"]
@@ -188,15 +191,20 @@ shape = SubResource("RectangleShape2D_38hbp")
 position = Vector2(-124, 81.6875)
 shape = SubResource("RectangleShape2D_bqgkp")
 
-[node name="Sprite2D" type="Sprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
 position = Vector2(123, 82.5)
 scale = Vector2(1.2978122, 1.109375)
-texture = ExtResource("9_kdd1f")
+sprite_frames = ExtResource("15_327hu")
+frame = 29
+frame_progress = 0.87248546
+speed_scale = 2.5
 
-[node name="Sprite2D2" type="Sprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
+[node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
 position = Vector2(-124.99999, 83)
 scale = Vector2(1.298, 1.162875)
-texture = ExtResource("9_kdd1f")
+sprite_frames = ExtResource("15_327hu")
+frame_progress = 0.18262367
+speed_scale = 2.5
 
 [node name="Column2" type="Area2D" parent="AttackPatterns/RepulsiveWave/Columns"]
 collision_layer = 0
@@ -211,15 +219,19 @@ shape = SubResource("RectangleShape2D_7xygs")
 position = Vector2(-204.375, 61)
 shape = SubResource("RectangleShape2D_7xygs")
 
-[node name="Sprite2D" type="Sprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
 position = Vector2(-207, 60.999985)
 scale = Vector2(1.2431245, 1.7924999)
-texture = ExtResource("9_kdd1f")
+sprite_frames = ExtResource("16_jeg63")
+frame_progress = 0.3998903
+speed_scale = 2.5
 
-[node name="Sprite2D2" type="Sprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
+[node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
 position = Vector2(204.99998, 58.822365)
 scale = Vector2(1.1651436, 1.8069491)
-texture = ExtResource("9_kdd1f")
+sprite_frames = ExtResource("16_jeg63")
+frame_progress = 0.18021862
+speed_scale = 2.5
 
 [node name="Column3" type="Area2D" parent="AttackPatterns/RepulsiveWave/Columns"]
 collision_layer = 0
@@ -234,15 +246,19 @@ shape = SubResource("RectangleShape2D_1qyaf")
 position = Vector2(-298, 16)
 shape = SubResource("RectangleShape2D_1qyaf")
 
-[node name="Sprite2D2" type="Sprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
 position = Vector2(295.00003, 12.999985)
 scale = Vector2(1.6294464, 3.247224)
-texture = ExtResource("9_kdd1f")
+sprite_frames = ExtResource("17_wh08u")
+frame_progress = 0.9010395
+speed_scale = 2.5
 
-[node name="Sprite2D3" type="Sprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
+[node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
 position = Vector2(-297, 15)
 scale = Vector2(1.5617173, 3.2265396)
-texture = ExtResource("9_kdd1f")
+sprite_frames = ExtResource("17_wh08u")
+frame_progress = 0.43212867
+speed_scale = 2.5
 
 [node name="LaserCage" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "LaserCage"
