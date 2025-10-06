@@ -8,15 +8,15 @@ func get_collectible_value(collectible_type: CollectibleType) -> int:
 		CollectibleType.DOLLAR_COIN:
 			return 1
 		CollectibleType.DOLLAR_BILL:
-			return 20
-		CollectibleType.BUNDLE_OF_CASH:
 			return 100
-		CollectibleType.MONEY_BAG:
-			return 1000
-		CollectibleType.GOLD_BAR:
+		CollectibleType.BUNDLE_OF_CASH:
 			return 10000
+		CollectibleType.MONEY_BAG:
+			return 1000000
+		CollectibleType.GOLD_BAR:
+			return 100000000
 		CollectibleType.BITCOIN:
-			return 100000
+			return 10000000000
 		_:
 			return 0
 
