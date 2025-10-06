@@ -271,7 +271,7 @@ texture = ExtResource("9_kdd1f")
 attack_name = "N.D.A"
 cooldown = 3.0
 maximum_distance_x = 0.16
-prefered_distance_x = 0.1
+prefered_distance_x = 0.08
 prefered_distance_tolerance_x = 0.05
 base_weigth = 1.5
 
