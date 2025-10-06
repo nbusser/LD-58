@@ -14,7 +14,7 @@ config/name="Rends l'argent ! https://la-conjugaison.nouvelobs.com/regles/conjug
 config/description="Ludum Dare 58"
 run/main_scene="res://src/SceneManager/SceneManager.tscn"
 config/features=PackedStringArray("4.5")
-config/icon="res://assets/sprites/player.png"
+config/icon="uid://bjrhdxbsucup7"
 
 [autoload]
 
