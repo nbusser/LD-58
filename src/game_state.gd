@@ -70,7 +70,7 @@ func apply_upgrade(card: UpgradeCardData) -> bool:
 	for upgr in get_upgrade_stats():
 		match upgr:
 			UpgradeCardData.EffectType.BULLET_TIME:
-				player_stats.unlocked_on_demand_bullet_time = true
+				player_stats.unlocked_bullet_proximity_slowmo = true
 			UpgradeCardData.EffectType.COMBO_MULTIPLIER:
 				player_stats.combo_base += .1
 			UpgradeCardData.EffectType.JUMP_HEIGHT:

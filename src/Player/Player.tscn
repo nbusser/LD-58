@@ -230,25 +230,6 @@ radius = 60.0
 [node name="Player" type="CharacterBody2D" groups=["Player", "player"]]
 collision_layer = 16
 script = ExtResource("2")
-ground_speed = null
-air_speed = null
-dash_cooldown = null
-dash_speed = null
-dash_window = null
-dash_slow_factor = null
-dash_slow_time = null
-down_dash_speed = null
-down_dash_duration = null
-max_input_jump_time = null
-jump_force = null
-wall_stickiness = null
-wall_jump_force = null
-wall_jump_cooldown = null
-billionaire_head_bounce = null
-billionaire_knockback = null
-melee_damage = null
-dash_glide_window = null
-glide_force = null
 
 [node name="AttackManager" type="Node2D" parent="."]
 position = Vector2(0, -50)
