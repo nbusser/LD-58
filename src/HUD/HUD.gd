@@ -2,8 +2,6 @@ class_name HUD
 
 extends Control
 
-var level_name:
-	set = set_level_name
 
 var nb_coins:
 	set = set_nb_coins
@@ -16,7 +14,6 @@ var billionaire_net_worth:
 
 @onready var level_number_label: Label = $VBoxContainer/VBoxContainer/LevelNumber/LevelNumberValue
 @onready var coins_label: Label = $VBoxContainer/VBoxContainer/CoinNumber/CoinNumberValue
-@onready var level_name_label: Label = $VBoxContainer/CenterContainer/LevelNameValue
 @onready var net_worth_label: Label = $VBoxContainer/VBoxContainer/NetWorth/NetWorthValue
 @onready var dash_progress_bar: ProgressBar = $VBoxContainer/VBoxContainer/DashCooldown/ProgressBar
 @onready var fadein_pane: ColorRect = $FadeinPane
@@ -24,10 +21,6 @@ var billionaire_net_worth:
 @onready var calendar_year := $Calendar/Year
 @onready var calendar_month := $Calendar/Month
 @onready var Heart := preload("res://src/Hearts/Heart.tscn")
-
-
-func set_level_name(value: String) -> void:
-	level_name_label.text = value
 
 
 func set_nb_coins(value: int) -> void:
