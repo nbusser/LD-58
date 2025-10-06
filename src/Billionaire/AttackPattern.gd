@@ -15,7 +15,7 @@ extends Node2D
 @export var prefered_distance_tolerance_x: float = 0.1
 
 # Can be lowered if the attack is more rare
-@export var rarity: float = 1.0
+@export var base_weigth: float = 1.0
 
 @export var enabled: bool = true
 
@@ -55,4 +55,4 @@ func calculate_weight(
 	var diff = normalized_distance - prefered_distance_x
 	var distance_factor = exp(-pow(diff, 2) / (2.0 * pow(prefered_distance_tolerance_x, 2)))
 
-	return rarity * distance_factor
+	return base_weigth * distance_factor

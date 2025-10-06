@@ -24,8 +24,7 @@ var _is_level_timeout = false
 @onready var _bullets: Node2D = $"../Bullets"
 @onready var _player: Player = $"../Player"
 @onready var _repulse_wave: Node2D = $AttackPatterns/RepulsiveWave/Columns
-@onready var _schlass_left: Node2D = $AttackPatterns/Schlassage/Members/Left
-@onready var _schlass_right: Node2D = $AttackPatterns/Schlassage/Members/Right
+@onready var _schlass: Node2D = $AttackPatterns/Schlassage/Foot
 
 @onready var _attack_patterns: Node = $AttackPatterns
 @onready var _level: Level = $"../.."
@@ -73,10 +72,12 @@ func _get_attack_pattern():
 	# 	print("Normalized distance: ", normalized_distance)
 	# 	print(map_weights.call(attack))
 	# 	return null
-	# debug_only_benchmark_attack.call(8) # DEBUG ONLY - DO NOT COMMIT UNCOMMENTED
+	# debug_only_benchmark_attack.call(9) # DEBUG ONLY - DO NOT COMMIT UNCOMMENTED
+	# var attack_patterns = [_attack_patterns.get_child(9)] # DEBUG ONLY - DO NOT COMMIT UNCOMMENTED
 	# return null # DEBUG ONLY - DO NOT COMMIT UNCOMMENTED
 
-	var attacks_and_weights = _attack_patterns.get_children().map(map_weights).filter(
+	var attack_patterns = _attack_patterns.get_children()
+	var attacks_and_weights = attack_patterns.map(map_weights).filter(
 		func(attack_and_weight): return attack_and_weight.weight > 0.0
 	)
 
@@ -576,25 +577,25 @@ func _laser_cage_routine() -> void:
 
 
 func _schlassage_routine():
-	if global_position.x - _player.global_position.x > 0:  # Schlass left
-		_schlass_left.visible = true
-		_schlass_left.monitoring = true
-	else:  # Schlass right
-		_schlass_right.visible = true
-		_schlass_right.monitoring = true
-	var focus_duration: float = 2.0
-	$AttackPatterns/RepulsiveWave/FocusSound.play_sound()
-
+	$AttackPatterns/Schlassage/FocusSound.play_sound()
 	$Sprite2D.play("focus")
+	var focus_duration: float = 0.5
 	await get_tree().create_timer(focus_duration).timeout
 	$Sprite2D.play("laugh")
 
-	_schlass_left.visible = false
-	_schlass_left.monitoring = false
-	_schlass_right.visible = false
-	_schlass_right.monitoring = false
+	_schlass.visible = true
+	_schlass.monitoring = true
+	if global_position.x - _player.global_position.x > 0:  # Left
+		_schlass.scale.x = 1
+	else:  # Right
+		_schlass.scale.x = -1
+
+	$AttackPatterns/Schlassage/AttackSound.play_sound()
 
 	await get_tree().create_timer(1.0).timeout
+
+	_schlass.visible = false
+	_schlass.monitoring = false
 
 	$Sprite2D.play("default")
 
@@ -610,3 +611,11 @@ func on_player_dies():
 
 func on_level_timeout():
 	_is_level_timeout = true
+
+
+# During schlass
+func _on_foot_body_entered(body: Node2D) -> void:
+	if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]):
+		var kick_force = 5000.0
+		var direction = -1.0 if global_position.x - _player.global_position.x > 0 else 1.0
+		_player.get_hurt(Vector2(kick_force * direction, 0))
