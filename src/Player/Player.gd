@@ -54,6 +54,8 @@ var is_in_billionaire = false
 var is_on_top_of_billionaire = false
 var dash_glide_window_start = 0
 
+var intouchable = false
+
 var direction = Direction.RIGHT
 
 var previous_dir = [0, 0]  # left, right
@@ -308,7 +310,7 @@ func _die():
 
 
 func get_hurt(knockback_force):
-	if is_dead || is_level_timeout:
+	if is_dead || is_level_timeout || intouchable:
 		return
 
 	# Get knocked back
@@ -329,7 +331,9 @@ func get_hurt(knockback_force):
 	# Red glow on hit
 	_hurt_sound.play_sound()
 	modulate = Color(1, 0, 0)
+	intouchable = true
 	await get_tree().create_timer(1.0).timeout
+	intouchable = false
 	modulate = Color(1, 1, 1, 1)
 	scale = _original_scale
 
