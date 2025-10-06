@@ -266,6 +266,7 @@ func _can_move():
 
 
 func _die():
+	$SoundFx/DeathSound.play_sound()
 	is_dead = true
 
 	if direction == Direction.LEFT:

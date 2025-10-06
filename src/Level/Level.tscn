@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://fkx747pj67wj"]
+[gd_scene load_steps=11 format=3 uid="uid://fkx747pj67wj"]
 
 [ext_resource type="Script" uid="uid://drh117nvpnukt" path="res://src/Level/Level.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://btohiqrak4tcf" path="res://src/Map/Map.tscn" id="2"]
@@ -6,6 +6,8 @@
 [ext_resource type="Shader" uid="uid://b0hbcpqv8d8w" path="res://src/Level/PostProcess.gdshader" id="4_5g3p6"]
 [ext_resource type="Script" uid="uid://uvipfx8brsj0" path="res://src/UI/PostProcessOverlay.gd" id="4_c7nqk"]
 [ext_resource type="Shader" uid="uid://ccoc5wp0cgskd" path="res://src/Laser.gdshader" id="4_noe52"]
+[ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="7_1b0u6"]
+[ext_resource type="AudioStream" uid="uid://curqsvlnprpo1" path="res://assets/sounds/timeout.wav" id="8_qpfp4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sbvk8"]
 shader = ExtResource("4_noe52")
@@ -84,5 +86,12 @@ color = Color(0, 0, 0, 0)
 wait_time = 60.0
 one_shot = true
 autostart = true
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="TimeoutSound" type="AudioStreamPlayer" parent="SFX"]
+script = ExtResource("7_1b0u6")
+sounds = Array[AudioStream]([ExtResource("8_qpfp4")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

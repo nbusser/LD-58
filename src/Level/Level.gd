@@ -44,7 +44,21 @@ func change_net_worth(damount: int):
 	return remaining_net_worth
 
 
+func _on_player_billionaire_punched(amount: int) -> void:
+	var remaining_net_worth: int = change_net_worth(amount)
+	billionaire_hit.emit(amount, remaining_net_worth)
+
+
+func on_coin_collected(collectible_type: Collectible.CollectibleType) -> void:
+	level_state.collect_item(collectible_type)
+	var value_of_collected_items = level_state.get_value_of_collected_items()
+	level_state.player_cash = GameState.player_cash + value_of_collected_items
+	hud.set_nb_coins(value_of_collected_items)
+
+
 func _on_Timer_timeout():
+	$SFX/TimeoutSound.play_sound()
+
 	_player.on_level_timeout()
 	_billionaire.on_level_timeout()
 
@@ -61,18 +75,6 @@ func _on_Timer_timeout():
 			}
 		)
 	)
-
-
-func _on_player_billionaire_punched(amount: int) -> void:
-	var remaining_net_worth: int = change_net_worth(amount)
-	billionaire_hit.emit(amount, remaining_net_worth)
-
-
-func on_coin_collected(collectible_type: Collectible.CollectibleType) -> void:
-	level_state.collect_item(collectible_type)
-	var value_of_collected_items = level_state.get_value_of_collected_items()
-	level_state.player_cash = GameState.player_cash + value_of_collected_items
-	hud.set_nb_coins(value_of_collected_items)
 
 
 func on_player_dies(animation_finished_coroutine_to_await: Callable):
