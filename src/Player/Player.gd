@@ -34,7 +34,7 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var billionaire_knockback = 800
 @export var melee_damage = 100
 # Dash glide
-@export var dash_glide_window = .3
+@export var dash_glide_window = .1
 @export var glide_force = 3800
 
 @export var is_dead_animation_playing = false
