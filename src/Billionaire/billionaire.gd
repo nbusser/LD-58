@@ -393,7 +393,7 @@ func _machinegun_routine() -> void:
 	$Sprite2D.play("machinegun")
 
 	var bullet_speed = 400.0 + 60.0 * (GameState.difficulty_factor - 1.0)
-	var nb_bullets: int = 6 + int(2.0 * (GameState.difficulty_factor - 1))
+	var nb_bullets: int = 8 + int(2.0 * (GameState.difficulty_factor - 1))
 
 	for _i in range(nb_bullets):
 		var gunpoint_position: Vector2
