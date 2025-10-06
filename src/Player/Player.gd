@@ -14,7 +14,7 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var air_speed = 290
 # Horizontal dash
 @export var dash_cooldown = 1.0
-@export var dash_speed = 4500
+@export var dash_speed = 3700
 @export var dash_window = .3
 # Dash slow motion
 @export var dash_slow_factor = 0.6
