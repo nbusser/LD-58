@@ -356,13 +356,13 @@ func _machinegun_routine() -> void:
 
 	$Sprite2D.play("machinegun_windup")
 	$AttackPatterns/Machinegun/FocusSound.play()
-	var focus_time: float = 2.0 - 0.1 * (GameState.difficulty_factor - 1.0)
+	var focus_time: float = 2.0 - 0.12 * (GameState.difficulty_factor - 1.0)
 	await get_tree().create_timer(focus_time).timeout
 	$Sprite2D.play("machinegun")
 
 	var gunpoint_offset = Vector2(42.0, 7.0)
-	var bullet_speed = 300.0 + 60.0 * (GameState.difficulty_factor - 1.0)
-	var nb_bullets: int = 5 + int(2.0 * (GameState.difficulty_factor - 1))
+	var bullet_speed = 400.0 + 60.0 * (GameState.difficulty_factor - 1.0)
+	var nb_bullets: int = 6 + int(2.0 * (GameState.difficulty_factor - 1))
 
 	for _i in range(nb_bullets):
 		var bullet_direction = (_player.global_position - global_position).normalized()
