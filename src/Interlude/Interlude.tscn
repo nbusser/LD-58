@@ -41,23 +41,25 @@ expand_mode = 1
 [node name="LossesLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 578.0
-offset_top = 378.0
-offset_right = 835.0
-offset_bottom = 436.0
+offset_left = 797.00006
+offset_top = 525.0
+offset_right = 1054.0
+offset_bottom = 606.0
 rotation = -0.4537856
 theme_override_fonts/font = ExtResource("7_q8van")
+theme_override_font_sizes/font_size = 70
 text = "$123,123"
 
 [node name="RemainingNetWorthLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 629.00006
-offset_top = 438.0
-offset_right = 886.00006
-offset_bottom = 496.0
+offset_left = 874.00006
+offset_top = 607.0
+offset_right = 1131.0001
+offset_bottom = 688.0
 rotation = -0.4537856
 theme_override_fonts/font = ExtResource("7_q8van")
+theme_override_font_sizes/font_size = 70
 text = "$123,123"
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -71,9 +73,9 @@ texture = ExtResource("5_vkv47")
 expand_mode = 1
 
 [node name="RecapProjection" type="Sprite2D" parent="."]
-position = Vector2(287, 503.00003)
+position = Vector2(394.99997, 693)
 rotation = -0.7452556
-scale = Vector2(0.30955267, 0.30955267)
+scale = Vector2(0.40777397, 0.40777397)
 skew = -0.3193953
 texture = SubResource("ViewportTexture_q8van")
 
