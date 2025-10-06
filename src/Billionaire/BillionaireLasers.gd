@@ -1,10 +1,15 @@
 extends Node2D
 
+var max_lasers: int = 12
+var laser_size = 50.0
+
+var progress_before_flash = 0.62
+var progress_flash = 0.8
+
 var laser_positions: PackedVector2Array
 var laser_states: PackedFloat32Array
 var active_lasers: Array[Dictionary] = []
-const max_lasers: int = 12
-const laser_size = 50.0
+var limits: Rect2 = Rect2()
 
 @onready var player: Player = get_tree().get_first_node_in_group("player")
 @onready var laser_surface: ColorRect = get_tree().get_first_node_in_group("laser_surface")
@@ -12,8 +17,6 @@ const laser_size = 50.0
 @onready var ceiling = $"../Borders/Ceiling/CollisionShape2D"
 @onready var wall_l = $"../Borders/WallL/CamMarker"
 @onready var wall_r = $"../Borders/WallR/CamMarker"
-
-var limits: Rect2 = Rect2()
 
 
 func _ready():
@@ -47,10 +50,6 @@ func _on_viewport_size_changed():
 	var viewport_size = get_viewport().size
 	if laser_surface:
 		laser_surface.material.set_shader_parameter("resolution", viewport_size)
-
-
-const progress_before_flash = 0.62
-const progress_flash = 0.8
 
 
 func _physics_process(delta):

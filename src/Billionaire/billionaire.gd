@@ -81,7 +81,9 @@ func _spawn_bullet(
 	bullet_scale_factor: float = 1.0
 ) -> void:
 	var bullet: Bullet = _bullet_scene.instantiate()
-	bullet.init(bullet_position, bullet_direction, bullet_knockback, bullet_speed, bullet_scale_factor)
+	bullet.init(
+		bullet_position, bullet_direction, bullet_knockback, bullet_speed, bullet_scale_factor
+	)
 	_bullets.add_child(bullet)
 
 

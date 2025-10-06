@@ -1,10 +1,10 @@
 extends Node2D
 
-@onready var laser_surface: Polygon2D = $LaserSurface
-
 var time: float = 0.0
 var laser_positions: PackedVector2Array
 var laser_states: PackedFloat32Array
+
+@onready var laser_surface: Polygon2D = $LaserSurface
 
 
 func _ready():
