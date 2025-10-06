@@ -356,6 +356,11 @@ monitorable = false
 position = Vector2(-80, -1)
 shape = SubResource("CircleShape2D_tafn6")
 
+[node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/Schlassage"]
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("6_tyvur")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
 [node name="SFX" type="Node2D" parent="."]
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="SFX"]

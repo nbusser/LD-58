@@ -620,6 +620,7 @@ func _laser_warning_routine() -> void:
 
 	# Focus animation
 	$Sprite2D.play("focus")
+	$AttackPatterns/Rain/FocusSound.play()
 	await get_tree().create_timer(1.0).timeout
 
 	# Fire lasers at player position
@@ -639,6 +640,7 @@ func _laser_sweep_routine() -> void:
 
 	# Focus animation
 	$Sprite2D.play("focus")
+	$AttackPatterns/Rain/FocusSound.play()
 	await get_tree().create_timer(1.2).timeout
 
 	# Fire sweeping laser
@@ -659,6 +661,7 @@ func _laser_cage_routine() -> void:
 
 	# Focus animation
 	$Sprite2D.play("focus")
+	$AttackPatterns/Rain/FocusSound.play()
 	await get_tree().create_timer(1.0).timeout
 
 	# Create laser cage
@@ -674,7 +677,7 @@ func _laser_cage_routine() -> void:
 func _schlassage_routine():
 	_schlass_connected = false
 
-	$AttackPatterns/Rain/FocusSound.play()
+	$AttackPatterns/Schlassage/FocusSound.play_sound()
 
 	$Sprite2D.play("shout")
 
