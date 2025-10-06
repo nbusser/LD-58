@@ -12,6 +12,17 @@ var level_state: LevelState
 @onready var _billionaire: Billionaire = $Map/Billionaire
 
 
+func _fadeout(time: float = 1.5):
+	await (
+		get_tree()
+		. create_tween()
+		. tween_property($UI/Fadeout, "color:a", 1.0, time)
+		. set_trans(Tween.TRANS_LINEAR)
+		. set_ease(Tween.EASE_IN_OUT)
+		. finished
+	)
+
+
 func _ready():
 	assert(level_state, "init must be called before creating Level scene")
 	hud.init(level_state)
@@ -34,7 +45,13 @@ func change_net_worth(damount: int):
 
 
 func _on_Timer_timeout():
-	# Globals.end_scene(Globals.EndSceneStatus.LEVEL_GAME_OVER)
+	_player.on_level_timeout()
+	_billionaire.on_level_timeout()
+
+	await get_tree().create_timer(1.5).timeout
+	await _fadeout(2.5)
+	await get_tree().create_timer(0.5).timeout
+
 	(
 		Globals
 		. end_scene(
@@ -61,22 +78,18 @@ func on_coin_collected(collectible_type: Collectible.CollectibleType) -> void:
 func on_player_dies(animation_finished_coroutine_to_await: Callable):
 	level_state.lost = true
 	_billionaire.on_player_dies()
+
 	await animation_finished_coroutine_to_await.call()
-	await (
-		get_tree()
-		. create_tween()
-		. tween_property($UI/Fadeout, "color:a", 1.0, 1.5)
-		. set_trans(Tween.TRANS_LINEAR)
-		. set_ease(Tween.EASE_IN_OUT)
-		. finished
-	)
+	await _fadeout()
 	await get_tree().create_timer(0.5).timeout
-	(
-		Globals
-		. end_scene(
-			Globals.EndSceneStatus.LEVEL_END,
-			{
-				"level_state": level_state,
-			}
-		)
-	)
+
+	Globals.end_scene(Globals.EndSceneStatus.LEVEL_GAME_OVER)
+	# (
+	# 	Globals
+	# 	. end_scene(
+	# 		Globals.EndSceneStatus.LEVEL_END,
+	# 		{
+	# 			"level_state": level_state,
+	# 		}
+	# 	)
+	# )

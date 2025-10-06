@@ -38,6 +38,7 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var enable_gravity = true
 
 var is_dead = false
+var is_level_timeout = false
 
 var jump_load_start = null
 var is_actively_jumping = false
@@ -227,7 +228,7 @@ func _physics_process(delta):
 	# Combat
 	_punch_area.scale.x = -1.0 if direction == Direction.LEFT else 1.0
 
-	if not is_dead and Input.is_action_just_pressed("melee"):
+	if Input.is_action_just_pressed("melee") and not is_dead and not is_level_timeout:
 		$AttackManager.try_attack()
 
 	# Animation
@@ -261,7 +262,7 @@ func _exit_tree() -> void:
 
 
 func _can_move():
-	return not is_dead and not $AttackManager.is_attacking_ground()
+	return not is_level_timeout and not is_dead and not $AttackManager.is_attacking_ground()
 
 
 func _die():
@@ -284,7 +285,7 @@ func _die():
 
 
 func get_hurt(knockback_force):
-	if is_dead:
+	if is_dead || is_level_timeout:
 		return
 
 	# Get knocked back
@@ -341,3 +342,7 @@ func _on_attack_manager_punch_has_connected(attack: AttackManager.Attack) -> voi
 		and current_nb_jumps_left == 0
 	):
 		current_nb_jumps_left += 1
+
+
+func on_level_timeout():
+	is_level_timeout = true

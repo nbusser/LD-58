@@ -17,6 +17,7 @@ var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
 var _coin_scene = preload("res://src/Coin/Coin.tscn")
 
 var _is_player_dead = false
+var _is_level_timeout = false
 
 @onready var _idle_timer: Timer = $IdleTimer
 @onready var _body: CharacterBody2D = $BillionaireBody
@@ -285,6 +286,10 @@ func _on_idle_timer_timeout() -> void:
 	if _is_player_dead:
 		$BillionaireBody/Sprite2D.play("laugh")
 		return
+	if _is_level_timeout:
+		print("caca")
+		$BillionaireBody/Sprite2D.play("hurt")
+		return
 
 	var attack = _get_attack_pattern()
 	if attack != null:
@@ -417,3 +422,7 @@ func _on_sprite_2d_animation_finished() -> void:
 # Waits for next idle, then waits for Level to continue
 func on_player_dies():
 	_is_player_dead = true
+
+
+func on_level_timeout():
+	_is_level_timeout = true
