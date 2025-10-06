@@ -559,7 +559,6 @@ func spawn_coins(amount: int):
 		Collectible.CollectibleType.MONEY_BAG,
 		Collectible.CollectibleType.GOLD_BAR,
 		Collectible.CollectibleType.BITCOIN,
-		Collectible.CollectibleType.CRYPTO_WALLET
 	]
 
 	var remaining_value = target_value
@@ -585,9 +584,9 @@ func spawn_coins(amount: int):
 		coin.set_deferred("angular_velocity", randf_range(-6.0, 6.0))
 		_coins.call_deferred("add_child", coin)
 
-		var value = Collectible.get_collectible_value(collectible_type)
-		total_value_spawned += value
-		remaining_value -= value
+		var col_value = Collectible.get_collectible_value(collectible_type)
+		total_value_spawned += col_value
+		remaining_value -= col_value
 
 	if total_value_spawned > 0:
 		_level.change_net_worth(total_value_spawned)

@@ -1,8 +1,6 @@
 extends Node
 
-enum CollectibleType {
-	DOLLAR_COIN, DOLLAR_BILL, BUNDLE_OF_CASH, MONEY_BAG, GOLD_BAR, BITCOIN, CRYPTO_WALLET
-}
+enum CollectibleType { DOLLAR_COIN, DOLLAR_BILL, BUNDLE_OF_CASH, MONEY_BAG, GOLD_BAR, BITCOIN }
 
 
 func get_collectible_value(collectible_type: CollectibleType) -> int:
@@ -10,17 +8,15 @@ func get_collectible_value(collectible_type: CollectibleType) -> int:
 		CollectibleType.DOLLAR_COIN:
 			return 1
 		CollectibleType.DOLLAR_BILL:
-			return 5
-		CollectibleType.BUNDLE_OF_CASH:
 			return 20
-		CollectibleType.MONEY_BAG:
+		CollectibleType.BUNDLE_OF_CASH:
 			return 100
-		CollectibleType.GOLD_BAR:
-			return 50
-		CollectibleType.BITCOIN:
-			return 500
-		CollectibleType.CRYPTO_WALLET:
+		CollectibleType.MONEY_BAG:
 			return 1000
+		CollectibleType.GOLD_BAR:
+			return 10000
+		CollectibleType.BITCOIN:
+			return 100000
 		_:
 			return 0
 
@@ -39,8 +35,6 @@ func get_collectible_name(collectible_type: CollectibleType) -> String:
 			return "Gold Bar"
 		CollectibleType.BITCOIN:
 			return "Bitcoin"
-		CollectibleType.CRYPTO_WALLET:
-			return "Crypto Wallet"
 		_:
 			return "Unknown"
 
