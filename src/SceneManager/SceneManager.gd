@@ -94,7 +94,13 @@ func _on_end_of_level(level_state: LevelState) -> void:
 	GameState.latest_level_state = level_state
 	GameState.player_cash = level_state.player_cash
 	GameState.billionaire_cash = level_state.billionaire_net_worth
-	_run_interlude()
+
+	if GameState.current_level_number == levels.size() - 1:
+		# No more levels, end of the game
+		_run_credits(false)
+	else:
+		# Load interlude
+		_run_interlude()
 
 
 func _on_end_of_interlude() -> void:
@@ -118,13 +124,7 @@ func _load_score_screen() -> void:
 
 func _run_next_level() -> void:
 	GameState.current_level_number += 1
-
-	if GameState.current_level_number >= levels.size():
-		# No more levels, end of the game
-		_run_credits(false)
-	else:
-		# Load next level
-		_run_level()
+	_run_level()
 
 
 func _run_credits(can_go_back: bool) -> void:
