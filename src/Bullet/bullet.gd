@@ -13,6 +13,7 @@ var _coin_scene = preload("res://src/Coin/Coin.tscn")
 
 @onready var _sprite_container = %SpriteContainer
 @onready var _coins = $"../../Coins"
+@onready var _level: Level = $"../../../"
 
 
 func init(
@@ -51,4 +52,9 @@ func _on_body_entered(body: Node2D) -> void:
 		var cs = _coin_scene.instantiate()
 		cs.init(self.global_position, _collectible_type)
 		_coins.call_deferred("add_child", cs)
+
+		# Reduce billionaire's net worth by the value of spawned collectible
+		var collectible_value = Collectible.get_collectible_value(_collectible_type)
+		if _level and collectible_value > 0:
+			_level.change_net_worth(collectible_value)
 	queue_free()
