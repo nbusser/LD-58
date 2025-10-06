@@ -15,8 +15,8 @@
 [ext_resource type="AudioStream" uid="uid://br8a34y2lixbm" path="res://assets/sounds/woosh/who_var_04.wav" id="10_60pqq"]
 [ext_resource type="AudioStream" uid="uid://c3p0l877cnqyw" path="res://assets/sounds/punch.wav" id="11_3bth7"]
 [ext_resource type="AudioStream" uid="uid://brkosi4q2bqda" path="res://assets/sounds/woosh/who_var_05.wav" id="11_dvqb2"]
-[ext_resource type="AudioStream" uid="uid://d1i6r2bm01r4v" path="res://assets/sounds/repulsive_wave_column.wav" id="11_tafn6"]
 [ext_resource type="AudioStream" uid="uid://cfh85dw30ostv" path="res://assets/sounds/attack.wav" id="12_3bth7"]
+[ext_resource type="AudioStream" uid="uid://dt2y3s2857va4" path="res://assets/sounds/Player/bubble.mp3" id="14_0ym8j"]
 [ext_resource type="SpriteFrames" uid="uid://bvi1idvrvrbb2" path="res://src/Billionaire/bubble_100.tres" id="15_327hu"]
 [ext_resource type="SpriteFrames" uid="uid://dgoanvtm3rx52" path="res://src/Billionaire/bubble_200.tres" id="16_jeg63"]
 [ext_resource type="SpriteFrames" uid="uid://bfujddc8s3ueg" path="res://src/Billionaire/bubble_300.tres" id="17_wh08u"]
@@ -180,7 +180,13 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 [node name="ColumnSound" type="AudioStreamPlayer" parent="AttackPatterns/RepulsiveWave"]
 bus = &"SFX"
 script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("11_tafn6")])
+sounds = Array[AudioStream]([ExtResource("14_0ym8j")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
+[node name="ColumnSound2" type="AudioStreamPlayer" parent="AttackPatterns/RepulsiveWave"]
+bus = &"SFX"
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("14_0ym8j")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="Columns" type="Node2D" parent="AttackPatterns/RepulsiveWave"]

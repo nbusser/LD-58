@@ -497,7 +497,12 @@ func _repulse_wave_routine():
 		column.monitoring = true
 		column.get_node("Sprite2D").play("default")
 		column.get_node("Sprite2D2").play("default")
-		$AttackPatterns/RepulsiveWave/ColumnSound.play_sound()
+		var delayed_sound = func():
+			await get_tree().create_timer(randf_range(0.5, 0.8)).timeout
+			$AttackPatterns/RepulsiveWave/ColumnSound.play_sound()
+			await get_tree().create_timer(randf_range(0.05, 0.2)).timeout
+			$AttackPatterns/RepulsiveWave/ColumnSound2.play_sound()
+		delayed_sound.call_deferred()
 		await get_tree().create_timer(column_spawn_interval).timeout
 
 	await get_tree().create_timer(1.0).timeout
