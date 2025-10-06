@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dcp75mk4cpk11"]
 
-[ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="1_el2we"]
 [ext_resource type="Script" uid="uid://clioqy0tcrlw0" path="res://src/Bullet/bullet.gd" id="1_v1s1s"]
+[ext_resource type="Texture2D" uid="uid://d1wfll1g1l5pl" path="res://assets/sprites/collectibles/gold_bar_icon.png" id="2_v1s1s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v1s1s"]
 radius = 1.0
@@ -17,9 +17,10 @@ script = ExtResource("1_v1s1s")
 unique_name_in_owner = true
 
 [node name="Sprite2D" type="Sprite2D" parent="SpriteContainer"]
-position = Vector2(4.7683713e-07, -4.7683716e-07)
-scale = Vector2(0.006, 0.02)
-texture = ExtResource("1_el2we")
+position = Vector2(-0.25839782, -0.1558361)
+rotation = 1.0682627
+scale = Vector2(0.0993238, 0.06911903)
+texture = ExtResource("2_v1s1s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_v1s1s")
