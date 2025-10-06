@@ -68,7 +68,7 @@ var play_jump_start_ts = 0
 var health = 10
 
 @onready var _hurt_sound = $SoundFx/HurtSound
-@onready var _billionaire: CharacterBody2D = $"../Billionaire/BillionaireBody"
+@onready var _billionaire: CharacterBody2D = $"../Billionaire"
 @onready var _punch_area: Area2D = $PunchArea
 @onready var _smash_area: Area2D = $SmashArea
 @onready var _hud: HUD = $"../../UI/HUD"

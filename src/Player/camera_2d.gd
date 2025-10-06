@@ -21,7 +21,7 @@ var noise_bg_i: float = 0.0
 var shake_strength: float = 0.0
 
 @onready var player = $"../Player"
-@onready var billionaire = $"../Billionaire/BillionaireBody"
+@onready var billionaire = $"../Billionaire"
 @onready var boss_indicator = $"../BossIndicator"
 @onready var rand = RandomNumberGenerator.new()
 @onready var noise = FastNoiseLite.new()

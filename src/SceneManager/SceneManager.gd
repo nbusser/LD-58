@@ -94,7 +94,6 @@ func _on_end_of_level(level_state: LevelState) -> void:
 	GameState.latest_level_state = level_state
 	GameState.player_cash = level_state.player_cash
 	GameState.billionaire_cash = level_state.billionaire_net_worth
-	# _load_score_screen()
 	_run_interlude()
 
 
