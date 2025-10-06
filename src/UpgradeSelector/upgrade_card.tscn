@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://yeevmoyvkx8e" path="res://src/UpgradeSelector/upgrade_card_data.gd" id="2_tr77e"]
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="2_wuml4"]
 [ext_resource type="Texture2D" uid="uid://llhbf5hj1pua" path="res://assets/sprites/upgrade_selector/upgrade_sheet.png" id="4_qwt42"]
-[ext_resource type="Texture2D" uid="uid://css0pguf5gdda" path="res://assets/sprites/upgrade_selector/upgrade-pin-red.png" id="5_40kcd"]
+[ext_resource type="Texture2D" uid="uid://mqaprq3oos7m" path="res://assets/sprites/upgrade_selector/upgrade-pin-yeller.png" id="5_40kcd"]
 [ext_resource type="FontVariation" uid="uid://6ps3tjx81bnu" path="res://assets/fonts/contract_font.tres" id="6_iqrqx"]
 
 [sub_resource type="Resource" id="Resource_wuml4"]
@@ -135,4 +135,11 @@ offset_top = 507.0
 offset_right = 372.0
 offset_bottom = 573.0
 
-[connection signal="button_up" from="SelectButton" to="." method="_on_select_button_button_up"]
+[node name="SignatureLine2D" type="Line2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-122, -149)
+points = PackedVector2Array(383, 675, 384, 690, 390, 703, 405, 704, 409, 692, 411, 681, 406, 674, 400, 675, 397, 686, 402, 695, 412, 703, 419, 703, 424, 699, 428, 697, 428, 691, 431, 682, 431, 674, 422, 673, 422, 684, 435, 698, 444, 687, 443, 674, 438, 670, 438, 683, 438.87354, 686.49426, 441, 695, 452, 698, 459, 689, 451, 674, 448, 675, 449, 685, 449, 691, 456, 698, 457, 702, 452, 702, 428, 702, 378, 697, 395, 693, 407, 692, 423, 690, 431, 687, 459, 683)
+width = 2.0
+default_color = Color(0.05490196, 0.05490196, 0.0627451, 1)
+
+[connection signal="button_down" from="SelectButton" to="." method="_on_select_button_button_down"]

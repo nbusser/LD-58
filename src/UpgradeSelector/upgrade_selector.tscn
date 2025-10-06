@@ -96,7 +96,7 @@ layout_mode = 2
 [node name="UpgradeCard3" parent="CenterContainer/CardContainer" instance=ExtResource("2_og7cp")]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="."]
+[node name="RedrawButton" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -104,7 +104,20 @@ anchor_bottom = 1.0
 offset_top = -8.0
 offset_right = 8.0
 grow_vertical = 0
-text = "Redraw"
+text = "Redraw (DEBUG)"
+
+[node name="SkipButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -181.0
+offset_top = -66.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Skip"
 
 [node name="Cursor" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -113,4 +126,13 @@ unique_name_in_owner = true
 position = Vector2(334, 196)
 sprite_frames = SubResource("SpriteFrames_je2q3")
 
-[connection signal="button_up" from="Button" to="." method="_on_redraw_button_up"]
+[node name="CursorEndPosition" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(1667, 371)
+
+[node name="CursorStartPosition" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(832, 1045)
+
+[connection signal="button_up" from="RedrawButton" to="." method="_on_redraw_button_up"]
+[connection signal="button_up" from="SkipButton" to="." method="_on_redraw_button_up"]
