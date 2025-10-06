@@ -329,7 +329,7 @@ func get_hurt(knockback_force):
 		_die()
 		return
 	# Red glow on hit
-	_hurt_sound.play_sound()
+	_hurt_sound.play()
 	modulate = Color(1, 0, 0)
 	intouchable = true
 	await get_tree().create_timer(1.0).timeout

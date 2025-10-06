@@ -117,7 +117,7 @@ func _attack() -> void:
 	_billionaire_was_punched_in_current_attack = false
 	_cancel_counter += 1
 	_attack_state = AttackState.WINDUP
-	$AttackSound.play_sound()
+	$AttackSound.play()
 
 
 func try_attack() -> bool:
@@ -130,7 +130,7 @@ func try_attack() -> bool:
 func _punch_billionaire() -> void:
 	punch_has_connected.emit(_current_attack)
 	_billionaire_was_punched_in_current_attack = true
-	$PunchSound.play_sound()
+	$PunchSound.play()
 
 
 func _try_punch_billionaire() -> bool:

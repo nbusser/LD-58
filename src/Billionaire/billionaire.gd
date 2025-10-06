@@ -309,10 +309,9 @@ func _machinegun_routine() -> void:
 	if Globals.coin_flip():
 		await _random_run()
 
-	$AttackPatterns/Machinegun/FocusSound.play_sound()
+	$AttackPatterns/Machinegun/FocusSound.play()
 	await get_tree().create_timer(1.2).timeout
 	$Sprite2D.play("machinegun")
-	$AttackPatterns/Machinegun/ShootSound.play_sound()
 	var nb_bullets = 10
 	var gunpoint_offset = Vector2(42.0, 7.0)
 
@@ -324,6 +323,7 @@ func _machinegun_routine() -> void:
 			gunpoint_offset.x *= -1
 		var gunpoint = position + gunpoint_offset
 
+		$AttackPatterns/Machinegun/ShootingSound.play()
 		_spawn_bullet(gunpoint, bullet_direction, 50, 600.0, 1.0, 0.0)
 		await get_tree().create_timer(0.1).timeout
 
@@ -461,7 +461,7 @@ func _on_idle_timer_timeout() -> void:
 
 
 func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
-	$SFX/HurtSound.play_sound()
+	$SFX/HurtSound.play()
 
 	if amount >= 0:
 		var coins_to_spawn = max(1, int(round(amount * coins_per_damage)))
@@ -525,7 +525,6 @@ func _laser_warning_routine() -> void:
 		await _random_run()
 
 	# Focus animation
-	$AttackPatterns/LaserWarning/FocusSound.play_sound()
 	$Sprite2D.play("focus")
 	await get_tree().create_timer(1.0).timeout
 
@@ -543,7 +542,6 @@ func _laser_sweep_routine() -> void:
 	var sweep_direction = 1 if _player.global_position.x < global_position.x else -1
 
 	# Focus animation
-	$AttackPatterns/LaserSweep/FocusSound.play_sound()
 	$Sprite2D.play("focus")
 	await get_tree().create_timer(1.2).timeout
 
@@ -563,7 +561,6 @@ func _laser_cage_routine() -> void:
 		await _run(center_direction, 200.0, 0.2, 0.3, 0.4, true)
 
 	# Focus animation
-	$AttackPatterns/LaserCage/FocusSound.play_sound()
 	$Sprite2D.play("focus")
 	await get_tree().create_timer(1.5).timeout
 
