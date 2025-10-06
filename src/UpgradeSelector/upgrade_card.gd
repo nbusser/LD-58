@@ -46,17 +46,21 @@ func _ready():
 	_is_ready = true
 
 	pin_texture_rect.texture = (
-		[
-			PIN_GRAY,
-			PIN_GREEN,
-			PIN_BLUE,
-			PIN_PURPLE,
-			PIN_ORANGE,
-			PIN_RED,
-			PIN_YELLOW,
-			PIN_TURQUOISE,
-		]
-		. pick_random()
+		(
+			[
+				PIN_GRAY,
+				PIN_GREEN,
+				PIN_BLUE,
+				PIN_PURPLE,
+				PIN_ORANGE,
+				PIN_RED,
+				PIN_YELLOW,
+				PIN_TURQUOISE,
+			]
+			. pick_random()
+		)
+		if not Engine.is_editor_hint()
+		else PIN_ORANGE
 	)
 
 
