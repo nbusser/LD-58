@@ -17,8 +17,8 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		UpgradeCardData.Rarity.COMMON,
 		"loot_quantity",
 		1,
-		"Scavenger",
-		"Find more loot",
+		"Part-Time Thief",
+		"Get your hands in unattended pockets",
 		0,
 		{UpgradeCardData.EffectType.LOOT_QUANTITY: 1}
 	),
@@ -28,8 +28,8 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		UpgradeCardData.Rarity.UNCOMMON,
 		"loot_quantity",
 		2,
-		"Treasure Hunter",
-		"Find even more loot",
+		"Full-Time Thief",
+		"Sleight of hand is your middle name",
 		100,
 		{UpgradeCardData.EffectType.LOOT_QUANTITY: 2},
 		["loot_quantity_1"]
@@ -41,7 +41,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		"loot_value",
 		1,
 		"Appraiser",
-		"Increase loot value",
+		"Yield more profit from each heist",
 		0,
 		{UpgradeCardData.EffectType.LOOT_VALUE: 1}
 	),
@@ -51,8 +51,8 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		UpgradeCardData.Rarity.UNCOMMON,
 		"loot_value",
 		2,
-		"Valuator",
-		"Increase loot value even more",
+		"Golden Touch",
+		"Midas would be jealous",
 		100,
 		{UpgradeCardData.EffectType.LOOT_VALUE: 2},
 		["loot_value_1"]
@@ -69,6 +69,45 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		{UpgradeCardData.EffectType.BITCOIN_VALUE: 1},
 		["loot_value_2", "loot_quantity_1"]
 	),
+	UpgradeCardData.new(
+		"bitcoin_value_2",
+		UpgradeCardData.CardType.PROFIT,
+		UpgradeCardData.Rarity.RARE,
+		"bitcoin_value",
+		2,
+		"Smart Contract Editor",
+		"Write your own rules for profit",
+		500,
+		{UpgradeCardData.EffectType.BITCOIN_VALUE: 2},
+		["bitcoin_value_1"]
+	),
+	UpgradeCardData.new(
+		"combo_multiplier_1",
+		UpgradeCardData.CardType.PROFIT,
+		UpgradeCardData.Rarity.UNCOMMON,
+		"combo_multiplier",
+		1,
+		"Momentum Mastery",
+		"Build up your streaks to maximize profit",
+		200,
+		{UpgradeCardData.EffectType.COMBO_MULTIPLIER: 1},
+		["loot_value_1", "loot_quantity_2"]
+	),
+	(
+		UpgradeCardData
+		. new(
+			"combo_multiplier_2",
+			UpgradeCardData.CardType.PROFIT,
+			UpgradeCardData.Rarity.RARE,
+			"combo_multiplier",
+			2,
+			"Streak Savant",
+			"Your ability to maintain focus and precision during high-pressure situations is unparalleled",
+			400,
+			{UpgradeCardData.EffectType.COMBO_MULTIPLIER: 1},
+			["combo_multiplier_1"]
+		)
+	),
 	# SPEED
 	UpgradeCardData.new(
 		"speed_1",
@@ -76,8 +115,8 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		UpgradeCardData.Rarity.COMMON,
 		"speed",
 		1,
-		"Smooth Shoes",
-		"1-year ROI",
+		"Invest in a shoe company",
+		"Get your kicks on the ground faster",
 		0,
 		{UpgradeCardData.EffectType.MOVEMENT_SPEED: 2, UpgradeCardData.EffectType.AIR_CONTROL: 1}
 	),
@@ -87,8 +126,8 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		UpgradeCardData.Rarity.COMMON,
 		"dash",
 		0,
-		"Dash Ability",
-		"",
+		"Sprint to Success",
+		"Quick bursts of speed to close the deal",
 		1000,
 		{UpgradeCardData.EffectType.ABILITY_DASH: 1}
 	),
@@ -98,8 +137,8 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		UpgradeCardData.Rarity.UNCOMMON,
 		"speed",
 		2,
-		"Swift Sneakers",
-		"2-year ROI",
+		"Speedy Investor",
+		"Time is money, so move like it",
 		100,
 		{UpgradeCardData.EffectType.MOVEMENT_SPEED: 3, UpgradeCardData.EffectType.AIR_CONTROL: 2},
 		["speed_1", "dash"]
@@ -111,8 +150,8 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		UpgradeCardData.Rarity.COMMON,
 		"jump_height",
 		1,
-		"Jump Boost",
-		"",
+		"Pogo Stick",
+		"Bounce to new heights",
 		0,
 		{UpgradeCardData.EffectType.JUMP_HEIGHT: 2, UpgradeCardData.EffectType.AIR_CONTROL: 1}
 	),
@@ -122,8 +161,8 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		UpgradeCardData.Rarity.COMMON,
 		"double_jump",
 		0,
-		"Double Jump Ability",
-		"",
+		"Pump and Dump",
+		"Leap again to avoid falling stocks",
 		1000,
 		{UpgradeCardData.EffectType.ABILITY_DOUBLE_JUMP: 1},
 		["jump_height_1"]
@@ -134,8 +173,8 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		UpgradeCardData.Rarity.UNCOMMON,
 		"jump_height",
 		2,
-		"High Hops",
-		"",
+		"Moonshot",
+		"Reach for the stars",
 		100,
 		{UpgradeCardData.EffectType.JUMP_HEIGHT: 3, UpgradeCardData.EffectType.AIR_CONTROL: 2},
 		["jump_height_1"]
@@ -146,8 +185,8 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		UpgradeCardData.Rarity.COMMON,
 		"dash_down",
 		0,
-		"Dash Down Ability",
-		"",
+		"Market Crash Dive",
+		"Plunge towards profit... or the ground",
 		1000,
 		{UpgradeCardData.EffectType.ABILITY_DASH_DOWN: 1},
 		["double_jump"]
@@ -159,22 +198,28 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		UpgradeCardData.Rarity.COMMON,
 		"bullet_time",
 		1,
-		"Bullet Time",
-		"Time slows down when a bullet is near",
+		"Insider Knowledge",
+		"You read the flow of money like it's moving in slow motion, always one step ahead",
 		0,
 		{UpgradeCardData.EffectType.BULLET_TIME: 1, UpgradeCardData.EffectType.COMBO_MULTIPLIER: 1}
 	),
-	UpgradeCardData.new(
-		"bullet_time_2",
-		UpgradeCardData.CardType.BULLET_TIME,
-		UpgradeCardData.Rarity.UNCOMMON,
-		"bullet_time",
-		2,
-		"Advanced Bullet Time",
-		"Slower time, longer combos",
-		200,
-		{UpgradeCardData.EffectType.BULLET_TIME: 1, UpgradeCardData.EffectType.COMBO_MULTIPLIER: 1},
-		["bullet_time_1"]
+	(
+		UpgradeCardData
+		. new(
+			"bullet_time_2",
+			UpgradeCardData.CardType.BULLET_TIME,
+			UpgradeCardData.Rarity.UNCOMMON,
+			"bullet_time",
+			2,
+			"Market Guru",
+			"Your intuition for market trends is uncanny, allowing you to capitalize on opportunities before they arise",
+			200,
+			{
+				UpgradeCardData.EffectType.BULLET_TIME: 1,
+				UpgradeCardData.EffectType.COMBO_MULTIPLIER: 1
+			},
+			["bullet_time_1"]
+		)
 	),
 ]
 
