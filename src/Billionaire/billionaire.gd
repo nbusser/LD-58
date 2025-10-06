@@ -173,12 +173,15 @@ func _jump_to_peek(jump_velocity: float):
 		await get_tree().process_frame
 
 
-func _shoot_cone():
+# Shoot bullets in a cone
+func _shoot_cone(nb_bullets: int, spread_deg: float = 30.0):
 	var bullet_direction = (_player.global_position - global_position).normalized()
-	var angles = [-15, 0, 15]
-	for angle in angles:
+	for i in range(nb_bullets):
+		var t = float(i) / float(nb_bullets - 1)
+		var angle = -spread_deg / 2 + t * spread_deg
 		var dir = bullet_direction.rotated(deg_to_rad(angle))
 		_spawn_bullet(global_position, dir, 800, 500.0, 1.0, 1)
+
 	$AttackPatterns/JumpConeBullets/ShootSound.play_sound()
 
 
@@ -194,7 +197,7 @@ func _jump_cone_bullets_routine() -> void:
 	await get_tree().create_timer(0.3).timeout
 
 	# Shoot bullets to the player
-	_shoot_cone()
+	_shoot_cone(5)
 
 	# Freeze
 	await get_tree().create_timer(0.3).timeout
@@ -248,7 +251,7 @@ func _parachute_routine() -> void:
 		var max_shots = 4
 		var current_nb_shots = 0
 		while state.has_parachute:
-			await _shoot_cone()
+			await _shoot_cone(3)
 			current_nb_shots += 1
 			await get_tree().create_timer(1.0).timeout
 			# After 4 bullets, quits the pattern
