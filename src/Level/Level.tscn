@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://drh117nvpnukt" path="res://src/Level/Level.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://btohiqrak4tcf" path="res://src/Map/Map.tscn" id="2"]
-[ext_resource type="Texture2D" uid="uid://c842h3l0862cb" path="res://assets/sprites/sky_0.png" id="2_clcnw"]
-[ext_resource type="Texture2D" uid="uid://bgljkyym7601t" path="res://assets/sprites/mountain_0.png" id="3_5q5n4"]
+[ext_resource type="Texture2D" uid="uid://jxgd7uq48p8d" path="res://assets/backgrounds/jammy_bahammy-export.png" id="2_clcnw"]
+[ext_resource type="Texture2D" uid="uid://bgogjqs7fufqs" path="res://assets/backgrounds/factory_og-Sheet-export.png" id="3_clcnw"]
 [ext_resource type="PackedScene" uid="uid://dwiu4cm7rlq0p" path="res://src/HUD/HUD.tscn" id="3_p81om"]
 [ext_resource type="Shader" uid="uid://b0hbcpqv8d8w" path="res://src/Level/PostProcess.gdshader" id="4_5g3p6"]
+[ext_resource type="Texture2D" uid="uid://b1shmvaasvapm" path="res://assets/backgrounds/yacht-export.png" id="4_5q5n4"]
 [ext_resource type="Script" uid="uid://uvipfx8brsj0" path="res://src/UI/PostProcessOverlay.gd" id="4_c7nqk"]
 [ext_resource type="Shader" uid="uid://ccoc5wp0cgskd" path="res://src/Laser.gdshader" id="4_noe52"]
-[ext_resource type="Texture2D" uid="uid://cdo8e7hc3mt7t" path="res://assets/sprites/mountain_1.png" id="4_r00bm"]
 [ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="7_1b0u6"]
 [ext_resource type="AudioStream" uid="uid://curqsvlnprpo1" path="res://assets/sounds/timeout.wav" id="8_qpfp4"]
 
@@ -47,33 +47,20 @@ script = ExtResource("1")
 
 [node name="BG" type="Node2D" parent="."]
 
-[node name="Parallax2D" type="Parallax2D" parent="BG"]
-scroll_scale = Vector2(0.1, 0.1)
-scroll_offset = Vector2(300, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="BG/Parallax2D"]
+[node name="bg0" type="Sprite2D" parent="BG"]
 texture_filter = 1
-position = Vector2(0, 0.0511)
-scale = Vector2(4, 4)
 texture = ExtResource("2_clcnw")
+offset = Vector2(0, -400)
 
-[node name="Parallax2D2" type="Parallax2D" parent="BG"]
-scroll_scale = Vector2(0.3, 0.2)
-scroll_offset = Vector2(0, 700)
-
-[node name="Sprite2D2" type="Sprite2D" parent="BG/Parallax2D2"]
+[node name="bg1" type="Sprite2D" parent="BG"]
 texture_filter = 1
-scale = Vector2(4, 4)
-texture = ExtResource("3_5q5n4")
+texture = ExtResource("3_clcnw")
+offset = Vector2(0, -400)
 
-[node name="Parallax2D3" type="Parallax2D" parent="BG"]
-scroll_scale = Vector2(0.5, 0.3)
-scroll_offset = Vector2(0, 700)
-
-[node name="Sprite2D3" type="Sprite2D" parent="BG/Parallax2D3"]
+[node name="bg2" type="Sprite2D" parent="BG"]
 texture_filter = 1
-scale = Vector2(4, 4)
-texture = ExtResource("4_r00bm")
+texture = ExtResource("4_5q5n4")
+offset = Vector2(0, -400)
 
 [node name="Map" parent="." instance=ExtResource("2")]
 

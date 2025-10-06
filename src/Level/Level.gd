@@ -37,6 +37,12 @@ func _ready():
 
 	Globals.year += 1
 
+	var bg_nodes := $BG.get_children()
+	if bg_nodes.size() > 0:
+		var random_index := randi() % bg_nodes.size()
+		for i in bg_nodes.size():
+			bg_nodes[i].visible = (i == random_index)
+
 
 func init(level_number_p: int, player_stats: PlayerStats):
 	level_state = LevelState.new(level_number_p, 0, GameState.billionaire_cash, false)
