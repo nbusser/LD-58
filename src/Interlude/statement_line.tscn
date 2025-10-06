@@ -1,46 +1,59 @@
-[gd_scene load_steps=2 format=3 uid="uid://df1s8j1ir7sb"]
+[gd_scene load_steps=3 format=3 uid="uid://df1s8j1ir7sb"]
 
 [ext_resource type="Script" uid="uid://b07bcbgu35f67" path="res://src/Interlude/statement_line.gd" id="1_swbfc"]
+[ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="2_l7nw3"]
 
 [node name="StatementLine" type="HBoxContainer"]
-anchors_preset = 15
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.5
+offset_top = -29.0
+offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_swbfc")
 
+[node name="Icon" type="TextureRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("2_l7nw3")
+expand_mode = 1
+stretch_mode = 4
+
 [node name="DescriptionLabel" type="Label" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
-size_flags_horizontal = 3
 text = "Description"
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-custom_minimum_size = Vector2(50, 0)
+[node name="Label3" type="Label" parent="."]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+text_overrun_behavior = 1
 
 [node name="UnitValueLabel" type="Label" parent="."]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 text = "$1"
 horizontal_alignment = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="."]
-custom_minimum_size = Vector2(50, 0)
+[node name="Label" type="Label" parent="."]
 layout_mode = 2
+text = "×"
 
 [node name="QuantityLabel" type="Label" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 text = "123"
-horizontal_alignment = 2
 
-[node name="MarginContainer3" type="MarginContainer" parent="."]
-custom_minimum_size = Vector2(50, 0)
+[node name="Label2" type="Label" parent="."]
 layout_mode = 2
+text = "="
 
 [node name="ValueLabel" type="Label" parent="."]
 unique_name_in_owner = true

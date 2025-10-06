@@ -1,0 +1,7 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://bawuiamdvgn6o"]
+
+[ext_resource type="FontFile" uid="uid://dv8t8nn0k76a0" path="res://assets/fonts/LinLibertine_aBL.ttf" id="1_d8rav"]
+
+[resource]
+base_font = ExtResource("1_d8rav")
+variation_embolden = 1.0

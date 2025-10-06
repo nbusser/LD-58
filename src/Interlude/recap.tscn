@@ -1,0 +1,72 @@
+[gd_scene load_steps=3 format=3 uid="uid://rn148bjscf1s"]
+
+[ext_resource type="FontVariation" uid="uid://bawuiamdvgn6o" path="res://assets/fonts/bold_font.tres" id="1_cbqyn"]
+[ext_resource type="PackedScene" uid="uid://df1s8j1ir7sb" path="res://src/Interlude/statement_line.tscn" id="1_fc62m"]
+
+[node name="Recap" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_cbqyn")
+theme_override_font_sizes/font_size = 40
+text = "STATEMENT OF ACCOUNT"
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="StatementLinesContainer" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="StatementLine" parent="VBoxContainer/StatementLinesContainer" instance=ExtResource("1_fc62m")]
+layout_mode = 2
+
+[node name="StatementLine2" parent="VBoxContainer/StatementLinesContainer" instance=ExtResource("1_fc62m")]
+layout_mode = 2
+
+[node name="StatementLine3" parent="VBoxContainer/StatementLinesContainer" instance=ExtResource("1_fc62m")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatementLine2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/StatementLine2"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer/StatementLine2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "TOTAL"
+
+[node name="Label3" type="Label" parent="VBoxContainer/StatementLine2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+text_overrun_behavior = 1
+
+[node name="TotalValueLabel" type="Label" parent="VBoxContainer/StatementLine2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 80
+text = "$123,456"
+horizontal_alignment = 2

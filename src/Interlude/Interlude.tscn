@@ -1,12 +1,14 @@
 [gd_scene load_steps=8 format=3 uid="uid://13ldbpvp21wo"]
 
-[ext_resource type="SpriteFrames" uid="uid://cr415b4hp2y1r" path="res://src/Player/PlayerAnimations.tres" id="1_kq2do"]
 [ext_resource type="Script" uid="uid://casgxbyvs3j7c" path="res://src/Interlude/interlude.gd" id="1_tccgx"]
-[ext_resource type="PackedScene" uid="uid://df1s8j1ir7sb" path="res://src/Interlude/statement_line.tscn" id="2_esflg"]
 [ext_resource type="PackedScene" uid="uid://bw6igwix0v8lt" path="res://src/UpgradeSelector/upgrade_selector.tscn" id="3_o8ror"]
 [ext_resource type="Texture2D" uid="uid://cc2jwscktkp1e" path="res://assets/sprites/interlude/The_Fraudulent_times_1.png" id="5_iamgo"]
+[ext_resource type="PackedScene" uid="uid://rn148bjscf1s" path="res://src/Interlude/recap.tscn" id="5_q8van"]
 [ext_resource type="Texture2D" uid="uid://ddlcvvr87w77x" path="res://assets/sprites/interlude/taxman_reading.png" id="5_vkv47"]
 [ext_resource type="FontVariation" uid="uid://boxigvia40f4m" path="res://assets/fonts/slanted_font.tres" id="7_q8van"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_q8van"]
+viewport_path = NodePath("SubViewport")
 
 [node name="Interlude" type="Control"]
 layout_mode = 3
@@ -68,6 +70,22 @@ grow_vertical = 2
 texture = ExtResource("5_vkv47")
 expand_mode = 1
 
+[node name="RecapProjection" type="Sprite2D" parent="."]
+position = Vector2(287, 503.00003)
+rotation = -0.7452556
+scale = Vector2(0.30955267, 0.30955267)
+skew = -0.3193953
+texture = SubResource("ViewportTexture_q8van")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(600, 600)
+render_target_update_mode = 4
+
+[node name="Recap" parent="SubViewport" instance=ExtResource("5_q8van")]
+unique_name_in_owner = true
+
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -85,11 +103,6 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Label" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
-layout_mode = 2
-text = "STATEMENT OF ACCOUNT"
-horizontal_alignment = 1
-
 [node name="SubtitleLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -100,84 +113,10 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="StatementLine" type="HBoxContainer" parent="CenterContainer/Panel/VBoxContainer"]
-layout_mode = 2
-
-[node name="DescriptionLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "ITEM"
-
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="UnitValueLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-text = "UNIT VALUE"
-horizontal_alignment = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="QuantityLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-text = "QTY"
-horizontal_alignment = 2
-
-[node name="MarginContainer3" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="ValueLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatementLine"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-text = "VALUE"
-horizontal_alignment = 2
-
-[node name="StatementLinesContainer" type="VBoxContainer" parent="CenterContainer/Panel/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="StatementLine" parent="CenterContainer/Panel/VBoxContainer/StatementLinesContainer" instance=ExtResource("2_esflg")]
-layout_mode = 2
-
-[node name="StatementLine2" type="HBoxContainer" parent="CenterContainer/Panel/VBoxContainer"]
-layout_mode = 2
-
-[node name="DescriptionLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatementLine2"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "TOTAL"
-
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer/StatementLine2"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="TotalValueLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatementLine2"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-text = "$123"
-horizontal_alignment = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-
 [node name="ClickToContinue" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
 layout_mode = 2
 text = "< Click to continue >"
 horizontal_alignment = 1
-
-[node name="Player" type="StaticBody2D" parent="."]
-position = Vector2(-68, 417)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
-sprite_frames = ExtResource("1_kq2do")
 
 [node name="UpgradeSelector" parent="." instance=ExtResource("3_o8ror")]
 visible = false
