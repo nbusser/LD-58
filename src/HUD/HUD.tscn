@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dwiu4cm7rlq0p"]
+[gd_scene load_steps=5 format=3 uid="uid://dwiu4cm7rlq0p"]
 
 [ext_resource type="Script" uid="uid://bmjl8m7gyu3qj" path="res://src/HUD/HUD.gd" id="2"]
 [ext_resource type="FontVariation" uid="uid://bawuiamdvgn6o" path="res://assets/fonts/bold_font.tres" id="2_llxr8"]
 [ext_resource type="PackedScene" uid="uid://dx4e07rgnuhvp" path="res://src/Hearts/Heart.tscn" id="3_2vejy"]
+[ext_resource type="Texture2D" uid="uid://d0imd2kydllrg" path="res://assets/sprites/collectibles/dollar_coin.png" id="3_llxr8"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -60,6 +61,19 @@ vertical_alignment = 1
 layout_mode = 0
 anchor_right = 1.0
 
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer"]
+texture_filter = 1
+position = Vector2(43, 31)
+scale = Vector2(2, 2)
+texture = ExtResource("3_llxr8")
+
+[node name="Sprite2D2" type="Sprite2D" parent="VBoxContainer"]
+modulate = Color(0.65882355, 0, 0, 1)
+texture_filter = 1
+position = Vector2(43, 90)
+scale = Vector2(2, 2)
+texture = ExtResource("3_llxr8")
+
 [node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer"]
 layout_mode = 2
 
@@ -101,7 +115,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/CoinNumber"]
 layout_mode = 2
-text = "Coins: "
+text = "      "
 
 [node name="CoinNumberValue" type="Label" parent="VBoxContainer/VBoxContainer/CoinNumber"]
 layout_mode = 2
@@ -112,7 +126,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/NetWorth"]
 layout_mode = 2
-text = "Net Worth: "
+text = "      "
 
 [node name="NetWorthValue" type="Label" parent="VBoxContainer/VBoxContainer/NetWorth"]
 layout_mode = 2
@@ -123,7 +137,6 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/DashCooldown"]
 layout_mode = 2
-text = "Dash:"
 
 [node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/VBoxContainer/DashCooldown"]
 custom_minimum_size = Vector2(150, 0)

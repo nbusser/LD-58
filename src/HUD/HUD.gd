@@ -19,7 +19,7 @@ var billionaire_net_worth:
 
 
 func set_nb_coins(value: int) -> void:
-	coins_label.text = str(value)
+	coins_label.text = StringFormatter.format_currency(value)
 
 
 func set_billionaire_net_worth(value: int) -> void:
