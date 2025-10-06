@@ -97,6 +97,10 @@ func _ready():
 	_pick_cards(3)
 
 
+func _exit_tree() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+
 func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
 	print("Selected card index: %d" % index)
 	var applied = GameState.apply_upgrade(card_data)
