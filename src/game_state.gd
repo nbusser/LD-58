@@ -9,20 +9,22 @@ var latest_level_state: LevelState = null
 var active_upgrades: Array[UpgradeCardData] = []
 var player_stats: PlayerStats = PlayerStats.new()
 
+# Actualized after each phase
 var difficulty_factor:
 	get = _get_difficulty_factor
 
 
 func _get_difficulty_factor() -> float:
-	var base_difficulty = 1.0
-	var current_phase_difficulty = current_phase * 0.1
+	var current_phase_difficulty = current_phase * 0.5
 
-	# The 10k first $ have no impact on difficulty
-	var initial_offset = 10000
-	var lost_health = max(BILLIONAIRE_INITIAL_CASH - billionaire_cash - initial_offset, 0.0)
-	var health_difference_difficulty = log(lost_health) / log(10) if lost_health != 0 else 0.0
+	# The difficulty starts scaling at 10k$ loss
+	var initial_offset = 4
+	var lost_health = BILLIONAIRE_INITIAL_CASH - billionaire_cash
+	var health_difference_difficulty = (
+		max((log(lost_health) / log(10)) - initial_offset, 0.0) if lost_health != 0 else 0.0
+	)
 
-	return base_difficulty + current_phase_difficulty + health_difference_difficulty
+	return clamp(current_phase_difficulty + health_difference_difficulty, 1.0, 10.0)
 
 
 func reset():

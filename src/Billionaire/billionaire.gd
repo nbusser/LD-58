@@ -231,7 +231,8 @@ func _jump_cone_bullets_routine() -> void:
 	await get_tree().create_timer(0.3).timeout
 
 	# Shoot bullets to the player
-	_shoot_cone(5)
+	var nb_bullets: int = 3 + int(0.9 * GameState.difficulty_factor)
+	_shoot_cone(nb_bullets)
 
 	# Freeze
 	await get_tree().create_timer(0.3).timeout
@@ -282,10 +283,11 @@ func _parachute_routine() -> void:
 
 	# Shoot bullets regularly
 	var shoot_coroutine = func():
-		var max_shots = 4
+		var nb_bullets_in_cone = 3 + int(0.5 * GameState.difficulty_factor)
+		var max_shots: int = 2 + int(0.5 * GameState.difficulty_factor)
 		var current_nb_shots = 0
 		while state.has_parachute:
-			await _shoot_cone(3)
+			await _shoot_cone(nb_bullets_in_cone)
 			current_nb_shots += 1
 			await get_tree().create_timer(1.0).timeout
 			# After 4 bullets, quits the pattern
@@ -312,8 +314,9 @@ func _machinegun_routine() -> void:
 	$AttackPatterns/Machinegun/FocusSound.play()
 	await get_tree().create_timer(1.2).timeout
 	$Sprite2D.play("machinegun")
-	var nb_bullets = 10
 	var gunpoint_offset = Vector2(42.0, 7.0)
+	var bullet_speed = 300.0 + 60.0 * (GameState.difficulty_factor - 1.0)
+	var nb_bullets: int = 5 + int(GameState.difficulty_factor - 1)
 
 	for _i in range(nb_bullets):
 		var bullet_direction = (_player.global_position - global_position).normalized()
@@ -324,7 +327,7 @@ func _machinegun_routine() -> void:
 		var gunpoint = position + gunpoint_offset
 
 		$AttackPatterns/Machinegun/ShootingSound.play()
-		_spawn_bullet(gunpoint, bullet_direction, 50, 600.0, 1.0, 0.0)
+		_spawn_bullet(gunpoint, bullet_direction, 50, bullet_speed, 1.0, 0.0)
 		await get_tree().create_timer(0.1).timeout
 
 	$Sprite2D.play("default")
@@ -334,11 +337,12 @@ func _machinegun_routine() -> void:
 func _rain_routine() -> void:
 	var spawn_rain_coroutine = func() -> void:
 		var rain_nb_waves: int = 10
-		var rain_nb_bullets_per_waves: int = 4
-		var rain_bullet_speed: float = 200.0
+		var rain_nb_bullets_per_waves: int = 4 + int(GameState.difficulty_factor / 2)
+		var rain_bullet_speed: float = 200.0 + 10.0 * GameState.difficulty_factor
 		var rain_bullet_interval_duration: float = 0.6
 		var rain_bullet_interval_x: int = 70
 		var rain_bullet_random_interval_y: int = 15
+		var rain_acceleration: int = 400 + (40.0 * (GameState.difficulty_factor - 1.0))
 
 		var spawn_y = $"../BillionaireBorders/Ceiling".position.y + 10
 		var min_x = $"../Borders/WallL".position.x + 10
@@ -356,7 +360,9 @@ func _rain_routine() -> void:
 				var bullet_position_y = spawn_y + randi() % rain_bullet_random_interval_y
 
 				var bullet_position = Vector2(bullet_position_x, bullet_position_y)
-				_spawn_bullet(bullet_position, Vector2.DOWN, 50, rain_bullet_speed, 1.0, 800)
+				_spawn_bullet(
+					bullet_position, Vector2.DOWN, 50, rain_bullet_speed, 1.0, rain_acceleration
+				)
 			await get_tree().create_timer(rain_bullet_interval_duration).timeout
 
 	$AttackPatterns/Rain/FocusSound.play_sound()
@@ -372,11 +378,13 @@ func _rain_routine() -> void:
 
 func _rain_carpet_bomb_routine() -> void:
 	var spawn_rain_coroutine = func() -> void:
-		var nb_waves: int = randi() % 2 + 1
+		var max_nb_waves: int = 1 + int(0.5 * GameState.difficulty_factor)
+		var nb_waves: int = randi() % max_nb_waves + 1
 		var wave_interval_duration: float = 1.0
 
-		var rain_bullet_speed: float = 150.0
+		var rain_bullet_speed: float = 120.0
 		var rain_bullet_interval_x: int = 70
+		var rain_bullet_acceleration: int = 200 + int(20.0 * GameState.difficulty_factor)
 
 		var spawn_y = $"../BillionaireBorders/Ceiling".position.y + 10
 		var min_x = $"../Borders/WallL".position.x + 10
@@ -393,7 +401,14 @@ func _rain_carpet_bomb_routine() -> void:
 			for i in slot_range:
 				var bullet_position_x = min_x + (i * rain_bullet_interval_x)
 				var bullet_position = Vector2(bullet_position_x, spawn_y)
-				_spawn_bullet(bullet_position, Vector2.DOWN, 50, rain_bullet_speed, 1.0, 400)
+				_spawn_bullet(
+					bullet_position,
+					Vector2.DOWN,
+					50,
+					rain_bullet_speed,
+					1.0,
+					rain_bullet_acceleration
+				)
 			await get_tree().create_timer(wave_interval_duration).timeout
 
 	$AttackPatterns/Rain/FocusSound.play_sound()
@@ -429,13 +444,15 @@ func _repulse_wave_routine():
 	await get_tree().create_timer(focus_duration).timeout
 	$Sprite2D.play("laugh")
 
+	var column_spawn_interval = 1.0 + 0.07 - 0.07 * GameState.difficulty_factor
+
 	for column: Area2D in _repulse_wave.get_children():
 		column.visible = true
 		column.monitoring = true
 		column.get_node("Sprite2D").play("default")
 		column.get_node("Sprite2D2").play("default")
 		$AttackPatterns/RepulsiveWave/ColumnSound.play_sound()
-		await get_tree().create_timer(0.8).timeout
+		await get_tree().create_timer(column_spawn_interval).timeout
 
 	await get_tree().create_timer(1.0).timeout
 
@@ -532,10 +549,12 @@ func _laser_warning_routine() -> void:
 
 	# Fire lasers at player position
 	$Sprite2D.play("laugh")
-	await _lasers.laser_warning_pattern(3, 0.4)
+	var nb_lasers = 3 + (GameState.difficulty_factor - 1.0)
+	await _lasers.laser_warning_pattern(nb_lasers, 0.4)
 
 	# Wait for lasers to finish
-	await get_tree().create_timer(2.0).timeout
+	var waiting_time = 2.0 - 0.18 * (GameState.difficulty_factor - 1.0)
+	await get_tree().create_timer(waiting_time).timeout
 	$Sprite2D.play("default")
 
 
@@ -552,7 +571,8 @@ func _laser_sweep_routine() -> void:
 	_lasers.laser_sweep_pattern(sweep_direction, 200.0)
 
 	# Wait for laser to finish
-	await get_tree().create_timer(4.0).timeout
+	var waiting_time = 4.0 - 0.4 * (GameState.difficulty_factor - 1.0)
+	await get_tree().create_timer(waiting_time).timeout
 	$Sprite2D.play("default")
 
 
@@ -571,7 +591,8 @@ func _laser_cage_routine() -> void:
 	await _lasers.laser_cage_pattern()
 
 	# Wait for cage to finish
-	await get_tree().create_timer(4.0).timeout
+	var waiting_time = 4.0 - 0.4 * (GameState.difficulty_factor - 1.0)
+	await get_tree().create_timer(waiting_time).timeout
 	$Sprite2D.play("default")
 
 
@@ -580,7 +601,7 @@ func _schlassage_routine():
 
 	$AttackPatterns/Schlassage/FocusSound.play_sound()
 	$Sprite2D.play("focus")
-	var focus_duration: float = 0.5
+	var focus_duration: float = 1.5 - 1.0 * (GameState.difficulty_factor - 1.0)
 	await get_tree().create_timer(focus_duration).timeout
 	$Sprite2D.play("laugh")
 
