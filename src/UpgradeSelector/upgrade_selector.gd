@@ -30,7 +30,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		2,
 		"Full-Time Thief",
 		"Sleight of hand is your middle name",
-		100,
+		2500,
 		{UpgradeCardData.EffectType.LOOT_QUANTITY: 2},
 		["loot_quantity_1"]
 	),
@@ -53,7 +53,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		2,
 		"Golden Touch",
 		"Midas would be jealous",
-		100,
+		2500,
 		{UpgradeCardData.EffectType.LOOT_VALUE: 2},
 		["loot_value_1"]
 	),
@@ -65,7 +65,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		1,
 		"Crypto Crash Course",
 		"Avoiding scams made easy",
-		250,
+		3500,
 		{UpgradeCardData.EffectType.BITCOIN_VALUE: 1},
 		["loot_value_2", "loot_quantity_1"]
 	),
@@ -77,7 +77,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		2,
 		"Smart Contract Editor",
 		"Write your own rules for profit",
-		500,
+		7500,
 		{UpgradeCardData.EffectType.BITCOIN_VALUE: 2},
 		["bitcoin_value_1"]
 	),
@@ -89,7 +89,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		1,
 		"Momentum Mastery",
 		"Build up your streaks to maximize profit",
-		200,
+		4000,
 		{UpgradeCardData.EffectType.COMBO_MULTIPLIER: 1},
 		["loot_value_1", "loot_quantity_2"]
 	),
@@ -103,7 +103,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 			2,
 			"Streak Savant",
 			"Your ability to maintain focus and precision during high-pressure situations is unparalleled",
-			400,
+			8000,
 			{UpgradeCardData.EffectType.COMBO_MULTIPLIER: 1},
 			["combo_multiplier_1"]
 		)
@@ -128,7 +128,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		0,
 		"Sprint to Success",
 		"Quick bursts of speed to close the deal",
-		1000,
+		1500,
 		{UpgradeCardData.EffectType.ABILITY_DASH: 1}
 	),
 	UpgradeCardData.new(
@@ -139,7 +139,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		2,
 		"Speedy Investor",
 		"Time is money, so move like it",
-		100,
+		3000,
 		{UpgradeCardData.EffectType.MOVEMENT_SPEED: 3, UpgradeCardData.EffectType.AIR_CONTROL: 2},
 		["speed_1", "dash"]
 	),
@@ -163,7 +163,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		0,
 		"Pump and Dump",
 		"Leap again to avoid falling stocks",
-		1000,
+		2000,
 		{UpgradeCardData.EffectType.ABILITY_DOUBLE_JUMP: 1},
 		["jump_height_1"]
 	),
@@ -175,7 +175,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		2,
 		"Moonshot",
 		"Reach for the stars",
-		100,
+		3000,
 		{UpgradeCardData.EffectType.JUMP_HEIGHT: 3, UpgradeCardData.EffectType.AIR_CONTROL: 2},
 		["jump_height_1"]
 	),
@@ -187,7 +187,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		0,
 		"Market Crash Dive",
 		"Plunge towards profit... or the ground",
-		1000,
+		2500,
 		{UpgradeCardData.EffectType.ABILITY_DASH_DOWN: 1},
 		["double_jump"]
 	),
@@ -200,7 +200,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		1,
 		"Insider Knowledge",
 		"You read the flow of money like it's moving in slow motion, always one step ahead",
-		0,
+		500,
 		{UpgradeCardData.EffectType.BULLET_TIME: 1, UpgradeCardData.EffectType.COMBO_MULTIPLIER: 1}
 	),
 	(
@@ -213,7 +213,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 			2,
 			"Market Guru",
 			"Your intuition for market trends is uncanny, allowing you to capitalize on opportunities before they arise",
-			200,
+			5000,
 			{
 				UpgradeCardData.EffectType.BULLET_TIME: 1,
 				UpgradeCardData.EffectType.COMBO_MULTIPLIER: 1
