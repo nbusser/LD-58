@@ -37,6 +37,8 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var is_dead_animation_playing = false
 @export var enable_gravity = true
 
+var is_dead = false
+
 var jump_load_start = null
 var is_actively_jumping = false
 var is_keep_pressing_jump_button = false
@@ -225,13 +227,13 @@ func _physics_process(delta):
 	# Combat
 	_punch_area.scale.x = -1.0 if direction == Direction.LEFT else 1.0
 
-	if Input.is_action_just_pressed("melee"):
+	if not is_dead and Input.is_action_just_pressed("melee"):
 		$AttackManager.try_attack()
 
 	# Animation
 
 	# Attack animations are directly handled by the attack manager
-	if not is_dead_animation_playing and not $AttackManager.is_attacking():
+	if not is_dead and not $AttackManager.is_attacking():
 		if is_on_floor():
 			# Ground animations
 			if Input.get_axis("move_left", "move_right") == 0:
@@ -259,27 +261,32 @@ func _exit_tree() -> void:
 
 
 func _can_move():
-	return not is_dead_animation_playing and not $AttackManager.is_attacking_ground()
+	return not is_dead and not $AttackManager.is_attacking_ground()
 
 
-func _run_death_animation():
+func _die():
+	is_dead = true
+
 	if direction == Direction.LEFT:
 		$Sprite.flip_h = false
 		direction = Direction.RIGHT
 	velocity = Vector2.ZERO
 
-	var slow_factor = 0.6
+	var slow_factor = 0.7
 	$AnimationPlayer.play("die", slow_factor)
 
-	var slowmo_death_routine = func():
-		if Globals.create_slowmo("death", dash_slow_factor):
-			await $AnimationPlayer.animation_finished
-			Globals.cancel_slowmo_if_exists("death")
+	var slowmo_death_routine = func(): await $AnimationPlayer.animation_finished
+	# if Globals.create_slowmo("death", dash_slow_factor):
+	# 	await $AnimationPlayer.animation_finished
+	# Globals.cancel_slowmo_if_exists("death")
 
 	_level.on_player_dies(slowmo_death_routine)
 
 
 func get_hurt(knockback_force):
+	if is_dead:
+		return
+
 	# Get knocked back
 	velocity += knockback_force
 	# Get deformed
@@ -293,7 +300,7 @@ func get_hurt(knockback_force):
 	health = health - 1
 	_hud.update_life(health)
 	if health <= 0:
-		_run_death_animation()
+		_die()
 		return
 	# Red glow on hit
 	_hurt_sound.play_sound()

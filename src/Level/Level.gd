@@ -65,7 +65,7 @@ func on_player_dies(animation_finished_coroutine_to_await: Callable):
 	await (
 		get_tree()
 		. create_tween()
-		. tween_property($"Fade/Fade", "modulate:a", 255, 1.0)
+		. tween_property($UI/Fadeout, "color:a", 1.0, 1.5)
 		. set_trans(Tween.TRANS_LINEAR)
 		. set_ease(Tween.EASE_IN_OUT)
 		. finished
