@@ -69,23 +69,28 @@ size_flags_vertical = 4
 
 [node name="Heart" parent="VBoxContainer/CenterContainer2/HeartsContainer" instance=ExtResource("3_2vejy")]
 texture_filter = 1
-position = Vector2(-224, 72)
+position = Vector2(-176, 56)
+scale = Vector2(0.6, 0.6)
 
 [node name="Heart2" parent="VBoxContainer/CenterContainer2/HeartsContainer" instance=ExtResource("3_2vejy")]
 texture_filter = 1
-position = Vector2(-112, 72)
+position = Vector2(-88, 56)
+scale = Vector2(0.6, 0.6)
 
 [node name="Heart3" parent="VBoxContainer/CenterContainer2/HeartsContainer" instance=ExtResource("3_2vejy")]
 texture_filter = 1
-position = Vector2(0, 72)
+position = Vector2(0, 56)
+scale = Vector2(0.6, 0.6)
 
 [node name="Heart4" parent="VBoxContainer/CenterContainer2/HeartsContainer" instance=ExtResource("3_2vejy")]
 texture_filter = 1
-position = Vector2(112, 72)
+position = Vector2(88, 56)
+scale = Vector2(0.6, 0.6)
 
 [node name="Heart5" parent="VBoxContainer/CenterContainer2/HeartsContainer" instance=ExtResource("3_2vejy")]
 texture_filter = 1
-position = Vector2(224, 72)
+position = Vector2(176, 56)
+scale = Vector2(0.6, 0.6)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
