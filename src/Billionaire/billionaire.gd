@@ -724,7 +724,7 @@ func _laser_cage_routine() -> void:
 func _schlassage_routine():
 	_schlass_connected = false
 
-	$AttackPatterns/Schlassage/FocusSound.play_sound()
+	$AttackPatterns/Schlassage/FocusSound.play()
 
 	$Sprite2D.play("shout")
 
@@ -756,7 +756,7 @@ func _schlassage_routine():
 	else:
 		$Sprite2D.play("schlass_r")
 
-	$AttackPatterns/Schlassage/AttackSound.play_sound()
+	$AttackPatterns/Schlassage/AttackSound.play()
 
 	await get_tree().create_timer(.2).timeout
 
@@ -783,6 +783,7 @@ func on_level_timeout():
 # During schlass
 func _on_foot_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]) and not _schlass_connected:
+		$AttackPatterns/Schlassage/HitSound.play()
 		_schlass_connected = true
 		var kick_force = 5000.0
 		var direction = -1.0 if global_position.x - _player.global_position.x > 0 else 1.0

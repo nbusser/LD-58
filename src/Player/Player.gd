@@ -280,7 +280,7 @@ func _can_move():
 
 
 func _die():
-	$SoundFx/DeathSound.play_sound()
+	$SoundFx/DeathSound.play()
 	is_dead = true
 
 	if direction == Direction.LEFT:

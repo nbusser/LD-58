@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://ty44l5afcwx4" path="res://src/Player/Player.gd" id="2"]
 [ext_resource type="Script" uid="uid://0ol0gfmf4qyv" path="res://src/Player/AttackManager.gd" id="2_ub20b"]
-[ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="3_vy1tf"]
 [ext_resource type="AudioStream" uid="uid://dqhn35opl716d" path="res://assets/sounds/Player/whiff.ogg" id="4_fnhyv"]
 [ext_resource type="AudioStream" uid="uid://bflcfddtqh428" path="res://assets/sounds/Player/whiff1.ogg" id="4_vy57f"]
 [ext_resource type="AudioStream" uid="uid://w0bitowxkxh0" path="res://assets/sounds/Player/punch.ogg" id="5_nrcd8"]
@@ -46,6 +45,11 @@ stream_0/stream = ExtResource("12_6rxnr")
 stream_1/stream = ExtResource("13_22iev")
 stream_2/stream = ExtResource("14_m5txt")
 stream_3/stream = ExtResource("15_hovyp")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_cdx0i"]
+playback_mode = 1
+streams_count = 1
+stream_0/stream = ExtResource("9_ub20b")
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(40, 68)
@@ -265,10 +269,9 @@ volume_db = 10.0
 stream = SubResource("AudioStreamRandomizer_lxp3e")
 volume_db = 10.0
 
-[node name="DeathSound" type="AudioStreamPlayer" parent="SoundFx"]
-script = ExtResource("3_vy1tf")
-sounds = Array[AudioStream]([ExtResource("9_ub20b")])
-metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="SoundFx"]
+stream = SubResource("AudioStreamRandomizer_cdx0i")
+volume_db = 5.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
