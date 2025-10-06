@@ -207,14 +207,39 @@ func _jump_to_peek(jump_velocity: float):
 		await get_tree().process_frame
 
 
+# io_state:
+# - in  -> is_running - stop token; routine syops on false
+# - out -> gunpoint   - current gunpoint position
+func _air_attack_track_player_anim(io_state: Dictionary):
+	while io_state.is_running:
+		var player_direction = _player.global_position - global_position
+		var angle = rad_to_deg(Vector2.DOWN.angle_to(player_direction.normalized()))
+		# If player is located within a 90deg cone under me
+		if abs(angle) <= 45:
+			$Sprite2D.play("air_attack_down")
+			io_state.gunpoint = $AttackPatterns/JumpConeBullets/GunPoints/Down
+		else:
+			$Sprite2D.play("air_attack")
+			io_state.gunpoint = (
+				$AttackPatterns/JumpConeBullets/GunPoints/Left
+				if player_direction.x < 0
+				else $AttackPatterns/JumpConeBullets/GunPoints/Right
+			)
+		$Sprite2D.flip_h = player_direction.x > 0
+		await get_tree().process_frame
+
+	# Cleanup
+	$Sprite2D.flip_h = false
+
+
 # Shoot bullets in a cone
-func _shoot_cone(nb_bullets: int, spread_deg: float = 30.0):
+func _shoot_cone(gunpoint: Vector2, nb_bullets: int, spread_deg: float = 30.0):
 	var bullet_direction = (_player.global_position - global_position).normalized()
 	for i in range(nb_bullets):
 		var t = float(i) / float(nb_bullets - 1)
 		var angle = -spread_deg / 2 + t * spread_deg
 		var dir = bullet_direction.rotated(deg_to_rad(angle))
-		_spawn_bullet(global_position, dir, 800, 500.0, 1.0, 1)
+		_spawn_bullet(gunpoint, dir, 800, 500.0, 1.0, 1)
 
 	$AttackPatterns/JumpConeBullets/ShootSound.play_sound()
 
@@ -226,20 +251,28 @@ func _jump_cone_bullets_routine() -> void:
 
 	await _jump_to_peek(600)
 
+	var player_watcher_coroutine_state = {"is_running": true, "gunpoint": Vector2.ZERO}
+	# This coroutine will take care of updating anim and giving us gunpoint via the dict
+	_air_attack_track_player_anim.call_deferred(player_watcher_coroutine_state)
+
 	# Freeze in the air
 	_is_gravity_enabled = false
 	await get_tree().create_timer(0.3).timeout
 
 	# Shoot bullets to the player
 	var nb_bullets: int = 3 + int(0.9 * GameState.difficulty_factor)
-	_shoot_cone(nb_bullets)
+	_shoot_cone(player_watcher_coroutine_state.gunpoint.global_position, nb_bullets)
 
 	# Freeze
 	await get_tree().create_timer(0.3).timeout
 
+	# Stopping the coroutine
+	player_watcher_coroutine_state.is_running = false
+
 	# Fall
 	_is_gravity_enabled = true
 	await get_tree().create_timer(0.5).timeout
+	$Sprite2D.play("default")
 
 
 func _parachute_routine() -> void:
@@ -265,6 +298,10 @@ func _parachute_routine() -> void:
 	# Jump
 	await _jump_to_peek(800)
 
+	var player_watcher_coroutine_state = {"is_running": true, "gunpoint": Vector2.ZERO}
+	# This coroutine will take care of updating anim and giving us gunpoint via the dict
+	_air_attack_track_player_anim.call_deferred(player_watcher_coroutine_state)
+
 	# Show parachute
 	$AttackPatterns/Parachute/ParachuteSprite.visible = true
 
@@ -279,6 +316,7 @@ func _parachute_routine() -> void:
 
 	var drop_parachute = func():
 		state.has_parachute = false
+		player_watcher_coroutine_state.is_running = false
 		$AttackPatterns/Parachute/ParachuteSprite.visible = false
 
 	# Shoot bullets regularly
@@ -287,7 +325,9 @@ func _parachute_routine() -> void:
 		var max_shots: int = 2 + int(0.5 * GameState.difficulty_factor)
 		var current_nb_shots = 0
 		while state.has_parachute:
-			await _shoot_cone(nb_bullets_in_cone)
+			await _shoot_cone(
+				player_watcher_coroutine_state.gunpoint.global_position, nb_bullets_in_cone
+			)
 			current_nb_shots += 1
 			await get_tree().create_timer(1.0).timeout
 			# After 4 bullets, quits the pattern
@@ -304,6 +344,9 @@ func _parachute_routine() -> void:
 		await get_tree().process_frame
 
 	state.is_running = false
+
+	await get_tree().create_timer(0.5).timeout
+	$Sprite2D.play("default")
 
 
 func _machinegun_routine() -> void:

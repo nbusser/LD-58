@@ -118,6 +118,17 @@ script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("6_qa6ra")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
+[node name="GunPoints" type="Node2D" parent="AttackPatterns/JumpConeBullets"]
+
+[node name="Left" type="Node2D" parent="AttackPatterns/JumpConeBullets/GunPoints"]
+position = Vector2(-97, 25)
+
+[node name="Right" type="Node2D" parent="AttackPatterns/JumpConeBullets/GunPoints"]
+position = Vector2(97, 25)
+
+[node name="Down" type="Node2D" parent="AttackPatterns/JumpConeBullets/GunPoints"]
+position = Vector2(-6, 75)
+
 [node name="Machinegun" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Minting Plate !"
 cooldown = 10.0
