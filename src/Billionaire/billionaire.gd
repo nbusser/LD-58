@@ -35,7 +35,8 @@ var _last_hit_time = 0.0
 @onready var _level: Level = $"../.."
 @onready var _coins: Node2D = $"../Coins"
 @onready var _lasers: Node2D = %Lasers
-@onready var _combo_label: Label = $ComboLabel
+@onready var _combo_display: Node2D = $"../ComboDisplay"
+@onready var _combo_label: Label = $"../ComboDisplay/ComboLabel"
 
 
 func _ready() -> void:
@@ -596,6 +597,11 @@ func _show_combo_stomp():
 	if _combo_count <= 1:
 		_combo_label.visible = false
 		return
+
+	var horizontal_offset = 1.0 if _player.direction == Player.Direction.RIGHT else -1.0
+	_combo_display.global_position = (
+		_player.global_position + Vector2(80.0 * horizontal_offset, -30)
+	)
 
 	var combo_mult = pow(_player.ps.combo_base, _combo_count)
 	_combo_label.text = "x%.1f" % combo_mult
