@@ -26,7 +26,7 @@ var current_scene:
 func set_scene(new_scene: Node) -> void:
 	# Free older scene
 	if current_scene:
-		viewport.remove_child(current_scene)
+		viewport.call_deferred("remove_child", current_scene)
 		current_scene.queue_free()
 
 	current_scene = new_scene

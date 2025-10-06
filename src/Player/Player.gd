@@ -312,7 +312,7 @@ func _on_feet_body_exited(_body: Node2D) -> void:
 	is_on_top_of_billionaire = false
 
 
-# When the billiognaire is punched from the air, we grant an extra jump to the player (it they are out of jumps)
+# When the billionaire is punched from the air, we grant an extra jump to the player (it they are out of jumps)
 func _on_attack_manager_punch_has_connected(attack: AttackManager.Attack) -> void:
 	emit_signal("billionaire_punched", melee_damage)
 	if (
