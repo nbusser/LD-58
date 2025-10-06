@@ -35,6 +35,8 @@ func _ready():
 	if is_instance_valid(_billionaire):
 		billionaire_hit.connect(_billionaire.on_level_billionaire_hit)
 
+	Globals.year += 1
+
 
 func init(level_number_p: int, player_stats: PlayerStats):
 	level_state = LevelState.new(level_number_p, 0, GameState.billionaire_cash, false)

@@ -62,6 +62,7 @@ func init(level_state: LevelState) -> void:
 func _ready() -> void:
 	# Fadein animation
 	fadein_pane.visible = 1
+	set_year(Globals.year)
 	create_tween().tween_property(fadein_pane, "modulate", Color.TRANSPARENT, 0.7)
 
 
