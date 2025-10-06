@@ -402,7 +402,7 @@ func _machinegun_routine() -> void:
 		else:
 			gunpoint_position = $AttackPatterns/Machinegun/Gunpoints/Right.global_position
 
-		var bullet_direction = (gunpoint_position - global_position).normalized()
+		var bullet_direction = (_player.global_position - gunpoint_position).normalized()
 
 		$AttackPatterns/Machinegun/ShootingSound.play()
 		_spawn_bullet(gunpoint_position, bullet_direction, 50, bullet_speed, 1.0, 0.0)
