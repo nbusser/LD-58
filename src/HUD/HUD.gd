@@ -31,7 +31,7 @@ func set_level_number(value: int) -> void:
 
 
 func set_billionaire_net_worth(value: int) -> void:
-	net_worth_label.text = str(value)
+	net_worth_label.text = StringFormatter.format_currency(value)
 
 
 func set_dash_cooldown(value: int) -> void:
