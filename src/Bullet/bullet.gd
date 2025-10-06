@@ -21,7 +21,7 @@ func init(
 	knockback_force: float,
 	speed: float = 100,
 	bullet_scale_factor: float = 1.0,
-	acceleration : float = 0,
+	acceleration: float = 0,
 	collectible_type: Collectible.CollectibleType = Collectible.CollectibleType.DOLLAR_COIN,
 ) -> void:
 	_initialized = true
