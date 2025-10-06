@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="5_ypdof"]
 [ext_resource type="Script" uid="uid://yeevmoyvkx8e" path="res://src/UpgradeSelector/upgrade_card_data.gd" id="6_e1bcd"]
 [ext_resource type="Texture2D" uid="uid://llhbf5hj1pua" path="res://assets/sprites/upgrade_selector/upgrade_sheet.png" id="7_20hqm"]
-[ext_resource type="Texture2D" uid="uid://mqaprq3oos7m" path="res://assets/sprites/upgrade_selector/upgrade-pin-yeller.png" id="8_k4wgw"]
+[ext_resource type="Texture2D" uid="uid://c5k3yru82twpu" path="res://assets/sprites/upgrade_selector/upgrade-pin-turquoise.png" id="8_uy7kt"]
 [ext_resource type="FontVariation" uid="uid://6ps3tjx81bnu" path="res://assets/fonts/contract_font.tres" id="9_0vb0y"]
 [ext_resource type="Texture2D" uid="uid://css0pguf5gdda" path="res://assets/sprites/upgrade_selector/upgrade-pin-red.png" id="10_4j8vg"]
 [ext_resource type="Texture2D" uid="uid://wvhjq6gjsr3h" path="res://assets/sprites/upgrade_selector/upgrade-pin-blue.png" id="11_hgdfc"]
@@ -131,8 +131,8 @@ color = Color(0.5176471, 0.28627452, 0, 0.42745098)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 41.0
-offset_bottom = 99.0
+offset_top = 57.0
+offset_bottom = 138.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.9254902, 0.92156863, 0.90588236, 1)
 theme_override_font_sizes/font_size = 70
@@ -145,8 +145,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -150.0
-offset_bottom = 150.0
+offset_top = -260.0
+offset_bottom = 340.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -172,7 +172,7 @@ unique_name_in_owner = true
 layout_mode = 0
 offset_right = 420.0
 offset_bottom = 600.0
-texture = ExtResource("8_k4wgw")
+texture = ExtResource("8_uy7kt")
 
 [node name="LevelLabel" type="Label" parent="UpgradeSelector/CenterContainer/CardContainer/UpgradeCard"]
 unique_name_in_owner = true

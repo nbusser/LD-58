@@ -4,7 +4,7 @@ extends Control
 
 var back_button_visible: bool
 
-@onready var back_button = $CenterContainer/VBoxContainer/CenterContainer4/Back
+@onready var back_button = $Back
 
 
 func _ready() -> void:
