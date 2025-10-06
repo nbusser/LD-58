@@ -193,10 +193,23 @@ func _machinegun_routine() -> void:
 	$Sprite2D.play("machinegun")
 	$AttackPatterns/Machinegun/ShootSound.play_sound()
 	var nb_bullets = 10
+	var gunpoint_offset = Vector2(45.0, 0.0)
+
 	for _i in range(nb_bullets):
 		var bullet_direction = (_player.global_position - global_position).normalized()
-		_spawn_bullet(position, bullet_direction, 50, 600.0, 1.0, 0.0)
+
+		$Sprite2D.flip_h = bullet_direction.x > 0.0
+		var gunpoint = position
+		if bullet_direction.x > 0.0:
+			gunpoint += gunpoint_offset
+		else:
+			gunpoint -= gunpoint_offset
+
+		_spawn_bullet(gunpoint, bullet_direction, 50, 600.0, 1.0, 0.0)
 		await get_tree().create_timer(0.1).timeout
+
+	$Sprite2D.play("default")
+	$Sprite2D.flip_h = false
 
 
 func _rain_routine() -> void:
