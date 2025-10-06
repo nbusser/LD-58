@@ -39,6 +39,7 @@ const SAMPLE_GLOBAL_VARIABLE: int = 1
 var slowmos: Dictionary[String, float] = {}
 var year = 2025
 
+
 func end_scene(status: EndSceneStatus, params: Dictionary = {}) -> void:
 	scene_ended.emit(status, params)
 
