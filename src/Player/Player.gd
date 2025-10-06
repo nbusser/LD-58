@@ -290,7 +290,7 @@ func _die():
 	# if Globals.create_slowmo("death", dash_slow_factor):
 	# 	await $AnimationPlayer.animation_finished
 	# Globals.cancel_slowmo_if_exists("death")
-
+	$"../Camera2D".death_zoom()
 	_level.on_player_dies(slowmo_death_routine)
 
 

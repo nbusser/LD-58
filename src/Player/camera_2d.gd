@@ -102,6 +102,13 @@ func collision(r: Rect2, l_to: Vector2) -> Variant:
 	return best
 
 
+func death_zoom():
+	zoom = Vector2(4, 4)
+	await get_tree().create_timer(2.8).timeout 
+	noise_bg_shake_strength = 15
+	noise_bg_shake_speed = 800
+
+
 func _process(delta):
 	# TODO the code below is framerate dependent, see
 	# https://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/
