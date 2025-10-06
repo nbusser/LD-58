@@ -135,4 +135,4 @@ unique_name_in_owner = true
 position = Vector2(832, 1045)
 
 [connection signal="button_up" from="RedrawButton" to="." method="_on_redraw_button_up"]
-[connection signal="button_up" from="SkipButton" to="." method="_on_redraw_button_up"]
+[connection signal="button_up" from="SkipButton" to="." method="_on_skip_button_button_up"]
