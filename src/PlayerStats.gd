@@ -14,3 +14,7 @@ var unlocked_higher_jumps = true
 var unlocked_dash_glide = true
 var max_nb_jumps = 2
 var interest_rate = 0
+# Bullet proximity slow motion parameters
+var bullet_proximity_radius = 65.0
+var bullet_proximity_slow_factor = 0.8
+var unlocked_bullet_proximity_slowmo = false

@@ -8,6 +8,7 @@ enum Direction { LEFT = -1, RIGHT = 1 }
 const DIRECTIONS = ["move_left", "move_right"]
 const DIRECTIONS_MODIFIERS = [-1, 1]
 const DASH_SLOWMO_NAME := "player_dash"
+const BULLET_PROXIMITY_SLOWMO_NAME := "bullet_proximity"
 
 # Movement
 @export var ground_speed = 450
@@ -72,9 +73,12 @@ var play_jump_start_ts = 0
 
 var health = 10
 
+var bullets_in_proximity: Array[Node2D] = []
+
 @onready var _hurt_sound = $SoundFx/HurtSound
 @onready var _punch_area: Area2D = $PunchArea
 @onready var _smash_area: Area2D = $SmashArea
+@onready var _bullet_time_area: Area2D = $BulletTimeArea
 @onready var _hud: HUD = $"../../UI/HUD"
 @onready var _level: Node = $"../.."
 @onready var _camera: Node = $"../Camera2D"
@@ -85,6 +89,17 @@ func _ready() -> void:
 	# Waits for Game.gd to run randomize()
 	await get_tree().process_frame
 	_hud.update_life(health)
+
+	# Setup bullet time area
+	if _bullet_time_area:
+		_bullet_time_area.area_entered.connect(_on_bullet_time_area_entered)
+		_bullet_time_area.area_exited.connect(_on_bullet_time_area_exited)
+		# Update bullet time area radius from player stats
+		for c in _bullet_time_area.get_children():
+			if c is CollisionShape2D:
+				var shape = c.shape
+				if shape is CircleShape2D:
+					shape.radius = ps.bullet_proximity_radius
 
 
 func init(ps_p: PlayerStats):
@@ -284,6 +299,7 @@ func dash_slow_mo():
 
 func _exit_tree() -> void:
 	Globals.cancel_slowmo_if_exists(DASH_SLOWMO_NAME)
+	Globals.cancel_slowmo_if_exists(BULLET_PROXIMITY_SLOWMO_NAME)
 
 
 func _can_move():
@@ -374,3 +390,19 @@ func _on_feet_area_entered(_area: Area2D) -> void:
 
 func _on_feet_area_exited(_area: Area2D) -> void:
 	is_on_top_of_billionaire = false
+
+
+func _on_bullet_time_area_entered(area: Area2D) -> void:
+	if area.is_in_group(Globals.GROUPS_DICT[Globals.Groups.BULLET]):
+		bullets_in_proximity.append(area)
+
+		if ps and ps.unlocked_bullet_proximity_slowmo and bullets_in_proximity.size() == 1:
+			Globals.create_slowmo(BULLET_PROXIMITY_SLOWMO_NAME, ps.bullet_proximity_slow_factor)
+
+
+func _on_bullet_time_area_exited(area: Area2D) -> void:
+	if area.is_in_group(Globals.GROUPS_DICT[Globals.Groups.BULLET]):
+		bullets_in_proximity.erase(area)
+
+		if ps and ps.unlocked_bullet_proximity_slowmo and bullets_in_proximity.is_empty():
+			Globals.cancel_slowmo_if_exists(BULLET_PROXIMITY_SLOWMO_NAME)
