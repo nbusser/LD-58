@@ -76,6 +76,6 @@ var glide_force = 3800
 #var glide_force = 3800
 
 # Bullet proximity slow motion parameters
-var bullet_proximity_radius = 65.0
-var bullet_proximity_slow_factor = 0.8
+var bullet_proximity_radius = 70.0
+var bullet_proximity_slow_factor = 0.75
 var unlocked_bullet_proximity_slowmo = false

@@ -71,6 +71,8 @@ func apply_upgrade(card: UpgradeCardData) -> bool:
 		match upgr:
 			UpgradeCardData.EffectType.BULLET_TIME:
 				player_stats.unlocked_bullet_proximity_slowmo = true
+				player_stats.bullet_proximity_radius += 12
+				player_stats.bullet_proximity_slow_factor -= 0.1
 			UpgradeCardData.EffectType.COMBO_MULTIPLIER:
 				player_stats.combo_base += .5
 			UpgradeCardData.EffectType.JUMP_HEIGHT:
