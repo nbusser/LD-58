@@ -32,8 +32,8 @@ var _is_level_timeout = false
 
 
 func _ready() -> void:
-	$AttackPatterns/JumpConeBullets.routine = _air_shotgun_routine
-	$AttackPatterns/Machinegun.routine = _minting_plate_routine
+	$AttackPatterns/JumpConeBullets.routine = _jump_cone_bullets_routine
+	$AttackPatterns/Machinegun.routine = _machinegun_routine
 	$AttackPatterns/Rain.routine = _rain_routine
 	$AttackPatterns/RepulsiveWave.routine = _repulse_wave_routine
 	$AttackPatterns/LaserWarning.routine = _laser_warning_routine
@@ -153,7 +153,7 @@ func _random_run():
 	)
 
 
-func _air_shotgun_routine() -> void:
+func _jump_cone_bullets_routine() -> void:
 	# Maybe run
 	if Globals.coin_flip():
 		await _random_run()
@@ -184,13 +184,14 @@ func _air_shotgun_routine() -> void:
 	await get_tree().create_timer(0.5).timeout
 
 
-func _minting_plate_routine() -> void:
+func _machinegun_routine() -> void:
 	# Maybe run
 	if Globals.coin_flip():
 		await _random_run()
 
 	$AttackPatterns/Machinegun/FocusSound.play_sound()
 	await get_tree().create_timer(1.2).timeout
+	$BillionaireBody/Sprite2D.play("machinegun")
 	$AttackPatterns/Machinegun/ShootSound.play_sound()
 	var nb_bullets = 10
 	for _i in range(nb_bullets):
