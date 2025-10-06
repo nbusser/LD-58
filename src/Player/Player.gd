@@ -105,7 +105,6 @@ func _physics_process(delta):
 		hz_velocity = input_direction * (ground_speed if self.is_on_floor() else air_speed)
 
 		# Jump
-		var time_since_jump = now - (jump_load_start if jump_load_start != null else INF)
 		if (
 			not is_keep_pressing_jump_button  # No automatic jump when space is kept pressed
 			and current_nb_jumps_left > 0  # As long as we have remaining jumps
@@ -116,6 +115,7 @@ func _physics_process(delta):
 			current_nb_jumps_left -= 1
 			is_actively_jumping = true
 			jump_load_start = now
+		var time_since_jump = now - (jump_load_start if jump_load_start != null else INF)
 		if (
 			is_actively_jumping
 			&& Input.is_action_pressed("jump")
