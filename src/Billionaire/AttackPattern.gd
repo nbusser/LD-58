@@ -5,6 +5,7 @@ extends Node2D
 @export var attack_name: String
 @export var net_worth_percent_threshold: float = 100.0
 @export var cooldown: float = 0.0
+@export var minimum_difficulty_factor: float = 1.0
 
 # Normalized distance to the player
 # 0.0 means the player is next to boss
@@ -46,6 +47,7 @@ func calculate_weight(
 		or billionaire_money > net_worth_percent_threshold
 		or normalized_distance < minimum_distance_x
 		or normalized_distance > maximum_distance_x
+		or GameState._get_difficulty_factor() < minimum_difficulty_factor
 	):
 		return 0.0
 
