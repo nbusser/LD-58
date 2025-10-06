@@ -618,7 +618,7 @@ func _schlassage_routine():
 
 	$AttackPatterns/Schlassage/AttackSound.play_sound()
 
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(.2).timeout
 
 	_schlass.visible = false
 	_schlass.monitoring = false
