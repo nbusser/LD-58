@@ -2,8 +2,9 @@ class_name Billionaire
 
 extends CharacterBody2D
 
-const _JUMP_VELOCITY = -650
 const _GRAVITY: float = 900.0
+const _RUNNING_SPEED: float = 600
+const _MAX_SPEED: float = 200
 
 # Interval range between two attacks, in seconds
 @export var idle_range_seconds: Vector2 = Vector2(0.5, 1.0)
@@ -39,6 +40,7 @@ func _ready() -> void:
 	$AttackPatterns/LaserWarning.routine = _laser_warning_routine
 	$AttackPatterns/LaserSweep.routine = _laser_sweep_routine
 	$AttackPatterns/LaserCage.routine = _laser_cage_routine
+	$AttackPatterns/Parachute.routine = _parachute_routine
 
 	_init_repulse_wave()
 
@@ -69,6 +71,15 @@ func _physics_process(delta: float) -> void:
 	var knockback_decay = Vector2(700.0, 1000.0)
 	_knockback_velocity.x = move_toward(_knockback_velocity.x, 0.0, knockback_decay.x * delta)
 	_knockback_velocity.y = move_toward(_knockback_velocity.y, 0.0, knockback_decay.y * delta)
+
+	var run_decay_x = _RUNNING_SPEED * 0.75
+	if abs(_run_velocity.x) > 0.0:
+		var sign_x = sign(_run_velocity.x)
+		_run_velocity.x -= run_decay_x * sign_x * delta
+		if sign(_run_velocity.x) != sign_x:
+			_run_velocity.x = 0.0
+		if _run_velocity.length() > _MAX_SPEED:
+			_run_velocity = _run_velocity.normalized() * _MAX_SPEED
 
 	velocity.x = _run_velocity.x + _knockback_velocity.x
 	velocity.y += _knockback_velocity.y
@@ -153,22 +164,15 @@ func _random_run():
 	)
 
 
-func _jump_cone_bullets_routine() -> void:
-	# Maybe run
-	if Globals.coin_flip():
-		await _random_run()
-
+func _jump_to_peek(jump_velocity: float):
 	# Jump
 	$Sprite2D.play("jump")
-	velocity.y = _JUMP_VELOCITY
+	velocity.y = -jump_velocity
 	while velocity.y < 0:
 		await get_tree().process_frame
 
-	# Freeze in the air
-	_is_gravity_enabled = false
-	await get_tree().create_timer(0.3).timeout
 
-	# Shoot bullets to the player
+func _shoot_cone():
 	var bullet_direction = (_player.global_position - global_position).normalized()
 	var angles = [-15, 0, 15]
 	for angle in angles:
@@ -176,12 +180,87 @@ func _jump_cone_bullets_routine() -> void:
 		_spawn_bullet(global_position, dir, 800, 500.0, 1.0, 1)
 	$AttackPatterns/JumpConeBullets/ShootSound.play_sound()
 
+
+func _jump_cone_bullets_routine() -> void:
+	# Maybe run
+	if Globals.coin_flip():
+		await _random_run()
+
+	await _jump_to_peek(600)
+
+	# Freeze in the air
+	_is_gravity_enabled = false
+	await get_tree().create_timer(0.3).timeout
+
+	# Shoot bullets to the player
+	_shoot_cone()
+
 	# Freeze
 	await get_tree().create_timer(0.3).timeout
 
 	# Fall
 	_is_gravity_enabled = true
 	await get_tree().create_timer(0.5).timeout
+
+
+func _parachute_routine() -> void:
+	# Cannot pass a simple boolean, because it would be passed by copy to the coroutine
+	# Thus, we use a dictionary, which is passed by reference
+	var state = {"has_parachute": true, "is_running": true}
+
+	var distance_to_left_wall = abs(position.x - $"../Borders/WallL".position.x)
+	var distance_to_right_wall = abs(position.x - $"../Borders/WallR".position.x)
+	var direction = -1.0 if distance_to_left_wall > distance_to_right_wall else 1.0
+	var wall = (
+		$"../Borders/WallL".position.x if direction == -1.0 else $"../Borders/WallR".position.x
+	)
+
+	# Handle run
+	var run_coroutine = func():
+		while state.is_running:
+			_run_velocity.x += _RUNNING_SPEED * direction * get_process_delta_time()
+			await get_tree().process_frame
+	# Run in background
+	run_coroutine.call_deferred()
+
+	# Jump
+	await _jump_to_peek(800)
+
+	# TODO: show parachute
+
+	# Handle parachute friction physics
+	var parachute_friction_coroutine = func():
+		var friction = -_GRAVITY * 0.99
+		while state.has_parachute:
+			velocity.y += friction * get_process_delta_time()
+			await get_tree().process_frame
+	# Run in background
+	parachute_friction_coroutine.call_deferred()
+
+	var drop_parachute = func(): state.has_parachute = false
+
+	# Shoot bullets regularly
+	var shoot_coroutine = func():
+		var max_shots = 4
+		var current_nb_shots = 0
+		while state.has_parachute:
+			await _shoot_cone()
+			current_nb_shots += 1
+			await get_tree().create_timer(1.0).timeout
+			# After 4 bullets, quits the pattern
+			if current_nb_shots >= max_shots:
+				drop_parachute.call()
+	# Run in background
+	shoot_coroutine.call_deferred()
+
+	# Stops routine whenever we are too close from the wall
+	var distance_threshold = 100
+	while state.has_parachute:
+		if abs(position.x - wall) < distance_threshold:
+			state.has_parachute = false
+		await get_tree().process_frame
+
+	state.is_running = false
 
 
 func _machinegun_routine() -> void:
@@ -226,13 +305,6 @@ func _rain_routine() -> void:
 		var min_x = $"../Borders/WallL".position.x + 10
 		var max_x = $"../Borders/WallR".position.x - 10
 		var nb_slots: int = abs(min_x - max_x) / rain_bullet_interval_x
-
-		# Pattern carpet bombing
-		# for i in range(1):
-		# 	print(min_x, max_x)
-		# 	var bullet_position_x = min_x + (i * rain_bullet_interval_x)
-		# 	var bullet_position = Vector2(bullet_position_x, -300)
-		# 	_spawn_bullet(bullet_position, Vector2.DOWN, 50, rain_bullet_speed)
 
 		for wave in range(rain_nb_waves):
 			var shuffled_slots = range(nb_slots)

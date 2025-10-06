@@ -227,6 +227,9 @@ script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("6_7xygs")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
+[node name="Parachute" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
+attack_name = "Golden parachute"
+
 [node name="SFX" type="Node" parent="."]
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="SFX"]
