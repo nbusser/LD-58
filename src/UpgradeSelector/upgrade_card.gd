@@ -92,7 +92,10 @@ func _format_effects(effects: Dictionary) -> String:
 		var effect_name = UpgradeCardData.EffectType.keys()[effect_type].to_lower().replace(
 			"_", " "
 		)
-		effects_str.append("%+d %s" % [value, effect_name])
+		if effect_name.begins_with("ability "):
+			effects_str.append("new ability: %s" % effect_name.trim_prefix("ability "))
+		else:
+			effects_str.append("%+d %s" % [value, effect_name])
 	return ", ".join(effects_str)
 
 
