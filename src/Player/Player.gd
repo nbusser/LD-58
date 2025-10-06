@@ -37,6 +37,8 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var is_dead_animation_playing = false
 @export var enable_gravity = true
 
+var ps: PlayerStats
+
 var is_dead = false
 var is_level_timeout = false
 
@@ -58,9 +60,6 @@ var previous_head_bounce = 0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var current_nb_jumps_left = 2
-var max_nb_jumps = 2
-
-var has_extra_jump_on_air_strike = true
 
 var prev_velocity = Vector2(0, 0)
 var play_jump_start_ts = 0
@@ -83,13 +82,17 @@ func _ready() -> void:
 	_hud.update_life(health)
 
 
+func init(ps_p: PlayerStats):
+	ps = ps_p
+
+
 func _physics_process(delta):
 	var vt_velocity = 0.
 	var hz_velocity = 0.
 	var now = Time.get_unix_time_from_system()
 
 	if is_on_floor():
-		current_nb_jumps_left = max_nb_jumps
+		current_nb_jumps_left = ps.max_nb_jumps
 
 	if _can_move():
 		# Horizontal movement
@@ -100,6 +103,9 @@ func _physics_process(delta):
 		($Sprite as AnimatedSprite2D).flip_h = direction == Direction.LEFT
 
 		hz_velocity = input_direction * (ground_speed if self.is_on_floor() else air_speed)
+
+		# Jump
+		var time_since_jump = now - (jump_load_start if jump_load_start != null else INF)
 		if (
 			not is_keep_pressing_jump_button  # No automatic jump when space is kept pressed
 			and current_nb_jumps_left > 0  # As long as we have remaining jumps
@@ -110,9 +116,6 @@ func _physics_process(delta):
 			current_nb_jumps_left -= 1
 			is_actively_jumping = true
 			jump_load_start = now
-
-		# Jump
-		var time_since_jump = now - (jump_load_start if jump_load_start != null else INF)
 		if (
 			is_actively_jumping
 			&& Input.is_action_pressed("jump")
@@ -136,51 +139,57 @@ func _physics_process(delta):
 			is_keep_pressing_jump_button = false
 
 		# Horizontal dash
-		for dir in range(2):
-			if Input.is_action_just_pressed(DIRECTIONS[dir]):
-				if now - previous_dash > dash_cooldown:
-					if now - previous_dir[dir] < dash_window:
-						previous_dash = now
-						hz_velocity = DIRECTIONS_MODIFIERS[dir] * dash_speed
-						dash_slow_mo()
-					previous_dir[dir] = now
-		_hud.set_dash_cooldown(100. * clamp((now - previous_dash) / dash_cooldown, 0., 100.))
+		if ps.unlocked_dash:
+			for dir in range(2):
+				if Input.is_action_just_pressed(DIRECTIONS[dir]):
+					if now - previous_dash > dash_cooldown:
+						if now - previous_dir[dir] < dash_window:
+							previous_dash = now
+							hz_velocity = DIRECTIONS_MODIFIERS[dir] * dash_speed
+							if ps.unlocked_dash_bullet_time:
+								dash_slow_mo()
+						previous_dir[dir] = now
+			_hud.set_dash_cooldown(100. * clamp((now - previous_dash) / dash_cooldown, 0., 100.))
 
 		# Down dash
-		if is_on_floor():
-			can_down_dash = true
-			is_down_dashing = false
+		if ps.unlocked_dash_down:
+			if is_on_floor():
+				can_down_dash = true
+				is_down_dashing = false
 
-		if (
-			Input.is_action_just_pressed("dash_down")
-			&& can_down_dash
-			&& !is_on_floor()
-			&& !is_down_dashing
-			&& now - previous_down_dash > dash_cooldown
-		):
-			previous_down_dash = now
-			is_down_dashing = true
-			is_actively_jumping = false
-			jump_load_start = null
-			velocity.y += down_dash_speed
-			dash_slow_mo()
-		if is_down_dashing && now - previous_down_dash > down_dash_duration:
-			is_down_dashing = false
-			if velocity.y > 0:
-				velocity.y -= min(down_dash_speed / 2., velocity.y)
+			if (
+				Input.is_action_just_pressed("dash_down")
+				&& can_down_dash
+				&& !is_on_floor()
+				&& !is_down_dashing
+				&& now - previous_down_dash > dash_cooldown
+			):
+				previous_down_dash = now
+				is_down_dashing = true
+				is_actively_jumping = false
+				jump_load_start = null
+				velocity.y += down_dash_speed
+				if ps.unlocked_dash_bullet_time:
+					dash_slow_mo()
+			if is_down_dashing && now - previous_down_dash > down_dash_duration:
+				is_down_dashing = false
+				if velocity.y > 0:
+					velocity.y -= min(down_dash_speed / 2., velocity.y)
 
 	# Wall sticking behavior
-	if is_on_wall():
-		if velocity.y > 0:
-			velocity.y -= wall_stickiness * delta
-		# Wall jumping
-		if (
-			Input.is_action_pressed("jump")
-			&& (jump_load_start == null || now - jump_load_start > wall_jump_cooldown)
-		):
-			vt_velocity = -wall_jump_force
-			jump_load_start = now
+	if ps.unlocked_wall_climbing:
+		if is_on_wall():
+			if velocity.y > 0:
+				velocity.y -= wall_stickiness * delta
+			# Wall jumping
+			if (
+				Input.is_action_pressed("jump")
+				&& (jump_load_start == null || now - jump_load_start > wall_jump_cooldown)
+			):
+				vt_velocity = -wall_jump_force
+				jump_load_start = now
 
+	# Gravity
 	hz_velocity = (
 		velocity.x - (16 * delta * velocity.x)
 		if abs(velocity.x) > abs(hz_velocity)
@@ -339,7 +348,7 @@ func _on_attack_manager_punch_has_connected(attack: AttackManager.Attack) -> voi
 	emit_signal("billionaire_punched", melee_damage)
 	if (
 		attack == AttackManager.Attack.AIR
-		and has_extra_jump_on_air_strike
+		and ps.unlocked_bonus_jump_after_airhit
 		and current_nb_jumps_left == 0
 	):
 		current_nb_jumps_left += 1

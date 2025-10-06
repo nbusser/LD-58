@@ -81,8 +81,12 @@ func _start_game() -> void:
 # Load current level
 func _run_level() -> void:
 	var scene: Level = level.instantiate()
-	# Provies its settings to the level
-	scene.init(GameState.current_level_number, levels[GameState.current_level_number])
+	# Provides its settings to the level
+	scene.init(
+		GameState.current_level_number,
+		levels[GameState.current_level_number],
+		GameState.player_stats
+	)
 	# Play level music
 	play_level_music()
 	# TODO restore later

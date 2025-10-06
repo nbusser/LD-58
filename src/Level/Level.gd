@@ -34,8 +34,9 @@ func _ready():
 		billionaire_hit.connect(_billionaire.on_level_billionaire_hit)
 
 
-func init(level_number_p: int, level_data_p: LevelData):
+func init(level_number_p: int, level_data_p: LevelData, player_stats: PlayerStats):
 	level_state = LevelState.new(level_number_p, level_data_p, 0, GameState.billionaire_cash, false)
+	$Map/Player.init(player_stats)
 
 
 func change_net_worth(damount: int):

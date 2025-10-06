@@ -5,6 +5,7 @@ var billionaire_cash: int = 100000000000
 var player_cash: int = 0
 var latest_level_state: LevelState = null
 var active_upgrades: Array[UpgradeCardData] = []
+var player_stats: PlayerStats = PlayerStats.new()
 
 
 func reset():
