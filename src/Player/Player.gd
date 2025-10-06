@@ -21,7 +21,7 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var dash_slow_time = 0.3
 # Vertical dash
 @export var down_dash_speed = 1500
-@export var down_dash_duration = 0.12
+@export var down_dash_duration = 0.20
 # Jumps
 @export var max_input_jump_time = .4
 @export var jump_force = 7000
@@ -33,6 +33,10 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var billionaire_head_bounce = 250
 @export var billionaire_knockback = 800
 @export var melee_damage = 100
+# Dash glide
+@export var dash_glide_window = .3
+@export var glide_force = 3800
+
 
 @export var is_dead_animation_playing = false
 @export var enable_gravity = true
@@ -49,6 +53,8 @@ var is_down_dashing = false
 var can_down_dash = false
 var is_in_billionaire = false
 var is_on_top_of_billionaire = false
+var dash_glide_window_start = 0
+
 
 var direction = Direction.RIGHT
 
@@ -65,6 +71,7 @@ var prev_velocity = Vector2(0, 0)
 var play_jump_start_ts = 0
 
 var health = 10
+
 
 @onready var _hurt_sound = $SoundFx/HurtSound
 @onready var _billionaire: CharacterBody2D = $"../Billionaire"
@@ -175,7 +182,14 @@ func _physics_process(delta):
 				is_down_dashing = false
 				if velocity.y > 0:
 					velocity.y -= min(down_dash_speed / 2., velocity.y)
-
+			if ps.unlocked_dash_glide && now - dash_glide_window_start < dash_glide_window:
+				if Input.is_action_just_pressed("move_left"):
+					velocity.x -= glide_force
+					dash_glide_window_start = 0
+				elif Input.is_action_just_pressed("move_right"):
+					velocity.x += glide_force
+					dash_glide_window_start = 0
+					
 	# Wall sticking behavior
 	if ps.unlocked_wall_climbing:
 		if is_on_wall():
@@ -221,6 +235,7 @@ func _physics_process(delta):
 
 	if prev_velocity.y > 1000 && is_on_floor():
 		_camera.apply_noise_shake()
+		dash_glide_window_start = now
 		for body in _smash_area.get_overlapping_bodies():
 			if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.BILLIONAIRE]):
 				body.velocity.y -= (

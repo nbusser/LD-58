@@ -104,7 +104,7 @@ func collision(r: Rect2, l_to: Vector2) -> Variant:
 
 func death_zoom():
 	zoom = Vector2(4, 4)
-	await get_tree().create_timer(2.8).timeout 
+	await get_tree().create_timer(2.8).timeout
 	noise_bg_shake_strength = 15
 	noise_bg_shake_speed = 800
 
