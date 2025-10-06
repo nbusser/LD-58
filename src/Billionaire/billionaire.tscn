@@ -41,7 +41,6 @@ one_shot = true
 autostart = true
 
 [node name="BillionaireBody" type="CharacterBody2D" parent="." groups=["Billionaire"]]
-position = Vector2(0, -119)
 collision_layer = 32
 collision_mask = 65
 
@@ -146,9 +145,6 @@ monitorable = false
 position = Vector2(0, -94)
 shape = SubResource("CircleShape2D_d2xww")
 debug_color = Color(0.7039909, 0.48934525, 0.06790887, 0.41960785)
-
-[node name="Bullets" type="Node2D" parent="."]
-position = Vector2(0, -1)
 
 [node name="AttackPatterns" type="Node" parent="."]
 

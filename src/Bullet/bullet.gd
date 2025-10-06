@@ -12,7 +12,7 @@ var _initialized = false
 var _coin_scene = preload("res://src/Coin/Coin.tscn")
 
 @onready var _sprite_container = %SpriteContainer
-@onready var _coins = $"../../../Coins"
+@onready var _coins = $"../../Coins"
 
 
 func init(

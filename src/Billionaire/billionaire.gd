@@ -18,7 +18,7 @@ var _coin_scene = preload("res://src/Coin/Coin.tscn")
 
 @onready var _idle_timer: Timer = $IdleTimer
 @onready var _body: CharacterBody2D = $BillionaireBody
-@onready var _bullets: Node2D = $Bullets
+@onready var _bullets: Node2D = $"../Bullets"
 @onready var _player: Player = $"../Player"
 @onready var _repulse_wave: Node2D = $BillionaireBody/RepulseWave
 
@@ -190,17 +190,33 @@ func _minting_plate_routine() -> void:
 func _rain_routine() -> void:
 	var spawn_rain_coroutine = func() -> void:
 		var rain_nb_waves: int = 10
-		var rain_nb_bullets_per_waves: int = 3
-		var rain_bullet_speed: float = 200.0
+		var rain_nb_bullets_per_waves: int = 30
+		var rain_bullet_speed: float = 100.0
 		var rain_bullet_interval_duration: float = 0.3
-		var rain_bullet_interval_x: int = 10
+		var rain_bullet_interval_x: int = 15
+
+		var spawn_y = $"../BillionaireBorders/Ceiling".position.y + 10
+		var min_x = $"../Borders/WallL".position.x + 10
+		var max_x = $"../Borders/WallR".position.x - 10
+		var nb_slots: int = abs(min_x - max_x) / rain_bullet_interval_x
+
+		# Pattern carpet bombing
+		# for i in range(1):
+		# 	print(min_x, max_x)
+		# 	var bullet_position_x = min_x + (i * rain_bullet_interval_x)
+		# 	var bullet_position = Vector2(bullet_position_x, -300)
+		# 	_spawn_bullet(bullet_position, Vector2.DOWN, 50, rain_bullet_speed)
 
 		for wave in range(rain_nb_waves):
+			var shuffled_slots = range(nb_slots)
+			shuffled_slots.shuffle()
+			var slot_index = 0
 			for bullet in range(rain_nb_bullets_per_waves):
-				var bullet_slot = (randi() % 60) - 30
-				var bullet_position_x = bullet_slot * rain_bullet_interval_x
+				var bullet_slot = shuffled_slots[slot_index]
+				slot_index += 1
+				var bullet_position_x = min_x + (bullet_slot * rain_bullet_interval_x)
 
-				var bullet_position = Vector2(bullet_position_x, -300)
+				var bullet_position = Vector2(bullet_position_x, spawn_y)
 				_spawn_bullet(bullet_position, Vector2.DOWN, 50, rain_bullet_speed)
 			await get_tree().create_timer(rain_bullet_interval_duration).timeout
 
