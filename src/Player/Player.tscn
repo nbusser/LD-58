@@ -27,7 +27,7 @@ height = 614.0
 
 [sub_resource type="Animation" id="Animation_4rl4y"]
 resource_name = "die"
-length = 6.0
+length = 5.1377
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true

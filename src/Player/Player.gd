@@ -262,6 +262,23 @@ func _can_move():
 	return not is_dead_animation_playing and not $AttackManager.is_attacking_ground()
 
 
+func _run_death_animation():
+	if direction == Direction.LEFT:
+		$Sprite.flip_h = false
+		direction = Direction.RIGHT
+	velocity = Vector2.ZERO
+
+	var slow_factor = 0.6
+	$AnimationPlayer.play("die", slow_factor)
+
+	var slowmo_death_routine = func():
+		if Globals.create_slowmo("death", dash_slow_factor):
+			await $AnimationPlayer.animation_finished
+			Globals.cancel_slowmo_if_exists("death")
+
+	_level.on_player_dies(slowmo_death_routine)
+
+
 func get_hurt(knockback_force):
 	# Get knocked back
 	velocity += knockback_force
@@ -276,9 +293,7 @@ func get_hurt(knockback_force):
 	health = health - 1
 	_hud.update_life(health)
 	if health <= 0:
-		$AnimationPlayer.play("die")
-		velocity = Vector2.ZERO
-		_level.on_player_dies($AnimationPlayer.animation_finished)
+		_run_death_animation()
 		return
 	# Red glow on hit
 	_hurt_sound.play_sound()

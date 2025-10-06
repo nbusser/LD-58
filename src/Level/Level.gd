@@ -58,10 +58,10 @@ func on_coin_collected(collectible_type: Collectible.CollectibleType) -> void:
 	hud.set_nb_coins(value_of_collected_items)
 
 
-func on_player_dies(animation_finished_signal_to_await: Signal):
+func on_player_dies(animation_finished_coroutine_to_await: Callable):
 	level_state.lost = true
 	_billionaire.on_player_dies()
-	await animation_finished_signal_to_await
+	await animation_finished_coroutine_to_await.call()
 	await (
 		get_tree()
 		. create_tween()
