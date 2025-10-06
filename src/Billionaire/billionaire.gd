@@ -532,22 +532,34 @@ func _on_idle_timer_timeout() -> void:
 
 
 func spawn_coins(amount: int):
-	var coins_to_spawn = max(1, int(round(amount * coins_per_damage)))
+	var target_value = amount * coins_per_damage
 	var total_value_spawned = 0
-	for _i in range(coins_to_spawn):
+
+	var collectible_types = [
+		Collectible.CollectibleType.DOLLAR_COIN,
+		Collectible.CollectibleType.DOLLAR_BILL,
+		Collectible.CollectibleType.BUNDLE_OF_CASH,
+		Collectible.CollectibleType.MONEY_BAG,
+		Collectible.CollectibleType.GOLD_BAR,
+		Collectible.CollectibleType.BITCOIN,
+		Collectible.CollectibleType.CRYPTO_WALLET
+	]
+
+	var remaining_value = target_value
+	while remaining_value > 0:
+		var valid_types = []
+		for type in collectible_types:
+			var value = Collectible.get_collectible_value(type)
+			if value <= remaining_value:
+				valid_types.append(type)
+
+		if valid_types.is_empty():
+			break
+
+		var collectible_type = valid_types.pick_random()
 		var coin: Coin = _coin_scene.instantiate()
 		var spawn_offset := Vector2(randf_range(-12.0, 12.0), randf_range(-8.0, 0.0))
-		var collectible_type = (
-			[
-				Collectible.CollectibleType.DOLLAR_COIN,
-				Collectible.CollectibleType.DOLLAR_COIN,
-				Collectible.CollectibleType.DOLLAR_COIN,
-				Collectible.CollectibleType.DOLLAR_BILL,
-				Collectible.CollectibleType.DOLLAR_BILL,
-				Collectible.CollectibleType.BUNDLE_OF_CASH
-			]
-			. pick_random()
-		)
+
 		coin.init(global_position + spawn_offset, collectible_type)
 		var angle := randf_range(-PI / 3, PI / 3)
 		var impulse_direction := Vector2.UP.rotated(angle)
@@ -556,10 +568,10 @@ func spawn_coins(amount: int):
 		coin.set_deferred("angular_velocity", randf_range(-6.0, 6.0))
 		_coins.call_deferred("add_child", coin)
 
-		# Add the value of this collectible to track total value spawned
-		total_value_spawned += Collectible.get_collectible_value(collectible_type)
+		var value = Collectible.get_collectible_value(collectible_type)
+		total_value_spawned += value
+		remaining_value -= value
 
-	# Reduce billionaire's net worth by the value of spawned collectibles
 	if total_value_spawned > 0:
 		_level.change_net_worth(total_value_spawned)
 
