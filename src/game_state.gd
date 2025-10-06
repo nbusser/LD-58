@@ -1,6 +1,6 @@
 extends Node
 
-var current_level_number: int = 0
+var current_phase: int = 0
 var billionaire_cash: int = 100000000000
 var player_cash: int = 0
 var latest_level_state: LevelState = null
@@ -9,7 +9,7 @@ var player_stats: PlayerStats = PlayerStats.new()
 
 
 func reset():
-	current_level_number = 0
+	current_phase = 0
 	billionaire_cash = 100000000000
 	player_cash = 0
 

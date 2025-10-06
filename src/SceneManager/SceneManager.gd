@@ -6,9 +6,6 @@ signal changed_to_level_music
 
 const LEVEL_MUSIC = 0
 
-# Settings of all levels. To be configured from the editor
-@export var levels: Array[LevelData]
-
 var current_scene:
 	set = set_scene
 var _last_idx: int = -1
@@ -16,8 +13,6 @@ var _last_idx: int = -1
 @onready var main_menu = preload("res://src/MainMenu/MainMenu.tscn")
 @onready var level = preload("res://src/Level/Level.tscn")
 @onready var interlude = preload("res://src/Interlude/Interlude.tscn")
-@onready var score_screen = preload("res://src/ScoreScreen/ScoreScreen.tscn")
-@onready var level_selector = preload("res://src/LevelSelector/LevelSelector.tscn")
 @onready var credits = preload("res://src/Credits/Credits.tscn")
 @onready var game_over = preload("res://src/GameOver/GameOver.tscn")
 
@@ -82,11 +77,7 @@ func _start_game() -> void:
 func _run_level() -> void:
 	var scene: Level = level.instantiate()
 	# Provides its settings to the level
-	scene.init(
-		GameState.current_level_number,
-		levels[GameState.current_level_number],
-		GameState.player_stats
-	)
+	scene.init(GameState.current_phase, GameState.player_stats)
 	# Play level music
 	play_level_music()
 	# TODO restore later
@@ -95,18 +86,12 @@ func _run_level() -> void:
 
 
 func _run_selected_level(level_i: int) -> void:
-	GameState.current_level_number = level_i
+	GameState.current_phase = level_i
 	_run_level()
 
 
 func _run_interlude() -> void:
 	var scene: Interlude = interlude.instantiate()
-	self.current_scene = scene
-
-
-func _run_level_selector() -> void:
-	var scene: LevelSelector = level_selector.instantiate()
-	scene.init(levels)
 	self.current_scene = scene
 
 
@@ -116,16 +101,16 @@ func _on_end_of_level(level_state: LevelState) -> void:
 	GameState.player_cash = level_state.player_cash
 	GameState.billionaire_cash = level_state.billionaire_net_worth
 
-	if GameState.current_level_number == levels.size() - 1:
-		# No more levels, end of the game
-		_run_credits(false)
-	else:
-		# Load interlude
-		_run_interlude()
+	# Load interlude
+	_run_interlude()
 
 
 func _on_end_of_interlude() -> void:
 	_run_next_level()
+
+
+func _on_game_won():
+	_run_credits(false)
 
 
 func _on_game_over() -> void:
@@ -137,14 +122,8 @@ func _restart_level() -> void:
 	_run_level()
 
 
-func _load_score_screen() -> void:
-	var scene: ScoreScreen = score_screen.instantiate()
-	scene.init(GameState.current_level_number, GameState.player_cash)
-	self.current_scene = scene
-
-
 func _run_next_level() -> void:
-	GameState.current_level_number += 1
+	GameState.current_phase += 1
 	_run_level()
 
 
@@ -161,8 +140,6 @@ func _on_end_scene(status: Globals.EndSceneStatus, params: Dictionary = {}) -> v
 	match status:
 		Globals.EndSceneStatus.MAIN_MENU_CLICK_START:
 			_start_game()
-		Globals.EndSceneStatus.MAIN_MENU_CLICK_SELECT_LEVEL:
-			_run_level_selector()
 		Globals.EndSceneStatus.MAIN_MENU_CLICK_CREDITS:
 			_run_credits(true)
 		Globals.EndSceneStatus.MAIN_MENU_CLICK_QUIT:
@@ -174,19 +151,14 @@ func _on_end_scene(status: Globals.EndSceneStatus, params: Dictionary = {}) -> v
 			_on_game_over()
 		Globals.EndSceneStatus.LEVEL_RESTART:
 			_restart_level()
+		Globals.EndSceneStatus.LEVEL_END_WIN_GAME:
+			_on_game_won()
 		Globals.EndSceneStatus.INTERLUDE_END:
 			_on_end_of_interlude()
 		Globals.EndSceneStatus.GAME_OVER_RESTART:
 			_restart_level()
 		Globals.EndSceneStatus.GAME_OVER_QUIT:
 			_quit_game()
-		Globals.EndSceneStatus.SCORE_SCREEN_NEXT:
-			_run_next_level()
-		Globals.EndSceneStatus.SCORE_SCREEN_RETRY:
-			_restart_level()
-		Globals.EndSceneStatus.SELECT_LEVEL_SELECTED:
-			var level_i: int = params["level_i"]
-			_run_selected_level(level_i)
 		Globals.EndSceneStatus.SELECT_LEVEL_BACK:
 			_run_main_menu()
 		Globals.EndSceneStatus.CREDITS_BACK:

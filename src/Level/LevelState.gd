@@ -6,7 +6,6 @@ extends Resource
 # Carries the level configuration but also holds game context information
 
 var level_number: int = 0
-var level_data: LevelData  # Config of the level
 
 var player_cash: int = 0  # Coins collected from the beggining of game
 var billionaire_initial_net_worth: int = 0
@@ -16,15 +15,8 @@ var lost: bool = false
 var collected_items: Dictionary[Collectible.CollectibleType, int] = {}
 
 
-func _init(
-	level_number_p: int,
-	level_data_p: LevelData,
-	player_cash_p: int,
-	billionaire_cash_p: int,
-	lost_p: bool
-):
+func _init(level_number_p: int, player_cash_p: int, billionaire_cash_p: int, lost_p: bool):
 	self.level_number = level_number_p
-	self.level_data = level_data_p
 	self.player_cash = player_cash_p
 	# self.billionaire_initial_net_worth = _compute_initial_billionaire_net_worth(level_number_p)
 	self.billionaire_initial_net_worth = billionaire_cash_p

@@ -1,23 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckntwca1o1jbq"]
+[gd_scene load_steps=6 format=3 uid="uid://ckntwca1o1jbq"]
 
 [ext_resource type="Script" uid="uid://bupdnxdyw4e13" path="res://src/SceneManager/SceneManager.gd" id="1"]
-[ext_resource type="Script" uid="uid://dtbff18d2g0t7" path="res://src/Level/LevelData.gd" id="2_shtkc"]
 [ext_resource type="AudioStream" uid="uid://b2rf5j086ruvl" path="res://assets/musics/financial_march.ogg" id="3_nlski"]
 [ext_resource type="AudioStream" uid="uid://clcpuyu8drmy8" path="res://assets/musics/tax_loophole_intro.ogg" id="5_du0b7"]
 [ext_resource type="AudioStream" uid="uid://wh8eb8on3tf1" path="res://assets/musics/tax_loophole.ogg" id="6_d0g8p"]
-
-[sub_resource type="Resource" id="Resource_r4gm4"]
-script = ExtResource("2_shtkc")
-name = "Année fiscale"
-timer_duration = 5.0
-
-[sub_resource type="Resource" id="Resource_o3yet"]
-script = ExtResource("2_shtkc")
-name = "Babibulles"
-
-[sub_resource type="Resource" id="Resource_waqno"]
-script = ExtResource("2_shtkc")
-metadata/_custom_type_script = "uid://dtbff18d2g0t7"
 
 [sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_waqno"]
 clip_count = 4
@@ -67,7 +53,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
-levels = Array[ExtResource("2_shtkc")]([SubResource("Resource_r4gm4"), SubResource("Resource_o3yet"), SubResource("Resource_waqno")])
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 0

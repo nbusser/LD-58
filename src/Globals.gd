@@ -6,21 +6,18 @@ signal slowmo_state_changed(active: bool)
 enum EndSceneStatus {
 	# Main meu
 	MAIN_MENU_CLICK_START,
-	MAIN_MENU_CLICK_SELECT_LEVEL,
 	MAIN_MENU_CLICK_CREDITS,
 	MAIN_MENU_CLICK_QUIT,
 	# Level
 	LEVEL_END,
 	LEVEL_GAME_OVER,
 	LEVEL_RESTART,
+	LEVEL_END_WIN_GAME,
 	# Interlude
 	INTERLUDE_END,
 	# Game over screen
 	GAME_OVER_RESTART,
 	GAME_OVER_QUIT,
-	# Score screen
-	SCORE_SCREEN_NEXT,
-	SCORE_SCREEN_RETRY,
 	# Select level
 	SELECT_LEVEL_SELECTED,
 	SELECT_LEVEL_BACK,

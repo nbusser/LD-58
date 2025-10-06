@@ -57,7 +57,6 @@ func update_life(health):
 
 
 func init(level_state: LevelState) -> void:
-	level_name = level_state.level_data.name
 	level_number = level_state.level_number
 	nb_coins = level_state.player_cash
 	billionaire_net_worth = level_state.billionaire_net_worth
