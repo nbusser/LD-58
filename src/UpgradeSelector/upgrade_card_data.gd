@@ -2,10 +2,10 @@ class_name UpgradeCardData
 extends Resource
 
 enum CardType {
-	ATTACK,
-	DEFENSE,
-	UTILITY,
-	KNOWLEDGE,
+	PROFIT,
+	SPEED,
+	JUMP,
+	BULLET_TIME,
 }
 
 enum Rarity {
@@ -15,12 +15,25 @@ enum Rarity {
 }
 
 enum EffectType {
-	DAMAGE,
-	HEAL,
-	SHIELD,
-	SPEED,
-	CRYPTO_CURRENCY,
+	# upgradeable effects
+	BULLET_TIME,
+	COMBO_MULTIPLIER,
+	JUMP_HEIGHT,
+	MOVEMENT_SPEED,
+	AIR_CONTROL,
+	LOOT_QUANTITY,
+	LOOT_VALUE,
+	BITCOIN_VALUE,
+	# ability effects
+	ABILITY_DASH_DOWN,
+	ABILITY_DASH,
+	ABILITY_DOUBLE_JUMP,
 }
+
+const ICON_PROFIT = preload("res://assets/sprites/upgrade_selector/icon_profit.png")
+const ICON_SPEED = preload("res://assets/sprites/upgrade_selector/icon_speed.png")
+const ICON_JUMP = preload("res://assets/sprites/upgrade_selector/icon_jump.png")
+const ICON_BULLET_TIME = preload("res://assets/sprites/upgrade_selector/icon_bullet_time.png")
 
 @export var id: String = "default_id"
 @export var dependencies: Array[String] = []
@@ -41,21 +54,21 @@ enum EffectType {
 @export var effects: Dictionary[EffectType, int] = {}
 
 
+# gdlint: disable=function-arguments-number
 func _init(
 	p_id: String = "default_id",
-	p_dependencies: Array[String] = [],
-	p_card_type: CardType = CardType.ATTACK,
+	p_card_type: CardType = CardType.PROFIT,
 	p_rarity: Rarity = Rarity.COMMON,
 	p_category: String = "default_category",
 	p_category_level: int = 0,
 	p_title: String = "Card Title",
 	p_description: String = "",
 	p_cost: int = 0,
+	p_effects: Dictionary[EffectType, int] = {},
+	p_dependencies: Array[String] = [],
 	p_icon: Texture2D = null,
-	p_effects: Dictionary[EffectType, int] = {}
 ):
 	id = p_id
-	dependencies = p_dependencies
 	card_type = p_card_type
 	rarity = p_rarity
 	category = p_category
@@ -63,5 +76,20 @@ func _init(
 	title = p_title
 	description = p_description
 	cost = p_cost
-	icon = p_icon
 	effects = p_effects
+	dependencies = p_dependencies
+	icon = p_icon if p_icon != null else _get_default_icon()
+
+
+func _get_default_icon() -> Texture2D:
+	match card_type:
+		CardType.PROFIT:
+			return ICON_PROFIT
+		CardType.SPEED:
+			return ICON_SPEED
+		CardType.JUMP:
+			return ICON_JUMP
+		CardType.BULLET_TIME:
+			return ICON_BULLET_TIME
+		_:
+			return null
