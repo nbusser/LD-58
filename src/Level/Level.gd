@@ -24,7 +24,7 @@ func _ready():
 
 
 func init(level_number_p: int, level_data_p: LevelData):
-	level_state = LevelState.new(level_number_p, level_data_p, 0, GameState.billionaire_cash)
+	level_state = LevelState.new(level_number_p, level_data_p, 0, GameState.billionaire_cash, false)
 
 
 func change_net_worth(damount: int):

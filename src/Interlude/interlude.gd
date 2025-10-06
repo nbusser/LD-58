@@ -33,7 +33,10 @@ func _cutscene():
 	)
 
 	await get_tree().create_timer(1).timeout
-	await _blocking_dialog("Je l'ai bien schlassé")
+	if !GameState.latest_level_state.lost:
+		await _blocking_dialog("Je l'ai bien schlassé")
+	else:
+		await _blocking_dialog("Je me suis fait hagar")
 
 	$UpgradeSelector.visible = true
 	await $UpgradeSelector.close

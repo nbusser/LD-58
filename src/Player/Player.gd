@@ -272,6 +272,7 @@ func get_hurt(knockback_force):
 	health = health - 1
 	_hud.update_life(health)
 	if health <= 0:
+		_level.level_state.lost = true
 		(
 			Globals
 			. end_scene(
