@@ -164,7 +164,7 @@ func _air_shotgun_routine() -> void:
 	var angles = [-15, 0, 15]
 	for angle in angles:
 		var dir = bullet_direction.rotated(deg_to_rad(angle))
-		_spawn_bullet(_body.position, dir, 800, 500.0)
+		_spawn_bullet(_body.global_position, dir, 800, 500.0)
 	$AttackPatterns/JumpConeBullets/ShootSound.play_sound()
 
 	# Freeze
