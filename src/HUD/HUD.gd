@@ -5,7 +5,6 @@ extends Control
 var nb_coins:
 	set = set_nb_coins
 
-
 var billionaire_net_worth:
 	set = set_billionaire_net_worth
 
