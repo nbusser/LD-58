@@ -76,19 +76,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.35409713, 0.7342835, 0.4462875, 1)
 
-[node name="PostProcessing" type="CanvasLayer" parent="."]
-
-[node name="PostProcessOverlay" type="ColorRect" parent="PostProcessing"]
-z_index = 100
-material = SubResource("ShaderMaterial_post_process")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("4_c7nqk")
-
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="UI" instance=ExtResource("3_p81om")]
@@ -101,6 +88,19 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
+
+[node name="PostProcessing" type="CanvasLayer" parent="."]
+
+[node name="PostProcessOverlay" type="ColorRect" parent="PostProcessing"]
+z_index = 100
+material = SubResource("ShaderMaterial_post_process")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_c7nqk")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 60.0

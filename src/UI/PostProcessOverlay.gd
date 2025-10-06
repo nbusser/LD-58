@@ -12,7 +12,8 @@ var _amount := 0.0
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	visible = false
+	# visible = false
+	visible = true
 	if material:
 		material.set_shader_parameter("desaturate_amount", 0.0)
 		material.set_shader_parameter("overlay_amount", 0.0)
@@ -30,8 +31,8 @@ func _on_slowmo_state_changed(is_active: bool) -> void:
 func _animate_to(target: float) -> void:
 	if _tween != null and _tween.is_running():
 		_tween.kill()
-	if target > 0.0:
-		visible = true
+	# if target > 0.0:
+	# 	visible = true
 	_tween = create_tween()
 	_tween.tween_method(_set_amount, _amount, target, fade_duration)
 	_tween.set_trans(Tween.TRANS_SINE)
@@ -44,13 +45,13 @@ func _set_amount(value: float) -> void:
 	if material:
 		material.set_shader_parameter("desaturate_amount", _amount)
 		material.set_shader_parameter("overlay_amount", _amount * overlay_strength)
-	visible = _amount > 0.001
+	# visible = _amount > 0.001
 
 
 func _on_tween_finished() -> void:
 	_tween = null
-	if _amount <= 0.001:
-		visible = false
+	# if _amount <= 0.001:
+	# 	visible = false
 
 
 func _exit_tree() -> void:

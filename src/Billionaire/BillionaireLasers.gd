@@ -104,7 +104,7 @@ func setup_laser_surface():
 func _on_viewport_size_changed():
 	var viewport_size = get_viewport().size
 	if laser_surface:
-		laser_surface.material.set_shader_parameter("resolution", viewport_size)
+		laser_surface.material.set_shader_parameter("resolution", viewport_size / 2)
 
 
 func _physics_process(delta):

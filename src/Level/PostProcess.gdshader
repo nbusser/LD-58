@@ -7,10 +7,10 @@ uniform float overlay_amount = 0.0;
 uniform float bloom_intensity = 1.0; // How strong the bloom is
 
 const int k = 3;
-const float resolution = 512.0;
+const float bloom_resolution = 512.0;
 
 void compute_bloom_and_blur(vec2 uv, out vec3 bloom, out vec3 horizontal_blur) {
-	float offset = 1.0 / resolution;
+	float offset = 1.0 / bloom_resolution;
 	bloom = vec3(0.0);
 	horizontal_blur = vec3(0.0);
 	for (int x = -k; x <= k; x++) {
@@ -27,9 +27,14 @@ void compute_bloom_and_blur(vec2 uv, out vec3 bloom, out vec3 horizontal_blur) {
 	bloom /= 9.0;
 	horizontal_blur /= 3.0;
 }
-
+const vec2 resolution = vec2(800.0, 450.0);
 void fragment() {
-	vec4 src = texture(screen_texture, SCREEN_UV);
+	vec2 uv = SCREEN_UV;
+
+	// Pixelate
+	uv = floor(uv * resolution) / resolution;
+
+	vec4 src = texture(screen_texture, uv);
 	float gray = dot(src.rgb, vec3(0.299, 0.587, 0.114));
 	vec3 desat = mix(src.rgb, vec3(gray), clamp(desaturate_amount, 0.0, 1.0));
 	vec3 tinted = mix(desat, overlay_color, clamp(overlay_amount, 0.0, 1.0));
@@ -38,7 +43,7 @@ void fragment() {
 	if (desaturate_amount > 0.0) {
 		vec3 bloom;
 		vec3 horizontal_blur;
-		compute_bloom_and_blur(SCREEN_UV, bloom, horizontal_blur);
+		compute_bloom_and_blur(uv, bloom, horizontal_blur);
 		bloom *= bloom_intensity * desaturate_amount;
 		tinted += bloom;
 		// Apply slight horizontal blur from the combined pass
