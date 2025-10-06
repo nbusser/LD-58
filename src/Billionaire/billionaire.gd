@@ -367,35 +367,49 @@ func _parachute_routine() -> void:
 	$Sprite2D.play("default")
 
 
+func _is_player_left():
+	return global_position.x - _player.global_position.x > 0
+
+
 func _machinegun_routine() -> void:
 	# Maybe run
 	if Globals.coin_flip():
 		await _random_run()
 
 	$Sprite2D.play("machinegun_windup")
+
+	var coroutine_state = {"is_running": true}
+	var flip_sprite_coroutine = func():
+		while coroutine_state.is_running:
+			$Sprite2D.flip_h = not _is_player_left()
+			await get_tree().process_frame
+		# Cleanup
+		$Sprite2D.flip_h = false
+	flip_sprite_coroutine.call_deferred()
+
 	$AttackPatterns/Machinegun/FocusSound.play()
 	var focus_time: float = 2.0 - 0.12 * (GameState.difficulty_factor - 1.0)
 	await get_tree().create_timer(focus_time).timeout
 	$Sprite2D.play("machinegun")
 
-	var gunpoint_offset = Vector2(42.0, 7.0)
 	var bullet_speed = 400.0 + 60.0 * (GameState.difficulty_factor - 1.0)
 	var nb_bullets: int = 6 + int(2.0 * (GameState.difficulty_factor - 1))
 
 	for _i in range(nb_bullets):
-		var bullet_direction = (_player.global_position - global_position).normalized()
+		var gunpoint_position: Vector2
+		if _is_player_left():
+			gunpoint_position = $AttackPatterns/Machinegun/Gunpoints/Left.global_position
+		else:
+			gunpoint_position = $AttackPatterns/Machinegun/Gunpoints/Right.global_position
 
-		$Sprite2D.flip_h = bullet_direction.x > 0.0
-		if bullet_direction.x < 0.0:
-			gunpoint_offset.x *= -1
-		var gunpoint = position + gunpoint_offset
+		var bullet_direction = (gunpoint_position - global_position).normalized()
 
 		$AttackPatterns/Machinegun/ShootingSound.play()
-		_spawn_bullet(gunpoint, bullet_direction, 50, bullet_speed, 1.0, 0.0)
+		_spawn_bullet(gunpoint_position, bullet_direction, 50, bullet_speed, 1.0, 0.0)
 		await get_tree().create_timer(0.1).timeout
 
 	$Sprite2D.play("default")
-	$Sprite2D.flip_h = false
+	coroutine_state.is_running = false
 
 
 func _rain_routine() -> void:

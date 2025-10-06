@@ -175,6 +175,14 @@ max_polyphony = 10
 stream = SubResource("AudioStreamRandomizer_wh08u")
 volume_db = 15.0
 
+[node name="Gunpoints" type="Node2D" parent="AttackPatterns/Machinegun"]
+
+[node name="Left" type="Node2D" parent="AttackPatterns/Machinegun/Gunpoints"]
+position = Vector2(-43, 6)
+
+[node name="Right" type="Node2D" parent="AttackPatterns/Machinegun/Gunpoints"]
+position = Vector2(43, 6)
+
 [node name="Rain" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Make it rain !"
 cooldown = 20.0
