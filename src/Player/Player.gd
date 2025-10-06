@@ -37,7 +37,6 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var dash_glide_window = .3
 @export var glide_force = 3800
 
-
 @export var is_dead_animation_playing = false
 @export var enable_gravity = true
 
@@ -55,7 +54,6 @@ var is_in_billionaire = false
 var is_on_top_of_billionaire = false
 var dash_glide_window_start = 0
 
-
 var direction = Direction.RIGHT
 
 var previous_dir = [0, 0]  # left, right
@@ -71,7 +69,6 @@ var prev_velocity = Vector2(0, 0)
 var play_jump_start_ts = 0
 
 var health = 10
-
 
 @onready var _hurt_sound = $SoundFx/HurtSound
 @onready var _billionaire: CharacterBody2D = $"../Billionaire"
@@ -189,7 +186,7 @@ func _physics_process(delta):
 				elif Input.is_action_just_pressed("move_right"):
 					velocity.x += glide_force
 					dash_glide_window_start = 0
-					
+
 	# Wall sticking behavior
 	if ps.unlocked_wall_climbing:
 		if is_on_wall():
