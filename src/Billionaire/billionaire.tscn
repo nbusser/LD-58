@@ -222,6 +222,9 @@ texture = ExtResource("9_kdd1f")
 [node name="Schlassage" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "N.D.A"
 cooldown = 10.0
+maximum_distance_x = 0.3
+prefered_distance_x = 0.2
+rarity = 0.2
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/Schlassage"]
 bus = &"SFX"
