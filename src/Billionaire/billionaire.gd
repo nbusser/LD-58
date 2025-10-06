@@ -1,6 +1,6 @@
 class_name Billionaire
 
-extends Node2D
+extends CharacterBody2D
 
 const _JUMP_VELOCITY = -650
 const _GRAVITY: float = 900.0
@@ -20,10 +20,9 @@ var _is_player_dead = false
 var _is_level_timeout = false
 
 @onready var _idle_timer: Timer = $IdleTimer
-@onready var _body: CharacterBody2D = $BillionaireBody
 @onready var _bullets: Node2D = $"../Bullets"
 @onready var _player: Player = $"../Player"
-@onready var _repulse_wave: Node2D = $BillionaireBody/RepulseWave
+@onready var _repulse_wave: Node2D = $AttackPatterns/RepulsiveWave/Columns
 
 @onready var _attack_patterns: Node = $AttackPatterns
 @onready var _level: Level = $"../.."
@@ -64,16 +63,16 @@ func _get_attack_pattern():
 
 func _physics_process(delta: float) -> void:
 	if _is_gravity_enabled:
-		_body.velocity.y += _GRAVITY * delta
+		velocity.y += _GRAVITY * delta
 
 	var knockback_decay = Vector2(700.0, 1000.0)
 	_knockback_velocity.x = move_toward(_knockback_velocity.x, 0.0, knockback_decay.x * delta)
 	_knockback_velocity.y = move_toward(_knockback_velocity.y, 0.0, knockback_decay.y * delta)
 
-	_body.velocity.x = _run_velocity.x + _knockback_velocity.x
-	_body.velocity.y += _knockback_velocity.y
+	velocity.x = _run_velocity.x + _knockback_velocity.x
+	velocity.y += _knockback_velocity.y
 
-	_body.move_and_slide()
+	move_and_slide()
 
 
 func _spawn_bullet(
@@ -159,9 +158,9 @@ func _jump_cone_bullets_routine() -> void:
 		await _random_run()
 
 	# Jump
-	$BillionaireBody/Sprite2D.play("jump")
-	_body.velocity.y = _JUMP_VELOCITY
-	while _body.velocity.y < 0:
+	$Sprite2D.play("jump")
+	velocity.y = _JUMP_VELOCITY
+	while velocity.y < 0:
 		await get_tree().process_frame
 
 	# Freeze in the air
@@ -169,11 +168,11 @@ func _jump_cone_bullets_routine() -> void:
 	await get_tree().create_timer(0.3).timeout
 
 	# Shoot bullets to the player
-	var bullet_direction = (_player.global_position - _body.global_position).normalized()
+	var bullet_direction = (_player.global_position - global_position).normalized()
 	var angles = [-15, 0, 15]
 	for angle in angles:
 		var dir = bullet_direction.rotated(deg_to_rad(angle))
-		_spawn_bullet(_body.global_position, dir, 800, 500.0, 1.0, 1)
+		_spawn_bullet(global_position, dir, 800, 500.0, 1.0, 1)
 	$AttackPatterns/JumpConeBullets/ShootSound.play_sound()
 
 	# Freeze
@@ -191,12 +190,12 @@ func _machinegun_routine() -> void:
 
 	$AttackPatterns/Machinegun/FocusSound.play_sound()
 	await get_tree().create_timer(1.2).timeout
-	$BillionaireBody/Sprite2D.play("machinegun")
+	$Sprite2D.play("machinegun")
 	$AttackPatterns/Machinegun/ShootSound.play_sound()
 	var nb_bullets = 10
 	for _i in range(nb_bullets):
-		var bullet_direction = (_player.global_position - _body.global_position).normalized()
-		_spawn_bullet(_body.position, bullet_direction, 50, 600.0, 1.0, 0.0)
+		var bullet_direction = (_player.global_position - global_position).normalized()
+		_spawn_bullet(position, bullet_direction, 50, 600.0, 1.0, 0.0)
 		await get_tree().create_timer(0.1).timeout
 
 
@@ -237,13 +236,13 @@ func _rain_routine() -> void:
 
 	$AttackPatterns/Rain/FocusSound.play_sound()
 
-	$BillionaireBody/Sprite2D.play("focus")
+	$Sprite2D.play("focus")
 	var focus_duration: float = 2.0
 	await get_tree().create_timer(focus_duration).timeout
 
-	$BillionaireBody/Sprite2D.play("laugh")
+	$Sprite2D.play("laugh")
 	await spawn_rain_coroutine.call()
-	$BillionaireBody/Sprite2D.play("default")
+	$Sprite2D.play("default")
 
 
 func _init_repulse_wave():
@@ -264,9 +263,9 @@ func _repulse_wave_routine():
 	var focus_duration: float = 2.0
 	$AttackPatterns/RepulsiveWave/FocusSound.play_sound()
 
-	$BillionaireBody/Sprite2D.play("focus")
+	$Sprite2D.play("focus")
 	await get_tree().create_timer(focus_duration).timeout
-	$BillionaireBody/Sprite2D.play("laugh")
+	$Sprite2D.play("laugh")
 
 	for column: Area2D in _repulse_wave.get_children():
 		column.visible = true
@@ -276,7 +275,7 @@ func _repulse_wave_routine():
 
 	await get_tree().create_timer(1.0).timeout
 
-	$BillionaireBody/Sprite2D.play("default")
+	$Sprite2D.play("default")
 
 	for column: Area2D in _repulse_wave.get_children():
 		column.visible = false
@@ -285,11 +284,11 @@ func _repulse_wave_routine():
 
 func _on_idle_timer_timeout() -> void:
 	if _is_player_dead:
-		$BillionaireBody/Sprite2D.play("laugh")
+		$Sprite2D.play("laugh")
 		return
 	if _is_level_timeout:
 		print("caca")
-		$BillionaireBody/Sprite2D.play("hurt")
+		$Sprite2D.play("hurt")
 		return
 
 	var attack = _get_attack_pattern()
@@ -309,7 +308,7 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 			var coin: Coin = _coin_scene.instantiate()
 			var spawn_offset := Vector2(randf_range(-12.0, 12.0), randf_range(-8.0, 0.0))
 			coin.init(
-				_body.global_position + spawn_offset,
+				global_position + spawn_offset,
 				(
 					[
 						Collectible.CollectibleType.DOLLAR_COIN,
@@ -331,16 +330,16 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 
 	# Red glow on hit
 	var glow_routine = func():
-		_body.modulate = Color(1, 0, 0)
+		modulate = Color(1, 0, 0)
 		await get_tree().create_timer(1.0).timeout
-		_body.modulate = Color(1, 1, 1, 1)
+		modulate = Color(1, 1, 1, 1)
 	glow_routine.call()
 
 	var knockback_routine = func():
 		var min_distance = 100.0
 		var max_distance = 200.0
 
-		var distance = _body.global_position.distance_to(_player.global_position)
+		var distance = global_position.distance_to(_player.global_position)
 		distance = clamp(distance, min_distance, max_distance)
 		var t = (distance - min_distance) / (max_distance - min_distance)
 
@@ -352,7 +351,7 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 		var max_force_y = 75.0
 		var knockback_force_y = lerp(max_force_y, min_force_y, t)
 
-		var knockback_direction = (_body.global_position - _player.global_position).normalized()
+		var knockback_direction = (global_position - _player.global_position).normalized()
 		_knockback_velocity.x = knockback_direction.x * knockback_force_x
 		_knockback_velocity.y = knockback_direction.y * knockback_force_y
 
@@ -366,58 +365,58 @@ func _laser_warning_routine() -> void:
 
 	# Focus animation
 	$AttackPatterns/LaserWarning/FocusSound.play_sound()
-	$BillionaireBody/Sprite2D.play("focus")
+	$Sprite2D.play("focus")
 	await get_tree().create_timer(1.0).timeout
 
 	# Fire lasers at player position
-	$BillionaireBody/Sprite2D.play("laugh")
+	$Sprite2D.play("laugh")
 	await _lasers.laser_warning_pattern(3, 0.4)
 
 	# Wait for lasers to finish
 	await get_tree().create_timer(2.0).timeout
-	$BillionaireBody/Sprite2D.play("default")
+	$Sprite2D.play("default")
 
 
 func _laser_sweep_routine() -> void:
 	# Determine sweep direction based on player position
-	var sweep_direction = 1 if _player.global_position.x < _body.global_position.x else -1
+	var sweep_direction = 1 if _player.global_position.x < global_position.x else -1
 
 	# Focus animation
 	$AttackPatterns/LaserSweep/FocusSound.play_sound()
-	$BillionaireBody/Sprite2D.play("focus")
+	$Sprite2D.play("focus")
 	await get_tree().create_timer(1.2).timeout
 
 	# Fire sweeping laser
-	$BillionaireBody/Sprite2D.play("laugh")
+	$Sprite2D.play("laugh")
 	_lasers.laser_sweep_pattern(sweep_direction, 0.4)
 
 	# Wait for laser to finish
 	await get_tree().create_timer(4.0).timeout
-	$BillionaireBody/Sprite2D.play("default")
+	$Sprite2D.play("default")
 
 
 func _laser_cage_routine() -> void:
 	# Run towards center
-	var center_direction = sign(0.0 - _body.global_position.x)
-	if abs(_body.global_position.x) > 100:
+	var center_direction = sign(0.0 - global_position.x)
+	if abs(global_position.x) > 100:
 		await _run(center_direction, 200.0, 0.2, 0.3, 0.4, true)
 
 	# Focus animation
 	$AttackPatterns/LaserCage/FocusSound.play_sound()
-	$BillionaireBody/Sprite2D.play("focus")
+	$Sprite2D.play("focus")
 	await get_tree().create_timer(1.5).timeout
 
 	# Create laser cage
-	$BillionaireBody/Sprite2D.play("laugh")
+	$Sprite2D.play("laugh")
 	await _lasers.laser_cage_pattern()
 
 	# Wait for cage to finish
 	await get_tree().create_timer(4.0).timeout
-	$BillionaireBody/Sprite2D.play("default")
+	$Sprite2D.play("default")
 
 
 func _on_sprite_2d_animation_finished() -> void:
-	$BillionaireBody/Sprite2D.play("default")
+	$Sprite2D.play("default")
 
 
 # Waits for next idle, then waits for Level to continue

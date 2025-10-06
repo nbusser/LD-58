@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bnpu5oypbbgo7" path="res://src/Billionaire/AttackPattern.gd" id="1_5wnyt"]
 
-[node name="AttackPattern" type="Node"]
+[node name="AttackPattern" type="Node2D"]
 script = ExtResource("1_5wnyt")
 
 [node name="Cooldown" type="Timer" parent="."]

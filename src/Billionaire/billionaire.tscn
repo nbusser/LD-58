@@ -18,6 +18,9 @@ size = Vector2(162, 236)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0jg"]
 size = Vector2(163, 237)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_d2xww"]
+radius = 24.020824
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bqgkp"]
 size = Vector2(81, 71.375)
 
@@ -30,125 +33,42 @@ size = Vector2(77.25, 116.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1qyaf"]
 size = Vector2(103.1875, 205.6875)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_d2xww"]
-radius = 24.020824
-
-[node name="Billionaire" type="Node2D"]
+[node name="Billionaire" type="CharacterBody2D" groups=["Billionaire"]]
+collision_layer = 32
+collision_mask = 65
 script = ExtResource("1_gpq05")
 
 [node name="IdleTimer" type="Timer" parent="."]
 one_shot = true
 autostart = true
 
-[node name="BillionaireBody" type="CharacterBody2D" parent="." groups=["Billionaire"]]
-collision_layer = 32
-collision_mask = 65
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_qa6ra")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="BillionaireBody"]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_d2xww")
-animation = &"machinegun"
-frame = 29
-frame_progress = 1.0
 
-[node name="Hitbox" type="Area2D" parent="BillionaireBody" groups=["billionaire"]]
+[node name="Hitbox" type="Area2D" parent="." groups=["billionaire"]]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/Hitbox" groups=["billionaire"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" groups=["billionaire"]]
 position = Vector2(-0.5, -0.5)
 shape = SubResource("RectangleShape2D_xg0jg")
 
-[node name="RepulseWave" type="Node2D" parent="BillionaireBody"]
-
-[node name="Column1" type="Area2D" parent="BillionaireBody/RepulseWave"]
-collision_layer = 0
-collision_mask = 16
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column1"]
-position = Vector2(123.5, 83.375)
-shape = SubResource("RectangleShape2D_bqgkp")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column1"]
-position = Vector2(1, -1)
-shape = SubResource("RectangleShape2D_38hbp")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column1"]
-position = Vector2(-124, 81.6875)
-shape = SubResource("RectangleShape2D_bqgkp")
-
-[node name="Sprite2D" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column1"]
-position = Vector2(123, 82.5)
-scale = Vector2(1.2978122, 1.109375)
-texture = ExtResource("9_kdd1f")
-
-[node name="Sprite2D2" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column1"]
-position = Vector2(-124.99999, 83)
-scale = Vector2(1.298, 1.162875)
-texture = ExtResource("9_kdd1f")
-
-[node name="Column2" type="Area2D" parent="BillionaireBody/RepulseWave"]
-collision_layer = 0
-collision_mask = 16
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column2"]
-position = Vector2(204, 58.25)
-shape = SubResource("RectangleShape2D_7xygs")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column2"]
-position = Vector2(-204.375, 61)
-shape = SubResource("RectangleShape2D_7xygs")
-
-[node name="Sprite2D" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column2"]
-position = Vector2(-207, 60.999985)
-scale = Vector2(1.2431245, 1.7924999)
-texture = ExtResource("9_kdd1f")
-
-[node name="Sprite2D2" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column2"]
-position = Vector2(204.99998, 58.822365)
-scale = Vector2(1.1651436, 1.8069491)
-texture = ExtResource("9_kdd1f")
-
-[node name="Column3" type="Area2D" parent="BillionaireBody/RepulseWave"]
-collision_layer = 0
-collision_mask = 16
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column3"]
-position = Vector2(296, 16)
-shape = SubResource("RectangleShape2D_1qyaf")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="BillionaireBody/RepulseWave/Column3"]
-position = Vector2(-298, 16)
-shape = SubResource("RectangleShape2D_1qyaf")
-
-[node name="Sprite2D2" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column3"]
-position = Vector2(295.00003, 12.999985)
-scale = Vector2(1.6294464, 3.247224)
-texture = ExtResource("9_kdd1f")
-
-[node name="Sprite2D3" type="Sprite2D" parent="BillionaireBody/RepulseWave/Column3"]
-position = Vector2(-297, 15)
-scale = Vector2(1.5617173, 3.2265396)
-texture = ExtResource("9_kdd1f")
-
-[node name="HeadTop" type="Area2D" parent="BillionaireBody"]
+[node name="HeadTop" type="Area2D" parent="."]
 collision_layer = 256
 collision_mask = 0
 monitoring = false
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBody/HeadTop"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HeadTop"]
 position = Vector2(0, -94)
 shape = SubResource("CircleShape2D_d2xww")
 debug_color = Color(0.7039909, 0.48934525, 0.06790887, 0.41960785)
 
-[node name="AttackPatterns" type="Node" parent="."]
+[node name="AttackPatterns" type="Node2D" parent="."]
 
 [node name="JumpConeBullets" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Money Shot !"
@@ -194,6 +114,81 @@ script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("11_tafn6")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
+[node name="Columns" type="Node2D" parent="AttackPatterns/RepulsiveWave"]
+
+[node name="Column1" type="Area2D" parent="AttackPatterns/RepulsiveWave/Columns"]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
+position = Vector2(123.5, 83.375)
+shape = SubResource("RectangleShape2D_bqgkp")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
+position = Vector2(1, -1)
+shape = SubResource("RectangleShape2D_38hbp")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
+position = Vector2(-124, 81.6875)
+shape = SubResource("RectangleShape2D_bqgkp")
+
+[node name="Sprite2D" type="Sprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
+position = Vector2(123, 82.5)
+scale = Vector2(1.2978122, 1.109375)
+texture = ExtResource("9_kdd1f")
+
+[node name="Sprite2D2" type="Sprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
+position = Vector2(-124.99999, 83)
+scale = Vector2(1.298, 1.162875)
+texture = ExtResource("9_kdd1f")
+
+[node name="Column2" type="Area2D" parent="AttackPatterns/RepulsiveWave/Columns"]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
+position = Vector2(204, 58.25)
+shape = SubResource("RectangleShape2D_7xygs")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
+position = Vector2(-204.375, 61)
+shape = SubResource("RectangleShape2D_7xygs")
+
+[node name="Sprite2D" type="Sprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
+position = Vector2(-207, 60.999985)
+scale = Vector2(1.2431245, 1.7924999)
+texture = ExtResource("9_kdd1f")
+
+[node name="Sprite2D2" type="Sprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
+position = Vector2(204.99998, 58.822365)
+scale = Vector2(1.1651436, 1.8069491)
+texture = ExtResource("9_kdd1f")
+
+[node name="Column3" type="Area2D" parent="AttackPatterns/RepulsiveWave/Columns"]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
+position = Vector2(296, 16)
+shape = SubResource("RectangleShape2D_1qyaf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
+position = Vector2(-298, 16)
+shape = SubResource("RectangleShape2D_1qyaf")
+
+[node name="Sprite2D2" type="Sprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
+position = Vector2(295.00003, 12.999985)
+scale = Vector2(1.6294464, 3.247224)
+texture = ExtResource("9_kdd1f")
+
+[node name="Sprite2D3" type="Sprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
+position = Vector2(-297, 15)
+scale = Vector2(1.5617173, 3.2265396)
+texture = ExtResource("9_kdd1f")
+
 [node name="LaserCage" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "LaserCage"
 net_worth_percent_threshold = 30.0
@@ -228,4 +223,4 @@ sounds = Array[AudioStream]([ExtResource("11_d2xww")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
-[connection signal="animation_finished" from="BillionaireBody/Sprite2D" to="." method="_on_sprite_2d_animation_finished"]
+[connection signal="animation_finished" from="Sprite2D" to="." method="_on_sprite_2d_animation_finished"]

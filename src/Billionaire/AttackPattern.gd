@@ -1,6 +1,6 @@
 class_name AttackPattern
 
-extends Node
+extends Node2D
 
 @export var attack_name: String
 @export var net_worth_percent_threshold: float = 100.0
