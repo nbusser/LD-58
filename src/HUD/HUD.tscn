@@ -68,19 +68,24 @@ layout_mode = 2
 size_flags_vertical = 4
 
 [node name="Heart" parent="VBoxContainer/CenterContainer2/HeartsContainer" instance=ExtResource("3_2vejy")]
-layout_mode = 2
+texture_filter = 1
+position = Vector2(-224, 72)
 
 [node name="Heart2" parent="VBoxContainer/CenterContainer2/HeartsContainer" instance=ExtResource("3_2vejy")]
-layout_mode = 2
+texture_filter = 1
+position = Vector2(-112, 72)
 
 [node name="Heart3" parent="VBoxContainer/CenterContainer2/HeartsContainer" instance=ExtResource("3_2vejy")]
-layout_mode = 2
+texture_filter = 1
+position = Vector2(0, 72)
 
 [node name="Heart4" parent="VBoxContainer/CenterContainer2/HeartsContainer" instance=ExtResource("3_2vejy")]
-layout_mode = 2
+texture_filter = 1
+position = Vector2(112, 72)
 
 [node name="Heart5" parent="VBoxContainer/CenterContainer2/HeartsContainer" instance=ExtResource("3_2vejy")]
-layout_mode = 2
+texture_filter = 1
+position = Vector2(224, 72)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2

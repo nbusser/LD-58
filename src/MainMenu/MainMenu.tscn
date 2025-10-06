@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="5_ypdof"]
 [ext_resource type="Script" uid="uid://yeevmoyvkx8e" path="res://src/UpgradeSelector/upgrade_card_data.gd" id="6_e1bcd"]
 [ext_resource type="Texture2D" uid="uid://llhbf5hj1pua" path="res://assets/sprites/upgrade_selector/upgrade_sheet.png" id="7_20hqm"]
-[ext_resource type="Texture2D" uid="uid://c5k3yru82twpu" path="res://assets/sprites/upgrade_selector/upgrade-pin-turquoise.png" id="8_uy7kt"]
+[ext_resource type="Texture2D" uid="uid://b428hmq26at8o" path="res://assets/sprites/upgrade_selector/upgrade-pin-green.png" id="8_uy7kt"]
 [ext_resource type="FontVariation" uid="uid://6ps3tjx81bnu" path="res://assets/fonts/contract_font.tres" id="9_0vb0y"]
 [ext_resource type="Texture2D" uid="uid://css0pguf5gdda" path="res://assets/sprites/upgrade_selector/upgrade-pin-red.png" id="10_4j8vg"]
 [ext_resource type="Texture2D" uid="uid://wvhjq6gjsr3h" path="res://assets/sprites/upgrade_selector/upgrade-pin-blue.png" id="11_hgdfc"]
@@ -110,6 +110,7 @@ grow_vertical = 2
 script = ExtResource("2_uy7kt")
 
 [node name="TextureRect" type="TextureRect" parent="UpgradeSelector"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

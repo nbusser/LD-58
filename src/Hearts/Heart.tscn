@@ -1,10 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dx4e07rgnuhvp"]
+[gd_scene load_steps=2 format=3 uid="uid://dx4e07rgnuhvp"]
 
-[ext_resource type="Texture2D" uid="uid://d0imd2kydllrg" path="res://assets/sprites/collectibles/dollar_coin.png" id="1_07jlt"]
-[ext_resource type="Texture2D" uid="uid://b1aodbc5yeiha" path="res://assets/sprites/collectibles/bitcoin_coin.png" id="2_o34jq"]
+[ext_resource type="SpriteFrames" uid="uid://yokc8sjuhlgk" path="res://src/Hearts/Heart.tres" id="1_1ou4a"]
 
-[node name="Heart" type="TextureProgressBar"]
-max_value = 1.0
-step = 0.5
-texture_under = ExtResource("1_07jlt")
-texture_progress = ExtResource("2_o34jq")
+[node name="Heart" type="AnimatedSprite2D"]
+sprite_frames = ExtResource("1_1ou4a")
+animation = &"half"
+frame = 2
+frame_progress = 1.0

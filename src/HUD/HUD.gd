@@ -39,15 +39,18 @@ func set_dash_cooldown(value: int) -> void:
 
 
 func update_life(health):
+	var animation_show = false
 	for heart in hearts_container.get_children():
 		if health >= 2:
-			heart.value = 1
 			health -= 2
 		elif health == 1:
-			heart.value = .5
+			heart.play("half")
 			health -= 1
+			animation_show = true
 		else:
-			heart.value = 0
+			if !animation_show:
+				heart.play("empty")
+				animation_show = true
 
 
 func init(level_state: LevelState) -> void:
