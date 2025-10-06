@@ -85,7 +85,8 @@ func _run_level() -> void:
 	scene.init(GameState.current_level_number, levels[GameState.current_level_number])
 	# Play level music
 	play_level_music()
-	await changed_to_level_music
+	# TODO restore later
+	# await changed_to_level_music
 	self.current_scene = scene
 
 
