@@ -20,6 +20,8 @@ var _coin_scene = preload("res://src/Coin/Coin.tscn")
 var _is_player_dead = false
 var _is_level_timeout = false
 
+var _schlass_connected = false
+
 @onready var _idle_timer: Timer = $IdleTimer
 @onready var _bullets: Node2D = $"../Bullets"
 @onready var _player: Player = $"../Player"
@@ -577,6 +579,8 @@ func _laser_cage_routine() -> void:
 
 
 func _schlassage_routine():
+	_schlass_connected = false
+
 	$AttackPatterns/Schlassage/FocusSound.play_sound()
 	$Sprite2D.play("focus")
 	var focus_duration: float = 0.5
@@ -615,7 +619,8 @@ func on_level_timeout():
 
 # During schlass
 func _on_foot_body_entered(body: Node2D) -> void:
-	if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]):
+	if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]) and not _schlass_connected:
+		_schlass_connected = true
 		var kick_force = 5000.0
 		var direction = -1.0 if global_position.x - _player.global_position.x > 0 else 1.0
 		_player.get_hurt(Vector2(kick_force * direction, 0))
