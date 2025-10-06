@@ -23,10 +23,28 @@ func _blocking_dialog(text: String):
 
 
 func _cutscene():
+	var win_catchphrases = [
+		"Pay up, billionaire!",
+		"Another loophole closed.",
+		"Another one bites the dust!",
+		"Cleaned him out!",
+		"Tax haven? Not today.",
+		"What a haul!",
+	]
+
+	var lose_catchphrases = [
+		"Damn loopholes...",
+		"I'll get him next time!",
+		"Tax evasion: 1, Taxman: 0.",
+		"He’ll pay… eventually.",
+		"Next time, no deductions!",
+		"This isn't over!",
+	]
+
 	if !GameState.latest_level_state.lost:
-		await _blocking_dialog("Got him good!")
+		await _blocking_dialog(win_catchphrases.pick_random())
 	else:
-		await _blocking_dialog("Je me suis fait hagar")
+		await _blocking_dialog(lose_catchphrases.pick_random())
 
 	$UpgradeSelector.visible = true
 	await $UpgradeSelector.close
