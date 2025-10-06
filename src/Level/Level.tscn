@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dwiu4cm7rlq0p" path="res://src/HUD/HUD.tscn" id="3_p81om"]
 [ext_resource type="Shader" path="res://src/Level/PostProcess.gdshader" id="4_5g3p6"]
 [ext_resource type="Script" uid="uid://uvipfx8brsj0" path="res://src/UI/PostProcessOverlay.gd" id="4_c7nqk"]
-[ext_resource type="Shader" uid="uid://ccoc5wp0cgskd" path="res://src/Laser.gdshader" id="4_noe52"]
+[ext_resource type="Shader" path="res://src/Laser.gdshader" id="4_noe52"]
 [ext_resource type="Texture2D" uid="uid://cdo8e7hc3mt7t" path="res://assets/sprites/mountain_1.png" id="4_r00bm"]
 [ext_resource type="Script" uid="uid://bqub0n7gx4ukd" path="res://src/AudioBankPlayer.gd" id="7_1b0u6"]
 [ext_resource type="AudioStream" uid="uid://curqsvlnprpo1" path="res://assets/sounds/timeout.wav" id="8_qpfp4"]
@@ -116,7 +116,7 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 60.0
+wait_time = 10.0
 one_shot = true
 autostart = true
 

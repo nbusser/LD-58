@@ -5,7 +5,7 @@ extends Control
 var statement_line_scene = preload("res://src/Interlude/statement_line.tscn")
 
 @onready var statement_lines_container: VBoxContainer = %Recap/%StatementLinesContainer
-@onready var panel = $CenterContainer/Panel
+@onready var panel = %Panel
 @onready var subtitle_label: Label = %SubtitleLabel
 @onready var total_value_label: Label = %Recap/%TotalValueLabel
 @onready var losses_label: Label = %LossesLabel
@@ -23,9 +23,8 @@ func _blocking_dialog(text: String):
 
 
 func _cutscene():
-	await get_tree().create_timer(1).timeout
 	if !GameState.latest_level_state.lost:
-		await _blocking_dialog("Je l'ai bien schlassé")
+		await _blocking_dialog("Got him good!")
 	else:
 		await _blocking_dialog("Je me suis fait hagar")
 

@@ -1,14 +1,21 @@
-[gd_scene load_steps=8 format=3 uid="uid://13ldbpvp21wo"]
+[gd_scene load_steps=11 format=3 uid="uid://13ldbpvp21wo"]
 
 [ext_resource type="Script" uid="uid://casgxbyvs3j7c" path="res://src/Interlude/interlude.gd" id="1_tccgx"]
 [ext_resource type="PackedScene" uid="uid://bw6igwix0v8lt" path="res://src/UpgradeSelector/upgrade_selector.tscn" id="3_o8ror"]
 [ext_resource type="Texture2D" uid="uid://cc2jwscktkp1e" path="res://assets/sprites/interlude/The_Fraudulent_times_1.png" id="5_iamgo"]
 [ext_resource type="PackedScene" uid="uid://rn148bjscf1s" path="res://src/Interlude/recap.tscn" id="5_q8van"]
 [ext_resource type="Texture2D" uid="uid://ddlcvvr87w77x" path="res://assets/sprites/interlude/taxman_reading.png" id="5_vkv47"]
+[ext_resource type="Texture2D" uid="uid://bdhfa5qccpa0w" path="res://assets/sprites/message_box.png" id="6_q8van"]
+[ext_resource type="FontFile" uid="uid://co0luhyf01b6a" path="res://assets/fonts/THICKHEA.TTF" id="7_5vb01"]
 [ext_resource type="FontVariation" uid="uid://boxigvia40f4m" path="res://assets/fonts/slanted_font.tres" id="7_q8van"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_q8van"]
 viewport_path = NodePath("SubViewport")
+
+[sub_resource type="LabelSettings" id="LabelSettings_5vb01"]
+font = ExtResource("7_5vb01")
+font_size = 32
+font_color = Color(0, 0, 0, 1)
 
 [node name="Interlude" type="Control"]
 layout_mode = 3
@@ -88,37 +95,44 @@ render_target_update_mode = 4
 [node name="Recap" parent="SubViewport" instance=ExtResource("5_q8van")]
 unique_name_in_owner = true
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="PanelContainer" parent="CenterContainer"]
-visible = false
-custom_minimum_size = Vector2(600, 0)
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="SubtitleLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
+[node name="Panel" type="Control" parent="."]
 unique_name_in_owner = true
-layout_mode = 2
-text = "Fun subtitle"
-horizontal_alignment = 1
+custom_minimum_size = Vector2(600, 0)
+anchors_preset = 0
+offset_left = 19.0
+offset_top = 23.0
+offset_right = 619.0
+offset_bottom = 223.0
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_left = -19.0
+offset_top = -23.0
+offset_right = 581.0
+offset_bottom = 177.0
+texture = ExtResource("6_q8van")
 
-[node name="ClickToContinue" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
-layout_mode = 2
+[node name="ClickToContinue" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 1010.0
+offset_top = -10.0
+offset_right = 1610.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "< Click to continue >"
 horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="Panel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 18.0
+offset_right = 536.0
+offset_bottom = 151.0
+text = "Fun subtitle"
+label_settings = SubResource("LabelSettings_5vb01")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="UpgradeSelector" parent="." instance=ExtResource("3_o8ror")]
 visible = false
