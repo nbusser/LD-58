@@ -673,7 +673,7 @@ func _laser_cage_routine() -> void:
 func _schlassage_routine():
 	_schlass_connected = false
 
-$AttackPatterns/Rain/FocusSound.play()
+	$AttackPatterns/Rain/FocusSound.play()
 
 	$Sprite2D.play("shout")
 
