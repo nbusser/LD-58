@@ -23,5 +23,5 @@ func init(description: String, quantity: int, unit_value: int) -> void:
 func _ready() -> void:
 	description_label.text = _description
 	quantity_label.text = str(_quantity)
-	unit_value_label.text = "$%d" % _unit_value
-	value_label.text = "$%d" % _value
+	unit_value_label.text = StringFormatter.format_currency(_unit_value)
+	value_label.text = StringFormatter.format_currency(_value)

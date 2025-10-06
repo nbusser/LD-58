@@ -90,10 +90,14 @@ func _setup_statement_lines():
 		)
 		statement_lines_container.add_child(statement_line)
 
-	total_value_label.text = "$%d" % GameState.latest_level_state.get_value_of_collected_items()
+	total_value_label.text = StringFormatter.format_currency(
+		GameState.latest_level_state.get_value_of_collected_items()
+	)
 
-	losses_label.text = "$%d" % GameState.latest_level_state.get_value_of_collected_items()
+	losses_label.text = StringFormatter.format_currency(
+		GameState.latest_level_state.get_value_of_collected_items()
+	)
 	var remaining_net_worth = (
 		GameState.billionaire_cash - GameState.latest_level_state.get_value_of_collected_items()
 	)
-	remaining_net_worth_label.text = "$%d" % remaining_net_worth
+	remaining_net_worth_label.text = StringFormatter.format_currency(remaining_net_worth)

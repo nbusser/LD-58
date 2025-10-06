@@ -21,6 +21,7 @@ config/icon="res://assets/sprites/player.png"
 Globals="*res://src/Globals.gd"
 GameState="*res://src/game_state.gd"
 Collectible="*res://src/collectible.gd"
+StringFormatter="*res://src/string_formatter.gd"
 
 [display]
 
