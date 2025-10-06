@@ -614,7 +614,7 @@ func _laser_warning_routine() -> void:
 	await _lasers.laser_warning_pattern(nb_lasers, 0.4)
 
 	# Wait for lasers to finish
-	var waiting_time = 2.0 - 0.18 * (GameState.difficulty_factor - 1.0)
+	var waiting_time = 1.5 * (1.0 - GameState.difficulty_factor / 10.0)
 	await get_tree().create_timer(waiting_time).timeout
 	$Sprite2D.play("default")
 
@@ -632,7 +632,7 @@ func _laser_sweep_routine() -> void:
 	_lasers.laser_sweep_pattern(sweep_direction, 200.0)
 
 	# Wait for laser to finish
-	var waiting_time = 4.0 - 0.4 * (GameState.difficulty_factor - 1.0)
+	var waiting_time = 1.5 * (1.0 - GameState.difficulty_factor / 10.0)
 	await get_tree().create_timer(waiting_time).timeout
 	$Sprite2D.play("default")
 
@@ -645,14 +645,14 @@ func _laser_cage_routine() -> void:
 
 	# Focus animation
 	$Sprite2D.play("focus")
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(1.0).timeout
 
 	# Create laser cage
 	$Sprite2D.play("laugh")
 	await _lasers.laser_cage_pattern()
 
 	# Wait for cage to finish
-	var waiting_time = 4.0 - 0.4 * (GameState.difficulty_factor - 1.0)
+	var waiting_time = 0.6 * (1.0 - GameState.difficulty_factor / 10.0)
 	await get_tree().create_timer(waiting_time).timeout
 	$Sprite2D.play("default")
 
