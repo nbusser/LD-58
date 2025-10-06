@@ -92,6 +92,7 @@ func _run_selected_level(level_i: int) -> void:
 
 func _run_interlude() -> void:
 	var scene: Interlude = interlude.instantiate()
+	music_interactive_playback.switch_to_clip(1)
 	self.current_scene = scene
 
 
