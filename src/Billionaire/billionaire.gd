@@ -496,8 +496,9 @@ func _repulse_wave_routine():
 	for column: Area2D in _repulse_wave.get_children():
 		column.visible = true
 		column.monitoring = true
-		column.get_node("Sprite2D").play("default")
-		column.get_node("Sprite2D2").play("default")
+		for sprite in column.get_node("Sprites").get_children():
+			sprite.play("default")
+
 		var delayed_sound = func():
 			await get_tree().create_timer(randf_range(0.5, 0.8)).timeout
 			$AttackPatterns/RepulsiveWave/ColumnSound.play_sound()

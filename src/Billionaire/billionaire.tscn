@@ -169,7 +169,7 @@ prefered_distance_x = 0.7
 prefered_distance_tolerance_x = 0.25
 
 [node name="RepulsiveWave" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
-attack_name = "N.D.A"
+attack_name = "Speculative Bubble !"
 cooldown = 10.0
 maximum_distance_x = 0.18
 prefered_distance_x = 0.05
@@ -207,17 +207,31 @@ shape = SubResource("RectangleShape2D_38hbp")
 position = Vector2(-124, 81.6875)
 shape = SubResource("RectangleShape2D_bqgkp")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
+[node name="Sprites" type="Node2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1/Sprites"]
 position = Vector2(123, 82.5)
 sprite_frames = ExtResource("15_327hu")
-frame = 29
-frame_progress = 0.87248546
 speed_scale = 2.5
 
-[node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
+[node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1/Sprites"]
 position = Vector2(-124.99999, 83)
 sprite_frames = ExtResource("15_327hu")
 frame_progress = 0.18262367
+speed_scale = 2.5
+
+[node name="Sprite2D3" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1/Sprites"]
+position = Vector2(-32.000004, 69)
+scale = Vector2(0.6785714, 0.6785714)
+sprite_frames = ExtResource("15_327hu")
+frame_progress = 0.7338228
+speed_scale = 2.5
+
+[node name="Sprite2D4" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1/Sprites"]
+position = Vector2(20, -40)
+scale = Vector2(1.2142857, 1.2142857)
+sprite_frames = ExtResource("15_327hu")
+frame_progress = 0.85141444
 speed_scale = 2.5
 
 [node name="Column2" type="Area2D" parent="AttackPatterns/RepulsiveWave/Columns"]
@@ -233,14 +247,16 @@ shape = SubResource("RectangleShape2D_7xygs")
 position = Vector2(-204.375, 61)
 shape = SubResource("RectangleShape2D_7xygs")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
+[node name="Sprites" type="Node2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2/Sprites"]
 texture_filter = 1
 position = Vector2(-207, 60.999985)
 sprite_frames = ExtResource("16_jeg63")
 frame_progress = 0.3998903
 speed_scale = 2.5
 
-[node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
+[node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2/Sprites"]
 position = Vector2(204.99998, 58.822365)
 sprite_frames = ExtResource("16_jeg63")
 frame_progress = 0.18021862
@@ -259,13 +275,15 @@ shape = SubResource("RectangleShape2D_1qyaf")
 position = Vector2(-298, 16)
 shape = SubResource("RectangleShape2D_1qyaf")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
+[node name="Sprites" type="Node2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3/Sprites"]
 position = Vector2(295.00003, 12.999985)
 sprite_frames = ExtResource("17_wh08u")
 frame_progress = 0.9010395
 speed_scale = 2.5
 
-[node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
+[node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3/Sprites"]
 position = Vector2(-297, 15)
 sprite_frames = ExtResource("17_wh08u")
 frame_progress = 0.43212867
@@ -302,7 +320,7 @@ position = Vector2(0, -149)
 texture = ExtResource("9_kdd1f")
 
 [node name="Schlassage" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
-attack_name = "N.D.A"
+attack_name = "Téma la paire"
 cooldown = 3.0
 maximum_distance_x = 0.16
 prefered_distance_x = 0.08
