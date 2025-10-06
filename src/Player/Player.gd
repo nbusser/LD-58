@@ -221,13 +221,13 @@ func _physics_process(delta):
 				velocity.x = sign(velocity.x) * 500
 			previous_head_bounce = now
 		#else:
-			#var to_billionaire_n = (global_position - _billionaire.global_position).normalized()
-			#var knockback = billionaire_knockback * to_billionaire_n
-			#if sign(velocity.x) != sign(knockback.x):
-				#velocity.x = 0
-			#velocity += Vector2(
-				#knockback.x if abs(knockback.x) > 100 else sign(knockback.x) * 100, knockback.y
-			#)
+		#var to_billionaire_n = (global_position - _billionaire.global_position).normalized()
+		#var knockback = billionaire_knockback * to_billionaire_n
+		#if sign(velocity.x) != sign(knockback.x):
+		#velocity.x = 0
+		#velocity += Vector2(
+		#knockback.x if abs(knockback.x) > 100 else sign(knockback.x) * 100, knockback.y
+		#)
 
 	velocity = clamp(velocity, Vector2(-8000, -1000), Vector2(8000, 1000))
 
