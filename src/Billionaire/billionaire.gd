@@ -562,7 +562,11 @@ func spawn_coins(amount: int):
 	]
 
 	var remaining_value = target_value
-	while remaining_value > 0:
+	var coins_spawned = 0
+	while remaining_value > 0 and coins_spawned < 9:
+		if total_value_spawned >= target_value * 0.95:
+			break
+
 		var valid_types = []
 		for type in collectible_types:
 			var value = Collectible.get_collectible_value(type)
@@ -587,6 +591,7 @@ func spawn_coins(amount: int):
 		var col_value = Collectible.get_collectible_value(collectible_type)
 		total_value_spawned += col_value
 		remaining_value -= col_value
+		coins_spawned += 1
 
 	if total_value_spawned > 0:
 		_level.change_net_worth(total_value_spawned)
