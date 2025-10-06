@@ -5,13 +5,10 @@ extends Control
 var nb_coins:
 	set = set_nb_coins
 
-var level_number:
-	set = set_level_number
 
 var billionaire_net_worth:
 	set = set_billionaire_net_worth
 
-@onready var level_number_label: Label = $VBoxContainer/VBoxContainer/LevelNumber/LevelNumberValue
 @onready var coins_label: Label = $VBoxContainer/VBoxContainer/CoinNumber/CoinNumberValue
 @onready var net_worth_label: Label = $VBoxContainer/VBoxContainer/NetWorth/NetWorthValue
 @onready var dash_progress_bar: ProgressBar = $VBoxContainer/VBoxContainer/DashCooldown/ProgressBar
@@ -24,10 +21,6 @@ var billionaire_net_worth:
 
 func set_nb_coins(value: int) -> void:
 	coins_label.text = str(value)
-
-
-func set_level_number(value: int) -> void:
-	level_number_label.text = str(value)
 
 
 func set_billionaire_net_worth(value: int) -> void:
@@ -54,7 +47,6 @@ func update_life(health):
 
 
 func init(level_state: LevelState) -> void:
-	level_number = level_state.level_number
 	nb_coins = level_state.player_cash
 	billionaire_net_worth = level_state.billionaire_net_worth
 

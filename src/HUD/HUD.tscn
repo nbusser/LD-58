@@ -96,17 +96,6 @@ scale = Vector2(0.6, 0.6)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="LevelNumber" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/LevelNumber"]
-layout_mode = 2
-text = "Level: "
-
-[node name="LevelNumberValue" type="Label" parent="VBoxContainer/VBoxContainer/LevelNumber"]
-layout_mode = 2
-text = "/"
-
 [node name="CoinNumber" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2
 
