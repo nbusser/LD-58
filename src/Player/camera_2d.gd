@@ -45,7 +45,7 @@ func _ready() -> void:
 	limit_right = wall_r.global_position.x
 	limit_top = ceiling.global_position.y
 	limit_bottom = ground.global_position.y + 25
-	zoom = Vector2(1., 1.)
+	zoom = Vector2(2., 2.)
 
 
 func apply_noise_shake() -> void:
