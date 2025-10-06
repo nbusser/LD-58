@@ -338,7 +338,6 @@ func _on_idle_timer_timeout() -> void:
 		$Sprite2D.play("laugh")
 		return
 	if _is_level_timeout:
-		print("caca")
 		$Sprite2D.play("hurt")
 		return
 
