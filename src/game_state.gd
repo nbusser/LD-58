@@ -68,19 +68,20 @@ func apply_upgrade(card: UpgradeCardData) -> bool:
 	print("Applied upgrade: %s" % card.title)
 	print("Current stats: %s" % str(get_upgrade_stats()))
 	for upgr in get_upgrade_stats():
+		var upgr_value = get_upgrade_stats()[upgr]
 		match upgr:
 			UpgradeCardData.EffectType.BULLET_TIME:
 				player_stats.unlocked_bullet_proximity_slowmo = true
-				player_stats.bullet_proximity_radius += 12
-				player_stats.bullet_proximity_slow_factor -= 0.1
+				player_stats.bullet_proximity_radius = 70 + upgr_value * 12
+				player_stats.bullet_proximity_slow_factor = .75 - upgr_value * 0.1
 			UpgradeCardData.EffectType.COMBO_MULTIPLIER:
-				player_stats.combo_base += .5
+				player_stats.combo_base = 1.5 + upgr_value * .5
 			UpgradeCardData.EffectType.JUMP_HEIGHT:
-				player_stats.jump_force = 7000
+				player_stats.jump_force = 6000 + upgr_value * 500
 			UpgradeCardData.EffectType.MOVEMENT_SPEED:
-				player_stats.ground_speed = 450
+				player_stats.ground_speed = 300 + upgr_value * 75
 			UpgradeCardData.EffectType.AIR_CONTROL:
-				player_stats.air_speed = 290
+				player_stats.air_speed = 150 + upgr_value * 140
 			UpgradeCardData.EffectType.LOOT_QUANTITY:
 				print("TODO")
 			UpgradeCardData.EffectType.LOOT_VALUE:

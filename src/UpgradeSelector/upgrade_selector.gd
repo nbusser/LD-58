@@ -31,7 +31,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		"Full-Time Thief",
 		"Sleight of hand is your middle name",
 		2500,
-		{UpgradeCardData.EffectType.LOOT_QUANTITY: 2},
+		{UpgradeCardData.EffectType.LOOT_QUANTITY: 1},
 		["loot_quantity_1"]
 	),
 	UpgradeCardData.new(
@@ -54,7 +54,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		"Golden Touch",
 		"Midas would be jealous",
 		2500,
-		{UpgradeCardData.EffectType.LOOT_VALUE: 2},
+		{UpgradeCardData.EffectType.LOOT_VALUE: 1},
 		["loot_value_1"]
 	),
 	UpgradeCardData.new(
@@ -78,7 +78,7 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		"Smart Contract Editor",
 		"Write your own rules for profit",
 		7500,
-		{UpgradeCardData.EffectType.BITCOIN_VALUE: 2},
+		{UpgradeCardData.EffectType.BITCOIN_VALUE: 1},
 		["bitcoin_value_1"]
 	),
 	UpgradeCardData.new(
