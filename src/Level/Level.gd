@@ -56,3 +56,27 @@ func on_coin_collected(collectible_type: Collectible.CollectibleType) -> void:
 	var value_of_collected_items = level_state.get_value_of_collected_items()
 	level_state.player_cash = GameState.player_cash + value_of_collected_items
 	hud.set_nb_coins(value_of_collected_items)
+
+
+func on_player_dies(animation_finished_signal_to_await: Signal):
+	level_state.lost = true
+	_billionaire.on_player_dies()
+	await animation_finished_signal_to_await
+	await (
+		get_tree()
+		. create_tween()
+		. tween_property($"Fade/Fade", "modulate:a", 255, 1.0)
+		. set_trans(Tween.TRANS_LINEAR)
+		. set_ease(Tween.EASE_IN_OUT)
+		. finished
+	)
+	await get_tree().create_timer(0.5).timeout
+	(
+		Globals
+		. end_scene(
+			Globals.EndSceneStatus.LEVEL_END,
+			{
+				"level_state": level_state,
+			}
+		)
+	)

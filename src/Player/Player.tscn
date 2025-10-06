@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bxrm1laqwt3cm"]
+[gd_scene load_steps=17 format=3 uid="uid://bxrm1laqwt3cm"]
 
 [ext_resource type="Script" uid="uid://ty44l5afcwx4" path="res://src/Player/Player.gd" id="2"]
 [ext_resource type="Script" uid="uid://0ol0gfmf4qyv" path="res://src/Player/AttackManager.gd" id="2_ub20b"]
@@ -25,6 +25,163 @@ size = Vector2(73.19675, 15.735322)
 radius = 18.0
 height = 614.0
 
+[sub_resource type="Animation" id="Animation_4rl4y"]
+resource_name = "die"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"die"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.9666667, 2.7666667, 3.8666666, 5.133333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.13333333),
+"transitions": PackedFloat32Array(1e-05, 1),
+"update": 1,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 1.0333333, 1.0999999, 1.1666666, 1.9333333, 2.7666667, 3.8333333, 4.5333333, 4.9333334, 5.133333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -25.999954), Vector2(-5.18, -26), Vector2(3.09, -26), Vector2(3.09, -26), Vector2(-5.18, -26), Vector2(3.09, -26), Vector2(3.09, -26), Vector2(-23.29, -50.68), Vector2(-75.42, -65.46), Vector2(-108.83, -70.98), Vector2(-108.83, -70.98), Vector2(-135.82, -18.2)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:is_dead_animation_playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:enable_gravity")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 5.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_ub20b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"die"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -25.999954)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:is_dead_animation_playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:enable_gravity")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ub20b"]
+_data = {
+&"RESET": SubResource("Animation_ub20b"),
+&"die": SubResource("Animation_4rl4y")
+}
+
 [node name="Player" type="CharacterBody2D" groups=["Player", "player"]]
 collision_layer = 16
 script = ExtResource("2")
@@ -45,7 +202,7 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -25.999954)
 sprite_frames = ExtResource("6_4rl4y")
-animation = &"jump_end"
+animation = &"die"
 offset = Vector2(0, -20.833288)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -108,6 +265,11 @@ collision_mask = 34
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SmashArea"]
 position = Vector2(-39.66658, -2.0000017)
 shape = SubResource("CapsuleShape2D_4rl4y")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ub20b")
+}
 
 [connection signal="punch_has_connected" from="AttackManager" to="." method="_on_attack_manager_punch_has_connected"]
 [connection signal="animation_changed" from="Sprite" to="AttackManager" method="_on_sprite_animation_changed"]

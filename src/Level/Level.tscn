@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://drh117nvpnukt" path="res://src/Level/Level.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://btohiqrak4tcf" path="res://src/Map/Map.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://dwiu4cm7rlq0p" path="res://src/HUD/HUD.tscn" id="3_p81om"]
-[ext_resource type="Shader" path="res://src/Level/PostProcess.gdshader" id="4_5g3p6"]
+[ext_resource type="Shader" uid="uid://b0hbcpqv8d8w" path="res://src/Level/PostProcess.gdshader" id="4_5g3p6"]
 [ext_resource type="Script" uid="uid://uvipfx8brsj0" path="res://src/UI/PostProcessOverlay.gd" id="4_c7nqk"]
 [ext_resource type="Shader" uid="uid://ccoc5wp0cgskd" path="res://src/Laser.gdshader" id="4_noe52"]
 
@@ -70,6 +70,17 @@ script = ExtResource("4_c7nqk")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="UI" instance=ExtResource("3_p81om")]
+
+[node name="Fade" type="CanvasLayer" parent="."]
+
+[node name="Fade" type="ColorRect" parent="Fade"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 60.0

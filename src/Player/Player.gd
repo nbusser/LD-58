@@ -34,6 +34,9 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var billionaire_knockback = 800
 @export var melee_damage = 100
 
+@export var is_dead_animation_playing = false
+@export var enable_gravity = true
+
 var jump_load_start = null
 var is_actively_jumping = false
 var is_keep_pressing_jump_button = false
@@ -180,7 +183,8 @@ func _physics_process(delta):
 		if abs(velocity.x) > abs(hz_velocity)
 		else hz_velocity
 	)
-	velocity = Vector2(hz_velocity, velocity.y + vt_velocity + gravity * delta)
+	var gravity_value = gravity if enable_gravity else 0.0
+	velocity = Vector2(hz_velocity, velocity.y + vt_velocity + gravity_value * delta)
 
 	# Billionaire knockback and head bounce
 	if is_in_billionaire:
@@ -227,7 +231,7 @@ func _physics_process(delta):
 	# Animation
 
 	# Attack animations are directly handled by the attack manager
-	if not $AttackManager.is_attacking():
+	if not is_dead_animation_playing and not $AttackManager.is_attacking():
 		if is_on_floor():
 			# Ground animations
 			if Input.get_axis("move_left", "move_right") == 0:
@@ -255,7 +259,7 @@ func _exit_tree() -> void:
 
 
 func _can_move():
-	return not $AttackManager.is_attacking_ground()
+	return not is_dead_animation_playing and not $AttackManager.is_attacking_ground()
 
 
 func get_hurt(knockback_force):
@@ -272,16 +276,9 @@ func get_hurt(knockback_force):
 	health = health - 1
 	_hud.update_life(health)
 	if health <= 0:
-		_level.level_state.lost = true
-		(
-			Globals
-			. end_scene(
-				Globals.EndSceneStatus.LEVEL_END,
-				{
-					"level_state": _level.level_state,
-				}
-			)
-		)
+		$AnimationPlayer.play("die")
+		velocity = Vector2.ZERO
+		_level.on_player_dies($AnimationPlayer.animation_finished)
 		return
 	# Red glow on hit
 	_hurt_sound.play_sound()
