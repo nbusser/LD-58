@@ -48,21 +48,39 @@ func _ready() -> void:
 
 # Return a random attack pattern
 func _get_attack_pattern():
-	var available_attacks = _attack_patterns.get_children().filter(
-		func(attack_pattern: AttackPattern):
-			return (
-				attack_pattern.enabled
-				and attack_pattern.is_ready()
-				and (
-					_level.level_state.get_percentage_net_worth_remaining()
-					<= attack_pattern.net_worth_percent_threshold
-				)
-			)
+	var theoretical_max_distance_x = abs(
+		$"../Borders/WallL".position.x - $"../Borders/WallR".position.x
 	)
-	if available_attacks.size() == 0:
-		print("NO ATTACK AVAILABLE !")
-		return null
-	return available_attacks[randi() % len(available_attacks)]
+	var distance_to_player_x = abs(global_position.x - _player.global_position.x)
+	var percentage_net_worth_remaining = _level.level_state.get_percentage_net_worth_remaining()
+
+	var map_weights = func(attack_pattern: AttackPattern):
+		return {
+			"attack": attack_pattern,
+			"weight":
+			attack_pattern.calculate_weight(
+				theoretical_max_distance_x, distance_to_player_x, percentage_net_worth_remaining
+			)
+		}
+
+	var attacks_and_weights = _attack_patterns.get_children().map(map_weights).filter(
+		func(attack_and_weight): return attack_and_weight.weight > 0.0
+	)
+
+	var sum_weights = 0.0
+	for attack_and_weight in attacks_and_weights:
+		sum_weights += attack_and_weight.weight
+
+	var r = randf() * sum_weights
+
+	var cumulative = 0.0
+	for attack_and_weight in attacks_and_weights:
+		cumulative += attack_and_weight.weight
+		if r <= cumulative:
+			return attack_and_weight.attack
+
+	print("NO ATTACK AVAILABLE !")
+	return null
 
 
 func _physics_process(delta: float) -> void:
