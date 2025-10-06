@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_r4gm4"]
 script = ExtResource("2_shtkc")
-name = "J'aime pu ma mère !"
+name = "Année fiscale"
 timer_duration = 5.0
 
 [sub_resource type="Resource" id="Resource_o3yet"]
