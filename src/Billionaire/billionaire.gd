@@ -77,12 +77,14 @@ func _spawn_bullet(
 	bullet_position: Vector2,
 	bullet_direction: Vector2,
 	bullet_knockback: float,
-	bullet_speed: float = 100.0,
-	bullet_scale_factor: float = 1.0
+	bullet_speed: float,
+	bullet_scale_factor: float,
+	bullet_acceleration: float
 ) -> void:
 	var bullet: Bullet = _bullet_scene.instantiate()
 	bullet.init(
-		bullet_position, bullet_direction, bullet_knockback, bullet_speed, bullet_scale_factor
+		bullet_position, bullet_direction, bullet_knockback, bullet_speed, bullet_scale_factor,
+		bullet_acceleration
 	)
 	_bullets.add_child(bullet)
 
@@ -164,7 +166,7 @@ func _air_shotgun_routine() -> void:
 	var angles = [-15, 0, 15]
 	for angle in angles:
 		var dir = bullet_direction.rotated(deg_to_rad(angle))
-		_spawn_bullet(_body.global_position, dir, 800, 500.0)
+		_spawn_bullet(_body.global_position, dir, 800, 500.0, 1.0, 1)
 	$AttackPatterns/JumpConeBullets/ShootSound.play_sound()
 
 	# Freeze
@@ -186,7 +188,7 @@ func _minting_plate_routine() -> void:
 	var nb_bullets = 10
 	for _i in range(nb_bullets):
 		var bullet_direction = (_player.global_position - _body.global_position).normalized()
-		_spawn_bullet(_body.position, bullet_direction, 50, 600.0)
+		_spawn_bullet(_body.position, bullet_direction, 50, 600.0, 1.0, 0.0)
 		await get_tree().create_timer(0.1).timeout
 
 
@@ -222,7 +224,7 @@ func _rain_routine() -> void:
 				var bullet_position_y = spawn_y + randi() % rain_bullet_random_interval_y
 
 				var bullet_position = Vector2(bullet_position_x, bullet_position_y)
-				_spawn_bullet(bullet_position, Vector2.DOWN, 50, rain_bullet_speed, 1.0)
+				_spawn_bullet(bullet_position, Vector2.DOWN, 50, rain_bullet_speed, 1.0, 800)
 			await get_tree().create_timer(rain_bullet_interval_duration).timeout
 
 	$AttackPatterns/Rain/FocusSound.play_sound()
