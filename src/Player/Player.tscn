@@ -249,6 +249,7 @@ sounds = Array[AudioStream]([ExtResource("9_ub20b")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 position = Vector2(0, -25.999954)
 sprite_frames = ExtResource("6_4rl4y")
 animation = &"die"

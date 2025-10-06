@@ -81,6 +81,7 @@ autostart = true
 shape = SubResource("RectangleShape2D_qa6ra")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 sprite_frames = ExtResource("2_d2xww")
 
 [node name="Hitbox" type="Area2D" parent="." groups=["billionaire"]]
@@ -217,6 +218,7 @@ position = Vector2(-204.375, 61)
 shape = SubResource("RectangleShape2D_7xygs")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
+texture_filter = 1
 position = Vector2(-207, 60.999985)
 sprite_frames = ExtResource("16_jeg63")
 frame_progress = 0.3998903
