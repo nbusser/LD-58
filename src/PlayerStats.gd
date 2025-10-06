@@ -43,7 +43,6 @@ var melee_damage = 100
 var dash_glide_window = .1
 var glide_force = 3800
 
-
 # Bullet proximity slow motion parameters
 var bullet_proximity_radius = 65.0
 var bullet_proximity_slow_factor = 0.8

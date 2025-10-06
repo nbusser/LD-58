@@ -115,7 +115,8 @@ func _physics_process(delta):
 		):
 			is_keep_pressing_jump_button = true
 			var timer_proportion = (
-				(1 - clamp(time_since_jump, 0, ps.max_input_jump_time) / ps.max_input_jump_time) ** 4
+				(1 - clamp(time_since_jump, 0, ps.max_input_jump_time) / ps.max_input_jump_time)
+				** 4
 			)
 			vt_velocity = -ps.jump_force * delta * timer_proportion
 			# Show animation for double jump
