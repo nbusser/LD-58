@@ -58,10 +58,10 @@ position = Vector2(-0.5, -0.5)
 shape = SubResource("RectangleShape2D_xg0jg")
 
 [node name="HeadTop" type="Area2D" parent="."]
+position = Vector2(-2, 0)
 collision_layer = 256
 collision_mask = 0
 monitoring = false
-monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HeadTop"]
 position = Vector2(0, -94)
@@ -245,3 +245,4 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
 [connection signal="animation_finished" from="Sprite2D" to="." method="_on_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="HeadTop" to="." method="_on_head_top_area_entered"]

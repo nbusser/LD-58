@@ -573,3 +573,7 @@ func on_player_dies():
 
 func on_level_timeout():
 	_is_level_timeout = true
+
+
+func _on_head_top_area_entered(area: Area2D) -> void:
+	print("test")

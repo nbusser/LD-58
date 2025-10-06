@@ -30,7 +30,7 @@ const DASH_SLOWMO_NAME := "player_dash"
 @export var wall_jump_force = 450
 @export var wall_jump_cooldown = .7
 # Billionaire contact
-@export var billionaire_head_bounce = 250
+@export var billionaire_head_bounce = 150
 @export var billionaire_knockback = 800
 @export var melee_damage = 100
 # Dash glide
@@ -71,7 +71,6 @@ var play_jump_start_ts = 0
 var health = 10
 
 @onready var _hurt_sound = $SoundFx/HurtSound
-@onready var _billionaire: CharacterBody2D = $"../Billionaire"
 @onready var _punch_area: Area2D = $PunchArea
 @onready var _smash_area: Area2D = $SmashArea
 @onready var _hud: HUD = $"../../UI/HUD"
@@ -210,23 +209,25 @@ func _physics_process(delta):
 	velocity = Vector2(hz_velocity, velocity.y + vt_velocity + gravity_value * delta)
 
 	# Billionaire knockback and head bounce
-	if is_in_billionaire:
-		if is_on_top_of_billionaire:
-			if now - previous_head_bounce > .1:
-				if velocity.y > 0:
-					velocity.y = -velocity.y / 6.
-				else:
-					velocity.y = 0
-				velocity.y -= billionaire_head_bounce
-				previous_head_bounce = now
-		else:
-			var to_billionaire_n = (global_position - _billionaire.global_position).normalized()
-			var knockback = billionaire_knockback * to_billionaire_n
-			if sign(velocity.x) != sign(knockback.x):
-				velocity.x = 0
-			velocity += Vector2(
-				knockback.x if abs(knockback.x) > 100 else sign(knockback.x) * 100, knockback.y
-			)
+	#if is_in_billionaire:
+	if is_on_top_of_billionaire:
+		if now - previous_head_bounce > .1:
+			if velocity.y > 0:
+				velocity.y = -velocity.y / 6.
+			else:
+				velocity.y = 0
+			velocity.y -= billionaire_head_bounce
+			if abs(velocity.x) < 500:
+				velocity.x = sign(velocity.x) * 500
+			previous_head_bounce = now
+		#else:
+			#var to_billionaire_n = (global_position - _billionaire.global_position).normalized()
+			#var knockback = billionaire_knockback * to_billionaire_n
+			#if sign(velocity.x) != sign(knockback.x):
+				#velocity.x = 0
+			#velocity += Vector2(
+				#knockback.x if abs(knockback.x) > 100 else sign(knockback.x) * 100, knockback.y
+			#)
 
 	velocity = clamp(velocity, Vector2(-8000, -1000), Vector2(8000, 1000))
 
@@ -347,14 +348,6 @@ func _on_soft_hitbox_body_exited(body: Node2D) -> void:
 		is_in_billionaire = false
 
 
-func _on_feet_body_entered(_body: Node2D) -> void:
-	is_on_top_of_billionaire = true
-
-
-func _on_feet_body_exited(_body: Node2D) -> void:
-	is_on_top_of_billionaire = false
-
-
 # When the billionaire is punched from the air, we grant an extra jump to the player (it they are out of jumps)
 func _on_attack_manager_punch_has_connected(attack: AttackManager.Attack) -> void:
 	emit_signal("billionaire_punched", melee_damage)
@@ -368,3 +361,11 @@ func _on_attack_manager_punch_has_connected(attack: AttackManager.Attack) -> voi
 
 func on_level_timeout():
 	is_level_timeout = true
+
+
+func _on_feet_area_entered(_area: Area2D) -> void:
+	is_on_top_of_billionaire = true
+
+
+func _on_feet_area_exited(_area: Area2D) -> void:
+	is_on_top_of_billionaire = false

@@ -214,7 +214,6 @@ shape = SubResource("1")
 position = Vector2(0, -54.166557)
 collision_layer = 0
 collision_mask = 256
-monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Feet"]
@@ -280,8 +279,8 @@ libraries = {
 [connection signal="punch_has_connected" from="AttackManager" to="." method="_on_attack_manager_punch_has_connected"]
 [connection signal="animation_changed" from="Sprite" to="AttackManager" method="_on_sprite_animation_changed"]
 [connection signal="animation_finished" from="Sprite" to="AttackManager" method="_on_sprite_animation_finished"]
-[connection signal="body_entered" from="Feet" to="." method="_on_feet_body_entered"]
-[connection signal="body_exited" from="Feet" to="." method="_on_feet_body_exited"]
+[connection signal="area_entered" from="Feet" to="." method="_on_feet_area_entered"]
+[connection signal="area_exited" from="Feet" to="." method="_on_feet_area_exited"]
 [connection signal="body_entered" from="SoftHitbox" to="." method="_on_soft_hitbox_body_entered"]
 [connection signal="body_exited" from="SoftHitbox" to="." method="_on_soft_hitbox_body_exited"]
 [connection signal="body_entered" from="PunchArea" to="AttackManager" method="_on_punch_area_body_entered"]
