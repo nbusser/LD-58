@@ -356,7 +356,7 @@ func _machinegun_routine() -> void:
 		await _random_run()
 
 	$Sprite2D.play("machinegun_windup")
-	$AttackPatterns/Machinegun/FocusSound.play()
+	$AttackPatterns/Rain/FocusSound.play()
 	var focus_time: float = 2.0 - 0.12 * (GameState.difficulty_factor - 1.0)
 	await get_tree().create_timer(focus_time).timeout
 	$Sprite2D.play("machinegun")
@@ -412,7 +412,7 @@ func _rain_routine() -> void:
 				)
 			await get_tree().create_timer(rain_bullet_interval_duration).timeout
 
-	$AttackPatterns/Rain/FocusSound.play_sound()
+	$AttackPatterns/Rain/FocusSound.play()
 
 	$Sprite2D.play("focus")
 	var focus_duration: float = 2.0
@@ -458,7 +458,7 @@ func _rain_carpet_bomb_routine() -> void:
 				)
 			await get_tree().create_timer(wave_interval_duration).timeout
 
-	$AttackPatterns/Rain/FocusSound.play_sound()
+	$AttackPatterns/Rain/FocusSound.play()
 
 	$Sprite2D.play("focus")
 	var focus_duration: float = 2.0
@@ -485,7 +485,7 @@ func _init_repulse_wave():
 
 func _repulse_wave_routine():
 	var focus_duration: float = 2.0
-	$AttackPatterns/RepulsiveWave/FocusSound.play_sound()
+	$AttackPatterns/Rain/FocusSound.play()
 
 	$Sprite2D.play("focus")
 	await get_tree().create_timer(focus_duration).timeout
@@ -673,7 +673,7 @@ func _laser_cage_routine() -> void:
 func _schlassage_routine():
 	_schlass_connected = false
 
-	$AttackPatterns/Schlassage/FocusSound.play_sound()
+$AttackPatterns/Rain/FocusSound.play()
 
 	$Sprite2D.play("shout")
 
