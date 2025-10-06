@@ -43,6 +43,7 @@ func _ready() -> void:
 	$AttackPatterns/Parachute.routine = _parachute_routine
 
 	_init_repulse_wave()
+	$AttackPatterns/Parachute/ParachuteSprite.visible = false
 
 
 # Return a random attack pattern
@@ -226,7 +227,8 @@ func _parachute_routine() -> void:
 	# Jump
 	await _jump_to_peek(800)
 
-	# TODO: show parachute
+	# Show parachute
+	$AttackPatterns/Parachute/ParachuteSprite.visible = true
 
 	# Handle parachute friction physics
 	var parachute_friction_coroutine = func():
@@ -237,7 +239,9 @@ func _parachute_routine() -> void:
 	# Run in background
 	parachute_friction_coroutine.call_deferred()
 
-	var drop_parachute = func(): state.has_parachute = false
+	var drop_parachute = func():
+		state.has_parachute = false
+		$AttackPatterns/Parachute/ParachuteSprite.visible = false
 
 	# Shoot bullets regularly
 	var shoot_coroutine = func():
@@ -257,7 +261,7 @@ func _parachute_routine() -> void:
 	var distance_threshold = 100
 	while state.has_parachute:
 		if abs(position.x - wall) < distance_threshold:
-			state.has_parachute = false
+			drop_parachute.call()
 		await get_tree().process_frame
 
 	state.is_running = false

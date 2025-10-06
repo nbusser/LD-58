@@ -230,6 +230,11 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 [node name="Parachute" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Golden parachute"
 
+[node name="ParachuteSprite" type="Sprite2D" parent="AttackPatterns/Parachute"]
+visible = false
+position = Vector2(0, -149)
+texture = ExtResource("9_kdd1f")
+
 [node name="SFX" type="Node" parent="."]
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="SFX"]
