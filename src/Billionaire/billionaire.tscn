@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=42 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="SpriteFrames" uid="uid://cwedgk16x5d4h" path="res://src/Billionaire/BillionaireAnimations.tres" id="2_d2xww"]
@@ -23,7 +23,6 @@
 [ext_resource type="SpriteFrames" uid="uid://bfujddc8s3ueg" path="res://src/Billionaire/bubble_300.tres" id="17_wh08u"]
 [ext_resource type="AudioStream" uid="uid://cllgjdbpyommg" path="res://assets/sounds/Ennemy/growl1.ogg" id="19_60pqq"]
 [ext_resource type="AudioStream" uid="uid://nxluy60n7c6d" path="res://assets/sounds/Ennemy/growl5.ogg" id="20_dvqb2"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/parachute.png" id="20_jeg63"]
 [ext_resource type="AudioStream" uid="uid://ddawsibvxuljf" path="res://assets/sounds/Ennemy/ouille.ogg" id="21_0ym8j"]
 [ext_resource type="AudioStream" uid="uid://b17vtcrvuye8v" path="res://assets/sounds/Ennemy/ouille2.ogg" id="22_327hu"]
 
@@ -345,7 +344,6 @@ base_weigth = 1.1
 [node name="ParachuteSprite" type="Sprite2D" parent="AttackPatterns/Parachute"]
 visible = false
 position = Vector2(0, -149)
-texture = ExtResource("20_jeg63")
 
 [node name="Schlassage" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Téma la paire"
