@@ -139,7 +139,7 @@ func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
 		)
 
 		await card.sign_contract()
-		
+
 	await (
 		create_tween()
 		. tween_property(_cursor, "position", _cursor_end_position.position, 0.5)
@@ -148,7 +148,7 @@ func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
 		. finished
 	)
 
-	if (get_parent().name == "MainMenu"):
+	if get_parent().name == "MainMenu":
 		if index == 0:
 			Globals.end_scene(Globals.EndSceneStatus.MAIN_MENU_CLICK_START)
 		elif index == 1:
