@@ -9,17 +9,17 @@
 [ext_resource type="Texture2D" uid="uid://debp773ns8ugc" path="res://assets/sprites/player/jump.png" id="8_e00yh"]
 [ext_resource type="Texture2D" uid="uid://dtx6rwj5bt14o" path="res://assets/sprites/player/walk.png" id="8_l2o1i"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0eh7s"]
-atlas = ExtResource("1_njq6p")
-region = Rect2(144, 0, 144, 160)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_l2o1i"]
 atlas = ExtResource("1_njq6p")
-region = Rect2(288, 0, 144, 160)
+region = Rect2(128, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qmjtk"]
 atlas = ExtResource("1_njq6p")
-region = Rect2(0, 0, 144, 160)
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sfkw8"]
+atlas = ExtResource("1_njq6p")
+region = Rect2(0, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q2yhw"]
 atlas = ExtResource("1_eao7d")
@@ -123,25 +123,25 @@ region = Rect2(0, 0, 80, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e00yh"]
 atlas = ExtResource("8_l2o1i")
-region = Rect2(0, 0, 72, 96)
+region = Rect2(0, 0, 80, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1sfci"]
 atlas = ExtResource("8_l2o1i")
-region = Rect2(72, 0, 72, 96)
+region = Rect2(80, 0, 80, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rvvjr"]
 atlas = ExtResource("8_l2o1i")
-region = Rect2(144, 0, 72, 96)
+region = Rect2(160, 0, 80, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nj3vh"]
 atlas = ExtResource("8_l2o1i")
-region = Rect2(216, 0, 72, 96)
+region = Rect2(240, 0, 80, 96)
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0eh7s")
+"texture": SubResource("AtlasTexture_l2o1i")
 }],
 "loop": false,
 "name": &"air_attack_active",
@@ -149,7 +149,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_l2o1i")
+"texture": SubResource("AtlasTexture_qmjtk")
 }],
 "loop": false,
 "name": &"air_attack_recover",
@@ -157,7 +157,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qmjtk")
+"texture": SubResource("AtlasTexture_sfkw8")
 }],
 "loop": false,
 "name": &"air_attack_windup",

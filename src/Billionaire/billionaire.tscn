@@ -8,7 +8,6 @@
 [ext_resource type="AudioStream" uid="uid://ctms8u1xdn58n" path="res://assets/sounds/woosh/who_var_01.wav" id="7_tyvur"]
 [ext_resource type="PackedScene" uid="uid://c6gdmgoo58hb7" path="res://src/Billionaire/AttackPattern.tscn" id="7_y3yri"]
 [ext_resource type="AudioStream" uid="uid://tos83h286mtr" path="res://assets/sounds/woosh/who_var_02.wav" id="8_m47ac"]
-[ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="9_kdd1f"]
 [ext_resource type="AudioStream" uid="uid://cslt4eee5xy2w" path="res://assets/sounds/woosh/who_var_03.wav" id="9_ym7v7"]
 [ext_resource type="AudioStream" uid="uid://br8a34y2lixbm" path="res://assets/sounds/woosh/who_var_04.wav" id="10_60pqq"]
 [ext_resource type="AudioStream" uid="uid://c3p0l877cnqyw" path="res://assets/sounds/punch.wav" id="11_3bth7"]
@@ -24,6 +23,7 @@
 [ext_resource type="SpriteFrames" uid="uid://bfujddc8s3ueg" path="res://src/Billionaire/bubble_300.tres" id="17_wh08u"]
 [ext_resource type="AudioStream" uid="uid://cllgjdbpyommg" path="res://assets/sounds/Ennemy/growl1.ogg" id="19_60pqq"]
 [ext_resource type="AudioStream" uid="uid://nxluy60n7c6d" path="res://assets/sounds/Ennemy/growl5.ogg" id="20_dvqb2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/parachute.png" id="20_jeg63"]
 [ext_resource type="AudioStream" uid="uid://ddawsibvxuljf" path="res://assets/sounds/Ennemy/ouille.ogg" id="21_0ym8j"]
 [ext_resource type="AudioStream" uid="uid://b17vtcrvuye8v" path="res://assets/sounds/Ennemy/ouille2.ogg" id="22_327hu"]
 
@@ -345,7 +345,7 @@ base_weigth = 1.1
 [node name="ParachuteSprite" type="Sprite2D" parent="AttackPatterns/Parachute"]
 visible = false
 position = Vector2(0, -149)
-texture = ExtResource("9_kdd1f")
+texture = ExtResource("20_jeg63")
 
 [node name="Schlassage" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Téma la paire"
