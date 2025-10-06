@@ -74,6 +74,7 @@ debug_color = Color(0.7039909, 0.48934525, 0.06790887, 0.41960785)
 attack_name = "Money Shot !"
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="AttackPatterns/JumpConeBullets"]
+bus = &"SFX"
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("6_qa6ra")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
@@ -83,11 +84,13 @@ attack_name = "Minting Plate !"
 cooldown = 5.0
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/Machinegun"]
+bus = &"SFX"
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("8_d2xww")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="AttackPatterns/Machinegun"]
+bus = &"SFX"
 script = ExtResource("3_bqgkp")
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
@@ -96,6 +99,7 @@ attack_name = "Make it rain !"
 cooldown = 30.0
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/Rain"]
+bus = &"SFX"
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("6_7xygs")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
@@ -108,11 +112,13 @@ attack_name = "N.D.A"
 cooldown = 10.0
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/RepulsiveWave"]
+bus = &"SFX"
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("9_qa6ra")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="ColumnSound" type="AudioStreamPlayer" parent="AttackPatterns/RepulsiveWave"]
+bus = &"SFX"
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("11_tafn6")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
@@ -197,6 +203,7 @@ attack_name = "LaserCage"
 net_worth_percent_threshold = 30.0
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/LaserCage"]
+bus = &"SFX"
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("6_7xygs")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
@@ -206,6 +213,7 @@ attack_name = "LaserSweep"
 cooldown = 8.0
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/LaserSweep"]
+bus = &"SFX"
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("6_7xygs")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
@@ -214,6 +222,7 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 attack_name = "LaserWarning"
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/LaserWarning"]
+bus = &"SFX"
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("6_7xygs")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
@@ -221,6 +230,7 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 [node name="SFX" type="Node" parent="."]
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="SFX"]
+bus = &"SFX"
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("11_d2xww")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"

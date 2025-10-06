@@ -2,7 +2,7 @@
 
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
-uid="uid://bv3ulg5uq6gf"
+uid="uid://wh8eb8on3tf1"
 path="res://.godot/imported/tax_loophole.ogg-321f23e6f1734f143dbd4116f7bad890.oggvorbisstr"
 
 [deps]
@@ -14,6 +14,6 @@ dest_files=["res://.godot/imported/tax_loophole.ogg-321f23e6f1734f143dbd4116f7ba
 
 loop=false
 loop_offset=0
-bpm=0
-beat_count=0
+bpm=60.0
+beat_count=8
 bar_beats=4

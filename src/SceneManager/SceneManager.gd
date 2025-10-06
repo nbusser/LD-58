@@ -2,15 +2,16 @@ class_name SceneManager
 
 extends Control
 
+signal changed_to_level_music
+
+const LEVEL_MUSIC = 0
+
 # Settings of all levels. To be configured from the editor
 @export var levels: Array[LevelData]
 
-var current_audio_player: AudioStreamPlayer
-
 var current_scene:
 	set = set_scene
-
-@onready var music_players = $Musics.get_children() as Array[AudioStreamPlayer]
+var _last_idx: int = -1
 
 @onready var main_menu = preload("res://src/MainMenu/MainMenu.tscn")
 @onready var level = preload("res://src/Level/Level.tscn")
@@ -21,6 +22,10 @@ var current_scene:
 @onready var game_over = preload("res://src/GameOver/GameOver.tscn")
 
 @onready var viewport: Viewport = $SubViewportContainer/SubViewport
+@onready var music_player: AudioStreamPlayer = $MusicPlayer
+@onready var music_stream_interactive: AudioStreamInteractive = music_player.stream
+@onready
+var music_interactive_playback: AudioStreamPlaybackInteractive = music_player.get_stream_playback()
 
 
 func set_scene(new_scene: Node) -> void:
@@ -39,9 +44,19 @@ func _ready() -> void:
 	_run_main_menu()
 
 
+func play_level_music() -> void:
+	music_interactive_playback.switch_to_clip(LEVEL_MUSIC)
+
+
 func _process(_delta: float) -> void:
 	if Input.is_action_pressed("quit"):
 		get_tree().quit()
+
+	var idx := music_interactive_playback.get_current_clip_index()
+	if idx != _last_idx:
+		_last_idx = idx
+		if idx == LEVEL_MUSIC:
+			emit_signal("changed_to_level_music")
 
 
 func _reset_game_state() -> void:
@@ -54,7 +69,7 @@ func _quit_game() -> void:
 
 func _run_main_menu() -> void:
 	var scene: MainMenu = main_menu.instantiate()
-	change_music_track(music_players[0])
+	# change_music_track(music_players[0])
 	self.current_scene = scene
 
 
@@ -69,7 +84,8 @@ func _run_level() -> void:
 	# Provies its settings to the level
 	scene.init(GameState.current_level_number, levels[GameState.current_level_number])
 	# Play level music
-	change_music_track(music_players[GameState.current_level_number % len(music_players)])
+	play_level_music()
+	await changed_to_level_music
 	self.current_scene = scene
 
 
@@ -131,14 +147,6 @@ func _run_credits(can_go_back: bool) -> void:
 	var scene: Credits = credits.instantiate()
 	scene.set_back(can_go_back)
 	self.current_scene = scene
-
-
-func change_music_track(new_audio_player: AudioStreamPlayer) -> void:
-	if current_audio_player != new_audio_player:
-		for mp in music_players:
-			mp.stop()
-		new_audio_player.play()
-		current_audio_player = new_audio_player
 
 
 # State machine handling the state of the whole game
