@@ -2,7 +2,6 @@ class_name HUD
 
 extends Control
 
-
 var nb_coins:
 	set = set_nb_coins
 
