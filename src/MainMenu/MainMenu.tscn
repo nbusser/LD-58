@@ -1,9 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://bvgh060edrp7j"]
+[gd_scene load_steps=21 format=3 uid="uid://bvgh060edrp7j"]
 
 [ext_resource type="Script" uid="uid://btvd0b0skhsfa" path="res://src/MainMenu/MainMenu.gd" id="1"]
 [ext_resource type="Script" uid="uid://se5xxijidgr3" path="res://src/UpgradeSelector/upgrade_selector.gd" id="2_uy7kt"]
 [ext_resource type="Texture2D" uid="uid://oujy4qm2cxuw" path="res://assets/sprites/upgrade_selector/corkboard.png" id="3_ah704"]
 [ext_resource type="Script" uid="uid://b5nh2h0ywhfv" path="res://src/UpgradeSelector/upgrade_card_menu.gd" id="4_6scwk"]
+[ext_resource type="Texture2D" uid="uid://dp404qpcukqlu" path="res://assets/title.png" id="4_ah704"]
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="5_ypdof"]
 [ext_resource type="Script" uid="uid://yeevmoyvkx8e" path="res://src/UpgradeSelector/upgrade_card_data.gd" id="6_e1bcd"]
 [ext_resource type="Texture2D" uid="uid://llhbf5hj1pua" path="res://assets/sprites/upgrade_selector/upgrade_sheet.png" id="7_20hqm"]
@@ -129,6 +130,7 @@ grow_vertical = 2
 color = Color(0.5176471, 0.28627452, 0, 0.42745098)
 
 [node name="Label" type="Label" parent="UpgradeSelector"]
+visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -140,14 +142,25 @@ theme_override_font_sizes/font_size = 70
 text = "Don Trickle goes to work"
 horizontal_alignment = 1
 
+[node name="TextureRect2" type="TextureRect" parent="UpgradeSelector"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 544.0
+offset_top = 20.0
+offset_right = 1056.0
+offset_bottom = 210.0
+texture = ExtResource("4_ah704")
+expand_mode = 2
+stretch_mode = 4
+
 [node name="CenterContainer" type="CenterContainer" parent="UpgradeSelector"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -260.0
-offset_bottom = 340.0
+offset_top = -220.0
+offset_bottom = 380.0
 grow_horizontal = 2
 grow_vertical = 2
 
