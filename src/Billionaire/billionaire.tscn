@@ -72,6 +72,9 @@ debug_color = Color(0.7039909, 0.48934525, 0.06790887, 0.41960785)
 
 [node name="JumpConeBullets" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Money Shot !"
+prefered_distance_x = 0.4
+prefered_distance_tolerance_x = 0.15
+rarity = 1.5
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="AttackPatterns/JumpConeBullets"]
 bus = &"SFX"
@@ -81,7 +84,8 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="Machinegun" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Minting Plate !"
-cooldown = 5.0
+cooldown = 10.0
+maximum_distance_x = 0.4
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/Machinegun"]
 bus = &"SFX"
@@ -96,7 +100,10 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="Rain" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Make it rain !"
-cooldown = 30.0
+cooldown = 20.0
+minimum_distance_x = 0.15
+prefered_distance_x = 0.7
+prefered_distance_tolerance_x = 0.25
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/Rain"]
 bus = &"SFX"
@@ -106,10 +113,17 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="RainCarpetBomb" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Hedge fund !"
+cooldown = 20.0
+minimum_distance_x = 0.15
+prefered_distance_x = 0.7
+prefered_distance_tolerance_x = 0.25
 
 [node name="RepulsiveWave" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "N.D.A"
 cooldown = 10.0
+maximum_distance_x = 0.18
+prefered_distance_x = 0.05
+prefered_distance_tolerance_x = 0.05
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/RepulsiveWave"]
 bus = &"SFX"
@@ -201,6 +215,8 @@ texture = ExtResource("9_kdd1f")
 [node name="LaserCage" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "LaserCage"
 net_worth_percent_threshold = 30.0
+prefered_distance_x = 0.4
+rarity = 0.8
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/LaserCage"]
 bus = &"SFX"
@@ -211,6 +227,8 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 [node name="LaserSweep" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "LaserSweep"
 cooldown = 8.0
+prefered_distance_x = 0.4
+rarity = 0.8
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/LaserSweep"]
 bus = &"SFX"
@@ -220,6 +238,8 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="LaserWarning" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "LaserWarning"
+prefered_distance_x = 0.4
+rarity = 0.8
 
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/LaserWarning"]
 bus = &"SFX"
@@ -229,6 +249,11 @@ metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="Parachute" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "Golden parachute"
+cooldown = 5.0
+maximum_distance_x = 0.45
+prefered_distance_x = 0.15
+prefered_distance_tolerance_x = 0.05
+rarity = 1.1
 
 [node name="ParachuteSprite" type="Sprite2D" parent="AttackPatterns/Parachute"]
 visible = false

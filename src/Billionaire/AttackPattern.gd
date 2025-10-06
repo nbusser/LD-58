@@ -11,8 +11,8 @@ extends Node2D
 # 1.0 means the player and the boss are in each walls
 @export var minimum_distance_x: float = 0.0
 @export var maximum_distance_x: float = 1.0
-@export var prefered_distance_x: float = 0.5
-@export var prefered_distance_tolerance_x: float = 0.5
+@export var prefered_distance_x: float = 0.3
+@export var prefered_distance_tolerance_x: float = 0.1
 
 # Can be lowered if the attack is more rare
 @export var rarity: float = 1.0
@@ -38,13 +38,18 @@ func call_routine() -> void:
 func calculate_weight(
 	theoretical_max_distance_x: float, distance_to_player_x: float, billionaire_money: float
 ) -> float:
-	if not enabled or not is_ready() or billionaire_money > net_worth_percent_threshold:
+	# We know the theoretical maximum distance (arena width), so we can normalize distance to player
+	var normalized_distance = clamp(distance_to_player_x / theoretical_max_distance_x, 0.0, 1.0)
+	if (
+		not enabled
+		or not is_ready()
+		or billionaire_money > net_worth_percent_threshold
+		or normalized_distance < minimum_distance_x
+		or normalized_distance > maximum_distance_x
+	):
 		return 0.0
 
 	# Pompé à un LLM. A surveiller
-
-	# We know the theoretical maximum distance (arena width), so we can normalize distance to player
-	var normalized_distance = clamp(distance_to_player_x / theoretical_max_distance_x, 0.0, 1.0)
 
 	# Gaussian proximity factor
 	var diff = normalized_distance - prefered_distance_x

@@ -63,6 +63,16 @@ func _get_attack_pattern():
 			)
 		}
 
+	# Uncomment this block to benchmark a specific attack
+	# var debug_only_benchmark_attack = func(attack_index: int):
+	# 	var attack: AttackPattern = _attack_patterns.get_child(attack_index)
+	# 	var normalized_distance = clamp(distance_to_player_x / theoretical_max_distance_x, 0.0, 1.0)
+	# 	print("Normalized distance: ", normalized_distance)
+	# 	print(map_weights.call(attack))
+	# 	return null
+	# debug_only_benchmark_attack.call(8) # DEBUG ONLY - DO NOT COMMIT UNCOMMENTED
+	# return null # DEBUG ONLY - DO NOT COMMIT UNCOMMENTED
+
 	var attacks_and_weights = _attack_patterns.get_children().map(map_weights).filter(
 		func(attack_and_weight): return attack_and_weight.weight > 0.0
 	)
