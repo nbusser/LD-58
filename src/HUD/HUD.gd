@@ -49,7 +49,7 @@ func update_life(health):
 		if health >= 2:
 			heart.value = 1
 			health -= 2
-		elif health ==  1:
+		elif health == 1:
 			heart.value = .5
 			health -= 1
 		else:
