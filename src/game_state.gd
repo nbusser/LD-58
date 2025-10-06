@@ -1,16 +1,33 @@
 extends Node
 
+const BILLIONAIRE_INITIAL_CASH = 100000000000
+
 var current_phase: int = 0
-var billionaire_cash: int = 100000000000
+var billionaire_cash: int = BILLIONAIRE_INITIAL_CASH
 var player_cash: int = 0
 var latest_level_state: LevelState = null
 var active_upgrades: Array[UpgradeCardData] = []
 var player_stats: PlayerStats = PlayerStats.new()
 
+var difficulty_factor:
+	get = _get_difficulty_factor
+
+
+func _get_difficulty_factor() -> float:
+	var base_difficulty = 1.0
+	var current_phase_difficulty = current_phase * 0.1
+
+	# The 10k first $ have no impact on difficulty
+	var initial_offset = 10000
+	var lost_health = max(BILLIONAIRE_INITIAL_CASH - billionaire_cash - initial_offset, 0.0)
+	var health_difference_difficulty = log(lost_health) / log(10) if lost_health != 0 else 0.0
+
+	return base_difficulty + current_phase_difficulty + health_difference_difficulty
+
 
 func reset():
 	current_phase = 0
-	billionaire_cash = 100000000000
+	billionaire_cash = BILLIONAIRE_INITIAL_CASH
 	player_cash = 0
 
 
