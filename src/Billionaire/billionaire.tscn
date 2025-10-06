@@ -315,7 +315,7 @@ base_weigth = 1.5
 [node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/Schlassage"]
 bus = &"SFX"
 script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("9_qa6ra")])
+sounds = Array[AudioStream]([ExtResource("6_tyvur")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
 [node name="HitSound" type="AudioStreamPlayer" parent="AttackPatterns/Schlassage"]
