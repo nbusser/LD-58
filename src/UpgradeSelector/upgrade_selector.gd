@@ -120,11 +120,10 @@ func _exit_tree() -> void:
 
 
 func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
-	print("Selected card index: %d" % index)
-
-	var applied = GameState.apply_upgrade(card_data)
-	if not applied:
-		return
+	if !(get_parent().name == "MainMenu"):
+		var applied = GameState.apply_upgrade(card_data)
+		if not applied:
+			return
 
 	var card: UpgradeCard = card_container.get_child(index)
 	if card != null:
@@ -140,7 +139,7 @@ func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
 		)
 
 		await card.sign_contract()
-
+		
 	await (
 		create_tween()
 		. tween_property(_cursor, "position", _cursor_end_position.position, 0.5)
@@ -148,6 +147,15 @@ func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
 		. set_ease(Tween.EASE_OUT)
 		. finished
 	)
+
+	if (get_parent().name == "MainMenu"):
+		if index == 0:
+			Globals.end_scene(Globals.EndSceneStatus.MAIN_MENU_CLICK_START)
+		elif index == 1:
+			Globals.end_scene(Globals.EndSceneStatus.MAIN_MENU_CLICK_CREDITS)
+		elif index == 2:
+			Globals.end_scene(Globals.EndSceneStatus.MAIN_MENU_CLICK_QUIT)
+		return
 
 	selectable_cards.pop_at(index)
 	_reset_selectable_cards()

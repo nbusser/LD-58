@@ -161,7 +161,7 @@ volume_db = 5.0
 bus = &"SFX"
 
 [node name="RainCarpetBomb" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
-attack_name = "Hedge fund !"
+attack_name = "Hedge fund!"
 cooldown = 20.0
 minimum_difficulty_factor = 3.0
 minimum_distance_x = 0.15

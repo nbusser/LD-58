@@ -4,3 +4,4 @@
 
 [resource]
 base_font = ExtResource("1_cec7k")
+variation_embolden = 0.67
