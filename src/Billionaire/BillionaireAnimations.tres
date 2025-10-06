@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=58 format=3 uid="uid://cwedgk16x5d4h"]
+[gd_resource type="SpriteFrames" load_steps=60 format=3 uid="uid://cwedgk16x5d4h"]
 
 [ext_resource type="Texture2D" uid="uid://bn6ucip7nxf3i" path="res://assets/sprites/billionaire/idle_80.png" id="1_82bc1"]
 [ext_resource type="Texture2D" uid="uid://bksavvlryneu7" path="res://assets/sprites/billionaire/air_attack.png" id="1_pnkw0"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dn6qr8tu63o7v" path="res://assets/sprites/billionaire/machinegun_80.png" id="5_3s7sa"]
 [ext_resource type="Texture2D" uid="uid://d1dohlcv23s2p" path="res://assets/sprites/billionaire/kick_l.png" id="6_fg0cj"]
 [ext_resource type="Texture2D" uid="uid://dfba4f4xo2exf" path="res://assets/sprites/billionaire/kick_r.png" id="7_s3hll"]
+[ext_resource type="Texture2D" uid="uid://npxo5lnsu81a" path="res://assets/sprites/billionaire/shout_80.png" id="10_iwrfx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kjpdl"]
 atlas = ExtResource("1_pnkw0")
@@ -201,6 +202,10 @@ region = Rect2(1120, 0, 224, 256)
 [sub_resource type="AtlasTexture" id="AtlasTexture_mio22"]
 atlas = ExtResource("5_3s7sa")
 region = Rect2(1344, 0, 224, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iiioo"]
+atlas = ExtResource("10_iwrfx")
+region = Rect2(0, 0, 224, 240)
 
 [resource]
 animations = [{
@@ -413,5 +418,13 @@ animations = [{
 }],
 "loop": true,
 "name": &"schlass_r",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iiioo")
+}],
+"loop": true,
+"name": &"shout",
 "speed": 5.0
 }]

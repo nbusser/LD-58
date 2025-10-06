@@ -83,6 +83,7 @@ shape = SubResource("RectangleShape2D_qa6ra")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = ExtResource("2_d2xww")
+animation = &"shout"
 
 [node name="Hitbox" type="Area2D" parent="." groups=["billionaire"]]
 collision_layer = 4

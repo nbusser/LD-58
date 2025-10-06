@@ -52,6 +52,7 @@ func _ready() -> void:
 
 # Return a random attack pattern
 func _get_attack_pattern():
+	# return _attack_patterns.get_child(9)
 	var theoretical_max_distance_x = abs(
 		$"../Borders/WallL".position.x - $"../Borders/WallR".position.x
 	)
@@ -661,17 +662,35 @@ func _schlassage_routine():
 	_schlass_connected = false
 
 	$AttackPatterns/Schlassage/FocusSound.play_sound()
-	$Sprite2D.play("focus")
+
+	$Sprite2D.play("shout")
+
+	var coroutine_state = {"is_running": true}
+	var flip_sprite_coroutine = func(state):
+		while state.is_running:
+			if global_position.x - _player.global_position.x > 0:  # Left
+				_schlass.scale.x = 1
+				$Sprite2D.flip_h = false
+			else:  # Right
+				_schlass.scale.x = -1
+				$Sprite2D.flip_h = true
+			await get_tree().process_frame
+		# Cleanup
+		$Sprite2D.flip_h = false
+
+	flip_sprite_coroutine.call_deferred(coroutine_state)
+
 	var focus_duration: float = 1.5 - 1.0 * (GameState.difficulty_factor - 1.0)
 	await get_tree().create_timer(focus_duration).timeout
 
+	coroutine_state.is_running = false
+
 	_schlass.visible = true
 	_schlass.monitoring = true
+
 	if global_position.x - _player.global_position.x > 0:  # Left
-		_schlass.scale.x = 1
 		$Sprite2D.play("schlass_l")
-	else:  # Right
-		_schlass.scale.x = -1
+	else:
 		$Sprite2D.play("schlass_r")
 
 	$AttackPatterns/Schlassage/AttackSound.play_sound()
@@ -680,6 +699,7 @@ func _schlassage_routine():
 
 	_schlass.visible = false
 	_schlass.monitoring = false
+	$Sprite2D.flip_h = false
 
 	$Sprite2D.play("default")
 
