@@ -80,7 +80,7 @@ texture = ExtResource("5_vkv47")
 expand_mode = 1
 
 [node name="RecapProjection" type="Sprite2D" parent="."]
-position = Vector2(392.84656, 691.77795)
+position = Vector2(403.99997, 703)
 rotation = -0.7452556
 scale = Vector2(0.37936962, 0.41494012)
 skew = -0.3822271
@@ -89,7 +89,7 @@ texture = SubResource("ViewportTexture_q8van")
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(600, 600)
+size = Vector2i(600, 700)
 render_target_update_mode = 4
 
 [node name="Recap" parent="SubViewport" instance=ExtResource("5_q8van")]
