@@ -7,6 +7,7 @@ signal close
 const ICON_TEXTURE = preload("res://assets/sprites/icon.png")
 
 const UpgradeCard = preload("res://src/UpgradeSelector/upgrade_card.gd")
+const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd")
 
 @export var available_cards: Array[UpgradeCardData] = [
 	# PROFIT
@@ -221,7 +222,7 @@ func _pick_cards(nb_cards: int) -> Array[UpgradeCardData]:
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	for child in card_container.get_children():
-		if child is UpgradeCard:
+		if child is UpgradeCard or child is UpgradeCardMenu:
 			child.card_selected.connect(_on_card_selected.bind(child.get_index()))
 	_pick_cards(3)
 
@@ -242,12 +243,13 @@ func _exit_tree() -> void:
 
 
 func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
+	print("Card selected: %s" % card_data.title)
 	if !(get_parent().name == "MainMenu"):
 		var applied = GameState.apply_upgrade(card_data)
 		if not applied:
 			return
 
-	var card: UpgradeCard = card_container.get_child(index)
+	var card = card_container.get_child(index)
 	if card != null:
 		_lock_cursor = true
 		card.signature_point_added.connect(

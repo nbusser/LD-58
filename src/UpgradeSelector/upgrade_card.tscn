@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://b042ulb2eqxpg"]
 
-[ext_resource type="Script" uid="uid://b5nh2h0ywhfv" path="res://src/UpgradeSelector/upgrade_card.gd" id="1_8s5m4"]
+[ext_resource type="Script" uid="uid://b56r8whxk8ofo" path="res://src/UpgradeSelector/upgrade_card.gd" id="1_8s5m4"]
 [ext_resource type="Script" uid="uid://yeevmoyvkx8e" path="res://src/UpgradeSelector/upgrade_card_data.gd" id="2_tr77e"]
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="2_wuml4"]
 [ext_resource type="Texture2D" uid="uid://llhbf5hj1pua" path="res://assets/sprites/upgrade_selector/upgrade_sheet.png" id="4_qwt42"]
-[ext_resource type="Texture2D" uid="uid://css0pguf5gdda" path="res://assets/sprites/upgrade_selector/upgrade-pin-red.png" id="5_40kcd"]
+[ext_resource type="Texture2D" uid="uid://c5f2hp77gfcbv" path="res://assets/sprites/upgrade_selector/upgrade-pin-orange.png" id="5_iqrqx"]
 [ext_resource type="FontVariation" uid="uid://6ps3tjx81bnu" path="res://assets/fonts/contract_font.tres" id="6_iqrqx"]
 [ext_resource type="Texture2D" uid="uid://bem8mbsb0dthk" path="res://assets/sprites/upgrade_selector/too_poor.png" id="7_iqrqx"]
 
@@ -40,7 +40,7 @@ unique_name_in_owner = true
 layout_mode = 0
 offset_right = 420.0
 offset_bottom = 600.0
-texture = ExtResource("5_40kcd")
+texture = ExtResource("5_iqrqx")
 
 [node name="LevelLabel" type="Label" parent="."]
 unique_name_in_owner = true

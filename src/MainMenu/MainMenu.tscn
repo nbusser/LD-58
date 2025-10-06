@@ -1,9 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://bvgh060edrp7j"]
+[gd_scene load_steps=19 format=3 uid="uid://bvgh060edrp7j"]
 
 [ext_resource type="Script" uid="uid://btvd0b0skhsfa" path="res://src/MainMenu/MainMenu.gd" id="1"]
 [ext_resource type="Script" uid="uid://se5xxijidgr3" path="res://src/UpgradeSelector/upgrade_selector.gd" id="2_uy7kt"]
 [ext_resource type="Texture2D" uid="uid://oujy4qm2cxuw" path="res://assets/sprites/upgrade_selector/corkboard.png" id="3_ah704"]
-[ext_resource type="Script" uid="uid://b5nh2h0ywhfv" path="res://src/UpgradeSelector/upgrade_card.gd" id="4_6scwk"]
+[ext_resource type="Script" uid="uid://b5nh2h0ywhfv" path="res://src/UpgradeSelector/upgrade_card_menu.gd" id="4_6scwk"]
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="5_ypdof"]
 [ext_resource type="Script" uid="uid://yeevmoyvkx8e" path="res://src/UpgradeSelector/upgrade_card_data.gd" id="6_e1bcd"]
 [ext_resource type="Texture2D" uid="uid://llhbf5hj1pua" path="res://assets/sprites/upgrade_selector/upgrade_sheet.png" id="7_20hqm"]
@@ -249,7 +249,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
 theme_override_fonts/font = ExtResource("9_0vb0y")
 theme_override_font_sizes/font_size = 30
-text = " 
+text = "
 
 "
 horizontal_alignment = 1
@@ -402,7 +402,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
 theme_override_fonts/font = ExtResource("9_0vb0y")
 theme_override_font_sizes/font_size = 30
-text = " 
+text = "
 
 "
 horizontal_alignment = 1
@@ -549,7 +549,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
 theme_override_fonts/font = ExtResource("9_0vb0y")
 theme_override_font_sizes/font_size = 30
-text = " 
+text = "
 
 "
 horizontal_alignment = 1
