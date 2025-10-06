@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=20 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="SpriteFrames" uid="uid://cwedgk16x5d4h" path="res://src/Billionaire/BillionaireAnimations.tres" id="2_d2xww"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://dj4nwmkxwucqt" path="res://assets/sounds/jump_cone_shoot.wav" id="6_qa6ra"]
 [ext_resource type="PackedScene" uid="uid://c6gdmgoo58hb7" path="res://src/Billionaire/AttackPattern.tscn" id="7_y3yri"]
 [ext_resource type="AudioStream" uid="uid://ne2y63b0451" path="res://assets/sounds/machinegun_focus.wav" id="8_d2xww"]
+[ext_resource type="Script" uid="uid://bnpu5oypbbgo7" path="res://src/Billionaire/AttackPattern.gd" id="8_tafn6"]
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="9_kdd1f"]
 [ext_resource type="AudioStream" uid="uid://cl4rktl331388" path="res://assets/sounds/repulsive_wave_focus.wav" id="9_qa6ra"]
 [ext_resource type="AudioStream" uid="uid://6u1f8h66ppko" path="res://assets/sounds/hurt.wav" id="11_d2xww"]
@@ -99,6 +100,11 @@ cooldown = 30.0
 script = ExtResource("3_bqgkp")
 sounds = Array[AudioStream]([ExtResource("6_7xygs")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
+[node name="RainCarpetBomb" type="Node2D" parent="AttackPatterns"]
+script = ExtResource("8_tafn6")
+attack_name = "Hedge fund !"
+metadata/_custom_type_script = "uid://bnpu5oypbbgo7"
 
 [node name="RepulsiveWave" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "N.D.A"

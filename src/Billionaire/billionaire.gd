@@ -34,6 +34,7 @@ func _ready() -> void:
 	$AttackPatterns/JumpConeBullets.routine = _jump_cone_bullets_routine
 	$AttackPatterns/Machinegun.routine = _machinegun_routine
 	$AttackPatterns/Rain.routine = _rain_routine
+	$AttackPatterns/RainCarpetBomb.routine = _rain_carpet_bomb_routine
 	$AttackPatterns/RepulsiveWave.routine = _repulse_wave_routine
 	$AttackPatterns/LaserWarning.routine = _laser_warning_routine
 	$AttackPatterns/LaserSweep.routine = _laser_sweep_routine
@@ -246,6 +247,43 @@ func _rain_routine() -> void:
 				var bullet_position = Vector2(bullet_position_x, bullet_position_y)
 				_spawn_bullet(bullet_position, Vector2.DOWN, 50, rain_bullet_speed, 1.0, 800)
 			await get_tree().create_timer(rain_bullet_interval_duration).timeout
+
+	$AttackPatterns/Rain/FocusSound.play_sound()
+
+	$Sprite2D.play("focus")
+	var focus_duration: float = 2.0
+	await get_tree().create_timer(focus_duration).timeout
+
+	$Sprite2D.play("laugh")
+	await spawn_rain_coroutine.call()
+	$Sprite2D.play("default")
+
+
+func _rain_carpet_bomb_routine() -> void:
+	var spawn_rain_coroutine = func() -> void:
+		var nb_waves: int = randi() % 2 + 1
+		var wave_interval_duration: float = 1.0
+
+		var rain_bullet_speed: float = 150.0
+		var rain_bullet_interval_x: int = 70
+
+		var spawn_y = $"../BillionaireBorders/Ceiling".position.y + 10
+		var min_x = $"../Borders/WallL".position.x + 10
+		var max_x = $"../Borders/WallR".position.x - 10
+		var nb_slots: int = abs(min_x - max_x) / rain_bullet_interval_x
+
+		var slot_hole_size = 3
+
+		for _wave in range(nb_waves):
+			var slot_hole_index = randi() % (nb_slots - slot_hole_size)
+			var slot_range = (
+				range(slot_hole_index) + range(slot_hole_index + slot_hole_size, nb_slots)
+			)
+			for i in slot_range:
+				var bullet_position_x = min_x + (i * rain_bullet_interval_x)
+				var bullet_position = Vector2(bullet_position_x, spawn_y)
+				_spawn_bullet(bullet_position, Vector2.DOWN, 50, rain_bullet_speed, 1.0, 400)
+			await get_tree().create_timer(wave_interval_duration).timeout
 
 	$AttackPatterns/Rain/FocusSound.play_sound()
 
