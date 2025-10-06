@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c842h3l0862cb" path="res://assets/sprites/sky_0.png" id="2_clcnw"]
 [ext_resource type="Texture2D" uid="uid://bgljkyym7601t" path="res://assets/sprites/mountain_0.png" id="3_5q5n4"]
 [ext_resource type="PackedScene" uid="uid://dwiu4cm7rlq0p" path="res://src/HUD/HUD.tscn" id="3_p81om"]
-[ext_resource type="Shader" uid="uid://b0hbcpqv8d8w" path="res://src/Level/PostProcess.gdshader" id="4_5g3p6"]
+[ext_resource type="Shader" path="res://src/Level/PostProcess.gdshader" id="4_5g3p6"]
 [ext_resource type="Script" uid="uid://uvipfx8brsj0" path="res://src/UI/PostProcessOverlay.gd" id="4_c7nqk"]
 [ext_resource type="Shader" uid="uid://ccoc5wp0cgskd" path="res://src/Laser.gdshader" id="4_noe52"]
 [ext_resource type="Texture2D" uid="uid://cdo8e7hc3mt7t" path="res://assets/sprites/mountain_1.png" id="4_r00bm"]
@@ -127,4 +127,9 @@ script = ExtResource("7_1b0u6")
 sounds = Array[AudioStream]([ExtResource("8_qpfp4")])
 metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
 
+[node name="MonthTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="MonthTimer" to="." method="_on_month_timer_timeout"]

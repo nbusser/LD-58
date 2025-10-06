@@ -21,6 +21,8 @@ var billionaire_net_worth:
 @onready var dash_progress_bar: ProgressBar = $VBoxContainer/VBoxContainer/DashCooldown/ProgressBar
 @onready var fadein_pane: ColorRect = $FadeinPane
 @onready var hearts_container := $VBoxContainer/CenterContainer2/HeartsContainer
+@onready var calendar_year := $Calendar/Year
+@onready var calendar_month := $Calendar/Month
 @onready var Heart := preload("res://src/Hearts/Heart.tscn")
 
 
@@ -66,3 +68,37 @@ func _ready() -> void:
 	# Fadein animation
 	fadein_pane.visible = 1
 	create_tween().tween_property(fadein_pane, "modulate", Color.TRANSPARENT, 0.7)
+
+
+func set_month(m: int):
+	var month_text
+	match m:
+		0:
+			month_text = "JAN"
+		1:
+			month_text = "FEB"
+		2:
+			month_text = "MAR"
+		3:
+			month_text = "APR"
+		4:
+			month_text = "MAY"
+		5:
+			month_text = "JUN"
+		6:
+			month_text = "JUL"
+		7:
+			month_text = "AUG"
+		8:
+			month_text = "SEP"
+		9:
+			month_text = "OCT"
+		10:
+			month_text = "NOV"
+		_:
+			month_text = "DEC"
+	calendar_month.set_text(month_text)
+
+
+func set_year(y: int):
+	calendar_year.set_text(str(y))

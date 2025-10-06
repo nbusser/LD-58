@@ -5,9 +5,11 @@ extends Node
 signal billionaire_hit(amount: int, remaining_net_worth: int)
 
 var level_state: LevelState
+var month = 0
 
 @onready var hud: HUD = $UI/HUD
 @onready var timer: Timer = $Timer
+@onready var month_timer: Timer = $MonthTimer
 @onready var _player: Player = $Map/Player
 @onready var _billionaire: Billionaire = $Map/Billionaire
 
@@ -96,3 +98,9 @@ func on_player_dies(animation_finished_coroutine_to_await: Callable):
 	# 		}
 	# 	)
 	# )
+
+
+func _on_month_timer_timeout() -> void:
+	month += 1
+	hud.set_month(month)
+	month_timer.start(5)
