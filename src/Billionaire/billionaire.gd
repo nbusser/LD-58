@@ -314,7 +314,7 @@ func _parachute_routine() -> void:
 	run_coroutine.call_deferred()
 
 	# Jump
-	await _jump_to_peek(800)
+	await _jump_to_peek(600)
 
 	var player_watcher_coroutine_state = {"is_running": true, "gunpoint": Vector2.ZERO}
 	# This coroutine will take care of updating anim and giving us gunpoint via the dict
@@ -322,6 +322,40 @@ func _parachute_routine() -> void:
 
 	# Show parachute
 	$AttackPatterns/Parachute/ParachuteSprite.visible = true
+
+	var parachute_swinging_coroutine = func():
+		var angle = 45.0
+		var duration = 1.5
+
+		var tween = create_tween()
+		tween.set_loops()
+
+		var parachute = $AttackPatterns/Parachute/ParachuteSprite
+		(
+			tween
+			. tween_property(parachute, "rotation_degrees", angle, duration)
+			. set_trans(Tween.TRANS_SINE)
+			. set_ease(Tween.EASE_IN_OUT)
+		)
+		(
+			tween
+			. tween_property(parachute, "rotation_degrees", -angle, duration * 2)
+			. set_trans(Tween.TRANS_SINE)
+			. set_ease(Tween.EASE_IN_OUT)
+		)
+		(
+			tween
+			. tween_property(parachute, "rotation_degrees", 0.0, duration)
+			. set_trans(Tween.TRANS_SINE)
+			. set_ease(Tween.EASE_IN_OUT)
+		)
+
+		while state.has_parachute:
+			await get_tree().process_frame
+		# Cleanup
+		tween.kill()
+		parachute.rotation_degrees = 0.0
+	parachute_swinging_coroutine.call_deferred()
 
 	# Handle parachute friction physics
 	var parachute_friction_coroutine = func():
