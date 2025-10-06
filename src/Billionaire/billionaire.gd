@@ -22,6 +22,9 @@ var _is_level_timeout = false
 
 var _schlass_connected = false
 
+var _combo_count = 0
+var _last_hit_time = 0.0
+
 @onready var _idle_timer: Timer = $IdleTimer
 @onready var _bullets: Node2D = $"../Bullets"
 @onready var _player: Player = $"../Player"
@@ -32,6 +35,7 @@ var _schlass_connected = false
 @onready var _level: Level = $"../.."
 @onready var _coins: Node2D = $"../Coins"
 @onready var _lasers: Node2D = %Lasers
+@onready var _combo_label: Label = $ComboLabel
 
 
 func _ready() -> void:
@@ -103,6 +107,18 @@ func _get_attack_pattern():
 func _physics_process(delta: float) -> void:
 	if _is_gravity_enabled:
 		velocity.y += _GRAVITY * delta
+
+	if _combo_count > 0:
+		var time_since_hit = Time.get_unix_time_from_system() - _last_hit_time
+		if time_since_hit > _player.ps.combo_reset_time:
+			_combo_count = 0
+			_combo_label.visible = false
+		elif _combo_count > 1:
+			var time_remaining = _player.ps.combo_reset_time - time_since_hit
+			var t = time_remaining / _player.ps.combo_reset_time
+			var ease_t = 1.0 - pow(1.0 - t, 3.0)
+			_combo_label.modulate.a = ease_t
+			_combo_label.scale = Vector2.ONE * (0.5 + 0.5 * ease_t)
 
 	var knockback_decay = Vector2(700.0, 1000.0)
 	_knockback_velocity.x = move_toward(_knockback_velocity.x, 0.0, knockback_decay.x * delta)
@@ -531,7 +547,8 @@ func _on_idle_timer_timeout() -> void:
 
 
 func spawn_coins(amount: int):
-	var target_value = amount * coins_per_damage
+	var combo_mult = pow(_player.ps.combo_base, _combo_count)
+	var target_value = amount * coins_per_damage * combo_mult
 	var total_value_spawned = 0
 
 	var collectible_types = [
@@ -575,8 +592,30 @@ func spawn_coins(amount: int):
 		_level.change_net_worth(total_value_spawned)
 
 
+func _show_combo_stomp():
+	if _combo_count <= 1:
+		_combo_label.visible = false
+		return
+
+	var combo_mult = pow(_player.ps.combo_base, _combo_count)
+	_combo_label.text = "x%.1f" % combo_mult
+	_combo_label.visible = true
+	_combo_label.modulate.a = 1.0
+	_combo_label.scale = Vector2.ZERO
+
+	var tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(_combo_label, "scale", Vector2.ONE, 0.3)
+
+
 func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 	$SFX/HurtSound.play()
+
+	_combo_count += 1
+	_last_hit_time = Time.get_unix_time_from_system()
+
+	_show_combo_stomp()
 
 	if amount >= 0:
 		spawn_coins(amount)

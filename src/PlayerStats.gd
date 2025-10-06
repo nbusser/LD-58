@@ -40,6 +40,8 @@ var wall_jump_cooldown = .7
 var billionaire_head_bounce = 150
 var billionaire_knockback = 800
 var melee_damage = 100
+var combo_base = 1.5
+var combo_reset_time = 2.0
 # Dash glide
 var dash_glide_window = .1
 var glide_force = 3800
