@@ -192,7 +192,6 @@ shape = SubResource("RectangleShape2D_bqgkp")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
 position = Vector2(123, 82.5)
-scale = Vector2(1.2978122, 1.109375)
 sprite_frames = ExtResource("15_327hu")
 frame = 29
 frame_progress = 0.87248546
@@ -200,7 +199,6 @@ speed_scale = 2.5
 
 [node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column1"]
 position = Vector2(-124.99999, 83)
-scale = Vector2(1.298, 1.162875)
 sprite_frames = ExtResource("15_327hu")
 frame_progress = 0.18262367
 speed_scale = 2.5
@@ -220,14 +218,12 @@ shape = SubResource("RectangleShape2D_7xygs")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
 position = Vector2(-207, 60.999985)
-scale = Vector2(1.2431245, 1.7924999)
 sprite_frames = ExtResource("16_jeg63")
 frame_progress = 0.3998903
 speed_scale = 2.5
 
 [node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column2"]
 position = Vector2(204.99998, 58.822365)
-scale = Vector2(1.1651436, 1.8069491)
 sprite_frames = ExtResource("16_jeg63")
 frame_progress = 0.18021862
 speed_scale = 2.5
@@ -247,14 +243,12 @@ shape = SubResource("RectangleShape2D_1qyaf")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
 position = Vector2(295.00003, 12.999985)
-scale = Vector2(1.6294464, 3.247224)
 sprite_frames = ExtResource("17_wh08u")
 frame_progress = 0.9010395
 speed_scale = 2.5
 
 [node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3"]
 position = Vector2(-297, 15)
-scale = Vector2(1.5617173, 3.2265396)
 sprite_frames = ExtResource("17_wh08u")
 frame_progress = 0.43212867
 speed_scale = 2.5
