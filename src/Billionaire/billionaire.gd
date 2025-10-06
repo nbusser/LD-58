@@ -572,9 +572,9 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 
 	# Red glow on hit
 	var glow_routine = func():
-		modulate = Color(1, 0, 0)
+		$Sprite2D.modulate = Color(1, 0, 0)
 		await get_tree().create_timer(1.0).timeout
-		modulate = Color(1, 1, 1, 1)
+		$Sprite2D.modulate = Color(1, 1, 1, 1)
 	glow_routine.call()
 
 	var knockback_routine = func():
