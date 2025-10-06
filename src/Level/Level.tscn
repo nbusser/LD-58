@@ -37,10 +37,10 @@ shader_parameter/flicker_intensity = 0.2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_post_process"]
 shader = ExtResource("4_5g3p6")
-shader_parameter/desaturate_amount = 0.0
-shader_parameter/overlay_color = Vector3(0.95, 0.95, 1)
-shader_parameter/overlay_amount = 0.0
-shader_parameter/bloom_intensity = 1.0
+shader_parameter/desaturate_amount = 0.5
+shader_parameter/overlay_color = Vector3(0, 0.95, 0)
+shader_parameter/overlay_amount = 0.8
+shader_parameter/bloom_intensity = 0.2
 
 [node name="Level" type="Node"]
 script = ExtResource("1")

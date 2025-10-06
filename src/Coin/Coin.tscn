@@ -258,7 +258,6 @@ stream_3/stream = ExtResource("12_coin4")
 stream_4/stream = ExtResource("13_coin5")
 
 [node name="Coin" type="RigidBody2D" groups=["coin"]]
-texture_filter = 1
 collision_layer = 2
 gravity_scale = 0.642
 script = ExtResource("1_ljt3x")
