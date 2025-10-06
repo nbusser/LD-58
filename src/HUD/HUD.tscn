@@ -67,13 +67,15 @@ text = "2025"
 
 [node name="Month" type="Label" parent="Calendar"]
 layout_mode = 0
-offset_left = 1474.0
-offset_top = 48.0
-offset_right = 1570.0
-offset_bottom = 106.0
+offset_left = 1465.0
+offset_top = 40.0
+offset_right = 1591.0
+offset_bottom = 111.0
 theme_override_colors/font_color = Color(0.8352941, 0.003921569, 0.007843138, 1)
 theme_override_fonts/font = ExtResource("2_llxr8")
 text = "JAN"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
