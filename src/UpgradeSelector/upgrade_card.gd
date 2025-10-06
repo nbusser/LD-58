@@ -23,6 +23,7 @@ const PIN_TURQUOISE = preload("res://assets/sprites/upgrade_selector/upgrade-pin
 		_update_display()
 
 var _is_ready: bool = false
+var _is_too_poor: bool = false
 
 @onready var pin_texture_rect: TextureRect = %PinTextureRect
 
@@ -33,7 +34,10 @@ var _is_ready: bool = false
 @onready var rarity_label: Label = %RarityLabel
 @onready var level_label: Label = %LevelLabel
 @onready var type_label: Label = %TypeLabel
+@onready var cost_label: Label = %CostLabel
 @onready var signature_line_2d: Line2D = %SignatureLine2D
+@onready var too_poor: Sprite2D = %TooPoor
+@onready var select_button: Button = %SelectButton
 
 
 func _ready():
@@ -66,6 +70,15 @@ func _update_display() -> void:
 	rarity_label.text = UpgradeCardData.Rarity.keys()[card_data.rarity].capitalize()
 	level_label.text = str(card_data.category_level)
 	type_label.text = UpgradeCardData.CardType.keys()[card_data.card_type].capitalize()
+	if card_data.cost > 0:
+		cost_label.text = (StringFormatter.format_currency(card_data.cost))
+		cost_label.modulate = Color.WHITE
+	else:
+		cost_label.text = "Free!!"
+		cost_label.modulate = Color.RED
+	_is_too_poor = GameState.player_cash < card_data.cost
+	too_poor.visible = _is_too_poor
+	select_button.disabled = _is_too_poor
 
 
 func _format_effects(effects: Dictionary) -> String:

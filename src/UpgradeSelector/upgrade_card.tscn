@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://b042ulb2eqxpg"]
+[gd_scene load_steps=9 format=3 uid="uid://b042ulb2eqxpg"]
 
 [ext_resource type="Script" uid="uid://b5nh2h0ywhfv" path="res://src/UpgradeSelector/upgrade_card.gd" id="1_8s5m4"]
 [ext_resource type="Script" uid="uid://yeevmoyvkx8e" path="res://src/UpgradeSelector/upgrade_card_data.gd" id="2_tr77e"]
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="2_wuml4"]
 [ext_resource type="Texture2D" uid="uid://llhbf5hj1pua" path="res://assets/sprites/upgrade_selector/upgrade_sheet.png" id="4_qwt42"]
-[ext_resource type="Texture2D" uid="uid://mqaprq3oos7m" path="res://assets/sprites/upgrade_selector/upgrade-pin-yeller.png" id="5_40kcd"]
+[ext_resource type="Texture2D" uid="uid://css0pguf5gdda" path="res://assets/sprites/upgrade_selector/upgrade-pin-red.png" id="5_40kcd"]
 [ext_resource type="FontVariation" uid="uid://6ps3tjx81bnu" path="res://assets/fonts/contract_font.tres" id="6_iqrqx"]
+[ext_resource type="Texture2D" uid="uid://bem8mbsb0dthk" path="res://assets/sprites/upgrade_selector/too_poor.png" id="7_iqrqx"]
 
 [sub_resource type="Resource" id="Resource_wuml4"]
 script = ExtResource("2_tr77e")
@@ -68,6 +69,35 @@ theme_override_fonts/font = ExtResource("6_iqrqx")
 theme_override_font_sizes/font_size = 30
 text = "Attack"
 
+[node name="CostLabel2" type="Label" parent="."]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 0
+offset_left = 47.0
+offset_top = 498.0
+offset_right = 130.0
+offset_bottom = 533.0
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("6_iqrqx")
+theme_override_font_sizes/font_size = 30
+text = "COST:"
+autowrap_mode = 3
+
+[node name="CostLabel" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 0
+offset_left = 47.0
+offset_top = 531.0
+offset_right = 156.0
+offset_bottom = 566.0
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("6_iqrqx")
+theme_override_font_sizes/font_size = 30
+text = "$1,234"
+autowrap_mode = 3
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -128,6 +158,7 @@ text = "Common"
 horizontal_alignment = 1
 
 [node name="SelectButton" type="Button" parent="."]
+unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 233.0
@@ -137,9 +168,18 @@ offset_bottom = 573.0
 
 [node name="SignatureLine2D" type="Line2D" parent="."]
 unique_name_in_owner = true
+visible = false
 position = Vector2(-122, -149)
 points = PackedVector2Array(383, 675, 384, 690, 390, 703, 405, 704, 409, 692, 411, 681, 406, 674, 400, 675, 397, 686, 402, 695, 412, 703, 419, 703, 424, 699, 428, 697, 428, 691, 431, 682, 431, 674, 422, 673, 422, 684, 435, 698, 444, 687, 443, 674, 438, 670, 438, 683, 438.87354, 686.49426, 441, 695, 452, 698, 459, 689, 451, 674, 448, 675, 449, 685, 449, 691, 456, 698, 457, 702, 452, 702, 428, 702, 378, 697, 395, 693, 407, 692, 423, 690, 431, 687, 459, 683)
 width = 2.0
 default_color = Color(0.05490196, 0.05490196, 0.0627451, 1)
+
+[node name="TooPoor" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.7411765)
+position = Vector2(299, 537)
+rotation = 0.22427508
+scale = Vector2(0.18855801, 0.188558)
+texture = ExtResource("7_iqrqx")
 
 [connection signal="button_down" from="SelectButton" to="." method="_on_select_button_button_down"]

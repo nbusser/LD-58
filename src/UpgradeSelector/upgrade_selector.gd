@@ -16,6 +16,7 @@ const UpgradeCard = preload("res://src/UpgradeSelector/upgrade_card.gd")
 		1,
 		"Smooth Shoes",
 		"1-year ROI",
+		0,
 		ICON_TEXTURE,
 		{UpgradeCardData.EffectType.SPEED: 2}
 	),
@@ -26,6 +27,7 @@ const UpgradeCard = preload("res://src/UpgradeSelector/upgrade_card.gd")
 		2,
 		"Swift Sneakers",
 		"2-year ROI",
+		100,
 		ICON_TEXTURE,
 		{UpgradeCardData.EffectType.SPEED: 3}
 	),
@@ -36,6 +38,7 @@ const UpgradeCard = preload("res://src/UpgradeSelector/upgrade_card.gd")
 		1,
 		"Crypto Crash Course",
 		"Avoiding scams made easy",
+		250,
 		ICON_TEXTURE,
 		{UpgradeCardData.EffectType.CRYPTO_CURRENCY: 1}
 	),
@@ -46,6 +49,7 @@ const UpgradeCard = preload("res://src/UpgradeSelector/upgrade_card.gd")
 		1,
 		"Basic Firewall",
 		"Blocks minor threats",
+		1000,
 		ICON_TEXTURE,
 		{UpgradeCardData.EffectType.SHIELD: 3}
 	),

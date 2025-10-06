@@ -31,6 +31,7 @@ enum EffectType {
 
 @export var title: String
 @export var description: String
+@export var cost: int
 
 @export var icon: Texture2D
 
@@ -44,6 +45,7 @@ func _init(
 	p_category_level: int = 0,
 	p_title: String = "Card Title",
 	p_description: String = "",
+	p_cost: int = 0,
 	p_icon: Texture2D = null,
 	p_effects: Dictionary[EffectType, int] = {}
 ):
@@ -53,5 +55,6 @@ func _init(
 	category_level = p_category_level
 	title = p_title
 	description = p_description
+	cost = p_cost
 	icon = p_icon
 	effects = p_effects
