@@ -4,6 +4,4 @@
 
 [node name="Heart" type="AnimatedSprite2D"]
 sprite_frames = ExtResource("1_1ou4a")
-animation = &"half"
-frame = 2
-frame_progress = 1.0
+animation = &"full"
