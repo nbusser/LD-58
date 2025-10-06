@@ -132,7 +132,7 @@ custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
 theme_override_fonts/font = ExtResource("6_iqrqx")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "Description of test card. This is a long description"
 autowrap_mode = 3
 
@@ -145,6 +145,7 @@ theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
 theme_override_fonts/font = ExtResource("6_iqrqx")
 theme_override_font_sizes/font_size = 30
 text = "+2 damage, -1 heal"
+horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="RarityLabel" type="Label" parent="VBoxContainer"]
