@@ -549,7 +549,7 @@ func _laser_sweep_routine() -> void:
 
 	# Fire sweeping laser
 	$Sprite2D.play("laugh")
-	_lasers.laser_sweep_pattern(sweep_direction, 0.4)
+	_lasers.laser_sweep_pattern(sweep_direction, 200.0)
 
 	# Wait for laser to finish
 	await get_tree().create_timer(4.0).timeout

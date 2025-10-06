@@ -15,6 +15,8 @@ var focus_sounds: Array[AudioStreamPlayer2D] = []
 var beam_sounds: Array[AudioStreamPlayer2D] = []
 var focus_audio_streams: Array[AudioStream] = []
 var beam_audio_streams: Array[AudioStream] = []
+var laser_areas: Array[Area2D] = []
+var laser_collision_shapes: Array[CollisionShape2D] = []
 
 @onready var player: Player = get_tree().get_first_node_in_group("player")
 @onready var laser_surface: ColorRect = get_tree().get_first_node_in_group("laser_surface")
@@ -40,7 +42,7 @@ func _ready():
 		var path = "res://assets/sounds/laser_beam/beam_%d.ogg" % i
 		beam_audio_streams.append(load(path))
 
-	# Create audio players for each laser slot
+	# Create audio players and collision areas for each laser slot
 	for i in range(max_lasers):
 		var focus_player = AudioStreamPlayer2D.new()
 		focus_player.name = "FocusSound%d" % i
@@ -55,6 +57,29 @@ func _ready():
 		beam_player.max_distance = 1500
 		add_child(beam_player)
 		beam_sounds.append(beam_player)
+
+		# Create Area2D for laser collision
+		var area = Area2D.new()
+		area.name = "LaserArea%d" % i
+		area.collision_layer = 0  # Don't collide with anything
+		area.collision_mask = 1 << 4  # Collide with player layer 5
+		area.monitoring = false  # Start disabled
+		add_child(area)
+
+		# Create collision shape
+		var collision_shape = CollisionShape2D.new()
+		collision_shape.name = "LaserCollision%d" % i
+		var rect = RectangleShape2D.new()
+		rect.size = Vector2(30, 100)  # Will be adjusted dynamically
+		collision_shape.shape = rect
+		collision_shape.disabled = true
+		area.add_child(collision_shape)
+
+		# Connect collision signal
+		area.body_entered.connect(_on_laser_hit_player.bind(i))
+
+		laser_areas.append(area)
+		laser_collision_shapes.append(collision_shape)
 
 	# Set up limits based on level boundaries
 	if wall_l and wall_r and ground and ceiling:
@@ -106,6 +131,20 @@ func _physics_process(delta):
 			var center = (laser.start + laser.end) / 2.0
 			beam_sounds[i].global_position = center
 
+		# Update collision shape position and size
+		if i < laser_areas.size() and i < laser_collision_shapes.size():
+			var area = laser_areas[i]
+			var collision_shape = laser_collision_shapes[i]
+			var center = (laser.start + laser.end) / 2.0
+			var length = laser.start.distance_to(laser.end)
+			var angle = (laser.end - laser.start).angle()
+
+			area.global_position = center
+			area.rotation = angle
+
+			if collision_shape.shape is RectangleShape2D:
+				collision_shape.shape.size = Vector2(length, 30)  # 30 pixels wide laser
+
 		var laser_progress = laser.timer / laser.warning_duration
 		# Update state based on timer
 		if laser_progress < progress_before_flash:
@@ -140,10 +179,11 @@ func _physics_process(delta):
 					beam_sounds[i].stream = beam_audio_streams[randi() % beam_audio_streams.size()]
 					beam_sounds[i].play()
 					laser.beam_played = true
-			# Check collision with player during active phase
-			if not laser.has_hit and is_laser_hitting_player(laser.start, laser.end):
-				player.get_hurt(Vector2.ZERO)
-				laser.has_hit = true
+				# Enable collision detection
+				if i < laser_areas.size() and i < laser_collision_shapes.size():
+					laser_areas[i].monitoring = true
+					laser_collision_shapes[i].disabled = false
+					laser.laser_index = i
 		else:
 			var fade_time = laser.timer - (laser.warning_duration + laser.active_duration)
 			var progress = fade_time * 4.
@@ -155,11 +195,14 @@ func _physics_process(delta):
 
 			if progress > 1.0:
 				laser.finished = true
-				# Stop sounds when laser finishes
+				# Stop sounds and disable collision when laser finishes
 				if i < focus_sounds.size() and focus_sounds[i].playing:
 					focus_sounds[i].stop()
 				if i < beam_sounds.size() and beam_sounds[i].playing:
 					beam_sounds[i].stop()
+				if i < laser_areas.size() and i < laser_collision_shapes.size():
+					laser_areas[i].monitoring = false
+					laser_collision_shapes[i].disabled = true
 		i += 1
 
 	# Clear finished lasers
@@ -192,19 +235,33 @@ func update_shader_parameters():
 	laser_surface.material.set_shader_parameter("laser_states", laser_states)
 
 
-func is_laser_hitting_player(start: Vector2, end: Vector2) -> bool:
-	# start and end are already in world coordinates
-	var player_pos = player.global_position
+func _on_laser_hit_player(body: Node, laser_index: int) -> void:
+	if body == player:
+		# Find the laser by its index
+		var matching_laser = null
+		var current_index = 0
+		for laser in active_lasers:
+			if current_index == laser_index:
+				matching_laser = laser
+				break
+			current_index += 1
 
-	# Calculate distance from player to laser line
-	var pa = player_pos - start
-	var ba = end - start
-	var t = clamp(pa.dot(ba) / ba.dot(ba), 0.0, 1.0)
-	var closest_point = start + t * ba
-	var distance = player_pos.distance_to(closest_point)
+		if matching_laser and not matching_laser.get("has_hit", false):
+			# Calculate bounce direction perpendicular to laser
+			var laser_dir = (matching_laser.end - matching_laser.start).normalized()
+			var to_player = player.global_position - matching_laser.start
+			var distance_along_laser = to_player.dot(laser_dir)
+			var closest_point = matching_laser.start + laser_dir * distance_along_laser
+			var bounce_dir = (player.global_position - closest_point).normalized()
 
-	# Check if player is within laser beam (adjust threshold as needed)
-	return distance < 30.0
+			# Apply bounce force and damage
+			player.get_hurt(Vector2(1200 * sign(bounce_dir.x), -100))
+			matching_laser.has_hit = true
+
+			# Brief invulnerability to prevent multi-hit
+			await get_tree().create_timer(0.5).timeout
+			if matching_laser:
+				matching_laser.has_hit = false
 
 
 func add_laser(
@@ -227,17 +284,23 @@ func clear_all_lasers():
 	active_lasers.clear()
 	for i in range(max_lasers):
 		laser_states[i] = 2.0
-		# Stop all sounds
+		# Stop all sounds and disable collisions
 		if i < focus_sounds.size() and focus_sounds[i].playing:
 			focus_sounds[i].stop()
 		if i < beam_sounds.size() and beam_sounds[i].playing:
 			beam_sounds[i].stop()
+		if i < laser_areas.size():
+			laser_areas[i].monitoring = false
+		if i < laser_collision_shapes.size():
+			laser_collision_shapes[i].disabled = true
 
 
 # Attack pattern: Warning lasers at player position
 func laser_warning_pattern(num_lasers: int = 3, delay_between: float = 0.3):
 	var base_x = player.global_position.x
 	var dir = sign(player.velocity.x)
+	if dir == 0:
+		dir = 1 if randf() < 0.5 else -1
 	# Predictive aiming based on player velocity
 	if player.velocity.x != 0:
 		base_x += player.velocity.x * 0.3  # Predict ~0.3 seconds ahead
