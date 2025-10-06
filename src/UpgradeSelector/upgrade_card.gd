@@ -3,6 +3,15 @@ extends Control
 
 signal card_selected(card_data: UpgradeCardData)
 
+const PIN_BLUE = preload("res://assets/sprites/upgrade_selector/upgrade-pin-blue.png")
+const PIN_GREEN = preload("res://assets/sprites/upgrade_selector/upgrade-pin-green.png")
+const PIN_ORANGE = preload("res://assets/sprites/upgrade_selector/upgrade-pin-orange.png")
+const PIN_PURPLE = preload("res://assets/sprites/upgrade_selector/upgrade-pin-purple.png")
+const PIN_RED = preload("res://assets/sprites/upgrade_selector/upgrade-pin-red.png")
+const PIN_YELLOW = preload("res://assets/sprites/upgrade_selector/upgrade-pin-yeller.png")
+const PIN_GRAY = preload("res://assets/sprites/upgrade_selector/upgrade-pin-grey.png")
+const PIN_TURQUOISE = preload("res://assets/sprites/upgrade_selector/upgrade-pin-turquoise.png")
+
 @export_tool_button("Update Display") var update_display_action = _update_display
 
 @export var card_data: UpgradeCardData:
@@ -11,6 +20,8 @@ signal card_selected(card_data: UpgradeCardData)
 		_update_display()
 
 var _is_ready: bool = false
+
+@onready var pin_texture_rect: TextureRect = %PinTextureRect
 
 @onready var title_label: Label = %TitleLabel
 @onready var description_label: Label = %DescriptionLabel
@@ -24,6 +35,20 @@ var _is_ready: bool = false
 func _ready():
 	_update_display()
 	_is_ready = true
+
+	pin_texture_rect.texture = (
+		[
+			PIN_GRAY,
+			PIN_GREEN,
+			PIN_BLUE,
+			PIN_PURPLE,
+			PIN_ORANGE,
+			PIN_RED,
+			PIN_YELLOW,
+			PIN_TURQUOISE,
+		]
+		. pick_random()
+	)
 
 
 func _update_display() -> void:

@@ -56,6 +56,7 @@ var selectable_cards: Array[UpgradeCardData] = []
 var _card_pool: Array[UpgradeCardData] = available_cards.duplicate_deep()
 
 @onready var card_container: Control = %CardContainer
+@onready var _cursor: Node2D = %Cursor
 
 
 func _reset_selectable_cards() -> void:
@@ -89,6 +90,7 @@ func _pick_cards(nb_cards: int) -> Array[UpgradeCardData]:
 
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	for child in card_container.get_children():
 		if child is UpgradeCard:
 			child.card_selected.connect(_on_card_selected.bind(child.get_index()))
@@ -119,3 +121,7 @@ func _update_cards_display() -> void:
 			card_control.visible = true
 		else:
 			card_control.visible = false
+
+
+func _process(_delta):
+	_cursor.position = get_local_mouse_position()

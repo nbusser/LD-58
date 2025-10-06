@@ -1,0 +1,6 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://6ps3tjx81bnu"]
+
+[ext_resource type="FontFile" uid="uid://cjgwyyqppah5r" path="res://assets/fonts/GenAR102.TTF" id="1_cec7k"]
+
+[resource]
+base_font = ExtResource("1_cec7k")

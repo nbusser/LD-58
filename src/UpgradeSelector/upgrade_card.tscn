@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://b042ulb2eqxpg"]
+[gd_scene load_steps=8 format=3 uid="uid://b042ulb2eqxpg"]
 
 [ext_resource type="Script" uid="uid://b5nh2h0ywhfv" path="res://src/UpgradeSelector/upgrade_card.gd" id="1_8s5m4"]
 [ext_resource type="Script" uid="uid://yeevmoyvkx8e" path="res://src/UpgradeSelector/upgrade_card_data.gd" id="2_tr77e"]
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="2_wuml4"]
+[ext_resource type="Texture2D" uid="uid://llhbf5hj1pua" path="res://assets/sprites/upgrade_selector/upgrade_sheet.png" id="4_qwt42"]
+[ext_resource type="Texture2D" uid="uid://css0pguf5gdda" path="res://assets/sprites/upgrade_selector/upgrade-pin-red.png" id="5_40kcd"]
+[ext_resource type="FontVariation" uid="uid://6ps3tjx81bnu" path="res://assets/fonts/contract_font.tres" id="6_iqrqx"]
 
 [sub_resource type="Resource" id="Resource_wuml4"]
 script = ExtResource("2_tr77e")
@@ -17,70 +20,30 @@ effects = Dictionary[int, int]({
 metadata/_custom_type_script = "uid://yeevmoyvkx8e"
 
 [node name="UpgradeCard" type="Control"]
-custom_minimum_size = Vector2(200, 320)
+custom_minimum_size = Vector2(420, 600)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 200.0
-offset_bottom = 300.0
+offset_right = 420.0
+offset_bottom = 600.0
 script = ExtResource("1_8s5m4")
 card_data = SubResource("Resource_wuml4")
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 420.0
+offset_bottom = 600.0
+texture = ExtResource("4_qwt42")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="PinTextureRect" type="TextureRect" parent="."]
 unique_name_in_owner = true
-layout_mode = 2
-text = "Test Card"
-horizontal_alignment = 1
-
-[node name="IconTextureRect" type="TextureRect" parent="Panel/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 150)
-layout_mode = 2
-texture = ExtResource("2_wuml4")
-stretch_mode = 5
-
-[node name="DescriptionLabel" type="Label" parent="Panel/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 2
-text = "Description of test card. This is a long description"
-autowrap_mode = 3
-
-[node name="EffectsLabel" type="Label" parent="Panel/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 2
-size_flags_vertical = 6
-text = "+2 damage, -1 heal"
-autowrap_mode = 3
-
-[node name="RarityLabel" type="Label" parent="Panel/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Common"
-horizontal_alignment = 1
-
-[node name="SelectButton" type="Button" parent="Panel/VBoxContainer"]
-layout_mode = 2
-text = "Select"
+layout_mode = 0
+offset_right = 420.0
+offset_bottom = 600.0
+texture = ExtResource("5_40kcd")
 
 [node name="LevelLabel" type="Label" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -88,14 +51,88 @@ anchor_right = 1.0
 offset_left = -40.0
 offset_bottom = 23.0
 grow_horizontal = 0
+theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("6_iqrqx")
+theme_override_font_sizes/font_size = 30
 text = "2"
 horizontal_alignment = 2
 
 [node name="TypeLabel" type="Label" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 offset_right = 40.0
 offset_bottom = 23.0
+theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("6_iqrqx")
+theme_override_font_sizes/font_size = 30
 text = "Attack"
 
-[connection signal="button_up" from="Panel/VBoxContainer/SelectButton" to="." method="_on_select_button_button_up"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 175.0
+offset_right = -64.0
+offset_bottom = -105.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("6_iqrqx")
+theme_override_font_sizes/font_size = 30
+text = "Test Card"
+horizontal_alignment = 1
+
+[node name="IconTextureRect" type="TextureRect" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+texture = ExtResource("2_wuml4")
+stretch_mode = 5
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("6_iqrqx")
+theme_override_font_sizes/font_size = 30
+text = "Description of test card. This is a long description"
+autowrap_mode = 3
+
+[node name="EffectsLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("6_iqrqx")
+theme_override_font_sizes/font_size = 30
+text = "+2 damage, -1 heal"
+autowrap_mode = 3
+
+[node name="RarityLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2784314, 0.26666668, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("6_iqrqx")
+theme_override_font_sizes/font_size = 30
+text = "Common"
+horizontal_alignment = 1
+
+[node name="SelectButton" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 233.0
+offset_top = 507.0
+offset_right = 372.0
+offset_bottom = 573.0
+
+[connection signal="button_up" from="SelectButton" to="." method="_on_select_button_button_up"]
