@@ -272,7 +272,16 @@ func get_hurt(knockback_force):
 	health = health - 1
 	_hud.update_life(health)
 	if health <= 0:
-		print("TODO death")
+		(
+			Globals
+			. end_scene(
+				Globals.EndSceneStatus.LEVEL_END,
+				{
+					"level_state": _level.level_state,
+				}
+			)
+		)
+		return
 	# Red glow on hit
 	_hurt_sound.play_sound()
 	modulate = Color(1, 0, 0)

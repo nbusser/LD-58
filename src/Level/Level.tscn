@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://drh117nvpnukt" path="res://src/Level/Level.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://btohiqrak4tcf" path="res://src/Map/Map.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://dwiu4cm7rlq0p" path="res://src/HUD/HUD.tscn" id="3_p81om"]
-[ext_resource type="Shader" uid="uid://b0hbcpqv8d8w" path="res://src/Level/PostProcess.gdshader" id="4_5g3p6"]
+[ext_resource type="Shader" path="res://src/Level/PostProcess.gdshader" id="4_5g3p6"]
 [ext_resource type="Script" uid="uid://uvipfx8brsj0" path="res://src/UI/PostProcessOverlay.gd" id="4_c7nqk"]
 [ext_resource type="Shader" uid="uid://ccoc5wp0cgskd" path="res://src/Laser.gdshader" id="4_noe52"]
 
