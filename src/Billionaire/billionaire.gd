@@ -24,6 +24,8 @@ var _is_level_timeout = false
 @onready var _bullets: Node2D = $"../Bullets"
 @onready var _player: Player = $"../Player"
 @onready var _repulse_wave: Node2D = $AttackPatterns/RepulsiveWave/Columns
+@onready var _schlass_left: Node2D = $AttackPatterns/Schlassage/Members/Left
+@onready var _schlass_right: Node2D = $AttackPatterns/Schlassage/Members/Right
 
 @onready var _attack_patterns: Node = $AttackPatterns
 @onready var _level: Level = $"../.."
@@ -41,6 +43,7 @@ func _ready() -> void:
 	$AttackPatterns/LaserSweep.routine = _laser_sweep_routine
 	$AttackPatterns/LaserCage.routine = _laser_cage_routine
 	$AttackPatterns/Parachute.routine = _parachute_routine
+	$AttackPatterns/Schlassage.routine = _schlassage_routine
 
 	_init_repulse_wave()
 	$AttackPatterns/Parachute/ParachuteSprite.visible = false
@@ -569,6 +572,30 @@ func _laser_cage_routine() -> void:
 
 	# Wait for cage to finish
 	await get_tree().create_timer(4.0).timeout
+	$Sprite2D.play("default")
+
+
+func _schlassage_routine():
+	if global_position.x - _player.global_position.x > 0:  # Schlass left
+		_schlass_left.visible = true
+		_schlass_left.monitoring = true
+	else:  # Schlass right
+		_schlass_right.visible = true
+		_schlass_right.monitoring = true
+	var focus_duration: float = 2.0
+	$AttackPatterns/RepulsiveWave/FocusSound.play_sound()
+
+	$Sprite2D.play("focus")
+	await get_tree().create_timer(focus_duration).timeout
+	$Sprite2D.play("laugh")
+
+	_schlass_left.visible = false
+	_schlass_left.monitoring = false
+	_schlass_right.visible = false
+	_schlass_right.monitoring = false
+
+	await get_tree().create_timer(1.0).timeout
+
 	$Sprite2D.play("default")
 
 

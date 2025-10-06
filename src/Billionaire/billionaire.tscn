@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=22 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="SpriteFrames" uid="uid://cwedgk16x5d4h" path="res://src/Billionaire/BillionaireAnimations.tres" id="2_d2xww"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://cl4rktl331388" path="res://assets/sounds/repulsive_wave_focus.wav" id="9_qa6ra"]
 [ext_resource type="AudioStream" uid="uid://6u1f8h66ppko" path="res://assets/sounds/hurt.wav" id="11_d2xww"]
 [ext_resource type="AudioStream" uid="uid://d1i6r2bm01r4v" path="res://assets/sounds/repulsive_wave_column.wav" id="11_tafn6"]
+[ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="11_wpliv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qa6ra"]
 size = Vector2(162, 236)
@@ -32,6 +33,12 @@ size = Vector2(77.25, 116.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1qyaf"]
 size = Vector2(103.1875, 205.6875)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tafn6"]
+radius = 118.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wpliv"]
+radius = 118.0
 
 [node name="Billionaire" type="CharacterBody2D" groups=["Billionaire"]]
 collision_layer = 32
@@ -211,6 +218,50 @@ texture = ExtResource("9_kdd1f")
 position = Vector2(-297, 15)
 scale = Vector2(1.5617173, 3.2265396)
 texture = ExtResource("9_kdd1f")
+
+[node name="Schlassage" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
+attack_name = "N.D.A"
+cooldown = 10.0
+
+[node name="FocusSound" type="AudioStreamPlayer" parent="AttackPatterns/Schlassage"]
+bus = &"SFX"
+script = ExtResource("3_bqgkp")
+sounds = Array[AudioStream]([ExtResource("9_qa6ra")])
+metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+
+[node name="Members" type="Node2D" parent="AttackPatterns/Schlassage"]
+
+[node name="Left" type="Area2D" parent="AttackPatterns/Schlassage/Members"]
+visible = false
+collision_layer = 0
+collision_mask = 16
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPatterns/Schlassage/Members/Left"]
+position = Vector2(-80, -1)
+shape = SubResource("CircleShape2D_tafn6")
+
+[node name="ColorRect" type="Sprite2D" parent="AttackPatterns/Schlassage/Members/Left"]
+position = Vector2(95, -2)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_wpliv")
+
+[node name="Right" type="Area2D" parent="AttackPatterns/Schlassage/Members"]
+visible = false
+collision_layer = 0
+collision_mask = 16
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPatterns/Schlassage/Members/Right"]
+position = Vector2(81, 0)
+shape = SubResource("CircleShape2D_wpliv")
+
+[node name="ColorRect2" type="Sprite2D" parent="AttackPatterns/Schlassage/Members/Right"]
+position = Vector2(-79, -3)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_wpliv")
 
 [node name="LaserCage" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
 attack_name = "LaserCage"
