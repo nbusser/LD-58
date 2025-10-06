@@ -493,18 +493,16 @@ func _repulse_wave_routine():
 
 	var column_spawn_interval = 1.0 + 0.07 - 0.07 * GameState.difficulty_factor
 
+	var delayed_sound = func():
+		await get_tree().create_timer(randf_range(0.5, 0.8)).timeout
+		$AttackPatterns/RepulsiveWave/ColumnSound.play()
+
 	for column: Area2D in _repulse_wave.get_children():
 		column.visible = true
 		column.monitoring = true
 		for sprite in column.get_node("Sprites").get_children():
+			delayed_sound.call_deferred()
 			sprite.play("default")
-
-		var delayed_sound = func():
-			await get_tree().create_timer(randf_range(0.5, 0.8)).timeout
-			$AttackPatterns/RepulsiveWave/ColumnSound.play_sound()
-			await get_tree().create_timer(randf_range(0.05, 0.2)).timeout
-			$AttackPatterns/RepulsiveWave/ColumnSound2.play_sound()
-		delayed_sound.call_deferred()
 		await get_tree().create_timer(column_spawn_interval).timeout
 
 	await get_tree().create_timer(1.0).timeout

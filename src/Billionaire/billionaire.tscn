@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bjp6oj1o86afi"]
+[gd_scene load_steps=40 format=3 uid="uid://bjp6oj1o86afi"]
 
 [ext_resource type="Script" uid="uid://bs014x5042aml" path="res://src/Billionaire/billionaire.gd" id="1_gpq05"]
 [ext_resource type="SpriteFrames" uid="uid://cwedgk16x5d4h" path="res://src/Billionaire/BillionaireAnimations.tres" id="2_d2xww"]
@@ -57,6 +57,12 @@ stream_0/stream = ExtResource("13_5lytf")
 stream_1/stream = ExtResource("14_n2fvo")
 stream_2/stream = ExtResource("15_xcagu")
 stream_3/stream = ExtResource("16_de05c")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5lytf"]
+playback_mode = 1
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("14_0ym8j")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bqgkp"]
 size = Vector2(81, 71.375)
@@ -184,17 +190,9 @@ prefered_distance_x = 0.05
 prefered_distance_tolerance_x = 0.05
 base_weigth = 1.2
 
-[node name="ColumnSound" type="AudioStreamPlayer" parent="AttackPatterns/RepulsiveWave"]
-bus = &"SFX"
-script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("14_0ym8j")])
-metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
-
-[node name="ColumnSound2" type="AudioStreamPlayer" parent="AttackPatterns/RepulsiveWave"]
-bus = &"SFX"
-script = ExtResource("3_bqgkp")
-sounds = Array[AudioStream]([ExtResource("14_0ym8j")])
-metadata/_custom_type_script = "uid://bqub0n7gx4ukd"
+[node name="ColumnSound" type="AudioStreamPlayer2D" parent="AttackPatterns/RepulsiveWave"]
+stream = SubResource("AudioStreamRandomizer_5lytf")
+max_polyphony = 50
 
 [node name="Columns" type="Node2D" parent="AttackPatterns/RepulsiveWave"]
 
