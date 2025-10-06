@@ -88,16 +88,15 @@ func on_player_dies(animation_finished_coroutine_to_await: Callable):
 	await _fadeout()
 	await get_tree().create_timer(0.5).timeout
 
-	Globals.end_scene(Globals.EndSceneStatus.LEVEL_GAME_OVER)
-	# (
-	# 	Globals
-	# 	. end_scene(
-	# 		Globals.EndSceneStatus.LEVEL_END,
-	# 		{
-	# 			"level_state": level_state,
-	# 		}
-	# 	)
-	# )
+	(
+		Globals
+		. end_scene(
+			Globals.EndSceneStatus.LEVEL_END,
+			{
+				"level_state": level_state,
+			}
+		)
+	)
 
 
 func _on_month_timer_timeout() -> void:
