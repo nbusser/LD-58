@@ -117,7 +117,6 @@ shape = SubResource("RectangleShape2D_qa6ra")
 texture_filter = 1
 position = Vector2(0, -12)
 sprite_frames = ExtResource("2_d2xww")
-animation = &"shout"
 
 [node name="Hitbox" type="Area2D" parent="." groups=["billionaire"]]
 collision_layer = 4

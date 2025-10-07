@@ -59,6 +59,9 @@ func _on_player_billionaire_punched(amount: int) -> void:
 	var remaining_net_worth: int = change_net_worth(amount)
 	billionaire_hit.emit(amount, remaining_net_worth)
 
+	if remaining_net_worth <= 0:
+		_on_billionaire_defeated()
+
 
 func on_coin_collected(collectible_type: Collectible.CollectibleType) -> void:
 	level_state.collect_item(collectible_type)
@@ -111,3 +114,18 @@ func _on_month_timer_timeout() -> void:
 	month += 1
 	hud.set_month(month)
 	month_timer.start(5)
+
+
+func _on_billionaire_defeated() -> void:
+	await _fadeout()
+	await get_tree().create_timer(0.5).timeout
+
+	(
+		Globals
+		. end_scene(
+			Globals.EndSceneStatus.LEVEL_VICTORY,
+			{
+				"level_state": level_state,
+			}
+		)
+	)
