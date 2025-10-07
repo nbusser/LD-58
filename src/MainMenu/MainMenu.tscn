@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bvgh060edrp7j"]
+[gd_scene load_steps=23 format=3 uid="uid://bvgh060edrp7j"]
 
 [ext_resource type="Script" uid="uid://btvd0b0skhsfa" path="res://src/MainMenu/MainMenu.gd" id="1"]
 [ext_resource type="Script" uid="uid://se5xxijidgr3" path="res://src/UpgradeSelector/upgrade_selector.gd" id="2_uy7kt"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://yeevmoyvkx8e" path="res://src/UpgradeSelector/upgrade_card_data.gd" id="6_e1bcd"]
 [ext_resource type="Texture2D" uid="uid://llhbf5hj1pua" path="res://assets/sprites/upgrade_selector/upgrade_sheet.png" id="7_20hqm"]
 [ext_resource type="FontVariation" uid="uid://6ps3tjx81bnu" path="res://assets/fonts/contract_font.tres" id="9_0vb0y"]
-[ext_resource type="Texture2D" uid="uid://c5k3yru82twpu" path="res://assets/sprites/upgrade_selector/upgrade-pin-turquoise.png" id="9_ypdof"]
 [ext_resource type="Texture2D" uid="uid://css0pguf5gdda" path="res://assets/sprites/upgrade_selector/upgrade-pin-red.png" id="10_4j8vg"]
 [ext_resource type="Texture2D" uid="uid://wvhjq6gjsr3h" path="res://assets/sprites/upgrade_selector/upgrade-pin-blue.png" id="11_hgdfc"]
 [ext_resource type="Texture2D" uid="uid://gc3pxayontfd" path="res://assets/sprites/upgrade_selector/upgrade_cursor.png" id="12_nxksq"]
@@ -35,6 +34,12 @@ metadata/_custom_type_script = "uid://yeevmoyvkx8e"
 [sub_resource type="Resource" id="Resource_ah704"]
 script = ExtResource("6_e1bcd")
 metadata/_custom_type_script = "uid://yeevmoyvkx8e"
+
+[sub_resource type="LabelSettings" id="LabelSettings_k4wgw"]
+font_size = 30
+font_color = Color(0, 0, 0, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_spcad"]
 atlas = ExtResource("12_nxksq")
@@ -64,12 +69,6 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
-
-[sub_resource type="LabelSettings" id="LabelSettings_k4wgw"]
-font_size = 30
-font_color = Color(0, 0, 0, 1)
-outline_size = 2
-outline_color = Color(0, 0, 0, 1)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -194,7 +193,7 @@ unique_name_in_owner = true
 layout_mode = 0
 offset_right = 420.0
 offset_bottom = 600.0
-texture = ExtResource("9_ypdof")
+texture = ExtResource("10_4j8vg")
 
 [node name="LevelLabel" type="Label" parent="UpgradeSelector/CenterContainer/CardContainer/UpgradeCard"]
 unique_name_in_owner = true
@@ -628,22 +627,6 @@ points = PackedVector2Array(383, 675, 384, 690, 390, 703, 405, 704, 409, 692, 41
 width = 2.0
 default_color = Color(0.05490196, 0.05490196, 0.0627451, 1)
 
-[node name="Cursor" type="Node2D" parent="UpgradeSelector"]
-unique_name_in_owner = true
-position = Vector2(1028, 780)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="UpgradeSelector/Cursor"]
-position = Vector2(334, 196)
-sprite_frames = SubResource("SpriteFrames_je2q3")
-
-[node name="CursorEndPosition" type="Node2D" parent="UpgradeSelector"]
-unique_name_in_owner = true
-position = Vector2(1667, 371)
-
-[node name="CursorStartPosition" type="Node2D" parent="UpgradeSelector"]
-unique_name_in_owner = true
-position = Vector2(832, 1045)
-
 [node name="PostJamBadge" type="Control" parent="UpgradeSelector"]
 anchors_preset = 0
 offset_left = 41.0
@@ -669,6 +652,22 @@ text = "Postjam version"
 label_settings = SubResource("LabelSettings_k4wgw")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Cursor" type="Node2D" parent="UpgradeSelector"]
+unique_name_in_owner = true
+position = Vector2(1028, 780)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="UpgradeSelector/Cursor"]
+position = Vector2(334, 196)
+sprite_frames = SubResource("SpriteFrames_je2q3")
+
+[node name="CursorEndPosition" type="Node2D" parent="UpgradeSelector"]
+unique_name_in_owner = true
+position = Vector2(1667, 371)
+
+[node name="CursorStartPosition" type="Node2D" parent="UpgradeSelector"]
+unique_name_in_owner = true
+position = Vector2(832, 1045)
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Start" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
