@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://lbhps7i1vwn4"]
+
+[ext_resource type="Script" uid="uid://22fxam1q3e8j" path="res://asup.gd" id="1_n413q"]
+[ext_resource type="SpriteFrames" uid="uid://bvi1idvrvrbb2" path="res://src/Billionaire/bubble_100.tres" id="1_tv3q1"]
+[ext_resource type="SpriteFrames" uid="uid://dgoanvtm3rx52" path="res://src/Billionaire/bubble_200.tres" id="2_n413q"]
+[ext_resource type="SpriteFrames" uid="uid://bfujddc8s3ueg" path="res://src/Billionaire/bubble_300.tres" id="3_2cqdq"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_n413q")
+
+[node name="SpriteSmall" type="AnimatedSprite2D" parent="."]
+position = Vector2(120, 341)
+sprite_frames = ExtResource("1_tv3q1")
+speed_scale = 2.5
+
+[node name="SpriteMedium" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(387, 351)
+sprite_frames = ExtResource("2_n413q")
+frame_progress = 0.3998903
+speed_scale = 2.5
+
+[node name="SpriteBig" type="AnimatedSprite2D" parent="."]
+position = Vector2(702, 320)
+sprite_frames = ExtResource("3_2cqdq")
+speed_scale = 2.5

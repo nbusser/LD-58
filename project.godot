@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Don Trickle"
 config/description="Ludum Dare 58"
-run/main_scene="res://src/SceneManager/SceneManager.tscn"
+run/main_scene="uid://lbhps7i1vwn4"
 config/features=PackedStringArray("4.5")
 config/icon="uid://bjrhdxbsucup7"
 

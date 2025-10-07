@@ -313,7 +313,7 @@ frame_progress = 0.9010395
 speed_scale = 2.5
 
 [node name="Sprite2D2" type="AnimatedSprite2D" parent="AttackPatterns/RepulsiveWave/Columns/Column3/Sprites"]
-position = Vector2(-297, 15)
+position = Vector2(-297, 13)
 sprite_frames = ExtResource("17_wh08u")
 frame_progress = 0.43212867
 speed_scale = 2.5
