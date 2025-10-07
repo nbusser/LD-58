@@ -597,7 +597,7 @@ func _on_idle_timer_timeout() -> void:
 
 func spawn_coins(amount: int):
 	var combo_mult = pow(_player.ps.combo_base, _combo_count)
-	var target_value = amount * coins_per_damage * combo_mult
+	var target_value = amount * coins_per_damage * _player.ps.damage_coins_multiplier * combo_mult
 	var total_value_spawned = 0
 
 	var collectible_types = [

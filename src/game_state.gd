@@ -83,11 +83,11 @@ func apply_upgrade(card: UpgradeCardData) -> bool:
 			UpgradeCardData.EffectType.AIR_CONTROL:
 				player_stats.air_speed = 150 + upgr_value * 140
 			UpgradeCardData.EffectType.LOOT_QUANTITY:
-				print("TODO")
+				player_stats.damage_coins_multiplier = 1.0 + upgr_value * 1.0
 			UpgradeCardData.EffectType.LOOT_VALUE:
-				print("TODO")
+				player_stats.loot_value_multiplier = 1.0 + upgr_value * 1.0
 			UpgradeCardData.EffectType.BITCOIN_VALUE:
-				print("TODO")
+				player_stats.bitcoin_value_multiplier = 1.0 + upgr_value * 10.0
 			UpgradeCardData.EffectType.ABILITY_DASH_DOWN:
 				player_stats.unlocked_dash_down = true
 				player_stats.unlocked_dash_glide = true

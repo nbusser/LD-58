@@ -45,6 +45,11 @@ var combo_reset_time = 2.0
 # Dash glide
 var dash_glide_window = .1
 var glide_force = 3800
+# Damage coins multiplier
+var damage_coins_multiplier = 1.0
+# Loot value multiplier
+var loot_value_multiplier = 1.0
+var bitcoin_value_multiplier = 1.0
 
 # End game stats
 ## Movement

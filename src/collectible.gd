@@ -4,6 +4,19 @@ enum CollectibleType { DOLLAR_COIN, DOLLAR_BILL, BUNDLE_OF_CASH, MONEY_BAG, GOLD
 
 
 func get_collectible_value(collectible_type: CollectibleType) -> int:
+	var base_value = get_base_collectible_value(collectible_type)
+	if collectible_type == CollectibleType.BITCOIN:
+		return int(
+			(
+				base_value
+				* GameState.player_stats.loot_value_multiplier
+				* GameState.player_stats.bitcoin_value_multiplier
+			)
+		)
+	return int(base_value * GameState.player_stats.loot_value_multiplier)
+
+
+func get_base_collectible_value(collectible_type: CollectibleType) -> int:
 	match collectible_type:
 		CollectibleType.DOLLAR_COIN:
 			return 1
