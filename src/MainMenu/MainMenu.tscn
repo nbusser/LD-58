@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bvgh060edrp7j"]
+[gd_scene load_steps=24 format=3 uid="uid://bvgh060edrp7j"]
 
 [ext_resource type="Script" uid="uid://btvd0b0skhsfa" path="res://src/MainMenu/MainMenu.gd" id="1"]
 [ext_resource type="Script" uid="uid://se5xxijidgr3" path="res://src/UpgradeSelector/upgrade_selector.gd" id="2_uy7kt"]
@@ -8,11 +8,13 @@
 [ext_resource type="Texture2D" uid="uid://51pr2epmlqdm" path="res://assets/sprites/icon.png" id="5_ypdof"]
 [ext_resource type="Script" uid="uid://yeevmoyvkx8e" path="res://src/UpgradeSelector/upgrade_card_data.gd" id="6_e1bcd"]
 [ext_resource type="Texture2D" uid="uid://llhbf5hj1pua" path="res://assets/sprites/upgrade_selector/upgrade_sheet.png" id="7_20hqm"]
-[ext_resource type="Texture2D" uid="uid://b428hmq26at8o" path="res://assets/sprites/upgrade_selector/upgrade-pin-green.png" id="8_uy7kt"]
 [ext_resource type="FontVariation" uid="uid://6ps3tjx81bnu" path="res://assets/fonts/contract_font.tres" id="9_0vb0y"]
+[ext_resource type="Texture2D" uid="uid://c5k3yru82twpu" path="res://assets/sprites/upgrade_selector/upgrade-pin-turquoise.png" id="9_ypdof"]
 [ext_resource type="Texture2D" uid="uid://css0pguf5gdda" path="res://assets/sprites/upgrade_selector/upgrade-pin-red.png" id="10_4j8vg"]
 [ext_resource type="Texture2D" uid="uid://wvhjq6gjsr3h" path="res://assets/sprites/upgrade_selector/upgrade-pin-blue.png" id="11_hgdfc"]
 [ext_resource type="Texture2D" uid="uid://gc3pxayontfd" path="res://assets/sprites/upgrade_selector/upgrade_cursor.png" id="12_nxksq"]
+[ext_resource type="Texture2D" uid="uid://i114lrloa1sh" path="res://assets/sprites/postjam_badge.png" id="14_e1bcd"]
+[ext_resource type="Theme" uid="uid://ciubrukaih6sc" path="res://assets/default_theme.tres" id="15_20hqm"]
 
 [sub_resource type="Resource" id="Resource_wuml4"]
 script = ExtResource("6_e1bcd")
@@ -62,6 +64,12 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k4wgw"]
+font_size = 30
+font_color = Color(0, 0, 0, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -186,7 +194,7 @@ unique_name_in_owner = true
 layout_mode = 0
 offset_right = 420.0
 offset_bottom = 600.0
-texture = ExtResource("8_uy7kt")
+texture = ExtResource("9_ypdof")
 
 [node name="LevelLabel" type="Label" parent="UpgradeSelector/CenterContainer/CardContainer/UpgradeCard"]
 unique_name_in_owner = true
@@ -635,6 +643,32 @@ position = Vector2(1667, 371)
 [node name="CursorStartPosition" type="Node2D" parent="UpgradeSelector"]
 unique_name_in_owner = true
 position = Vector2(832, 1045)
+
+[node name="PostJamBadge" type="Control" parent="UpgradeSelector"]
+anchors_preset = 0
+offset_left = 41.0
+offset_top = 23.0
+offset_right = 41.0
+offset_bottom = 23.0
+
+[node name="TextureRect" type="TextureRect" parent="UpgradeSelector/PostJamBadge"]
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 163.0
+texture = ExtResource("14_e1bcd")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="UpgradeSelector/PostJamBadge"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 59.0
+offset_right = 312.0
+offset_bottom = 94.0
+theme = ExtResource("15_20hqm")
+text = "Postjam version"
+label_settings = SubResource("LabelSettings_k4wgw")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Start" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
