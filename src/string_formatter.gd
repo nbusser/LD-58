@@ -15,6 +15,9 @@ func format_currency(
 	var value = amount
 
 	if not long_form:
+		if abs(amount) >= 1_000_000_000:
+			value = amount / 1_000_000.0
+			suffix = "B"
 		if abs(amount) >= 1_000_000:
 			value = amount / 1_000_000.0
 			suffix = "M"
