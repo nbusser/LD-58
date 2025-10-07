@@ -252,7 +252,7 @@ func _physics_process(delta):
 			# Ground animations
 			if Input.get_axis("move_left", "move_right") == 0:
 				$Sprite.play("default")
-			else:
+			elif not is_level_timeout:
 				$Sprite.play("walk")
 		else:
 			# Jump animations
