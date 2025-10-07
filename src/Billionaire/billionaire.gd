@@ -587,6 +587,11 @@ func _on_idle_timer_timeout() -> void:
 		$Sprite2D.play("hurt")
 		return
 
+	if _level.level_state.billionaire_net_worth < 200:
+		$Sprite2D.play("hurt")
+		_idle_timer.start(randf_range(idle_range_seconds.x, idle_range_seconds.y))
+		return
+
 	var attack = _get_attack_pattern()
 	if attack != null:
 		print("Attack name: ", (attack as AttackPattern).attack_name)

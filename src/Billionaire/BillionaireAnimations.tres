@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=62 format=3 uid="uid://cwedgk16x5d4h"]
+[gd_resource type="SpriteFrames" load_steps=75 format=3 uid="uid://cwedgk16x5d4h"]
 
 [ext_resource type="Texture2D" uid="uid://bn6ucip7nxf3i" path="res://assets/sprites/billionaire/idle_80.png" id="1_82bc1"]
 [ext_resource type="Texture2D" uid="uid://bksavvlryneu7" path="res://assets/sprites/billionaire/air_attack.png" id="1_pnkw0"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://rjwopq1e7m7t" path="res://assets/sprites/billionaire/phone_80.png" id="2_82bc1"]
 [ext_resource type="Texture2D" uid="uid://20j46dwg2qdy" path="res://assets/sprites/billionaire/laugh_80.png" id="3_3yasf"]
 [ext_resource type="Texture2D" uid="uid://ss35r6fegher" path="res://assets/sprites/billionaire/vanquished_80.png" id="3_6op37"]
+[ext_resource type="Texture2D" uid="uid://detwtkoq8t75l" path="res://assets/sprites/billionaire/death.png" id="3_vg1ow"]
 [ext_resource type="Texture2D" uid="uid://dn6qr8tu63o7v" path="res://assets/sprites/billionaire/machinegun_80.png" id="5_3s7sa"]
 [ext_resource type="Texture2D" uid="uid://d1dohlcv23s2p" path="res://assets/sprites/billionaire/kick_l.png" id="6_fg0cj"]
 [ext_resource type="Texture2D" uid="uid://dfba4f4xo2exf" path="res://assets/sprites/billionaire/kick_r.png" id="7_s3hll"]
@@ -18,6 +19,54 @@ region = Rect2(0, 0, 320, 280)
 [sub_resource type="AtlasTexture" id="AtlasTexture_iwrfx"]
 atlas = ExtResource("1_s3hll")
 region = Rect2(0, 0, 320, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a1jq3"]
+atlas = ExtResource("3_vg1ow")
+region = Rect2(0, 0, 384, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qojsr"]
+atlas = ExtResource("3_vg1ow")
+region = Rect2(384, 0, 384, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8wdy"]
+atlas = ExtResource("3_vg1ow")
+region = Rect2(768, 0, 384, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4igxe"]
+atlas = ExtResource("3_vg1ow")
+region = Rect2(1152, 0, 384, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jic5"]
+atlas = ExtResource("3_vg1ow")
+region = Rect2(1536, 0, 384, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0b3ms"]
+atlas = ExtResource("3_vg1ow")
+region = Rect2(1920, 0, 384, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnb08"]
+atlas = ExtResource("3_vg1ow")
+region = Rect2(2304, 0, 384, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2a622"]
+atlas = ExtResource("3_vg1ow")
+region = Rect2(2688, 0, 384, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ei6o3"]
+atlas = ExtResource("3_vg1ow")
+region = Rect2(3072, 0, 384, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jv8xc"]
+atlas = ExtResource("3_vg1ow")
+region = Rect2(3456, 0, 384, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7khy"]
+atlas = ExtResource("3_vg1ow")
+region = Rect2(3840, 0, 384, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twddh"]
+atlas = ExtResource("3_vg1ow")
+region = Rect2(4224, 0, 384, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vg1ow"]
 atlas = ExtResource("1_82bc1")
@@ -232,6 +281,47 @@ animations = [{
 "loop": true,
 "name": &"air_attack_down",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a1jq3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qojsr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i8wdy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4igxe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jic5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0b3ms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnb08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2a622")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ei6o3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jv8xc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p7khy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twddh")
+}],
+"loop": true,
+"name": &"death",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
