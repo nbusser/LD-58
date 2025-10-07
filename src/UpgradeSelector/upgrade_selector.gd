@@ -191,6 +191,18 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 		{UpgradeCardData.EffectType.ABILITY_DASH_DOWN: 1},
 		["double_jump"]
 	),
+	UpgradeCardData.new(
+		"air_bonus_jump",
+		UpgradeCardData.CardType.JUMP,
+		UpgradeCardData.Rarity.UNCOMMON,
+		"air_bonus_jump",
+		0,
+		"Jump loophole",
+		"Tax-smash them to the oblivion",
+		10000,
+		{UpgradeCardData.EffectType.ABILITY_AIR_ATTACK_BONUS_JUMP: 1},
+		["jump_height_1"]
+	),
 	# BULLET TIME
 	UpgradeCardData.new(
 		"bullet_time_1",

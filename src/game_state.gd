@@ -96,6 +96,8 @@ func apply_upgrade(card: UpgradeCardData) -> bool:
 				player_stats.unlocked_dash_bullet_time = true
 			UpgradeCardData.EffectType.ABILITY_DOUBLE_JUMP:
 				player_stats.max_nb_jumps = 2
+			UpgradeCardData.EffectType.ABILITY_AIR_ATTACK_BONUS_JUMP:
+				player_stats.unlocked_bonus_jump_after_airhit = true
 	return true
 
 

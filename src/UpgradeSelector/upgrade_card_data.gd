@@ -28,6 +28,7 @@ enum EffectType {
 	ABILITY_DASH_DOWN,
 	ABILITY_DASH,
 	ABILITY_DOUBLE_JUMP,
+	ABILITY_AIR_ATTACK_BONUS_JUMP,
 }
 
 const ICON_PROFIT = preload("res://assets/sprites/upgrade_selector/icon_profit.png")
