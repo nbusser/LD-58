@@ -5,6 +5,10 @@ extends EditorScript
 func _run() -> void:
 	print("Running tests...")
 
+	print("Test 0: Basic formatting without cents")
+	var result0 = StringFormatter.format_currency(34.56)
+	print("Result: %s" % result0)
+
 	print("Test 1: Basic formatting without cents")
 	var result1 = StringFormatter.format_currency(1234.56)
 	print("Result: %s" % result1)
