@@ -15,6 +15,7 @@ var _last_idx: int = -1
 @onready var interlude = preload("res://src/Interlude/Interlude.tscn")
 @onready var credits = preload("res://src/Credits/Credits.tscn")
 @onready var game_over = preload("res://src/GameOver/GameOver.tscn")
+@onready var victory = preload("res://src/Victory/Victory.tscn")
 
 @onready var viewport: Viewport = $SubViewportContainer/SubViewport
 @onready var music_player: AudioStreamPlayer = $MusicPlayer
@@ -134,6 +135,12 @@ func _run_credits(can_go_back: bool) -> void:
 	self.current_scene = scene
 
 
+func _run_victory() -> void:
+	var scene: Victory = victory.instantiate()
+	music_player.stop()
+	self.current_scene = scene
+
+
 # State machine handling the state of the whole game
 # Everytime a scene ends, it calls this function which will load the next
 # step of the game
@@ -154,6 +161,8 @@ func _on_end_scene(status: Globals.EndSceneStatus, params: Dictionary = {}) -> v
 			_restart_level()
 		Globals.EndSceneStatus.LEVEL_END_WIN_GAME:
 			_on_game_won()
+		Globals.EndSceneStatus.LEVEL_VICTORY:
+			_run_victory()
 		Globals.EndSceneStatus.INTERLUDE_END:
 			_on_end_of_interlude()
 		Globals.EndSceneStatus.GAME_OVER_RESTART:
