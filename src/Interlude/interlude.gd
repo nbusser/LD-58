@@ -93,9 +93,11 @@ func _setup_statement_lines():
 	)
 
 	losses_label.text = StringFormatter.format_currency(
-		GameState.latest_level_state.get_value_of_collected_items()
+		GameState.latest_level_state.get_value_of_collected_items(), false, "$", true
 	)
 	var remaining_net_worth = (
 		GameState.billionaire_cash - GameState.latest_level_state.get_value_of_collected_items()
 	)
-	remaining_net_worth_label.text = StringFormatter.format_currency(remaining_net_worth)
+	remaining_net_worth_label.text = StringFormatter.format_currency(
+		remaining_net_worth, false, "$", true
+	)
