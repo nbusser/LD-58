@@ -28,13 +28,13 @@ var _last_hit_time = 0.0
 @onready var _idle_timer: Timer = $IdleTimer
 @onready var _bullets: Node2D = $"../Bullets"
 @onready var _player: Player = $"../Player"
-@onready var _repulse_wave: Node2D = $AttackPatterns/RepulsiveWave/Columns
 @onready var _schlass: Node2D = $AttackPatterns/Schlassage/Foot
 
 @onready var _attack_patterns: Node = $AttackPatterns
 @onready var _level: Level = $"../.."
 @onready var _coins: Node2D = $"../Coins"
 @onready var _lasers: Node2D = %Lasers
+@onready var _repulsive_wave: RepulsiveWave = %RepulsiveWave
 @onready var _combo_display: Node2D = $"../ComboDisplay"
 @onready var _combo_label: Label = $"../ComboDisplay/ComboLabel"
 
@@ -51,13 +51,12 @@ func _ready() -> void:
 	$AttackPatterns/Parachute.routine = _parachute_routine
 	$AttackPatterns/Schlassage.routine = _schlassage_routine
 
-	_init_repulse_wave()
 	$AttackPatterns/Parachute/ParachuteSprite.visible = false
 
 
 # Return a random attack pattern
 func _get_attack_pattern():
-	# return _attack_patterns.get_child(9)
+	#return _attack_patterns.get_child(4)
 	var theoretical_max_distance_x = abs(
 		$"../Borders/WallL".position.x - $"../Borders/WallR".position.x
 	)
@@ -534,20 +533,6 @@ func _rain_carpet_bomb_routine() -> void:
 	$Sprite2D.play("default")
 
 
-func _init_repulse_wave():
-	var on_hit = func(body: Node2D) -> void:
-		if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]):
-			_player.get_hurt(Vector2(0, 0))
-
-	for column: Area2D in _repulse_wave.get_children():
-		column.visible = false
-		column.monitoring = false
-		column.monitorable = false
-		column.connect("body_entered", on_hit)
-
-	_repulse_wave.visible = true
-
-
 func _repulse_wave_routine():
 	var focus_duration: float = 2.0
 	$AttackPatterns/Rain/FocusSound.play()
@@ -557,26 +542,9 @@ func _repulse_wave_routine():
 	$Sprite2D.play("laugh")
 
 	var column_spawn_interval = 1.0 + 0.07 - 0.07 * GameState.difficulty_factor
-
-	var delayed_sound = func():
-		await get_tree().create_timer(randf_range(0.5, 0.8)).timeout
-		$AttackPatterns/RepulsiveWave/ColumnSound.play()
-
-	for column: Area2D in _repulse_wave.get_children():
-		column.visible = true
-		column.monitoring = true
-		for sprite in column.get_node("Sprites").get_children():
-			delayed_sound.call_deferred()
-			sprite.play("default")
-		await get_tree().create_timer(column_spawn_interval).timeout
-
-	await get_tree().create_timer(1.0).timeout
+	_repulsive_wave.spawn(column_spawn_interval)
 
 	$Sprite2D.play("default")
-
-	for column: Area2D in _repulse_wave.get_children():
-		column.visible = false
-		column.monitoring = false
 
 
 func _on_idle_timer_timeout() -> void:

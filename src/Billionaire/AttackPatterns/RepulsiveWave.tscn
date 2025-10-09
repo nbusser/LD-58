@@ -1,0 +1,135 @@
+[gd_scene load_steps=11 format=3 uid="uid://c7oy24dpr3gup"]
+
+[ext_resource type="Script" uid="uid://5f025ou0a01i" path="res://src/Billionaire/AttackPatterns/repulsive_wave.gd" id="1_gpw8e"]
+[ext_resource type="AudioStream" uid="uid://dt2y3s2857va4" path="res://assets/sounds/Player/bubble.mp3" id="2_qt8q0"]
+[ext_resource type="SpriteFrames" uid="uid://bvi1idvrvrbb2" path="res://src/Billionaire/bubble_100.tres" id="3_0ixlw"]
+[ext_resource type="SpriteFrames" uid="uid://dgoanvtm3rx52" path="res://src/Billionaire/bubble_200.tres" id="4_a5xa3"]
+[ext_resource type="SpriteFrames" uid="uid://bfujddc8s3ueg" path="res://src/Billionaire/bubble_300.tres" id="5_emiel"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_sycgs"]
+playback_mode = 1
+random_pitch = 1.56
+random_volume_offset_db = 2.67
+streams_count = 1
+stream_0/stream = ExtResource("2_qt8q0")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ooeug"]
+size = Vector2(81, 71.375)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2rdxt"]
+size = Vector2(162, 236)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8yvxe"]
+size = Vector2(77.25, 116.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_atpjt"]
+size = Vector2(103.1875, 205.6875)
+
+[node name="RepulsiveWave" type="Node2D"]
+script = ExtResource("1_gpw8e")
+
+[node name="ColumnSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_sycgs")
+volume_db = 8.0
+max_polyphony = 50
+
+[node name="Columns" type="Node2D" parent="."]
+
+[node name="Column1" type="Area2D" parent="Columns"]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Columns/Column1"]
+position = Vector2(123.5, 83.375)
+shape = SubResource("RectangleShape2D_ooeug")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Columns/Column1"]
+position = Vector2(1, -1)
+shape = SubResource("RectangleShape2D_2rdxt")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Columns/Column1"]
+position = Vector2(-124, 81.6875)
+shape = SubResource("RectangleShape2D_ooeug")
+
+[node name="Sprites" type="Node2D" parent="Columns/Column1"]
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Columns/Column1/Sprites"]
+position = Vector2(123, 82.5)
+sprite_frames = ExtResource("3_0ixlw")
+speed_scale = 2.5
+
+[node name="Sprite2D2" type="AnimatedSprite2D" parent="Columns/Column1/Sprites"]
+position = Vector2(-124.99999, 83)
+sprite_frames = ExtResource("3_0ixlw")
+frame_progress = 0.18262367
+speed_scale = 2.5
+
+[node name="Sprite2D3" type="AnimatedSprite2D" parent="Columns/Column1/Sprites"]
+position = Vector2(-32.000004, 69)
+scale = Vector2(0.6785714, 0.6785714)
+sprite_frames = ExtResource("3_0ixlw")
+frame_progress = 0.7338228
+speed_scale = 2.5
+
+[node name="Sprite2D4" type="AnimatedSprite2D" parent="Columns/Column1/Sprites"]
+position = Vector2(20, -40)
+scale = Vector2(1.2142857, 1.2142857)
+sprite_frames = ExtResource("3_0ixlw")
+frame_progress = 0.85141444
+speed_scale = 2.5
+
+[node name="Column2" type="Area2D" parent="Columns"]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Columns/Column2"]
+position = Vector2(204, 58.25)
+shape = SubResource("RectangleShape2D_8yvxe")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Columns/Column2"]
+position = Vector2(-204.375, 61)
+shape = SubResource("RectangleShape2D_8yvxe")
+
+[node name="Sprites" type="Node2D" parent="Columns/Column2"]
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Columns/Column2/Sprites"]
+texture_filter = 1
+position = Vector2(-207, 60.999985)
+sprite_frames = ExtResource("4_a5xa3")
+frame_progress = 0.3998903
+speed_scale = 2.5
+
+[node name="Sprite2D2" type="AnimatedSprite2D" parent="Columns/Column2/Sprites"]
+position = Vector2(204.99998, 58.822365)
+sprite_frames = ExtResource("4_a5xa3")
+frame_progress = 0.18021862
+speed_scale = 2.5
+
+[node name="Column3" type="Area2D" parent="Columns"]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Columns/Column3"]
+position = Vector2(296, 16)
+shape = SubResource("RectangleShape2D_atpjt")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Columns/Column3"]
+position = Vector2(-298, 16)
+shape = SubResource("RectangleShape2D_atpjt")
+
+[node name="Sprites" type="Node2D" parent="Columns/Column3"]
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Columns/Column3/Sprites"]
+position = Vector2(295.00003, 12.999985)
+sprite_frames = ExtResource("5_emiel")
+frame_progress = 0.9010395
+speed_scale = 2.5
+
+[node name="Sprite2D2" type="AnimatedSprite2D" parent="Columns/Column3/Sprites"]
+position = Vector2(-297, 15)
+sprite_frames = ExtResource("5_emiel")
+frame_progress = 0.43212867
+speed_scale = 2.5
