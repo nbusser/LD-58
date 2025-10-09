@@ -56,7 +56,7 @@ func _ready() -> void:
 
 # Return a random attack pattern
 func _get_attack_pattern():
-	#return _attack_patterns.get_child(4)
+	# return _attack_patterns.get_child(4)
 	var theoretical_max_distance_x = abs(
 		$"../Borders/WallL".position.x - $"../Borders/WallR".position.x
 	)

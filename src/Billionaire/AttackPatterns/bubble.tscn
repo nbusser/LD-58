@@ -1,11 +1,11 @@
 [gd_scene load_steps=6 format=3 uid="uid://cvdej00iwwtbl"]
 
 [ext_resource type="Script" uid="uid://hk6x5me3ica1" path="res://src/Billionaire/AttackPatterns/bubble.gd" id="1_oov7l"]
+[ext_resource type="SpriteFrames" uid="uid://bvi1idvrvrbb2" path="res://src/Billionaire/bubble_100.tres" id="2_rei1w"]
 [ext_resource type="AudioStream" uid="uid://dt2y3s2857va4" path="res://assets/sounds/Player/bubble.mp3" id="3_rei1w"]
-[ext_resource type="SpriteFrames" uid="uid://dgoanvtm3rx52" path="res://src/Billionaire/bubble_200.tres" id="3_ulwp5"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_oov7l"]
-size = Vector2(102, 103)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rei1w"]
+size = Vector2(100, 100)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uc4vl"]
 streams_count = 1
@@ -17,16 +17,16 @@ collision_mask = 16
 monitoring = false
 monitorable = false
 script = ExtResource("1_oov7l")
-bubble_size = 1
+speed_factor = null
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("3_ulwp5")
-frame = 49
+sprite_frames = ExtResource("2_rei1w")
+frame = 48
 speed_scale = 2.5
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(-7, -6.5)
-shape = SubResource("RectangleShape2D_oov7l")
+shape = SubResource("RectangleShape2D_rei1w")
 
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_uc4vl")
