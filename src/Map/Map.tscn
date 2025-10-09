@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://crkhemgnnguer" path="res://src/Player/camera_2d.gd" id="3_13lp4"]
 [ext_resource type="PackedScene" uid="uid://bjp6oj1o86afi" path="res://src/Billionaire/billionaire.tscn" id="3_e037b"]
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="5_lrvju"]
-[ext_resource type="PackedScene" uid="uid://c7oy24dpr3gup" path="res://src/Billionaire/AttackPatterns/RepulsiveWave.tscn" id="6_fyitu"]
+[ext_resource type="PackedScene" uid="uid://c7oy24dpr3gup" path="res://src/Billionaire/AttackPatterns/bubble_barrier.tscn" id="6_fyitu"]
 [ext_resource type="Script" uid="uid://d2jig773lhgy0" path="res://src/Billionaire/BillionaireLasers.gd" id="6_lrvju"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wqubw"]
@@ -127,6 +127,6 @@ text = "x2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RepulsiveWave" parent="." instance=ExtResource("6_fyitu")]
+[node name="BubbleBarrier" parent="." instance=ExtResource("6_fyitu")]
 unique_name_in_owner = true
 position = Vector2(0, -119)

@@ -34,7 +34,7 @@ var _last_hit_time = 0.0
 @onready var _level: Level = $"../.."
 @onready var _coins: Node2D = $"../Coins"
 @onready var _lasers: Node2D = %Lasers
-@onready var _repulsive_wave: RepulsiveWave = %RepulsiveWave
+@onready var _bubble_barrier: BubbleBarrier = %BubbleBarrier
 @onready var _combo_display: Node2D = $"../ComboDisplay"
 @onready var _combo_label: Label = $"../ComboDisplay/ComboLabel"
 
@@ -44,7 +44,7 @@ func _ready() -> void:
 	$AttackPatterns/Machinegun.routine = _machinegun_routine
 	$AttackPatterns/Rain.routine = _rain_routine
 	$AttackPatterns/RainCarpetBomb.routine = _rain_carpet_bomb_routine
-	$AttackPatterns/RepulsiveWave.routine = _repulse_wave_routine
+	$AttackPatterns/BubbleBarrier.routine = _bubble_barrier_routine
 	$AttackPatterns/LaserWarning.routine = _laser_warning_routine
 	$AttackPatterns/LaserSweep.routine = _laser_sweep_routine
 	$AttackPatterns/LaserCage.routine = _laser_cage_routine
@@ -533,7 +533,7 @@ func _rain_carpet_bomb_routine() -> void:
 	$Sprite2D.play("default")
 
 
-func _repulse_wave_routine():
+func _bubble_barrier_routine():
 	var focus_duration: float = 2.0
 	$AttackPatterns/Rain/FocusSound.play()
 
@@ -542,7 +542,7 @@ func _repulse_wave_routine():
 	$Sprite2D.play("laugh")
 
 	var column_spawn_interval = 1.0 + 0.07 - 0.07 * GameState.difficulty_factor
-	_repulsive_wave.spawn(column_spawn_interval)
+	_bubble_barrier.spawn(column_spawn_interval)
 
 	$Sprite2D.play("default")
 

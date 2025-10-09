@@ -71,7 +71,7 @@ func _update_preview_size() -> void:
 	visible = true
 	_sprite.sprite_frames = _bubble_anim_resource_dict[bubble_size]
 	_sprite.frame = _bubble_anim_preview_frame_dict[bubble_size]
-	# $Hitbox.shape.size = Vector2(hitbox_side, hitbox_side)
+
 	var new_shape: RectangleShape2D = RectangleShape2D.new()
 	new_shape.size = Vector2(hitbox_side, hitbox_side)
 	$Hitbox.shape = new_shape
