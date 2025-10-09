@@ -57,44 +57,6 @@ shape = SubResource("WorldBoundaryShape2D_wqubw")
 [node name="CamMarker" type="Node2D" parent="Borders/WallR"]
 position = Vector2(0, 32)
 
-[node name="BillionaireBorders" type="Node2D" parent="."]
-
-[node name="Ground" type="StaticBody2D" parent="BillionaireBorders"]
-position = Vector2(1, 0)
-collision_layer = 64
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBorders/Ground"]
-shape = SubResource("WorldBoundaryShape2D_wqubw")
-
-[node name="Ceiling" type="StaticBody2D" parent="BillionaireBorders"]
-position = Vector2(0, -626)
-scale = Vector2(-1, -1)
-collision_layer = 64
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBorders/Ceiling"]
-shape = SubResource("WorldBoundaryShape2D_wqubw")
-
-[node name="WallL" type="StaticBody2D" parent="BillionaireBorders"]
-position = Vector2(-634, -82)
-rotation = 1.5707964
-collision_layer = 64
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBorders/WallL"]
-shape = SubResource("WorldBoundaryShape2D_wqubw")
-
-[node name="WallR" type="StaticBody2D" parent="BillionaireBorders"]
-position = Vector2(640, -82)
-rotation = 4.712389
-collision_layer = 64
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BillionaireBorders/WallR"]
-position = Vector2(0, -40)
-shape = SubResource("WorldBoundaryShape2D_wqubw")
-
 [node name="Coins" type="Node2D" parent="."]
 
 [node name="BossIndicator" type="Node2D" parent="."]
