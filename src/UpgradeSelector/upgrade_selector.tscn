@@ -1,38 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bw6igwix0v8lt"]
+[gd_scene load_steps=5 format=3 uid="uid://bw6igwix0v8lt"]
 
 [ext_resource type="Script" uid="uid://se5xxijidgr3" path="res://src/UpgradeSelector/upgrade_selector.gd" id="1_2fgo5"]
 [ext_resource type="PackedScene" uid="uid://b042ulb2eqxpg" path="res://src/UpgradeSelector/upgrade_card.tscn" id="2_og7cp"]
 [ext_resource type="Texture2D" uid="uid://oujy4qm2cxuw" path="res://assets/sprites/upgrade_selector/corkboard.png" id="2_wscck"]
-[ext_resource type="Texture2D" uid="uid://gc3pxayontfd" path="res://assets/sprites/upgrade_selector/upgrade_cursor.png" id="4_auku0"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_spcad"]
-atlas = ExtResource("4_auku0")
-region = Rect2(0, 0, 672, 672)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r7hoq"]
-atlas = ExtResource("4_auku0")
-region = Rect2(672, 0, 672, 672)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dqmr4"]
-atlas = ExtResource("4_auku0")
-region = Rect2(1344, 0, 672, 672)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_je2q3"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_spcad")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r7hoq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dqmr4")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[ext_resource type="PackedScene" uid="uid://ce2sti7fbkmul" path="res://src/UpgradeSelector/cursor.tscn" id="4_auku0"]
 
 [node name="UpgradeSelector" type="Control"]
 layout_mode = 3
@@ -120,20 +91,8 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Skip"
 
-[node name="Cursor" type="Node2D" parent="."]
+[node name="Cursor" parent="." instance=ExtResource("4_auku0")]
 unique_name_in_owner = true
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Cursor"]
-position = Vector2(334, 196)
-sprite_frames = SubResource("SpriteFrames_je2q3")
-
-[node name="CursorEndPosition" type="Node2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(1667, 371)
-
-[node name="CursorStartPosition" type="Node2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(832, 1045)
 
 [connection signal="button_up" from="RedrawButton" to="." method="_on_redraw_button_up"]
 [connection signal="button_up" from="SkipButton" to="." method="_on_skip_button_button_up"]

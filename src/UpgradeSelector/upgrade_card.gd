@@ -1,4 +1,6 @@
 @tool
+class_name UpgradeCard
+
 extends Control
 
 signal card_selected(card_data: UpgradeCardData)

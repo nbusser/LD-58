@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://ce2sti7fbkmul"]
+
+[ext_resource type="Texture2D" uid="uid://gc3pxayontfd" path="res://assets/sprites/upgrade_selector/upgrade_cursor.png" id="1_4al4n"]
+[ext_resource type="Script" uid="uid://caahvc53l1ra5" path="res://src/UpgradeSelector/cursor.gd" id="1_136yy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spcad"]
+atlas = ExtResource("1_4al4n")
+region = Rect2(0, 0, 672, 672)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7hoq"]
+atlas = ExtResource("1_4al4n")
+region = Rect2(672, 0, 672, 672)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqmr4"]
+atlas = ExtResource("1_4al4n")
+region = Rect2(1344, 0, 672, 672)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_je2q3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spcad")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7hoq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqmr4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Cursor" type="Node2D"]
+script = ExtResource("1_136yy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(334, 196)
+sprite_frames = SubResource("SpriteFrames_je2q3")

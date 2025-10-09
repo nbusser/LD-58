@@ -6,8 +6,8 @@ signal close
 
 const ICON_TEXTURE = preload("res://assets/sprites/icon.png")
 
-const UpgradeCard = preload("res://src/UpgradeSelector/upgrade_card.gd")
-const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd")
+const UpgradeCardPreload = preload("res://src/UpgradeSelector/upgrade_card.gd")
+const UpgradeCardMenuPreload = preload("res://src/UpgradeSelector/upgrade_card_menu.gd")
 
 @export var available_cards: Array[UpgradeCardData] = [
 	# PROFIT
@@ -237,13 +237,10 @@ const UpgradeCardMenu = preload("res://src/UpgradeSelector/upgrade_card_menu.gd"
 
 var selectable_cards: Array[UpgradeCardData] = []
 
-var _lock_cursor: bool = false
 var _card_pool: Array[UpgradeCardData] = available_cards.duplicate_deep()
 
 @onready var card_container: Control = %CardContainer
-@onready var _cursor: Node2D = %Cursor
-@onready var _cursor_end_position: Node2D = %CursorEndPosition
-@onready var _cursor_start_position: Node2D = %CursorStartPosition
+@onready var _cursor: Cursor = %Cursor
 
 
 func _reset_selectable_cards() -> void:
@@ -279,20 +276,9 @@ func _pick_cards(nb_cards: int) -> Array[UpgradeCardData]:
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	for child in card_container.get_children():
-		if child is UpgradeCard or child is UpgradeCardMenu:
+		if child is UpgradeCardPreload or child is UpgradeCardMenuPreload:
 			child.card_selected.connect(_on_card_selected.bind(child.get_index()))
 	_pick_cards(3)
-
-	_lock_cursor = true
-	_cursor.position = _cursor_start_position.position
-	await (
-		create_tween()
-		. tween_property(_cursor, "position", get_local_mouse_position(), 0.2)
-		. set_trans(Tween.TRANS_LINEAR)
-		. set_ease(Tween.EASE_IN_OUT)
-		. finished
-	)
-	_lock_cursor = false
 
 
 func _exit_tree() -> void:
@@ -308,26 +294,7 @@ func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
 
 	var card = card_container.get_child(index)
 	if card != null:
-		_lock_cursor = true
-		card.signature_point_added.connect(
-			func(point: Vector2) -> void:
-				# _cursor.position = card.position + point
-				(
-					create_tween()
-					. tween_property(_cursor, "global_position", card.global_position + point, 0.05)
-					. set_trans(Tween.TRANS_LINEAR)
-				)
-		)
-
-		await card.sign_contract()
-
-	await (
-		create_tween()
-		. tween_property(_cursor, "position", _cursor_end_position.position, 0.5)
-		. set_trans(Tween.TRANS_LINEAR)
-		. set_ease(Tween.EASE_OUT)
-		. finished
-	)
+		await _cursor._sign_card(card)
 
 	if get_parent().name == "MainMenu":
 		if index == 0:
@@ -341,7 +308,6 @@ func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
 	selectable_cards.pop_at(index)
 	_reset_selectable_cards()
 	emit_signal("close")
-	_lock_cursor = false
 
 
 func _on_redraw_button_up() -> void:
@@ -358,11 +324,6 @@ func _update_cards_display() -> void:
 			card_control.visible = true
 		else:
 			card_control.visible = false
-
-
-func _process(_delta):
-	if not _lock_cursor:
-		_cursor.position = get_local_mouse_position()
 
 
 func _on_skip_button_button_up() -> void:
