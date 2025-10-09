@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7oy24dpr3gup"]
+
+[ext_resource type="Script" uid="uid://5f025ou0a01i" path="res://src/Billionaire/AttackPatterns/bubble_barrier.gd" id="1_gpw8e"]
+[ext_resource type="PackedScene" uid="uid://cvdej00iwwtbl" path="res://src/Billionaire/AttackPatterns/bubble.tscn" id="3_qt8q0"]
+
+[node name="BubbleBarrier" type="Node2D"]
+script = ExtResource("1_gpw8e")
+
+[node name="Waves" type="Node2D" parent="."]
+
+[node name="Wave1" type="Node2D" parent="Waves"]
+
+[node name="Bubble" parent="Waves/Wave1" instance=ExtResource("3_qt8q0")]
+position = Vector2(9, -42)
+bubble_size = 1
+hitbox_side = 200
+speed_factor = 2.5
+
+[node name="Bubble2" parent="Waves/Wave1" instance=ExtResource("3_qt8q0")]
+position = Vector2(56, 69)
+speed_factor = 2.5
+
+[node name="Bubble3" parent="Waves/Wave1" instance=ExtResource("3_qt8q0")]
+position = Vector2(-24, 39)
+speed_factor = 2.5
+
+[node name="Wave2" type="Node2D" parent="Waves"]
+
+[node name="Bubble4" parent="Waves/Wave2" instance=ExtResource("3_qt8q0")]
+position = Vector2(-103, 71)
+speed_factor = 2.5
+
+[node name="Bubble5" parent="Waves/Wave2" instance=ExtResource("3_qt8q0")]
+position = Vector2(134, 75)
+speed_factor = 2.5
+
+[node name="Wave3" type="Node2D" parent="Waves"]
+
+[node name="Bubble" parent="Waves/Wave3" instance=ExtResource("3_qt8q0")]
+position = Vector2(-237, 21)
+bubble_size = 1
+hitbox_side = 200
+speed_factor = 2.5
+
+[node name="Bubble2" parent="Waves/Wave3" instance=ExtResource("3_qt8q0")]
+position = Vector2(251, 21)
+bubble_size = 1
+hitbox_side = 200
+speed_factor = 2.5
