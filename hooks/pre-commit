@@ -1,0 +1,14 @@
+#!/bin/sh
+
+gdformat --diff .
+
+if [ $? -ne 0 ]; then
+    echo "gdformat reported errors. Please run gdformat."
+    exit 1
+fi
+
+gdlint .
+
+if [ $? -ne 0 ]; then
+    echo "gdlint reported errors. Please fix it."
+fi
