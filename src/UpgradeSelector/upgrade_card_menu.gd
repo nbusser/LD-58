@@ -30,7 +30,7 @@ var _is_ready: bool = false
 @onready var level_label: Label = %LevelLabel
 @onready var type_label: Label = %TypeLabel
 @onready var cost_label: Label = %CostLabel
-@onready var signature_line_2d: Line2D = $SignatureLine2D
+@onready var signature_line_2d: Line2D = %Signature
 @onready var select_button: Button = %SelectButton
 
 

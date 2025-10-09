@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://4qx72yv4ouk8"]
+
+[ext_resource type="Script" uid="uid://dimjxw0p5eitv" path="res://src/UpgradeSelector/signature.gd" id="1_d1yhv"]
+
+[node name="Signature" type="Line2D"]
+visible = false
+points = PackedVector2Array(383, 675, 384, 690, 390, 703, 405, 704, 409, 692, 411, 681, 406, 674, 400, 675, 397, 686, 402, 695, 412, 703, 419, 703, 424, 699, 428, 697, 428, 691, 431, 682, 431, 674, 422, 673, 422, 684, 435, 698, 444, 687, 443, 674, 438, 670, 438, 683, 438.87354, 686.49426, 441, 695, 452, 698, 459, 689, 451, 674, 448, 675, 449, 685, 449, 691, 456, 698, 457, 702, 452, 702, 428, 702, 378, 697, 395, 693, 407, 692, 423, 690, 431, 687, 459, 683)
+width = 2.0
+default_color = Color(0, 0, 0, 1)
+script = ExtResource("1_d1yhv")

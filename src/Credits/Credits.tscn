@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://j5a7okn8a6xv"]
+[gd_scene load_steps=7 format=3 uid="uid://j5a7okn8a6xv"]
 
 [ext_resource type="Script" uid="uid://c5irxtmrghoys" path="res://src/Credits/Credits.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://llhbf5hj1pua" path="res://assets/sprites/upgrade_selector/upgrade_sheet.png" id="2_non2c"]
 [ext_resource type="Texture2D" uid="uid://oujy4qm2cxuw" path="res://assets/sprites/upgrade_selector/corkboard.png" id="2_w4ps8"]
 [ext_resource type="Texture2D" uid="uid://ddlcvvr87w77x" path="res://assets/sprites/interlude/taxman_reading.png" id="4_ynyk4"]
+[ext_resource type="PackedScene" uid="uid://ce2sti7fbkmul" path="res://src/UpgradeSelector/cursor.tscn" id="5_riklg"]
 
 [sub_resource type="FontVariation" id="FontVariation_ynyk4"]
 variation_embolden = 0.61
@@ -93,5 +94,7 @@ offset_right = 929.0
 offset_bottom = 657.0
 size_flags_horizontal = 4
 text = "Back"
+
+[node name="Cursor" parent="." instance=ExtResource("5_riklg")]
 
 [connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]

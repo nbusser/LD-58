@@ -294,7 +294,7 @@ func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
 
 	var card = card_container.get_child(index)
 	if card != null:
-		await _cursor._sign_card(card)
+		await _cursor.sign(card.get_node("%Signature"))
 
 	if get_parent().name == "MainMenu":
 		if index == 0:
