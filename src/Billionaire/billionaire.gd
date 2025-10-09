@@ -16,6 +16,7 @@ var _knockback_velocity: Vector2 = Vector2.ZERO
 
 var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
 var _coin_scene = preload("res://src/Coin/Coin.tscn")
+var _bubble_scene = preload("res://src/Billionaire/AttackPatterns/bubble.tscn")
 
 var _is_player_dead = false
 var _is_level_timeout = false
@@ -34,9 +35,15 @@ var _last_hit_time = 0.0
 @onready var _level: Level = $"../.."
 @onready var _coins: Node2D = $"../Coins"
 @onready var _lasers: Node2D = %Lasers
+@onready var _bubbles: Node2D = %Bubbles
 @onready var _bubble_barrier: BubbleBarrier = %BubbleBarrier
 @onready var _combo_display: Node2D = $"../ComboDisplay"
 @onready var _combo_label: Label = $"../ComboDisplay/ComboLabel"
+
+@onready var _left_wall: Node2D = $"../Borders/WallL"
+@onready var _right_wall: Node2D = $"../Borders/WallR"
+@onready var _ceiling: Node2D = $"../Borders/Ceiling"
+@onready var _ground: Node2D = $"../Borders/Ground"
 
 
 func _ready() -> void:
@@ -50,16 +57,14 @@ func _ready() -> void:
 	$AttackPatterns/LaserCage.routine = _laser_cage_routine
 	$AttackPatterns/Parachute.routine = _parachute_routine
 	$AttackPatterns/Schlassage.routine = _schlassage_routine
+	$AttackPatterns/BubbleSwarm.routine = _bubble_swarm_routine
 
 	$AttackPatterns/Parachute/ParachuteSprite.visible = false
 
 
 # Return a random attack pattern
 func _get_attack_pattern():
-	# return _attack_patterns.get_child(4)
-	var theoretical_max_distance_x = abs(
-		$"../Borders/WallL".position.x - $"../Borders/WallR".position.x
-	)
+	var theoretical_max_distance_x = abs(_left_wall.position.x - $"../Borders/WallR".position.x)
 	var distance_to_player_x = abs(global_position.x - _player.global_position.x)
 	var percentage_net_worth_remaining = _level.level_state.get_percentage_net_worth_remaining()
 
@@ -297,12 +302,10 @@ func _parachute_routine() -> void:
 	# Thus, we use a dictionary, which is passed by reference
 	var state = {"has_parachute": true, "is_running": true}
 
-	var distance_to_left_wall = abs(position.x - $"../Borders/WallL".position.x)
-	var distance_to_right_wall = abs(position.x - $"../Borders/WallR".position.x)
+	var distance_to_left_wall = abs(position.x - _left_wall.position.x)
+	var distance_to_right_wall = abs(position.x - _right_wall.position.x)
 	var direction = -1.0 if distance_to_left_wall > distance_to_right_wall else 1.0
-	var wall = (
-		$"../Borders/WallL".position.x if direction == -1.0 else $"../Borders/WallR".position.x
-	)
+	var wall = _left_wall.position.x if direction == -1.0 else _right_wall.position.x
 
 	# Handle run
 	var run_coroutine = func():
@@ -455,9 +458,9 @@ func _rain_routine() -> void:
 		var rain_bullet_random_interval_y: int = 15
 		var rain_acceleration: int = 400 + (40.0 * (GameState.difficulty_factor - 1.0))
 
-		var spawn_y = $"../BillionaireBorders/Ceiling".position.y + 10
-		var min_x = $"../Borders/WallL".position.x + 10
-		var max_x = $"../Borders/WallR".position.x - 10
+		var spawn_y = _ceiling.position.y + 10
+		var min_x = _left_wall.position.x + 10
+		var max_x = _right_wall.position.x - 10
 		var nb_slots: int = abs(min_x - max_x) / rain_bullet_interval_x
 
 		for wave in range(rain_nb_waves):
@@ -497,9 +500,9 @@ func _rain_carpet_bomb_routine() -> void:
 		var rain_bullet_interval_x: int = 70
 		var rain_bullet_acceleration: int = 200 + int(20.0 * GameState.difficulty_factor)
 
-		var spawn_y = $"../BillionaireBorders/Ceiling".position.y + 10
-		var min_x = $"../Borders/WallL".position.x + 10
-		var max_x = $"../Borders/WallR".position.x - 10
+		var spawn_y = _ceiling.position.y + 10
+		var min_x = _left_wall.position.x + 10
+		var max_x = _right_wall.position.x - 10
 		var nb_slots: int = abs(min_x - max_x) / rain_bullet_interval_x
 
 		var slot_hole_size = 3
@@ -785,6 +788,61 @@ func _schlassage_routine():
 	_schlass.monitoring = false
 	$Sprite2D.flip_h = false
 
+	$Sprite2D.play("default")
+
+
+func _bubble_swarm_routine():
+	var bubble_spawn_coroutine = func():
+		# Number of 100x100 pixels surfaces of bubble to spawn in total
+		var bubble_capital: int = 25 + 8 * (GameState.difficulty_factor - 1)
+
+		# In difficulty 1:  [1.0-2.5]
+		# In difficulty 10: [2.5-4.0]
+		var speed_factor_range: Vector2 = Vector2(
+			1.0 + 0.15 * (GameState.difficulty_factor - 1.0),
+			2.5 + 0.15 * (GameState.difficulty_factor - 1.0)
+		)
+		while bubble_capital > 0:
+			var bubble: Bubble = _bubble_scene.instantiate()
+
+			var r = randi() % 3
+
+			var bubble_size: Bubble.Size
+			if r == 0:
+				bubble_size = Bubble.Size.SMALL
+			elif r == 1:
+				bubble_size = Bubble.Size.MEDIUM
+			else:
+				bubble_size = Bubble.Size.LARGE
+			bubble_capital -= (r + 1) * 2  # 200x200 is 4 times bigger in surface than 100x100
+
+			var bubble_speed_factor = randf_range(speed_factor_range.x, speed_factor_range.y)
+
+			bubble.init(bubble_size, bubble_speed_factor)
+
+			var bubble_side_size: Vector2 = bubble.get_hitbox_side()
+
+			var spawn_x: float = randf_range(
+				_left_wall.global_position.x, _right_wall.global_position.x - bubble_side_size.x / 2
+			)
+			var spawn_y: float = randf_range(
+				_ceiling.global_position.y + 250, _ground.global_position.y - bubble_side_size.y / 2
+			)
+			bubble.global_position = Vector2(spawn_x, spawn_y)
+
+			_bubbles.add_child(bubble)
+
+			# Free the bubble after it exploded
+			bubble.spawn(true)
+
+			await get_tree().create_timer(randf_range(0.05, 0.2)).timeout
+
+	bubble_spawn_coroutine.call_deferred()
+
+	$Sprite2D.play("focus")
+	await get_tree().create_timer(0.5).timeout
+	$AttackPatterns/Rain/FocusSound.play()
+	await get_tree().create_timer(1.0).timeout
 	$Sprite2D.play("default")
 
 

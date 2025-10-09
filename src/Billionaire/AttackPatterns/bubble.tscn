@@ -1,11 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cvdej00iwwtbl"]
+[gd_scene load_steps=5 format=3 uid="uid://cvdej00iwwtbl"]
 
 [ext_resource type="Script" uid="uid://hk6x5me3ica1" path="res://src/Billionaire/AttackPatterns/bubble.gd" id="1_oov7l"]
 [ext_resource type="SpriteFrames" uid="uid://bvi1idvrvrbb2" path="res://src/Billionaire/bubble_100.tres" id="2_rei1w"]
 [ext_resource type="AudioStream" uid="uid://dt2y3s2857va4" path="res://assets/sounds/Player/bubble.mp3" id="3_rei1w"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rei1w"]
-size = Vector2(100, 100)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uc4vl"]
 streams_count = 1
@@ -26,7 +23,6 @@ speed_scale = 2.5
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(-7, -6.5)
-shape = SubResource("RectangleShape2D_rei1w")
 
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_uc4vl")

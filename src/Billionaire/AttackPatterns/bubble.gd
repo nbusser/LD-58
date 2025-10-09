@@ -41,6 +41,29 @@ func _ready() -> void:
 	_reset()
 
 
+func init(size: Size, speed_factor_p: float = 2.5):
+	speed_factor = speed_factor_p
+
+	bubble_size = size
+
+	if bubble_size == Size.SMALL:
+		hitbox_side = 100
+	elif bubble_size == Size.MEDIUM:
+		hitbox_side = 200
+	elif bubble_size == Size.LARGE:
+		hitbox_side = 300
+	else:
+		assert(false, "Invalid bubble size")
+
+	var new_shape: RectangleShape2D = RectangleShape2D.new()
+	new_shape.size = Vector2(hitbox_side, hitbox_side)
+	$Hitbox.shape = new_shape
+
+
+func get_hitbox_side() -> Vector2:
+	return $Hitbox.shape.size
+
+
 func spawn(free_at_the_end: bool = false) -> void:
 	visible = true
 	_sprite.play("default", speed_factor)

@@ -82,8 +82,6 @@ stream_3/stream = ExtResource("22_327hu")
 collision_layer = 32
 collision_mask = 65
 script = ExtResource("1_gpq05")
-idle_range_seconds = null
-coins_per_damage = null
 
 [node name="IdleTimer" type="Timer" parent="."]
 one_shot = true
@@ -253,6 +251,14 @@ shape = SubResource("CircleShape2D_tafn6")
 [node name="FocusSound" type="AudioStreamPlayer2D" parent="AttackPatterns/Schlassage"]
 stream = SubResource("AudioStreamRandomizer_n2fvo")
 volume_db = 15.0
+
+[node name="BubbleSwarm" parent="AttackPatterns" instance=ExtResource("7_y3yri")]
+attack_name = "Bitcoin crash!"
+cooldown = 10.0
+minimum_distance_x = 0.1
+prefered_distance_x = 0.4
+prefered_distance_tolerance_x = 0.15
+base_weigth = 0.9
 
 [node name="SFX" type="Node2D" parent="."]
 

@@ -130,3 +130,6 @@ vertical_alignment = 1
 [node name="BubbleBarrier" parent="." instance=ExtResource("6_fyitu")]
 unique_name_in_owner = true
 position = Vector2(0, -119)
+
+[node name="Bubbles" type="Node2D" parent="."]
+unique_name_in_owner = true
