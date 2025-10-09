@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://c7oy24dpr3gup"]
+[gd_scene load_steps=12 format=3 uid="uid://c7oy24dpr3gup"]
 
 [ext_resource type="Script" uid="uid://5f025ou0a01i" path="res://src/Billionaire/AttackPatterns/repulsive_wave.gd" id="1_gpw8e"]
 [ext_resource type="AudioStream" uid="uid://dt2y3s2857va4" path="res://assets/sounds/Player/bubble.mp3" id="2_qt8q0"]
 [ext_resource type="SpriteFrames" uid="uid://bvi1idvrvrbb2" path="res://src/Billionaire/bubble_100.tres" id="3_0ixlw"]
+[ext_resource type="PackedScene" uid="uid://cvdej00iwwtbl" path="res://src/Billionaire/AttackPatterns/bubble.tscn" id="3_qt8q0"]
 [ext_resource type="SpriteFrames" uid="uid://dgoanvtm3rx52" path="res://src/Billionaire/bubble_200.tres" id="4_a5xa3"]
 [ext_resource type="SpriteFrames" uid="uid://bfujddc8s3ueg" path="res://src/Billionaire/bubble_300.tres" id="5_emiel"]
 
@@ -52,27 +53,34 @@ shape = SubResource("RectangleShape2D_2rdxt")
 position = Vector2(-124, 81.6875)
 shape = SubResource("RectangleShape2D_ooeug")
 
-[node name="Sprites" type="Node2D" parent="Columns/Column1"]
+[node name="Bubbles" type="Node2D" parent="Columns/Column1"]
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="Columns/Column1/Sprites"]
+[node name="Bubble" parent="Columns/Column1/Bubbles" instance=ExtResource("3_qt8q0")]
+position = Vector2(36, -61)
+size = 2
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Columns/Column1/Bubbles"]
+visible = false
 position = Vector2(123, 82.5)
 sprite_frames = ExtResource("3_0ixlw")
 speed_scale = 2.5
 
-[node name="Sprite2D2" type="AnimatedSprite2D" parent="Columns/Column1/Sprites"]
+[node name="Sprite2D2" type="AnimatedSprite2D" parent="Columns/Column1/Bubbles"]
+visible = false
 position = Vector2(-124.99999, 83)
 sprite_frames = ExtResource("3_0ixlw")
 frame_progress = 0.18262367
 speed_scale = 2.5
 
-[node name="Sprite2D3" type="AnimatedSprite2D" parent="Columns/Column1/Sprites"]
+[node name="Sprite2D3" type="AnimatedSprite2D" parent="Columns/Column1/Bubbles"]
 position = Vector2(-32.000004, 69)
 scale = Vector2(0.6785714, 0.6785714)
 sprite_frames = ExtResource("3_0ixlw")
 frame_progress = 0.7338228
 speed_scale = 2.5
 
-[node name="Sprite2D4" type="AnimatedSprite2D" parent="Columns/Column1/Sprites"]
+[node name="Sprite2D4" type="AnimatedSprite2D" parent="Columns/Column1/Bubbles"]
+visible = false
 position = Vector2(20, -40)
 scale = Vector2(1.2142857, 1.2142857)
 sprite_frames = ExtResource("3_0ixlw")
@@ -95,6 +103,7 @@ shape = SubResource("RectangleShape2D_8yvxe")
 [node name="Sprites" type="Node2D" parent="Columns/Column2"]
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Columns/Column2/Sprites"]
+visible = false
 texture_filter = 1
 position = Vector2(-207, 60.999985)
 sprite_frames = ExtResource("4_a5xa3")
@@ -102,6 +111,7 @@ frame_progress = 0.3998903
 speed_scale = 2.5
 
 [node name="Sprite2D2" type="AnimatedSprite2D" parent="Columns/Column2/Sprites"]
+visible = false
 position = Vector2(204.99998, 58.822365)
 sprite_frames = ExtResource("4_a5xa3")
 frame_progress = 0.18021862
@@ -123,12 +133,14 @@ shape = SubResource("RectangleShape2D_atpjt")
 [node name="Sprites" type="Node2D" parent="Columns/Column3"]
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Columns/Column3/Sprites"]
+visible = false
 position = Vector2(295.00003, 12.999985)
 sprite_frames = ExtResource("5_emiel")
 frame_progress = 0.9010395
 speed_scale = 2.5
 
 [node name="Sprite2D2" type="AnimatedSprite2D" parent="Columns/Column3/Sprites"]
+visible = false
 position = Vector2(-297, 15)
 sprite_frames = ExtResource("5_emiel")
 frame_progress = 0.43212867
