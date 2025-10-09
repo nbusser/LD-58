@@ -20,9 +20,9 @@ var _bubble_explosion_frame_dict: Dictionary[Size, int] = {
 }
 
 @onready var _bubble_anim_resource_dict: Dictionary[Size, SpriteFrames] = {
-	Size.SMALL: preload("res://src/Billionaire/bubble_100.tres"),
-	Size.MEDIUM: preload("res://src/Billionaire/bubble_200.tres"),
-	Size.LARGE: preload("res://src/Billionaire/bubble_300.tres")
+	Size.SMALL: preload("res://src/Billionaire/AttackPatterns/bubble_100.tres"),
+	Size.MEDIUM: preload("res://src/Billionaire/AttackPatterns/bubble_200.tres"),
+	Size.LARGE: preload("res://src/Billionaire/AttackPatterns/bubble_300.tres")
 }
 
 @onready var _sprite: AnimatedSprite2D = $Sprite
