@@ -293,10 +293,11 @@ var _card_pool: Array[UpgradeCardData] = available_cards.duplicate_deep()
 @onready var _cursor: Cursor = %Cursor
 
 
-func _reset_selectable_cards() -> void:
+func _reset_selectable_cards(should_update_display: bool = true) -> void:
 	_card_pool.append_array(selectable_cards)
 	selectable_cards.clear()
-	_update_cards_display()
+	if should_update_display:
+		_update_cards_display()
 
 
 func _pick_cards(nb_cards: int) -> Array[UpgradeCardData]:
@@ -336,27 +337,24 @@ func _exit_tree() -> void:
 
 
 func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
+	# Already signing in another routine. Canceling to speed up the animation.
+	if _cursor.is_signing():
+		_cursor.cancel_signing()
+		return
+
 	print("Card selected: %s" % card_data.title)
-	if !(get_parent().name == "MainMenu"):
-		var applied = GameState.apply_upgrade(card_data)
-		if not applied:
-			return
+	var applied = GameState.apply_upgrade(card_data)
+	if not applied:
+		return
 
 	var card = card_container.get_child(index)
 	if card != null:
 		await _cursor.sign(card.get_node("%Signature"))
 
-	if get_parent().name == "MainMenu":
-		if index == 0:
-			Globals.end_scene(Globals.EndSceneStatus.MAIN_MENU_CLICK_START)
-		elif index == 1:
-			Globals.end_scene(Globals.EndSceneStatus.MAIN_MENU_CLICK_CREDITS)
-		elif index == 2:
-			Globals.end_scene(Globals.EndSceneStatus.MAIN_MENU_CLICK_QUIT)
-		return
-
 	selectable_cards.pop_at(index)
-	_reset_selectable_cards()
+
+	# No display update to avoid seeing the cards disapeering
+	_reset_selectable_cards(false)
 	emit_signal("close")
 
 
