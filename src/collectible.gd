@@ -20,6 +20,8 @@ func get_base_collectible_value(collectible_type: CollectibleType) -> int:
 	match collectible_type:
 		CollectibleType.DOLLAR_COIN:
 			return 1
+		CollectibleType.BITCOIN:
+			return 1
 		CollectibleType.DOLLAR_BILL:
 			return 100
 		CollectibleType.BUNDLE_OF_CASH:
@@ -28,8 +30,6 @@ func get_base_collectible_value(collectible_type: CollectibleType) -> int:
 			return 1000000
 		CollectibleType.GOLD_BAR:
 			return 100000000
-		CollectibleType.BITCOIN:
-			return 10000000000
 		_:
 			return 0
 

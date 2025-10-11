@@ -15,7 +15,6 @@ var _run_velocity: Vector2 = Vector2.ZERO
 var _knockback_velocity: Vector2 = Vector2.ZERO
 
 var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
-var _coin_scene = preload("res://src/Coin/Coin.tscn")
 var _bubble_scene = preload("res://src/Billionaire/AttackPatterns/bubble.tscn")
 
 var _is_player_dead = false
@@ -33,7 +32,7 @@ var _last_hit_time = 0.0
 
 @onready var _attack_patterns: Node = $AttackPatterns
 @onready var _level: Level = $"../.."
-@onready var _coins: Node2D = $"../Coins"
+@onready var _coins_manager: CoinsManager = %CoinsManager
 @onready var _lasers: Node2D = %Lasers
 @onready var _bubbles: Node2D = %Bubbles
 @onready var _bubble_barrier: BubbleBarrier = %BubbleBarrier
@@ -578,11 +577,11 @@ func spawn_coins(amount: int):
 
 	var collectible_types = [
 		Collectible.CollectibleType.DOLLAR_COIN,
+		Collectible.CollectibleType.BITCOIN,
 		Collectible.CollectibleType.DOLLAR_BILL,
 		Collectible.CollectibleType.BUNDLE_OF_CASH,
 		Collectible.CollectibleType.MONEY_BAG,
 		Collectible.CollectibleType.GOLD_BAR,
-		Collectible.CollectibleType.BITCOIN,
 	]
 
 	var remaining_value = target_value
@@ -601,16 +600,16 @@ func spawn_coins(amount: int):
 			break
 
 		var collectible_type = valid_types.pick_random()
-		var coin: Coin = _coin_scene.instantiate()
-		var spawn_offset := Vector2(randf_range(-12.0, 12.0), randf_range(-8.0, 0.0))
 
-		coin.init(global_position + spawn_offset, collectible_type)
+		var spawn_offset := Vector2(randf_range(-12.0, 12.0), randf_range(-8.0, 0.0))
+		var coin = _coins_manager.create_coin(global_position + spawn_offset, collectible_type)
+
 		var angle := randf_range(-PI / 3, PI / 3)
 		var impulse_direction := Vector2.UP.rotated(angle)
 		var impulse_speed := randf_range(160.0, 260.0)
 		coin.set_deferred("linear_velocity", impulse_direction * impulse_speed)
 		coin.set_deferred("angular_velocity", randf_range(-6.0, 6.0))
-		_coins.call_deferred("add_child", coin)
+		_coins_manager.add_coin(coin)
 
 		var col_value = Collectible.get_collectible_value(collectible_type)
 		total_value_spawned += col_value
@@ -833,7 +832,7 @@ func _bubble_swarm_routine():
 			_bubbles.add_child(bubble)
 
 			# Free the bubble after it exploded
-			bubble.spawn(true)
+			bubble.spawn(_coins_manager, true)
 
 			await get_tree().create_timer(randf_range(0.05, 0.2)).timeout
 

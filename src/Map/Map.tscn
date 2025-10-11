@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://btohiqrak4tcf"]
+[gd_scene load_steps=9 format=3 uid="uid://btohiqrak4tcf"]
 
 [ext_resource type="PackedScene" uid="uid://bxrm1laqwt3cm" path="res://src/Player/Player.tscn" id="2"]
 [ext_resource type="Script" uid="uid://crkhemgnnguer" path="res://src/Player/camera_2d.gd" id="3_13lp4"]
 [ext_resource type="PackedScene" uid="uid://bjp6oj1o86afi" path="res://src/Billionaire/billionaire.tscn" id="3_e037b"]
+[ext_resource type="Script" uid="uid://bg4mcle25ug2y" path="res://src/Map/coin_manager.gd" id="4_fyitu"]
 [ext_resource type="Texture2D" uid="uid://bprdj2krbpywu" path="res://assets/sprites/player.png" id="5_lrvju"]
 [ext_resource type="PackedScene" uid="uid://c7oy24dpr3gup" path="res://src/Billionaire/AttackPatterns/bubble_barrier.tscn" id="6_fyitu"]
 [ext_resource type="Script" uid="uid://d2jig773lhgy0" path="res://src/Billionaire/BillionaireLasers.gd" id="6_lrvju"]
@@ -57,7 +58,9 @@ shape = SubResource("WorldBoundaryShape2D_wqubw")
 [node name="CamMarker" type="Node2D" parent="Borders/WallR"]
 position = Vector2(0, 32)
 
-[node name="Coins" type="Node2D" parent="."]
+[node name="CoinsManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_fyitu")
 
 [node name="BossIndicator" type="Node2D" parent="."]
 

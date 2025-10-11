@@ -64,7 +64,7 @@ func get_hitbox_side() -> Vector2:
 	return Vector2(hitbox_side, hitbox_side)
 
 
-func spawn(free_at_the_end: bool = false) -> void:
+func spawn(coins_manager: CoinsManager, free_at_the_end: bool = false) -> void:
 	visible = true
 	_sprite.play("default", speed_factor)
 
@@ -76,6 +76,8 @@ func spawn(free_at_the_end: bool = false) -> void:
 
 	monitorable = true
 	monitoring = true
+
+	coins_manager.spawn_coin(self.global_position, Collectible.CollectibleType.BITCOIN)
 
 	await _sprite.animation_finished
 

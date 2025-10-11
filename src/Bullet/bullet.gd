@@ -9,11 +9,8 @@ var _collectible_type: Collectible.CollectibleType
 var _acceleration: float
 var _initialized = false
 
-var _coin_scene = preload("res://src/Coin/Coin.tscn")
-
 @onready var _sprite_container = %SpriteContainer
-@onready var _coins = $"../../Coins"
-@onready var _level: Level = $"../../../"
+@onready var _coins_manager: CoinsManager = $"../../CoinsManager"
 
 
 func init(
@@ -49,12 +46,5 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]):
 		(body as Player).get_hurt(_knockback_force * _direction.normalized())
 	else:
-		var cs = _coin_scene.instantiate()
-		cs.init(self.global_position, _collectible_type)
-		_coins.call_deferred("add_child", cs)
-
-		# Reduce billionaire's net worth by the value of spawned collectible
-		var collectible_value = Collectible.get_collectible_value(_collectible_type)
-		if _level and collectible_value > 0:
-			_level.change_net_worth(collectible_value)
+		_coins_manager.spawn_coin(self.global_position, _collectible_type)
 	queue_free()

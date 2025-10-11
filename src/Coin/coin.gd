@@ -4,7 +4,8 @@ extends RigidBody2D
 var impulse_force := Vector2(0, 0)
 var _collectible_type := Collectible.CollectibleType.DOLLAR_COIN
 var _has_bounced := false
-@onready var bounce_sound_player: AudioStreamPlayer2D = $BounceSound
+
+@onready var _bounce_sound_player: AudioStreamPlayer2D = $BounceSound
 
 
 func init(spawn_position, collectible_type: Collectible.CollectibleType) -> void:
@@ -58,6 +59,10 @@ func get_collectible_type() -> Collectible.CollectibleType:
 	return _collectible_type
 
 
+func get_collectible_value() -> int:
+	return Collectible.get_collectible_value(get_collectible_type())
+
+
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	contact_monitor = true
@@ -65,8 +70,8 @@ func _ready() -> void:
 
 
 func _on_body_entered(_body: Node) -> void:
-	if not _has_bounced and bounce_sound_player:
-		bounce_sound_player.play()
+	if not _has_bounced and _bounce_sound_player:
+		_bounce_sound_player.play()
 		_has_bounced = true
 
 		await get_tree().create_timer(0.1).timeout

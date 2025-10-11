@@ -9,6 +9,7 @@ var _is_running = false
 
 @onready var _waves = $Waves
 @onready var _billionaire = %Billionaire
+@onready var _coins_manager = %CoinsManager
 
 
 func spawn(spawn_interval: float):
@@ -21,7 +22,7 @@ func spawn(spawn_interval: float):
 
 	for wave: Node2D in _waves.get_children():
 		for bubble: Bubble in wave.get_children():
-			bubble.spawn(false)
+			bubble.spawn(_coins_manager, false)
 		await get_tree().create_timer(spawn_interval).timeout
 
 	await get_tree().create_timer(1.0).timeout
