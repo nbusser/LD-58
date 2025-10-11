@@ -33,6 +33,12 @@ var _cancel_token: CancelToken = CancelToken.NOT_CANCELED
 
 @onready var _sprite: AnimatedSprite2D = $"../Sprite"
 
+@onready var _player: Player = $".."
+
+@onready var _player_stats: PlayerStats:
+	get():
+		return _player.ps
+
 
 # When called, will cancel the current parry and jump directly to NOT_PARRYING.
 func _cancel_parry(reason: CancelToken) -> void:
@@ -99,7 +105,7 @@ func _parying_stance() -> void:
 # Called when parry command is pressed.
 # Returns whether the player went to parry process or not.
 func try_parrying_stance() -> bool:
-	if is_in_parrying_stance():
+	if not _player_stats.unlocked_parry or is_in_parrying_stance():
 		return false
 	_parying_stance()
 	return true

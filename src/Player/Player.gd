@@ -157,7 +157,6 @@ func _physics_process(delta):
 	# Parry
 	if (
 		Input.is_action_just_pressed("Parry")
-		and ps.unlocked_parry
 		and not is_dead
 		and not is_level_timeout
 		and not $AttackManager.is_attacking()
@@ -167,30 +166,24 @@ func _physics_process(delta):
 	# Combat
 	_punch_area.scale.x = -1.0 if direction == Direction.LEFT else 1.0
 
-	if (
-		Input.is_action_just_pressed("melee")
-		and not is_dead
-		and not is_level_timeout
-		and not $ParryManager.is_in_parrying_stance()
-	):
+	if Input.is_action_just_pressed("melee") and _can_move():
 		$AttackManager.try_attack()
 
 	# Animation
 	if not $AttackManager.is_attacking() and not $ParryManager.is_in_parrying_stance():
 		$JumpManager.try_play_jumping_or_falling_animation(velocity.y)
 
-	# Attack animations are directly handled by the attack manager
 	if (
 		not is_dead
 		and not $AttackManager.is_attacking()
 		and not $ParryManager.is_in_parrying_stance()
+		and not $JumpManager.is_jumping_or_falling()
 	):
-		if is_on_floor():
-			# Ground animations
-			if Input.get_axis("move_left", "move_right") == 0:
-				$Sprite.play("default")
-			elif not is_level_timeout:
-				$Sprite.play("walk")
+		# Ground animations
+		if Input.get_axis("move_left", "move_right") == 0:
+			$Sprite.play("default")
+		elif not is_level_timeout:
+			$Sprite.play("walk")
 
 
 func dash_slow_mo():
