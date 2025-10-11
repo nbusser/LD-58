@@ -1,3 +1,5 @@
+class_name ParryManager
+
 extends Node2D
 
 # High level abstraction of parry state

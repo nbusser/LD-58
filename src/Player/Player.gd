@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 signal billionaire_punched(damage: int)
 signal player_is_hurt
+signal wall_sticked(now: float)
+signal dashed_down
 
 enum Direction { LEFT = -1, RIGHT = 1 }
 
@@ -19,8 +21,6 @@ var ps: PlayerStats
 var is_dead = false
 var is_level_timeout = false
 
-var jump_load_start = null
-var is_actively_jumping = false
 var is_keep_pressing_jump_button = false
 var is_down_dashing = false
 var can_down_dash = false
@@ -39,10 +39,7 @@ var previous_melee = 0
 var previous_head_bounce = 0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-var current_nb_jumps_left = 2
-
 var prev_velocity = Vector2(0, 0)
-var play_jump_start_ts = 0
 
 var health = 10
 
@@ -84,8 +81,7 @@ func _physics_process(delta):
 	var hz_velocity = 0.
 	var now = Time.get_unix_time_from_system()
 
-	if is_on_floor():
-		current_nb_jumps_left = ps.max_nb_jumps
+	$JumpManager.try_jump()
 
 	if _can_move():
 		# Horizontal movement
@@ -97,40 +93,7 @@ func _physics_process(delta):
 
 		hz_velocity = input_direction * (ps.ground_speed if self.is_on_floor() else ps.air_speed)
 
-		# Jump
-		if (
-			not is_keep_pressing_jump_button  # No automatic jump when space is kept pressed
-			and current_nb_jumps_left > 0  # As long as we have remaining jumps
-			and Input.is_action_pressed("jump")
-		):
-			# Cleans up gravity
-			velocity.y = 0
-			current_nb_jumps_left -= 1
-			is_actively_jumping = true
-			jump_load_start = now
-		var time_since_jump = now - (jump_load_start if jump_load_start != null else INF)
-		if (
-			is_actively_jumping
-			&& Input.is_action_pressed("jump")
-			&& time_since_jump < ps.max_input_jump_time
-		):
-			is_keep_pressing_jump_button = true
-			var timer_proportion = (
-				(1 - clamp(time_since_jump, 0, ps.max_input_jump_time) / ps.max_input_jump_time)
-				** 4
-			)
-			vt_velocity = -ps.jump_force * delta * timer_proportion
-			# Show animation for double jump
-			if !is_on_floor():
-				play_jump_start_ts = now
-		elif (
-			is_actively_jumping
-			&& (time_since_jump > ps.max_input_jump_time || Input.is_action_just_released("jump"))
-		):
-			is_actively_jumping = false
-
-		if Input.is_action_just_released("jump"):
-			is_keep_pressing_jump_button = false
+		vt_velocity += $JumpManager.update(delta)
 
 		# Horizontal dash
 		if ps.unlocked_dash:
@@ -160,8 +123,7 @@ func _physics_process(delta):
 			):
 				previous_down_dash = now
 				is_down_dashing = true
-				is_actively_jumping = false
-				jump_load_start = null
+				emit_signal("dashed_down")
 				velocity.y += ps.down_dash_speed
 				if ps.unlocked_dash_bullet_time:
 					dash_slow_mo()
@@ -185,10 +147,10 @@ func _physics_process(delta):
 			# Wall jumping
 			if (
 				Input.is_action_pressed("jump")
-				&& (jump_load_start == null || now - jump_load_start > ps.wall_jump_cooldown)
+				&& (now - $JumpManager.get_jump_load_timestamp() > ps.wall_jump_cooldown)
 			):
 				vt_velocity = -ps.wall_jump_force
-				jump_load_start = now
+				emit_signal("wall_sticked", now)
 
 	# Gravity
 	hz_velocity = (
@@ -261,6 +223,8 @@ func _physics_process(delta):
 		$AttackManager.try_attack()
 
 	# Animation
+	if not $AttackManager.is_attacking() and not $ParryManager.is_in_parrying_stance():
+		$JumpManager.try_play_jumping_or_falling_animation(velocity.y)
 
 	# Attack animations are directly handled by the attack manager
 	if (
@@ -274,14 +238,6 @@ func _physics_process(delta):
 				$Sprite.play("default")
 			elif not is_level_timeout:
 				$Sprite.play("walk")
-		else:
-			# Jump animations
-			if velocity.y >= 140 || now - play_jump_start_ts < .05:
-				$Sprite.play("jump_end")
-			elif velocity.y <= 0:
-				$Sprite.play("jump_start")
-			else:
-				$Sprite.play("jump_middle")
 
 
 func dash_slow_mo():
@@ -375,12 +331,7 @@ func _on_soft_hitbox_body_exited(body: Node2D) -> void:
 # When the billionaire is punched from the air, we grant an extra jump to the player (it they are out of jumps)
 func _on_attack_manager_punch_has_connected(attack: AttackManager.Attack) -> void:
 	emit_signal("billionaire_punched", ps.melee_damage)
-	if (
-		attack == AttackManager.Attack.AIR
-		and ps.unlocked_bonus_jump_after_airhit
-		and current_nb_jumps_left == 0
-	):
-		current_nb_jumps_left += 1
+	$JumpManager.try_grant_bonus_jump(attack)
 
 
 func on_level_timeout():
