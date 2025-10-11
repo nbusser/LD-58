@@ -242,6 +242,7 @@ func _physics_process(delta):
 	# Parry
 	if (
 		Input.is_action_just_pressed("Parry")
+		and ps.unlocked_parry
 		and not is_dead
 		and not is_level_timeout
 		and not $AttackManager.is_attacking()
