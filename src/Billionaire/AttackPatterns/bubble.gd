@@ -40,6 +40,10 @@ func _ready() -> void:
 	_sprite.sprite_frames = _bubble_anim_resource_dict[bubble_size]
 	_reset()
 
+	var new_shape: RectangleShape2D = RectangleShape2D.new()
+	new_shape.size = Vector2(hitbox_side, hitbox_side)
+	$Hitbox.shape = new_shape
+
 
 func init(size: Size, speed_factor_p: float = 2.5):
 	speed_factor = speed_factor_p
@@ -54,10 +58,6 @@ func init(size: Size, speed_factor_p: float = 2.5):
 		hitbox_side = 300
 	else:
 		assert(false, "Invalid bubble size")
-
-	var new_shape: RectangleShape2D = RectangleShape2D.new()
-	new_shape.size = Vector2(hitbox_side, hitbox_side)
-	$Hitbox.shape = new_shape
 
 
 func get_hitbox_side() -> Vector2:
