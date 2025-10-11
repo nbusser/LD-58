@@ -157,7 +157,11 @@ func _physics_process(delta):
 		$AttackManager.try_attack()
 
 	# Animation
-	if not $AttackManager.is_attacking() and not $ParryManager.is_in_parrying_stance():
+	if (
+		not is_dead
+		and not $AttackManager.is_attacking()
+		and not $ParryManager.is_in_parrying_stance()
+	):
 		$JumpManager.try_play_jumping_or_falling_animation(velocity.y)
 
 	# Walk/Idle animation

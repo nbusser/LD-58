@@ -61,7 +61,7 @@ func init(size: Size, speed_factor_p: float = 2.5):
 
 
 func get_hitbox_side() -> Vector2:
-	return $Hitbox.shape.size
+	return Vector2(hitbox_side, hitbox_side)
 
 
 func spawn(free_at_the_end: bool = false) -> void:
