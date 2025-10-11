@@ -90,14 +90,15 @@ func _process(_delta: float) -> void:
 		_attack_state = AttackState.FINISHED
 
 	# Plays animation matching the current logical state
-	if _attack_state == AttackState.WINDUP:
-		_sprite.play(_attacks_dict[_current_attack].windup)
-	elif _attack_state == AttackState.ACTIVE:
-		_sprite.play(_attacks_dict[_current_attack].active)
-	elif _attack_state == AttackState.RECOVER:
-		_sprite.play(_attacks_dict[_current_attack].recover)
-	elif _attack_state == AttackState.FINISHED:
-		_attack_finished_cleanup()
+	match _attack_state:
+		AttackState.WINDUP:
+			_sprite.play(_attacks_dict[_current_attack].windup)
+		AttackState.ACTIVE:
+			_sprite.play(_attacks_dict[_current_attack].active)
+		AttackState.RECOVER:
+			_sprite.play(_attacks_dict[_current_attack].recover)
+		AttackState.FINISHED:
+			_attack_finished_cleanup()
 
 
 func _attack_finished_cleanup() -> void:
