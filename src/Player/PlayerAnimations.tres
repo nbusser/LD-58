@@ -284,8 +284,16 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4vx3w")
 }],
-"loop": true,
-"name": &"parry",
+"loop": false,
+"name": &"parry_active",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vx3w")
+}],
+"loop": false,
+"name": &"parry_recover",
 "speed": 5.0
 }, {
 "frames": [{

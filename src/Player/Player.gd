@@ -2,6 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 signal billionaire_punched(damage: int)
+signal player_is_hurt
 
 enum Direction { LEFT = -1, RIGHT = 1 }
 
@@ -238,16 +239,34 @@ func _physics_process(delta):
 	prev_velocity = velocity
 	move_and_slide()
 
+	# Parry
+	if (
+		Input.is_action_just_pressed("Parry")
+		and not is_dead
+		and not is_level_timeout
+		and not $AttackManager.is_attacking()
+	):
+		$ParryManager.try_parrying_stance()
+
 	# Combat
 	_punch_area.scale.x = -1.0 if direction == Direction.LEFT else 1.0
 
-	if Input.is_action_just_pressed("melee") and not is_dead and not is_level_timeout:
+	if (
+		Input.is_action_just_pressed("melee")
+		and not is_dead
+		and not is_level_timeout
+		and not $ParryManager.is_in_parrying_stance()
+	):
 		$AttackManager.try_attack()
 
 	# Animation
 
 	# Attack animations are directly handled by the attack manager
-	if not is_dead and not $AttackManager.is_attacking():
+	if (
+		not is_dead
+		and not $AttackManager.is_attacking()
+		and not $ParryManager.is_in_parrying_stance()
+	):
 		if is_on_floor():
 			# Ground animations
 			if Input.get_axis("move_left", "move_right") == 0:
@@ -276,7 +295,12 @@ func _exit_tree() -> void:
 
 
 func _can_move():
-	return not is_level_timeout and not is_dead and not $AttackManager.is_attacking_ground()
+	return (
+		not is_level_timeout
+		and not is_dead
+		and not $AttackManager.is_attacking_ground()
+		and not $ParryManager.is_in_parrying_stance()
+	)
 
 
 func _die():
@@ -300,6 +324,9 @@ func _die():
 
 
 func get_hurt(knockback_force):
+	if $ParryManager.try_parry():
+		return
+
 	if is_dead || is_level_timeout || intouchable:
 		return
 
@@ -326,6 +353,8 @@ func get_hurt(knockback_force):
 	intouchable = false
 	modulate = Color(1, 1, 1, 1)
 	scale = _original_scale
+
+	emit_signal("player_is_hurt")
 
 
 func _on_soft_hitbox_body_entered(body: Node2D) -> void:
