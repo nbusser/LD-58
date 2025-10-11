@@ -34,6 +34,12 @@ speed_factor = 2.5
 position = Vector2(134, 75)
 speed_factor = 2.5
 
+[node name="Bubble" parent="Waves/Wave2" instance=ExtResource("2_6qjb7")]
+position = Vector2(4, 24)
+bubble_size = 1
+hitbox_side = 200
+speed_factor = 2.5
+
 [node name="Wave3" type="Node2D" parent="Waves"]
 
 [node name="Bubble" parent="Waves/Wave3" instance=ExtResource("2_6qjb7")]
@@ -46,4 +52,26 @@ speed_factor = 2.5
 position = Vector2(251, 21)
 bubble_size = 1
 hitbox_side = 200
+speed_factor = 2.5
+
+[node name="Bubble3" parent="Waves/Wave3" instance=ExtResource("2_6qjb7")]
+position = Vector2(3, -30)
+bubble_size = 2
+hitbox_side = 300
+speed_factor = 2.5
+
+[node name="Bubble4" parent="Waves/Wave3" instance=ExtResource("2_6qjb7")]
+position = Vector2(-150, 71)
+speed_factor = 2.5
+
+[node name="Bubble5" parent="Waves/Wave3" instance=ExtResource("2_6qjb7")]
+position = Vector2(156, 71)
+speed_factor = 2.5
+
+[node name="Bubble6" parent="Waves/Wave3" instance=ExtResource("2_6qjb7")]
+position = Vector2(-79, 10)
+speed_factor = 2.5
+
+[node name="Bubble7" parent="Waves/Wave3" instance=ExtResource("2_6qjb7")]
+position = Vector2(84, 10)
 speed_factor = 2.5
