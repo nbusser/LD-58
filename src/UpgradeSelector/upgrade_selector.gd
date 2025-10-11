@@ -233,6 +233,18 @@ const UpgradeCardMenuPreload = preload("res://src/UpgradeSelector/upgrade_card_m
 			["bullet_time_1"]
 		)
 	),
+	# PARRY
+	UpgradeCardData.new(
+		"parry_1",
+		UpgradeCardData.CardType.PARRY,
+		UpgradeCardData.Rarity.COMMON,
+		"parry",
+		1,
+		"Perfect perception",
+		"By pressing Right Click or Q, you directly intercept the stolen money.",
+		10000,
+		{UpgradeCardData.EffectType.ABILITY_PARRY: 1}
+	),
 ]
 
 var selectable_cards: Array[UpgradeCardData] = []

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ej28mql36bjg"
-path="res://.godot/imported/coin.png-2563619a65bec4336cef618eff16a7a4.ctex"
+uid="uid://vwfh34urd0y5"
+path="res://.godot/imported/parry.png-326aedbdfcc149ebddd475b1f97c4f1b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/player/coin.png"
-dest_files=["res://.godot/imported/coin.png-2563619a65bec4336cef618eff16a7a4.ctex"]
+source_file="res://assets/sprites/player/parry.png"
+dest_files=["res://.godot/imported/parry.png-326aedbdfcc149ebddd475b1f97c4f1b.ctex"]
 
 [params]
 

@@ -6,6 +6,7 @@ enum CardType {
 	SPEED,
 	JUMP,
 	BULLET_TIME,
+	PARRY,
 }
 
 enum Rarity {
@@ -29,12 +30,15 @@ enum EffectType {
 	ABILITY_DASH,
 	ABILITY_DOUBLE_JUMP,
 	ABILITY_AIR_ATTACK_BONUS_JUMP,
+	ABILITY_PARRY,
 }
 
 const ICON_PROFIT = preload("res://assets/sprites/upgrade_selector/icon_profit.png")
 const ICON_SPEED = preload("res://assets/sprites/upgrade_selector/icon_speed.png")
 const ICON_JUMP = preload("res://assets/sprites/upgrade_selector/icon_jump.png")
 const ICON_BULLET_TIME = preload("res://assets/sprites/upgrade_selector/icon_bullet_time.png")
+# TODO: change
+const ICON_PARRY = preload("res://assets/sprites/player/parry.png")
 
 @export var id: String = "default_id"
 @export var dependencies: Array[String] = []
@@ -92,5 +96,7 @@ func _get_default_icon() -> Texture2D:
 			return ICON_JUMP
 		CardType.BULLET_TIME:
 			return ICON_BULLET_TIME
+		CardType.PARRY:
+			return ICON_PARRY
 		_:
 			return null

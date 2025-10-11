@@ -12,6 +12,7 @@ var unlocked_fast_cooldown_dash = false
 var unlocked_stronger_dash = false
 var unlocked_higher_jumps = false
 var unlocked_dash_glide = false
+var unlocked_parry = false
 var max_nb_jumps = 1
 var interest_rate = 0
 

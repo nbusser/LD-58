@@ -90,8 +90,15 @@ func try_parry() -> bool:
 
 
 func _process(_detla: float) -> void:
-	if is_in_parrying_stance():
-		_sprite.play("parry_ready")
+	match _parry_state:
+		State.PARRY_READY:
+			_sprite.play("parry_ready")
+		State.PARRY_ACTIVE:
+			_sprite.play("parry_active")
+		State.PARRY_RECOVER:
+			_sprite.play("parry_recover")
+		_:
+			pass
 
 
 func _on_player_player_is_hurt() -> void:
