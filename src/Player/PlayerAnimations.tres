@@ -285,7 +285,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_4vx3w")
 }],
 "loop": false,
-"name": &"parry_active",
+"name": &"parry_ready",
 "speed": 5.0
 }, {
 "frames": [{

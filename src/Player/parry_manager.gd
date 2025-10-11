@@ -1,10 +1,11 @@
 extends Node2D
 
-enum State { NOT_PARRYING, PARRY_ACTIVE, PARRY_RECOVER }
+enum State { NOT_PARRYING, PARRY_READY, PARRY_ACTIVE, PARRY_RECOVER }
 
-const _PARRY_GLOW_DURATION: float = 0.5
+const _PARRY_SLOWMO_NAME = "PARRY_FREEZE_FRAME"
+const _PARRY_FREEZE_DURATION_FRAMES: int = 30
 const _PARRY_STATE_DURATION_FRAMES: Dictionary[State, int] = {
-	State.PARRY_ACTIVE: 30, State.PARRY_RECOVER: 30
+	State.PARRY_READY: 30, State.PARRY_ACTIVE: 30, State.PARRY_RECOVER: 30
 }
 
 var _parry_state: State = State.NOT_PARRYING
@@ -21,6 +22,10 @@ func _cancel_parry() -> void:
 
 func is_in_parrying_stance() -> bool:
 	return _parry_state != State.NOT_PARRYING
+
+
+func _is_parry_ready() -> bool:
+	return _parry_state == State.PARRY_READY
 
 
 func _is_parry_active() -> bool:
@@ -45,7 +50,7 @@ func _play_parry_state(parry_state: State) -> bool:
 
 func _parying_stance() -> void:
 	_cancel_token = false
-	if await _play_parry_state(State.PARRY_ACTIVE):
+	if await _play_parry_state(State.PARRY_READY):
 		return _finish_parrying()
 
 	await _play_parry_state(State.PARRY_RECOVER)
@@ -59,30 +64,34 @@ func try_parrying_stance() -> bool:
 	return true
 
 
-func _parry_gfx() -> void:
+func _parry() -> void:
+	$ParrySound.play()
+
 	_sprite.modulate = Color("#37fcfc", 0.7)
-	await get_tree().create_timer(_PARRY_GLOW_DURATION).timeout
+	# "Freeze" game for _PARRY_FREEZE_DURATION_FRAMES frames
+	if Globals.create_slowmo(_PARRY_SLOWMO_NAME, 0.01):
+		await _play_parry_state(State.PARRY_ACTIVE)
+		Globals.cancel_slowmo_if_exists(_PARRY_SLOWMO_NAME)
 	_sprite.modulate = Color(1, 1, 1, 1)
 
-
-func _parry() -> void:
-	print("Parried !")
-	_parry_gfx.call_deferred()
-	# TODO: freeze frame
-	$ParrySound.play()
 	_cancel_parry()
 
 
 func try_parry() -> bool:
+	# Parry already active
 	if _is_parry_active():
+		return true
+	# Activate parry
+	if _is_parry_ready():
 		_parry()
 		return true
+	# No parry
 	return false
 
 
 func _process(_detla: float) -> void:
 	if is_in_parrying_stance():
-		_sprite.play("parry_active")
+		_sprite.play("parry_ready")
 
 
 func _on_player_player_is_hurt() -> void:
