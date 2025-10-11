@@ -57,10 +57,11 @@ const UpgradeCardMenuPreload = preload("res://src/UpgradeSelector/upgrade_card_m
 		{UpgradeCardData.EffectType.LOOT_VALUE: 1},
 		["loot_value_1"]
 	),
+	# Bitcoin
 	UpgradeCardData.new(
 		"bitcoin_value_1",
-		UpgradeCardData.CardType.PROFIT,
-		UpgradeCardData.Rarity.UNCOMMON,
+		UpgradeCardData.CardType.BITCOIN,
+		UpgradeCardData.Rarity.COMMON,
 		"bitcoin_value",
 		1,
 		"Crypto Crash Course",
@@ -71,16 +72,53 @@ const UpgradeCardMenuPreload = preload("res://src/UpgradeSelector/upgrade_card_m
 	),
 	UpgradeCardData.new(
 		"bitcoin_value_2",
-		UpgradeCardData.CardType.PROFIT,
-		UpgradeCardData.Rarity.RARE,
+		UpgradeCardData.CardType.BITCOIN,
+		UpgradeCardData.Rarity.COMMON,
 		"bitcoin_value",
 		2,
 		"Smart Contract Editor",
 		"Write your own rules for profit",
-		7500,
+		10000,
 		{UpgradeCardData.EffectType.BITCOIN_VALUE: 1},
 		["bitcoin_value_1"]
 	),
+	UpgradeCardData.new(
+		"bitcoin_value_3",
+		UpgradeCardData.CardType.BITCOIN,
+		UpgradeCardData.Rarity.UNCOMMON,
+		"bitcoin_value",
+		3,
+		"To the moon",
+		"Don't forget your space suit",
+		150000,
+		{UpgradeCardData.EffectType.BITCOIN_VALUE: 1},
+		["bitcoin_value_2"]
+	),
+	UpgradeCardData.new(
+		"bitcoin_value_4",
+		UpgradeCardData.CardType.BITCOIN,
+		UpgradeCardData.Rarity.UNCOMMON,
+		"bitcoin_value",
+		4,
+		"Bull Market",
+		"Ban the corrida!",
+		300000,
+		{UpgradeCardData.EffectType.BITCOIN_VALUE: 1},
+		["bitcoin_value_3"]
+	),
+	UpgradeCardData.new(
+		"bitcoin_value_5",
+		UpgradeCardData.CardType.BITCOIN,
+		UpgradeCardData.Rarity.RARE,
+		"bitcoin_value",
+		5,
+		"51%",
+		"Get the power!",
+		1000000,
+		{UpgradeCardData.EffectType.BITCOIN_VALUE: 1},
+		["bitcoin_value_4"]
+	),
+	# Combo
 	UpgradeCardData.new(
 		"combo_multiplier_1",
 		UpgradeCardData.CardType.PROFIT,

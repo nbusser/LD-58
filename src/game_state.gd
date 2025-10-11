@@ -87,7 +87,7 @@ func apply_upgrade(card: UpgradeCardData) -> bool:
 			UpgradeCardData.EffectType.LOOT_VALUE:
 				player_stats.loot_value_multiplier = 1.0 + upgr_value * 1.0
 			UpgradeCardData.EffectType.BITCOIN_VALUE:
-				player_stats.bitcoin_value_multiplier = 1.0 + upgr_value * 10.0
+				player_stats.bitcoin_value_multiplier = 1.0 + pow(10.0, upgr_value)
 			UpgradeCardData.EffectType.ABILITY_DASH_DOWN:
 				player_stats.unlocked_dash_down = true
 				player_stats.unlocked_dash_glide = true

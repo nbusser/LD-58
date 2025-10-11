@@ -3,6 +3,7 @@ extends Resource
 
 enum CardType {
 	PROFIT,
+	BITCOIN,
 	SPEED,
 	JUMP,
 	BULLET_TIME,
@@ -34,6 +35,8 @@ enum EffectType {
 }
 
 const ICON_PROFIT = preload("res://assets/sprites/upgrade_selector/icon_profit.png")
+# TODO: change
+const ICON_BITCOIN = preload("res://assets/sprites/collectibles/bitcoin_coin.png")
 const ICON_SPEED = preload("res://assets/sprites/upgrade_selector/icon_speed.png")
 const ICON_JUMP = preload("res://assets/sprites/upgrade_selector/icon_jump.png")
 const ICON_BULLET_TIME = preload("res://assets/sprites/upgrade_selector/icon_bullet_time.png")
@@ -90,6 +93,8 @@ func _get_default_icon() -> Texture2D:
 	match card_type:
 		CardType.PROFIT:
 			return ICON_PROFIT
+		CardType.BITCOIN:
+			return ICON_BITCOIN
 		CardType.SPEED:
 			return ICON_SPEED
 		CardType.JUMP:
