@@ -10,7 +10,7 @@ signal dashed_down
 
 enum State { ON_GROUND, READY, DASHING_IMPULSE, DASHING, FINISHED }
 
-const _DASH_SLOWMO_NAME := "player_dash"
+const _DASH_SLOWMO_NAME := "player_down_dash"
 
 var _previous_dash_timestamp: float = 0.0
 var _dash_down_state: State = State.ON_GROUND

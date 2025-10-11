@@ -27,9 +27,6 @@ var intouchable = false
 
 var direction = Direction.RIGHT
 
-var previous_dir = [0, 0]  # left, right
-var previous_dash = 0
-var previous_melee = 0
 var previous_head_bounce = 0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -90,17 +87,7 @@ func _physics_process(delta):
 		vt_velocity += $JumpManager.update(delta)
 
 		# Horizontal dash
-		if ps.unlocked_dash:
-			for dir in range(2):
-				if Input.is_action_just_pressed(DIRECTIONS[dir]):
-					if now - previous_dash > ps.dash_cooldown:
-						if now - previous_dir[dir] < ps.dash_window:
-							previous_dash = now
-							hz_velocity = DIRECTIONS_MODIFIERS[dir] * ps.dash_speed
-							if ps.unlocked_dash_bullet_time:
-								dash_slow_mo()
-						previous_dir[dir] = now
-			_hud.set_dash_cooldown(100. * clamp((now - previous_dash) / ps.dash_cooldown, 0., 100.))
+		velocity += $DashManager.try_dash()
 
 		# Down dash
 		$DashDownManager.try_dash_down()
@@ -326,3 +313,7 @@ func _on_bullet_time_area_exited(area: Area2D) -> void:
 
 		if ps and ps.unlocked_bullet_proximity_slowmo and bullets_in_proximity.is_empty():
 			Globals.cancel_slowmo_if_exists(BULLET_PROXIMITY_SLOWMO_NAME)
+
+
+func _on_dash_manager_dashed(dash_cooldown: float) -> void:
+	_hud.set_dash_cooldown(int(dash_cooldown))
