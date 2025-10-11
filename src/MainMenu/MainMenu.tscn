@@ -105,6 +105,7 @@ offset_bottom = 810.0
 text = "Credits"
 
 [node name="IconTextureRect" parent="CreditsCard/VBoxContainer" index="2"]
+texture_filter = 1
 texture = ExtResource("8_olvkn")
 
 [node name="MarginContainer2" parent="CreditsCard/VBoxContainer" index="3"]
