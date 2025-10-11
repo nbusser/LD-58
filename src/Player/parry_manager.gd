@@ -105,10 +105,14 @@ func _parying_stance() -> void:
 # Called when parry command is pressed.
 # Returns whether the player went to parry process or not.
 func try_parrying_stance() -> bool:
-	if not _player_stats.unlocked_parry or is_in_parrying_stance():
-		return false
-	_parying_stance()
-	return true
+	if (
+		Input.is_action_just_pressed("Parry")
+		and _player_stats.unlocked_parry
+		and not is_in_parrying_stance()
+	):
+		_parying_stance()
+		return true
+	return false
 
 
 # Called when an attack connects with player.

@@ -68,8 +68,8 @@ func init(ps_p: PlayerStats):
 
 
 func _physics_process(delta):
-	var vt_velocity = 0.
-	var hz_velocity = 0.
+	var horizontal_velocity = 0.
+	var vertical_velocity = 0.
 	var now = Time.get_unix_time_from_system()
 
 	$JumpManager.try_jump()
@@ -79,12 +79,14 @@ func _physics_process(delta):
 		var input_direction = Input.get_axis("move_left", "move_right")
 		if input_direction != 0:
 			direction = Direction.LEFT if input_direction == -1 else Direction.RIGHT
+		horizontal_velocity = (
+			input_direction * (ps.ground_speed if self.is_on_floor() else ps.air_speed)
+		)
 
+		# Sprite direction
 		($Sprite as AnimatedSprite2D).flip_h = direction == Direction.LEFT
 
-		hz_velocity = input_direction * (ps.ground_speed if self.is_on_floor() else ps.air_speed)
-
-		vt_velocity += $JumpManager.update(delta)
+		vertical_velocity += $JumpManager.update(delta)
 
 		# Horizontal dash
 		velocity += $DashManager.try_dash()
@@ -103,20 +105,19 @@ func _physics_process(delta):
 				Input.is_action_pressed("jump")
 				&& (now - $JumpManager.get_jump_load_timestamp() > ps.wall_jump_cooldown)
 			):
-				vt_velocity = -ps.wall_jump_force
+				vertical_velocity = -ps.wall_jump_force
 				emit_signal("wall_sticked", now)
 
 	# Gravity
-	hz_velocity = (
+	horizontal_velocity = (
 		velocity.x - (16 * delta * velocity.x)
-		if abs(velocity.x) > abs(hz_velocity)
-		else hz_velocity
+		if abs(velocity.x) > abs(horizontal_velocity)
+		else horizontal_velocity
 	)
 	var gravity_value = gravity if enable_gravity else 0.0
-	velocity = Vector2(hz_velocity, velocity.y + vt_velocity + gravity_value * delta)
+	velocity = Vector2(horizontal_velocity, velocity.y + vertical_velocity + gravity_value * delta)
 
 	# Billionaire knockback and head bounce
-	#if is_in_billionaire:
 	if is_on_top_of_billionaire:
 		if now - previous_head_bounce > .1:
 			if velocity.y > 0:
@@ -127,14 +128,6 @@ func _physics_process(delta):
 			if abs(velocity.x) < 500:
 				velocity.x = sign(velocity.x) * 500
 			previous_head_bounce = now
-		#else:
-		#var to_billionaire_n = (global_position - _billionaire.global_position).normalized()
-		#var knockback = billionaire_knockback * to_billionaire_n
-		#if sign(velocity.x) != sign(knockback.x):
-		#velocity.x = 0
-		#velocity += Vector2(
-		#knockback.x if abs(knockback.x) > 100 else sign(knockback.x) * 100, knockback.y
-		#)
 
 	velocity = clamp(velocity, Vector2(-8000, -1000), Vector2(8000, 1000))
 
@@ -155,26 +148,21 @@ func _physics_process(delta):
 	move_and_slide()
 
 	# Parry
-	if (
-		Input.is_action_just_pressed("Parry")
-		and not is_dead
-		and not is_level_timeout
-		and not $AttackManager.is_attacking()
-	):
+	if not $AttackManager.is_attacking() and not _is_in_cutscene_mode():
 		$ParryManager.try_parrying_stance()
 
 	# Combat
 	_punch_area.scale.x = -1.0 if direction == Direction.LEFT else 1.0
-
-	if Input.is_action_just_pressed("melee") and _can_move():
+	if _can_move():
 		$AttackManager.try_attack()
 
 	# Animation
 	if not $AttackManager.is_attacking() and not $ParryManager.is_in_parrying_stance():
 		$JumpManager.try_play_jumping_or_falling_animation(velocity.y)
 
+	# Walk/Idle animation
 	if (
-		not is_dead
+		not _is_in_cutscene_mode()
 		and not $AttackManager.is_attacking()
 		and not $ParryManager.is_in_parrying_stance()
 		and not $JumpManager.is_jumping_or_falling()
@@ -182,8 +170,10 @@ func _physics_process(delta):
 		# Ground animations
 		if Input.get_axis("move_left", "move_right") == 0:
 			$Sprite.play("default")
-		elif not is_level_timeout:
+		else:
 			$Sprite.play("walk")
+	elif is_level_timeout:
+		$Sprite.play("default")
 
 
 func dash_slow_mo():
@@ -197,10 +187,13 @@ func _exit_tree() -> void:
 	Globals.cancel_slowmo_if_exists(BULLET_PROXIMITY_SLOWMO_NAME)
 
 
+func _is_in_cutscene_mode():
+	return is_level_timeout or is_dead
+
+
 func _can_move():
 	return (
-		not is_level_timeout
-		and not is_dead
+		not _is_in_cutscene_mode()
 		and not $AttackManager.is_attacking_ground()
 		and not $ParryManager.is_in_parrying_stance()
 	)

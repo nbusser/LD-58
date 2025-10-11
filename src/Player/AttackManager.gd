@@ -122,7 +122,7 @@ func _attack() -> void:
 
 
 func try_attack() -> bool:
-	if can_attack():
+	if Input.is_action_just_pressed("melee") and can_attack():
 		_attack()
 		return true
 	return false
