@@ -4,7 +4,6 @@ extends CharacterBody2D
 signal billionaire_punched(damage: int)
 signal player_is_hurt
 signal wall_sticked(now: float)
-signal dashed_down
 
 enum Direction { LEFT = -1, RIGHT = 1 }
 
@@ -21,12 +20,8 @@ var ps: PlayerStats
 var is_dead = false
 var is_level_timeout = false
 
-var is_keep_pressing_jump_button = false
-var is_down_dashing = false
-var can_down_dash = false
 var is_in_billionaire = false
 var is_on_top_of_billionaire = false
-var dash_glide_window_start = 0
 
 var intouchable = false
 
@@ -34,7 +29,6 @@ var direction = Direction.RIGHT
 
 var previous_dir = [0, 0]  # left, right
 var previous_dash = 0
-var previous_down_dash = 0
 var previous_melee = 0
 var previous_head_bounce = 0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -109,35 +103,8 @@ func _physics_process(delta):
 			_hud.set_dash_cooldown(100. * clamp((now - previous_dash) / ps.dash_cooldown, 0., 100.))
 
 		# Down dash
-		if ps.unlocked_dash_down:
-			if is_on_floor():
-				can_down_dash = true
-				is_down_dashing = false
-
-			if (
-				Input.is_action_just_pressed("dash_down")
-				&& can_down_dash
-				&& !is_on_floor()
-				&& !is_down_dashing
-				&& now - previous_down_dash > ps.dash_cooldown
-			):
-				previous_down_dash = now
-				is_down_dashing = true
-				emit_signal("dashed_down")
-				velocity.y += ps.down_dash_speed
-				if ps.unlocked_dash_bullet_time:
-					dash_slow_mo()
-			if is_down_dashing && now - previous_down_dash > ps.down_dash_duration:
-				is_down_dashing = false
-				if velocity.y > 0:
-					velocity.y -= min(ps.down_dash_speed / 2., velocity.y)
-			if ps.unlocked_dash_glide && now - dash_glide_window_start < ps.dash_glide_window:
-				if Input.is_action_just_pressed("move_left"):
-					velocity.x -= ps.glide_force
-					dash_glide_window_start = 0
-				elif Input.is_action_just_pressed("move_right"):
-					velocity.x += ps.glide_force
-					dash_glide_window_start = 0
+		$DashDownManager.try_dash_down()
+		velocity += $DashDownManager.update(velocity.y)
 
 	# Wall sticking behavior
 	if ps.unlocked_wall_climbing:
@@ -184,9 +151,8 @@ func _physics_process(delta):
 
 	velocity = clamp(velocity, Vector2(-8000, -1000), Vector2(8000, 1000))
 
-	if prev_velocity.y > 1000 && is_on_floor():
+	if prev_velocity.y > 1000 and is_on_floor():
 		_camera.apply_noise_shake()
-		dash_glide_window_start = now
 		for body in _smash_area.get_overlapping_bodies():
 			if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.BILLIONAIRE]):
 				body.velocity.y -= (

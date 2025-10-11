@@ -1,3 +1,7 @@
+# WARNING
+# This class is jsut a rough port of logic form Player's physics process.
+# TODO: refactor this for a more clean code by removing timestamps logic for example.
+
 class_name JumpManager
 
 extends Node2D
@@ -130,6 +134,6 @@ func _on_player_wall_sticked(now: float) -> void:
 	_jump_load_start = now
 
 
-func _on_player_dashed_down() -> void:
+func _on_dash_down_manager_dashed_down() -> void:
 	_jump_load_start = INF
 	_is_actively_jumping = false

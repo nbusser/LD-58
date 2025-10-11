@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bxrm1laqwt3cm"]
+[gd_scene load_steps=35 format=3 uid="uid://bxrm1laqwt3cm"]
 
 [ext_resource type="Script" uid="uid://ty44l5afcwx4" path="res://src/Player/Player.gd" id="2"]
 [ext_resource type="Script" uid="uid://0ol0gfmf4qyv" path="res://src/Player/AttackManager.gd" id="2_ub20b"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://btc37tyqe3yo" path="res://src/Player/jump_manager.gd" id="14_hovyp"]
 [ext_resource type="AudioStream" uid="uid://0ysykbh7fpwf" path="res://assets/sounds/Player/onHit3.ogg" id="14_m5txt"]
 [ext_resource type="AudioStream" uid="uid://b11tbfshr3b5w" path="res://assets/sounds/Player/onHit4.ogg" id="15_hovyp"]
+[ext_resource type="Script" uid="uid://c5tr4f5lkipmt" path="res://src/Player/dash_down_manager.gd" id="15_lxp3e"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vi1r3"]
 random_pitch = 1.2
@@ -256,6 +257,9 @@ stream = ExtResource("13_m5txt")
 [node name="JumpManager" type="Node2D" parent="."]
 script = ExtResource("14_hovyp")
 
+[node name="DashDownManager" type="Node2D" parent="."]
+script = ExtResource("15_lxp3e")
+
 [node name="SoundFx" type="Node2D" parent="."]
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="SoundFx"]
@@ -339,10 +343,10 @@ collision_mask = 128
 position = Vector2(0, -39.5833)
 shape = SubResource("CircleShape2D_6rxnr")
 
-[connection signal="dashed_down" from="." to="JumpManager" method="_on_player_dashed_down"]
 [connection signal="player_is_hurt" from="." to="ParryManager" method="_on_player_player_is_hurt"]
 [connection signal="wall_sticked" from="." to="JumpManager" method="_on_player_wall_sticked"]
 [connection signal="punch_has_connected" from="AttackManager" to="." method="_on_attack_manager_punch_has_connected"]
+[connection signal="dashed_down" from="DashDownManager" to="JumpManager" method="_on_dash_down_manager_dashed_down"]
 [connection signal="animation_changed" from="Sprite" to="AttackManager" method="_on_sprite_animation_changed"]
 [connection signal="animation_finished" from="Sprite" to="AttackManager" method="_on_sprite_animation_finished"]
 [connection signal="area_entered" from="Feet" to="." method="_on_feet_area_entered"]
