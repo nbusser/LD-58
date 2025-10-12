@@ -7,9 +7,6 @@ signal wall_sticked(now: float)
 
 enum Direction { LEFT = -1, RIGHT = 1 }
 
-const DIRECTIONS = ["move_left", "move_right"]
-const DIRECTIONS_MODIFIERS = [-1, 1]
-const DASH_SLOWMO_NAME := "player_dash"
 const BULLET_PROXIMITY_SLOWMO_NAME := "bullet_proximity"
 
 @export var is_dead_animation_playing = false
@@ -182,14 +179,7 @@ func _physics_process(delta):
 		$Sprite.play("default")
 
 
-func dash_slow_mo():
-	if Globals.create_slowmo(DASH_SLOWMO_NAME, ps.dash_slow_factor):
-		await get_tree().create_timer(ps.dash_slow_time).timeout
-		Globals.cancel_slowmo_if_exists(DASH_SLOWMO_NAME)
-
-
 func _exit_tree() -> void:
-	Globals.cancel_slowmo_if_exists(DASH_SLOWMO_NAME)
 	Globals.cancel_slowmo_if_exists(BULLET_PROXIMITY_SLOWMO_NAME)
 
 

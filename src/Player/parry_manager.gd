@@ -150,3 +150,8 @@ func _process(_detla: float) -> void:
 # Will cancel the current parry animation.
 func _on_player_player_is_hurt() -> void:
 	_cancel_parry(CancelToken.GOT_HURT)
+
+
+# Cleanup slowmo.
+func _exit_tree() -> void:
+	Globals.cancel_slowmo_if_exists(_PARRY_SLOWMO_NAME)

@@ -110,3 +110,8 @@ func try_dash_down() -> bool:
 
 func _on_player_player_is_hurt() -> void:
 	_cancel_dash()
+
+
+# Cleanup slowmo.
+func _exit_tree() -> void:
+	Globals.cancel_slowmo_if_exists(_DASH_SLOWMO_NAME)
