@@ -55,7 +55,7 @@ func try_dash() -> bool:
 
 	for i_direction in range(2):
 		if Input.is_action_just_pressed(_DIRECTION_INPUTS[i_direction]):
-			var timer = _directions_buffer_timers[i_direction]
+			var timer := _directions_buffer_timers[i_direction]
 			# Time between the two inputs is too long. Restarting the timer.
 			if timer.time_left == 0.0:
 				_directions_buffer_timers[i_direction] = get_tree().create_timer(

@@ -6,16 +6,16 @@ signal changed_to_level_music
 
 const LEVEL_MUSIC = 0
 
-var current_scene:
+var current_scene: Node:
 	set = set_scene
 var _last_idx: int = -1
 
-@onready var main_menu = preload("res://src/MainMenu/MainMenu.tscn")
-@onready var level = preload("res://src/Level/Level.tscn")
-@onready var interlude = preload("res://src/Interlude/Interlude.tscn")
-@onready var credits = preload("res://src/Credits/Credits.tscn")
-@onready var game_over = preload("res://src/GameOver/GameOver.tscn")
-@onready var victory = preload("res://src/Victory/Victory.tscn")
+@onready var main_menu := preload("res://src/MainMenu/MainMenu.tscn")
+@onready var level := preload("res://src/Level/Level.tscn")
+@onready var interlude := preload("res://src/Interlude/Interlude.tscn")
+@onready var credits := preload("res://src/Credits/Credits.tscn")
+@onready var game_over := preload("res://src/GameOver/GameOver.tscn")
+@onready var victory := preload("res://src/Victory/Victory.tscn")
 
 @onready var viewport: Viewport = $SubViewportContainer/SubViewport
 @onready var music_player: AudioStreamPlayer = $MusicPlayer

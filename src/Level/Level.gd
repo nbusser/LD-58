@@ -5,7 +5,7 @@ extends Node
 signal billionaire_hit(amount: int, remaining_net_worth: int)
 
 var level_state: LevelState
-var month = 0
+var month := 0
 
 @onready var hud: HUD = $UI/HUD
 @onready var timer: Timer = $Timer
@@ -14,7 +14,7 @@ var month = 0
 @onready var _billionaire: Billionaire = $Map/Billionaire
 
 
-func _fadeout(time: float = 1.5):
+func _fadeout(time := 1.5):
 	await (
 		get_tree()
 		. create_tween()
@@ -49,14 +49,14 @@ func init(level_number_p: int, player_stats: PlayerStats):
 	$Map/Player.init(player_stats)
 
 
-func change_net_worth(damount: int):
-	var remaining_net_worth: int = level_state.change_billionaire_net_worth(damount)
+func change_net_worth(damount: int) -> int:
+	var remaining_net_worth := level_state.change_billionaire_net_worth(damount)
 	hud.billionaire_net_worth = remaining_net_worth
 	return remaining_net_worth
 
 
 func _on_player_billionaire_punched(amount: int) -> void:
-	var remaining_net_worth: int = change_net_worth(amount)
+	var remaining_net_worth := change_net_worth(amount)
 	billionaire_hit.emit(amount, remaining_net_worth)
 
 	if remaining_net_worth <= 0:

@@ -8,12 +8,12 @@ enum State { ON_GROUND, READY, DASHING, FINISHED }
 
 const _DASH_SLOWMO_NAME := "player_down_dash"
 
-var _dash_down_state: State = State.ON_GROUND
+var _dash_down_state := State.ON_GROUND
 
-var _dash_velocity_x: Helpers.OneTimeFloat = Helpers.OneTimeFloat.new(0.0)
-var _dash_velocity_y: Helpers.OneTimeFloat = Helpers.OneTimeFloat.new(0.0)
+var _dash_velocity_x := Helpers.OneTimeFloat.new(0.0)
+var _dash_velocity_y := Helpers.OneTimeFloat.new(0.0)
 
-var _cancel_token: bool = false
+var _cancel_token := false
 
 @onready var _player: Player = $".."
 
@@ -49,12 +49,10 @@ func _dash_down_routine():
 	_dash_velocity_y = Helpers.OneTimeFloat.new(_player_stats.down_dash_speed)
 
 	# Cancelable dash.
-	var dash_timer: SceneTreeTimer = get_tree().create_timer(_player_stats.down_dash_duration)
+	var dash_timer := get_tree().create_timer(_player_stats.down_dash_duration)
 
-	var glide_window_timer: SceneTreeTimer = get_tree().create_timer(
-		_player_stats.dash_glide_window
-	)
-	var has_gliden: bool = false
+	var glide_window_timer := get_tree().create_timer(_player_stats.dash_glide_window)
+	var has_gliden := false
 
 	while not _cancel_token and dash_timer.time_left > 0.0:
 		await get_tree().process_frame

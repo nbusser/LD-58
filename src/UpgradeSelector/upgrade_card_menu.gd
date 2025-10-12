@@ -70,7 +70,7 @@ func _on_select_button_button_down() -> void:
 
 
 func sign_contract():
-	var points = signature_line_2d.points.duplicate()
+	var points := signature_line_2d.points.duplicate()
 	signature_line_2d.points = []
 	signature_line_2d.visible = true
 

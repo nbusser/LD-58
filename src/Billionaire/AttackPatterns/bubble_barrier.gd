@@ -5,11 +5,11 @@ extends Node2D
 
 @export_tool_button("Refresh Bubble Preview") var refresh_bubble_previews = _refresh_bubble_previews
 
-var _is_running = false
+var _is_running := false
 
-@onready var _waves = $Waves
-@onready var _billionaire = %Billionaire
-@onready var _coins_manager = %CoinsManager
+@onready var _waves: Node2D = $Waves
+@onready var _billionaire: Billionaire = %Billionaire
+@onready var _coins_manager: CoinsManager = %CoinsManager
 
 
 func spawn(spawn_interval: float):

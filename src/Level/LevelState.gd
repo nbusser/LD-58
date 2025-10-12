@@ -5,12 +5,12 @@ extends Resource
 # Represents the state of the level
 # Carries the level configuration but also holds game context information
 
-var level_number: int = 0
+var level_number := 0
 
-var player_cash: int = 0  # Coins collected from the beggining of game
-var billionaire_initial_net_worth: int = 0
-var billionaire_net_worth: int = 0
-var lost: bool = false
+var player_cash := 0  # Coins collected from the beggining of game
+var billionaire_initial_net_worth := 0
+var billionaire_net_worth := 0
+var lost := false
 
 var collected_items: Dictionary[Collectible.CollectibleType, int] = {}
 
@@ -46,8 +46,8 @@ func collect_item(collectible_type: Collectible.CollectibleType) -> void:
 
 
 func get_value_of_collected_items() -> int:
-	var total_value: int = 0
+	var total_value := 0
 	for item_type in collected_items.keys():
-		var quantity: int = collected_items[item_type]
+		var quantity := collected_items[item_type]
 		total_value += quantity * Collectible.get_collectible_value(item_type)
 	return total_value

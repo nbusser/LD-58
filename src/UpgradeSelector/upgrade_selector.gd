@@ -4,10 +4,10 @@ extends Control
 
 signal close
 
-const ICON_TEXTURE = preload("res://assets/sprites/icon.png")
+const ICON_TEXTURE := preload("res://assets/sprites/icon.png")
 
-const UpgradeCardPreload = preload("res://src/UpgradeSelector/upgrade_card.gd")
-const UpgradeCardMenuPreload = preload("res://src/UpgradeSelector/upgrade_card_menu.gd")
+const UpgradeCardPreload := preload("res://src/UpgradeSelector/upgrade_card.gd")
+const UpgradeCardMenuPreload := preload("res://src/UpgradeSelector/upgrade_card_menu.gd")
 
 @export var available_cards: Array[UpgradeCardData] = [
 	# PROFIT
@@ -309,13 +309,13 @@ func _pick_cards(nb_cards: int) -> Array[UpgradeCardData]:
 		func(card: UpgradeCardData) -> bool: return GameState.is_upgrade_applicable(card)
 	)
 
-	var rng = RandomNumberGenerator.new()
+	var rng := RandomNumberGenerator.new()
 	rng.randomize()
 
 	for i in range(nb_cards):
 		if legal_card_pool.size() == 0:
 			break
-		var index = rng.randi_range(0, legal_card_pool.size() - 1)
+		var index := rng.randi_range(0, legal_card_pool.size() - 1)
 		_card_pool.erase(legal_card_pool[index])
 		cards.append(legal_card_pool.pop_at(index))
 
@@ -343,11 +343,11 @@ func _on_card_selected(card_data: UpgradeCardData, index: int) -> void:
 		return
 
 	print("Card selected: %s" % card_data.title)
-	var applied = GameState.apply_upgrade(card_data)
+	var applied := GameState.apply_upgrade(card_data)
 	if not applied:
 		return
 
-	var card = card_container.get_child(index)
+	var card := card_container.get_child(index)
 	if card != null:
 		await _cursor.sign(card.get_node("%Signature"))
 
@@ -364,7 +364,7 @@ func _on_redraw_button_up() -> void:
 
 func _update_cards_display() -> void:
 	for i in range(3):
-		var card_control = card_container.get_child(i)
+		var card_control := card_container.get_child(i)
 		if card_control == null:
 			continue
 		if i < selectable_cards.size():

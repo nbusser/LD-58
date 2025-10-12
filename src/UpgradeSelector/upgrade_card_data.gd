@@ -43,7 +43,7 @@ const ICON_BULLET_TIME = preload("res://assets/sprites/upgrade_selector/icon_bul
 # TODO: change
 const ICON_PARRY = preload("res://assets/sprites/player/parry.png")
 
-@export var id: String = "default_id"
+@export var id := "default_id"
 @export var dependencies: Array[String] = []
 
 @export var card_type: CardType

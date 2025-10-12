@@ -23,8 +23,8 @@ const PIN_TURQUOISE = preload("res://assets/sprites/upgrade_selector/upgrade-pin
 			signature_line_2d.visible = false
 		_update_display()
 
-var _is_ready: bool = false
-var _is_too_poor: bool = false
+var _is_ready := false
+var _is_too_poor := false
 
 @onready var pin_texture_rect: TextureRect = %PinTextureRect
 

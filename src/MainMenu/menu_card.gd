@@ -2,7 +2,7 @@ extends Control
 
 signal card_selected(signature: Signature)
 
-@onready var _signature = %Signature
+@onready var _signature: Signature = %Signature
 
 
 func _on_select_button_pressed() -> void:

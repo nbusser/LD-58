@@ -42,16 +42,16 @@ class AttackAnimation:
 
 
 # Max consecutive cancels (ground only)
-const MAX_CANCELS = 3
+const MAX_CANCELS := 3
 
 # If billionaire is hit, allows an attack cancel (ground only)
-var _billionaire_was_punched_in_current_attack: bool = false
-var _cancel_counter: int = 0
+var _billionaire_was_punched_in_current_attack := false
+var _cancel_counter := 0
 
-var _billionaire_in_melee_reach: bool = false
+var _billionaire_in_melee_reach := false
 
-var _attack_state: AttackState = AttackState.NOT_ATTACKING
-var _current_attack: Attack = Attack.UNSPECIFIED
+var _attack_state := AttackState.NOT_ATTACKING
+var _current_attack := Attack.UNSPECIFIED
 
 # Associates an attack type with its animation labels
 var _attacks_dict: Dictionary[Attack, AttackAnimation] = {

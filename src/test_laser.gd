@@ -1,6 +1,6 @@
 extends Node2D
 
-var time: float = 0.0
+var time := 0.0
 var laser_positions: PackedVector2Array
 var laser_states: PackedFloat32Array
 
@@ -25,7 +25,7 @@ func _on_viewport_size_changed():
 func _process(delta):
 	time += delta
 
-	var laser_count = 4
+	var laser_count := 4
 
 	# laser_positions[0] = Vector2(0.1 + sin(time * 1.5) * 0.05, 0.0)
 	laser_positions[0] = Vector2(0.1, 0.0)
@@ -57,5 +57,5 @@ func _process(delta):
 	laser_surface.material.set_shader_parameter("laser_points", laser_positions)
 	laser_surface.material.set_shader_parameter("laser_states", laser_states)
 
-	var hue = fmod(time * 20.0, 360.0)
+	var hue := fmod(time * 20.0, 360.0)
 	laser_surface.material.set_shader_parameter("laser_hue", hue)

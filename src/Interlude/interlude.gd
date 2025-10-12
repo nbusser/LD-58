@@ -23,7 +23,7 @@ func _blocking_dialog(text: String):
 
 
 func _cutscene():
-	var win_catchphrases = [
+	var win_catchphrases: Array[String] = [
 		"Pay up, billionaire!",
 		"Another loophole closed.",
 		"Another one bites the dust!",
@@ -32,7 +32,7 @@ func _cutscene():
 		"What a haul!",
 	]
 
-	var lose_catchphrases = [
+	var lose_catchphrases: Array[String] = [
 		"Damn loopholes...",
 		"I'll get him next time!",
 		"Tax evasion: 1, Taxman: 0.",
@@ -71,13 +71,13 @@ func _setup_statement_lines():
 		if collectible_type not in GameState.latest_level_state.collected_items:
 			continue
 
-		var value = GameState.latest_level_state.collected_items[collectible_type]
+		var value := GameState.latest_level_state.collected_items[collectible_type]
 
 		if value <= 0:
 			continue
 
 		var statement_line: StatementLine = statement_line_scene.instantiate()
-		var unit_value = Collectible.get_collectible_value(collectible_type)
+		var unit_value := Collectible.get_collectible_value(collectible_type)
 		(
 			statement_line
 			. init(
@@ -95,7 +95,7 @@ func _setup_statement_lines():
 	losses_label.text = StringFormatter.format_currency(
 		GameState.latest_level_state.get_value_of_collected_items(), false, "$", true
 	)
-	var remaining_net_worth = (
+	var remaining_net_worth := (
 		GameState.billionaire_cash - GameState.latest_level_state.get_value_of_collected_items()
 	)
 	remaining_net_worth_label.text = StringFormatter.format_currency(

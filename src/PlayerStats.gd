@@ -1,56 +1,57 @@
 class_name PlayerStats
 extends Resource
 
-var unlocked_dash = false
-var unlocked_dash_down = false
-var unlocked_wall_climbing = false
-var unlocked_wall_projection = false
-var unlocked_dash_bullet_time = false
-var unlocked_on_demand_bullet_time = false
-var unlocked_bonus_jump_after_airhit = false
-var unlocked_fast_cooldown_dash = false
-var unlocked_stronger_dash = false
-var unlocked_higher_jumps = false
-var unlocked_dash_glide = false
-var unlocked_parry = false
-var max_nb_jumps = 1
-var interest_rate = 0
+var unlocked_dash := false
+var unlocked_dash_down := false
+var unlocked_wall_climbing := false
+var unlocked_wall_projection := false
+var unlocked_dash_bullet_time := false
+var unlocked_on_demand_bullet_time := false
+var unlocked_bonus_jump_after_airhit := false
+var unlocked_fast_cooldown_dash := false
+var unlocked_stronger_dash := false
+var unlocked_higher_jumps := false
+var unlocked_dash_glide := false
+var unlocked_parry := false
+var max_nb_jumps := 1
+var interest_rate := 0
 
 # Beginner stats
 # Movement
-var ground_speed = 300
-var air_speed = 150
+var ground_speed := 300
+var air_speed := 150
 # Horizontal dash
-var dash_cooldown = 1.0
-var dash_speed = 3700
-var dash_window = .3
+var dash_cooldown := 1.0
+var dash_speed := 3700
+var dash_duration := 0.20
+var dash_window := .3
 # Dash slow motion
-var dash_slow_factor = 0.6
-var dash_slow_time = 0.3
+var dash_slow_factor := 0.6
+var dash_slow_time := 0.3
 # Vertical dash
-var down_dash_speed = 1500
-var down_dash_duration = 0.20
+var down_dash_speed := 1500
+var down_dash_duration := 0.20
 # Jumps
-var max_input_jump_time = .4
-var jump_force = 6000
+var max_input_jump_time := .4
+var jump_force := 6000
 # Walls stickiness
-var wall_stickiness = 450
-var wall_jump_force = 450
-var wall_jump_cooldown = .7
+var wall_stickiness := 450
+var wall_jump_force := 450
+var wall_jump_cooldown := .7
 # Billionaire contact
-var billionaire_head_bounce = 150
-var billionaire_knockback = 800
-var melee_damage = 100
-var combo_base = 1.5
-var combo_reset_time = 2.0
+var billionaire_head_bounce := 150
+var billionaire_knockback := 800
+var melee_damage := 100
+var combo_base := 1.5
+var combo_reset_time := 2.0
 # Dash glide
-var dash_glide_window = .1
-var glide_force = 3800
+var dash_glide_window := .1
+var glide_force := 3800
 # Damage coins multiplier
-var damage_coins_multiplier = 1.0
+var damage_coins_multiplier := 1.0
 # Loot value multiplier
-var loot_value_multiplier = 1.0
-var bitcoin_value_multiplier = 1.0
+var loot_value_multiplier := 1.0
+var bitcoin_value_multiplier := 1.0
 
 # End game stats
 ## Movement
@@ -82,6 +83,6 @@ var bitcoin_value_multiplier = 1.0
 #var glide_force = 3800
 
 # Bullet proximity slow motion parameters
-var bullet_proximity_radius = 70.0
-var bullet_proximity_slow_factor = 0.75
-var unlocked_bullet_proximity_slowmo = false
+var bullet_proximity_radius := 70.0
+var bullet_proximity_slow_factor := 0.75
+var unlocked_bullet_proximity_slowmo := false

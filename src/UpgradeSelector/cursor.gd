@@ -2,8 +2,8 @@ class_name Cursor
 
 extends Node2D
 
-const CURSOR_START_POSITION: Vector2 = Vector2(832.0, 1045.0)
-const CURSOR_END_POSITION: Vector2 = Vector2(1667.0, 371.0)
+const CURSOR_START_POSITION := Vector2(832.0, 1045.0)
+const CURSOR_END_POSITION := Vector2(1667.0, 371.0)
 
 var _is_locked = false
 
@@ -49,7 +49,7 @@ func sign(signature: Signature) -> bool:
 			)
 	)
 
-	var was_canceled: bool = await signature.sign()
+	var was_canceled := await signature.sign()
 	if not was_canceled:
 		await (
 			create_tween()

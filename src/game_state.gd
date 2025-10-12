@@ -1,25 +1,25 @@
 extends Node
 
-const BILLIONAIRE_INITIAL_CASH = 100000000000
+const BILLIONAIRE_INITIAL_CASH := 100000000000
 
-var current_phase: int = 0
-var billionaire_cash: int = BILLIONAIRE_INITIAL_CASH
-var player_cash: int = 0
+var current_phase := 0
+var billionaire_cash := BILLIONAIRE_INITIAL_CASH
+var player_cash := 0
 var latest_level_state: LevelState = null
 var active_upgrades: Array[UpgradeCardData] = []
-var player_stats: PlayerStats = PlayerStats.new()
+var player_stats := PlayerStats.new()
 
 # Actualized after each phase
-var difficulty_factor:
+var difficulty_factor: float:
 	get = _get_difficulty_factor
 
 
 func _get_difficulty_factor() -> float:
-	var current_phase_difficulty = current_phase * 0.5
+	var current_phase_difficulty := current_phase * 0.5
 
 	# The difficulty starts scaling at 10k$ loss
-	var initial_offset = 4
-	var lost_health = BILLIONAIRE_INITIAL_CASH - billionaire_cash
+	var initial_offset := 4
+	var lost_health := BILLIONAIRE_INITIAL_CASH - billionaire_cash
 	var health_difference_difficulty = (
 		max((log(lost_health) / log(10)) - initial_offset, 0.0) if lost_health != 0 else 0.0
 	)
@@ -38,7 +38,7 @@ func is_upgrade_applicable(card: UpgradeCardData) -> bool:
 		return false
 
 	for dependency in card.dependencies:
-		var dependency_met = false
+		var dependency_met := false
 		for existing_card in active_upgrades:
 			if existing_card.id == dependency:
 				dependency_met = true
@@ -46,7 +46,7 @@ func is_upgrade_applicable(card: UpgradeCardData) -> bool:
 		if not dependency_met:
 			return false
 
-	var category_exists = false
+	var category_exists := false
 	for existing_card in active_upgrades:
 		if existing_card.category == card.category:
 			category_exists = true
@@ -68,7 +68,7 @@ func apply_upgrade(card: UpgradeCardData) -> bool:
 	print("Applied upgrade: %s" % card.title)
 	print("Current stats: %s" % str(get_upgrade_stats()))
 	for upgr in get_upgrade_stats():
-		var upgr_value = get_upgrade_stats()[upgr]
+		var upgr_value := get_upgrade_stats()[upgr]
 		match upgr:
 			UpgradeCardData.EffectType.BULLET_TIME:
 				player_stats.unlocked_bullet_proximity_slowmo = true

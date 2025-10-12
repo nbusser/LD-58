@@ -6,13 +6,13 @@ class_name JumpManager
 
 extends Node2D
 
-var _is_keep_pressing_jump_button: bool = false
+var _is_keep_pressing_jump_button := false
 
 # Set to true while player is ascending
-var _is_actively_jumping: bool = false
+var _is_actively_jumping := false
 
-var _jump_load_start: float = INF
-var _play_jump_start_ts: float = INF
+var _jump_load_start := INF
+var _play_jump_start_ts := INF
 
 @onready var _player: Player = $".."
 @onready var _sprite: AnimatedSprite2D = $"../Sprite"
@@ -58,9 +58,9 @@ func try_jump() -> bool:
 
 # Update current jump's characteristics and returns the current frame's jump velocity.
 func update(delta: float) -> float:
-	var now = Time.get_unix_time_from_system()
+	var now := Time.get_unix_time_from_system()
 
-	var vertical_velocity: float = 0.0
+	var vertical_velocity := 0.0
 
 	var time_since_jump = now - _jump_load_start
 	if (

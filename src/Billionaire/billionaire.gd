@@ -2,28 +2,28 @@ class_name Billionaire
 
 extends CharacterBody2D
 
-const _GRAVITY: float = 900.0
-const _RUNNING_SPEED: float = 600
-const _MAX_SPEED: float = 200
+const _GRAVITY := 900.0
+const _RUNNING_SPEED := 600
+const _MAX_SPEED := 200
 
 # Interval range between two attacks, in seconds
-@export var idle_range_seconds: Vector2 = Vector2(0.5, 1.0)
-@export var coins_per_damage: float = 0.1
+@export var idle_range_seconds := Vector2(0.5, 1.0)
+@export var coins_per_damage := 0.1
 
-var _is_gravity_enabled: bool = true
-var _run_velocity: Vector2 = Vector2.ZERO
-var _knockback_velocity: Vector2 = Vector2.ZERO
+var _is_gravity_enabled := true
+var _run_velocity := Vector2.ZERO
+var _knockback_velocity := Vector2.ZERO
 
-var _bullet_scene = preload("res://src/Bullet/Bullet.tscn")
-var _bubble_scene = preload("res://src/Billionaire/AttackPatterns/bubble.tscn")
+var _bullet_scene := preload("res://src/Bullet/Bullet.tscn")
+var _bubble_scene := preload("res://src/Billionaire/AttackPatterns/bubble.tscn")
 
-var _is_player_dead = false
-var _is_level_timeout = false
+var _is_player_dead := false
+var _is_level_timeout := false
 
-var _schlass_connected = false
+var _schlass_connected := false
 
-var _combo_count = 0
-var _last_hit_time = 0.0
+var _combo_count := 0
+var _last_hit_time := 0.0
 
 @onready var _idle_timer: Timer = $IdleTimer
 @onready var _bullets: Node2D = $"../Bullets"
@@ -63,11 +63,13 @@ func _ready() -> void:
 
 # Return a random attack pattern
 func _get_attack_pattern():
-	var theoretical_max_distance_x = abs(_left_wall.position.x - $"../Borders/WallR".position.x)
-	var distance_to_player_x = abs(global_position.x - _player.global_position.x)
-	var percentage_net_worth_remaining = _level.level_state.get_percentage_net_worth_remaining()
+	var theoretical_max_distance_x: float = abs(
+		_left_wall.position.x - $"../Borders/WallR".position.x
+	)
+	var distance_to_player_x: float = abs(global_position.x - _player.global_position.x)
+	var percentage_net_worth_remaining := _level.level_state.get_percentage_net_worth_remaining()
 
-	var map_weights = func(attack_pattern: AttackPattern):
+	var map_weights := func(attack_pattern: AttackPattern):
 		return {
 			"attack": attack_pattern,
 			"weight":
@@ -87,18 +89,18 @@ func _get_attack_pattern():
 	# var attack_patterns = [_attack_patterns.get_child(9)] # DEBUG ONLY - DO NOT COMMIT UNCOMMENTED
 	# return null # DEBUG ONLY - DO NOT COMMIT UNCOMMENTED
 
-	var attack_patterns = _attack_patterns.get_children()
-	var attacks_and_weights = attack_patterns.map(map_weights).filter(
+	var attack_patterns := _attack_patterns.get_children()
+	var attacks_and_weights := attack_patterns.map(map_weights).filter(
 		func(attack_and_weight): return attack_and_weight.weight > 0.0
 	)
 
-	var sum_weights = 0.0
+	var sum_weights := 0.0
 	for attack_and_weight in attacks_and_weights:
 		sum_weights += attack_and_weight.weight
 
-	var r = randf() * sum_weights
+	var r := randf() * sum_weights
 
-	var cumulative = 0.0
+	var cumulative := 0.0
 	for attack_and_weight in attacks_and_weights:
 		cumulative += attack_and_weight.weight
 		if r <= cumulative:
@@ -113,24 +115,24 @@ func _physics_process(delta: float) -> void:
 		velocity.y += _GRAVITY * delta
 
 	if _combo_count > 0:
-		var time_since_hit = Time.get_unix_time_from_system() - _last_hit_time
+		var time_since_hit := Time.get_unix_time_from_system() - _last_hit_time
 		if time_since_hit > _player.ps.combo_reset_time:
 			_combo_count = 0
 			_combo_label.visible = false
 		elif _combo_count > 1:
-			var time_remaining = _player.ps.combo_reset_time - time_since_hit
-			var t = time_remaining / _player.ps.combo_reset_time
-			var ease_t = 1.0 - pow(1.0 - t, 3.0)
+			var time_remaining := _player.ps.combo_reset_time - time_since_hit
+			var t := time_remaining / _player.ps.combo_reset_time
+			var ease_t := 1.0 - pow(1.0 - t, 3.0)
 			_combo_label.modulate.a = ease_t
 			_combo_label.scale = Vector2.ONE * (0.5 + 0.5 * ease_t)
 
-	var knockback_decay = Vector2(700.0, 1000.0)
+	var knockback_decay := Vector2(700.0, 1000.0)
 	_knockback_velocity.x = move_toward(_knockback_velocity.x, 0.0, knockback_decay.x * delta)
 	_knockback_velocity.y = move_toward(_knockback_velocity.y, 0.0, knockback_decay.y * delta)
 
-	var run_decay_x = _RUNNING_SPEED * 0.75
+	var run_decay_x := _RUNNING_SPEED * 0.75
 	if abs(_run_velocity.x) > 0.0:
-		var sign_x = sign(_run_velocity.x)
+		var sign_x: float = sign(_run_velocity.x)
 		_run_velocity.x -= run_decay_x * sign_x * delta
 		if sign(_run_velocity.x) != sign_x:
 			_run_velocity.x = 0.0
@@ -168,7 +170,7 @@ func _run(
 	run_speed: float = 200.0,
 	run_accel_duration: float = 0.2,
 	run_constant_speed_duration: float = 0.5,
-	run_decel_duration = 0.6,
+	run_decel_duration: float = 0.6,
 	wait_until_stopped: bool = false
 ) -> void:
 	# Acceleration
@@ -182,7 +184,7 @@ func _run(
 	)
 
 	# Constant and speed deceleration in a single coroutine
-	var run_constant_then_decelerate = func():
+	var run_constant_then_decelerate := func():
 		# Constant speed
 		await get_tree().create_timer(run_constant_speed_duration).timeout
 		# Deceleration
@@ -204,12 +206,12 @@ func _run(
 
 
 func _random_run():
-	var run_direction: float = -1.0 if Globals.coin_flip() else 1.0
-	var run_speed: float = 200.0
-	var run_accel_duration: float = 0.2
-	var run_constant_speed_duration: float = randf_range(0.3, 0.6)
-	var run_decel_duration: float = 0.6
-	var wait_until_stopped: bool = Globals.coin_flip() as bool
+	var run_direction := -1.0 if Globals.coin_flip() else 1.0
+	var run_speed := 200.0
+	var run_accel_duration := 0.2
+	var run_constant_speed_duration := randf_range(0.3, 0.6)
+	var run_decel_duration := 0.6
+	var wait_until_stopped := Globals.coin_flip() as bool
 	await _run(
 		run_direction,
 		run_speed,
@@ -233,8 +235,8 @@ func _jump_to_peek(jump_velocity: float):
 # - out -> gunpoint   - current gunpoint position
 func _air_attack_track_player_anim(io_state: Dictionary):
 	while io_state.is_running:
-		var player_direction = _player.global_position - global_position
-		var angle = rad_to_deg(Vector2.DOWN.angle_to(player_direction.normalized()))
+		var player_direction := _player.global_position - global_position
+		var angle := rad_to_deg(Vector2.DOWN.angle_to(player_direction.normalized()))
 		# If player is located within a 90deg cone under me
 		if abs(angle) <= 45:
 			$Sprite2D.play("air_attack_down")
@@ -255,11 +257,11 @@ func _air_attack_track_player_anim(io_state: Dictionary):
 
 # Shoot bullets in a cone
 func _shoot_cone(gunpoint: Vector2, nb_bullets: int, spread_deg: float = 30.0):
-	var bullet_direction = (_player.global_position - global_position).normalized()
+	var bullet_direction := (_player.global_position - global_position).normalized()
 	for i in range(nb_bullets):
-		var t = float(i) / float(nb_bullets - 1)
-		var angle = -spread_deg / 2 + t * spread_deg
-		var dir = bullet_direction.rotated(deg_to_rad(angle))
+		var t := float(i) / float(nb_bullets - 1)
+		var angle := -spread_deg / 2 + t * spread_deg
+		var dir := bullet_direction.rotated(deg_to_rad(angle))
 		_spawn_bullet(gunpoint, dir, 800, 500.0, 1.0, 1)
 
 	$AttackPatterns/JumpConeBullets/ShootSound.play_sound()
@@ -272,7 +274,7 @@ func _jump_cone_bullets_routine() -> void:
 
 	await _jump_to_peek(600)
 
-	var player_watcher_coroutine_state = {"is_running": true, "gunpoint": Vector2.ZERO}
+	var player_watcher_coroutine_state := {"is_running": true, "gunpoint": Vector2.ZERO}
 	# This coroutine will take care of updating anim and giving us gunpoint via the dict
 	_air_attack_track_player_anim.call_deferred(player_watcher_coroutine_state)
 
@@ -281,7 +283,7 @@ func _jump_cone_bullets_routine() -> void:
 	await get_tree().create_timer(0.3).timeout
 
 	# Shoot bullets to the player
-	var nb_bullets: int = 3 + int(0.9 * GameState.difficulty_factor)
+	var nb_bullets := 3 + int(0.9 * GameState.difficulty_factor)
 	_shoot_cone(player_watcher_coroutine_state.gunpoint.global_position, nb_bullets)
 
 	# Freeze
@@ -299,15 +301,15 @@ func _jump_cone_bullets_routine() -> void:
 func _parachute_routine() -> void:
 	# Cannot pass a simple boolean, because it would be passed by copy to the coroutine
 	# Thus, we use a dictionary, which is passed by reference
-	var state = {"has_parachute": true, "is_running": true}
+	var state := {"has_parachute": true, "is_running": true}
 
-	var distance_to_left_wall = abs(position.x - _left_wall.position.x)
-	var distance_to_right_wall = abs(position.x - _right_wall.position.x)
-	var direction = -1.0 if distance_to_left_wall > distance_to_right_wall else 1.0
-	var wall = _left_wall.position.x if direction == -1.0 else _right_wall.position.x
+	var distance_to_left_wall: float = abs(position.x - _left_wall.position.x)
+	var distance_to_right_wall: float = abs(position.x - _right_wall.position.x)
+	var direction := -1.0 if distance_to_left_wall > distance_to_right_wall else 1.0
+	var wall := _left_wall.position.x if direction == -1.0 else _right_wall.position.x
 
 	# Handle run
-	var run_coroutine = func():
+	var run_coroutine := func():
 		while state.is_running:
 			_run_velocity.x += _RUNNING_SPEED * direction * get_process_delta_time()
 			await get_tree().process_frame
@@ -317,21 +319,21 @@ func _parachute_routine() -> void:
 	# Jump
 	await _jump_to_peek(600)
 
-	var player_watcher_coroutine_state = {"is_running": true, "gunpoint": Vector2.ZERO}
+	var player_watcher_coroutine_state := {"is_running": true, "gunpoint": Vector2.ZERO}
 	# This coroutine will take care of updating anim and giving us gunpoint via the dict
 	_air_attack_track_player_anim.call_deferred(player_watcher_coroutine_state)
 
 	# Show parachute
 	$AttackPatterns/Parachute/ParachuteSprite.visible = true
 
-	var parachute_swinging_coroutine = func():
-		var angle = 45.0
-		var duration = 1.5
+	var parachute_swinging_coroutine := func():
+		var angle := 45.0
+		var duration := 1.5
 
-		var tween = create_tween()
+		var tween := create_tween()
 		tween.set_loops()
 
-		var parachute = $AttackPatterns/Parachute/ParachuteSprite
+		var parachute: Sprite2D = $AttackPatterns/Parachute/ParachuteSprite
 		(
 			tween
 			. tween_property(parachute, "rotation_degrees", angle, duration)
@@ -359,24 +361,24 @@ func _parachute_routine() -> void:
 	parachute_swinging_coroutine.call_deferred()
 
 	# Handle parachute friction physics
-	var parachute_friction_coroutine = func():
-		var friction = -_GRAVITY * 0.99
+	var parachute_friction_coroutine := func():
+		var friction := -_GRAVITY * 0.99
 		while state.has_parachute:
 			velocity.y += friction * get_process_delta_time()
 			await get_tree().process_frame
 	# Run in background
 	parachute_friction_coroutine.call_deferred()
 
-	var drop_parachute = func():
+	var drop_parachute := func():
 		state.has_parachute = false
 		player_watcher_coroutine_state.is_running = false
 		$AttackPatterns/Parachute/ParachuteSprite.visible = false
 
 	# Shoot bullets regularly
-	var shoot_coroutine = func():
-		var nb_bullets_in_cone = 3 + int(0.5 * GameState.difficulty_factor)
-		var max_shots: int = 2 + int(0.5 * GameState.difficulty_factor)
-		var current_nb_shots = 0
+	var shoot_coroutine := func():
+		var nb_bullets_in_cone := 3 + int(0.5 * GameState.difficulty_factor)
+		var max_shots := 2 + int(0.5 * GameState.difficulty_factor)
+		var current_nb_shots := 0
 		while state.has_parachute:
 			await _shoot_cone(
 				player_watcher_coroutine_state.gunpoint.global_position, nb_bullets_in_cone
@@ -390,7 +392,7 @@ func _parachute_routine() -> void:
 	shoot_coroutine.call_deferred()
 
 	# Stops routine whenever we are too close from the wall
-	var distance_threshold = 100
+	var distance_threshold := 100
 	while state.has_parachute:
 		if abs(position.x - wall) < distance_threshold:
 			drop_parachute.call()
@@ -413,8 +415,8 @@ func _machinegun_routine() -> void:
 
 	$Sprite2D.play("machinegun_windup")
 
-	var coroutine_state = {"is_running": true}
-	var flip_sprite_coroutine = func():
+	var coroutine_state := {"is_running": true}
+	var flip_sprite_coroutine := func():
 		while coroutine_state.is_running:
 			$Sprite2D.flip_h = not _is_player_left()
 			await get_tree().process_frame
@@ -423,12 +425,12 @@ func _machinegun_routine() -> void:
 	flip_sprite_coroutine.call_deferred()
 
 	$AttackPatterns/Machinegun/FocusSound.play()
-	var focus_time: float = 2.0 - 0.12 * (GameState.difficulty_factor - 1.0)
+	var focus_time := 2.0 - 0.12 * (GameState.difficulty_factor - 1.0)
 	await get_tree().create_timer(focus_time).timeout
 	$Sprite2D.play("machinegun")
 
-	var bullet_speed = 400.0 + 60.0 * (GameState.difficulty_factor - 1.0)
-	var nb_bullets: int = 8 + int(2.0 * (GameState.difficulty_factor - 1))
+	var bullet_speed := 400.0 + 60.0 * (GameState.difficulty_factor - 1.0)
+	var nb_bullets := 8 + int(2.0 * (GameState.difficulty_factor - 1))
 
 	for _i in range(nb_bullets):
 		var gunpoint_position: Vector2
@@ -437,7 +439,7 @@ func _machinegun_routine() -> void:
 		else:
 			gunpoint_position = $AttackPatterns/Machinegun/Gunpoints/Right.global_position
 
-		var bullet_direction = (_player.global_position - gunpoint_position).normalized()
+		var bullet_direction := (_player.global_position - gunpoint_position).normalized()
 
 		$AttackPatterns/Machinegun/ShootingSound.play()
 		_spawn_bullet(gunpoint_position, bullet_direction, 50, bullet_speed, 1.0, 0.0)
@@ -448,31 +450,31 @@ func _machinegun_routine() -> void:
 
 
 func _rain_routine() -> void:
-	var spawn_rain_coroutine = func() -> void:
-		var rain_nb_waves: int = 10
-		var rain_nb_bullets_per_waves: int = 4 + int(GameState.difficulty_factor / 2)
-		var rain_bullet_speed: float = 200.0 + 10.0 * GameState.difficulty_factor
-		var rain_bullet_interval_duration: float = 0.6
-		var rain_bullet_interval_x: int = 70
-		var rain_bullet_random_interval_y: int = 15
-		var rain_acceleration: int = 400 + (40.0 * (GameState.difficulty_factor - 1.0))
+	var spawn_rain_coroutine := func() -> void:
+		var rain_nb_waves := 10
+		var rain_nb_bullets_per_waves := 4 + int(GameState.difficulty_factor / 2)
+		var rain_bullet_speed := 200.0 + 10.0 * GameState.difficulty_factor
+		var rain_bullet_interval_duration := 0.6
+		var rain_bullet_interval_x := 70
+		var rain_bullet_random_interval_y := 15
+		var rain_acceleration := 400 + (40.0 * (GameState.difficulty_factor - 1.0))
 
-		var spawn_y = _ceiling.position.y + 10
-		var min_x = _left_wall.position.x + 10
-		var max_x = _right_wall.position.x - 10
+		var spawn_y := _ceiling.position.y + 10
+		var min_x := _left_wall.position.x + 10
+		var max_x := _right_wall.position.x - 10
 		var nb_slots: int = abs(min_x - max_x) / rain_bullet_interval_x
 
 		for wave in range(rain_nb_waves):
-			var shuffled_slots = range(nb_slots)
+			var shuffled_slots: Array[int] = range(nb_slots)
 			shuffled_slots.shuffle()
-			var slot_index = 0
+			var slot_index := 0
 			for bullet in range(rain_nb_bullets_per_waves):
-				var bullet_slot = shuffled_slots[slot_index]
+				var bullet_slot := shuffled_slots[slot_index]
 				slot_index += 1
-				var bullet_position_x = min_x + (bullet_slot * rain_bullet_interval_x)
-				var bullet_position_y = spawn_y + randi() % rain_bullet_random_interval_y
+				var bullet_position_x := min_x + (bullet_slot * rain_bullet_interval_x)
+				var bullet_position_y := spawn_y + randi() % rain_bullet_random_interval_y
 
-				var bullet_position = Vector2(bullet_position_x, bullet_position_y)
+				var bullet_position := Vector2(bullet_position_x, bullet_position_y)
 				_spawn_bullet(
 					bullet_position, Vector2.DOWN, 50, rain_bullet_speed, 1.0, rain_acceleration
 				)
@@ -481,7 +483,7 @@ func _rain_routine() -> void:
 	$AttackPatterns/Rain/FocusSound.play()
 
 	$Sprite2D.play("focus")
-	var focus_duration: float = 2.0
+	var focus_duration := 2.0
 	await get_tree().create_timer(focus_duration).timeout
 
 	$Sprite2D.play("laugh")
@@ -491,29 +493,29 @@ func _rain_routine() -> void:
 
 func _rain_carpet_bomb_routine() -> void:
 	var spawn_rain_coroutine = func() -> void:
-		var max_nb_waves: int = 1 + int(0.5 * GameState.difficulty_factor)
-		var nb_waves: int = randi() % max_nb_waves + 1
-		var wave_interval_duration: float = 1.0
+		var max_nb_waves := 1 + int(0.5 * GameState.difficulty_factor)
+		var nb_waves := randi() % max_nb_waves + 1
+		var wave_interval_duration := 1.0
 
-		var rain_bullet_speed: float = 120.0
-		var rain_bullet_interval_x: int = 70
-		var rain_bullet_acceleration: int = 200 + int(20.0 * GameState.difficulty_factor)
+		var rain_bullet_speed := 120.0
+		var rain_bullet_interval_x := 70
+		var rain_bullet_acceleration := 200 + int(20.0 * GameState.difficulty_factor)
 
-		var spawn_y = _ceiling.position.y + 10
-		var min_x = _left_wall.position.x + 10
-		var max_x = _right_wall.position.x - 10
+		var spawn_y := _ceiling.position.y + 10
+		var min_x := _left_wall.position.x + 10
+		var max_x := _right_wall.position.x - 10
 		var nb_slots: int = abs(min_x - max_x) / rain_bullet_interval_x
 
-		var slot_hole_size = 3
+		var slot_hole_size := 3
 
-		for _wave in range(nb_waves):
-			var slot_hole_index = randi() % (nb_slots - slot_hole_size)
-			var slot_range = (
+		for _wave: int in range(nb_waves):
+			var slot_hole_index := randi() % (nb_slots - slot_hole_size)
+			var slot_range := (
 				range(slot_hole_index) + range(slot_hole_index + slot_hole_size, nb_slots)
 			)
-			for i in slot_range:
-				var bullet_position_x = min_x + (i * rain_bullet_interval_x)
-				var bullet_position = Vector2(bullet_position_x, spawn_y)
+			for i: int in slot_range:
+				var bullet_position_x := min_x + (i * rain_bullet_interval_x)
+				var bullet_position := Vector2(bullet_position_x, spawn_y)
 				_spawn_bullet(
 					bullet_position,
 					Vector2.DOWN,
@@ -527,7 +529,7 @@ func _rain_carpet_bomb_routine() -> void:
 	$AttackPatterns/Rain/FocusSound.play()
 
 	$Sprite2D.play("focus")
-	var focus_duration: float = 2.0
+	var focus_duration := 2.0
 	await get_tree().create_timer(focus_duration).timeout
 
 	$Sprite2D.play("laugh")
@@ -536,14 +538,14 @@ func _rain_carpet_bomb_routine() -> void:
 
 
 func _bubble_barrier_routine():
-	var focus_duration: float = 2.0
+	var focus_duration := 2.0
 	$AttackPatterns/Rain/FocusSound.play()
 
 	$Sprite2D.play("focus")
 	await get_tree().create_timer(focus_duration).timeout
 	$Sprite2D.play("laugh")
 
-	var column_spawn_interval = 1.0 + 0.07 - 0.07 * GameState.difficulty_factor
+	var column_spawn_interval := 1.0 + 0.07 - 0.07 * GameState.difficulty_factor
 	_bubble_barrier.spawn(column_spawn_interval)
 
 	$Sprite2D.play("default")
@@ -571,11 +573,11 @@ func _on_idle_timer_timeout() -> void:
 
 
 func spawn_coins(amount: int):
-	var combo_mult = pow(_player.ps.combo_base, _combo_count)
-	var target_value = amount * coins_per_damage * _player.ps.damage_coins_multiplier * combo_mult
+	var combo_mult := pow(_player.ps.combo_base, _combo_count)
+	var target_value := amount * coins_per_damage * _player.ps.damage_coins_multiplier * combo_mult
 	var total_value_spawned = 0
 
-	var collectible_types = [
+	var collectible_types: Array[Collectible.CollectibleType] = [
 		Collectible.CollectibleType.DOLLAR_COIN,
 		Collectible.CollectibleType.BITCOIN,
 		Collectible.CollectibleType.DOLLAR_BILL,
@@ -584,25 +586,25 @@ func spawn_coins(amount: int):
 		Collectible.CollectibleType.GOLD_BAR,
 	]
 
-	var remaining_value = target_value
-	var coins_spawned = 0
+	var remaining_value := target_value
+	var coins_spawned := 0
 	while remaining_value > 0 and coins_spawned < 9:
 		if total_value_spawned >= target_value * 0.95:
 			break
 
-		var valid_types = []
+		var valid_types: Array[Collectible.CollectibleType] = []
 		for type in collectible_types:
-			var value = Collectible.get_collectible_value(type)
+			var value := Collectible.get_collectible_value(type)
 			if value <= remaining_value:
 				valid_types.append(type)
 
 		if valid_types.is_empty():
 			break
 
-		var collectible_type = valid_types.pick_random()
+		var collectible_type: Collectible.CollectibleType = valid_types.pick_random()
 
 		var spawn_offset := Vector2(randf_range(-12.0, 12.0), randf_range(-8.0, 0.0))
-		var coin = _coins_manager.create_coin(global_position + spawn_offset, collectible_type)
+		var coin := _coins_manager.create_coin(global_position + spawn_offset, collectible_type)
 
 		var angle := randf_range(-PI / 3, PI / 3)
 		var impulse_direction := Vector2.UP.rotated(angle)
@@ -611,7 +613,7 @@ func spawn_coins(amount: int):
 		coin.set_deferred("angular_velocity", randf_range(-6.0, 6.0))
 		_coins_manager.add_coin(coin)
 
-		var col_value = Collectible.get_collectible_value(collectible_type)
+		var col_value := Collectible.get_collectible_value(collectible_type)
 		total_value_spawned += col_value
 		remaining_value -= col_value
 		coins_spawned += 1
@@ -625,18 +627,18 @@ func _show_combo_stomp():
 		_combo_label.visible = false
 		return
 
-	var horizontal_offset = 1.0 if _player.direction == Player.Direction.RIGHT else -1.0
+	var horizontal_offset := 1.0 if _player.direction == Player.Direction.RIGHT else -1.0
 	_combo_display.global_position = (
 		_player.global_position + Vector2(80.0 * horizontal_offset, -30)
 	)
 
-	var combo_mult = pow(_player.ps.combo_base, _combo_count)
+	var combo_mult := pow(_player.ps.combo_base, _combo_count)
 	_combo_label.text = "x%.1f" % combo_mult
 	_combo_label.visible = true
 	_combo_label.modulate.a = 1.0
 	_combo_label.scale = Vector2.ZERO
 
-	var tween = get_tree().create_tween()
+	var tween := get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_BACK)
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(_combo_label, "scale", Vector2.ONE, 0.3)
@@ -654,29 +656,29 @@ func on_level_billionaire_hit(amount: int, _remaining_net_worth: int) -> void:
 		spawn_coins(amount)
 
 	# Red glow on hit
-	var glow_routine = func():
+	var glow_routine := func():
 		$Sprite2D.modulate = Color(1, 0, 0)
 		await get_tree().create_timer(1.0).timeout
 		$Sprite2D.modulate = Color(1, 1, 1, 1)
 	glow_routine.call()
 
-	var knockback_routine = func():
-		var min_distance = 100.0
-		var max_distance = 200.0
+	var knockback_routine := func():
+		var min_distance := 100.0
+		var max_distance := 200.0
 
-		var distance = global_position.distance_to(_player.global_position)
+		var distance := global_position.distance_to(_player.global_position)
 		distance = clamp(distance, min_distance, max_distance)
-		var t = (distance - min_distance) / (max_distance - min_distance)
+		var t := (distance - min_distance) / (max_distance - min_distance)
 
-		var min_force_x = 100.0
-		var max_force_x = 650.0
-		var knockback_force_x = lerp(max_force_x, min_force_x, t)
+		var min_force_x := 100.0
+		var max_force_x := 650.0
+		var knockback_force_x: float = lerp(max_force_x, min_force_x, t)
 
-		var min_force_y = 45.0
-		var max_force_y = 75.0
-		var knockback_force_y = lerp(max_force_y, min_force_y, t)
+		var min_force_y := 45.0
+		var max_force_y := 75.0
+		var knockback_force_y: float = lerp(max_force_y, min_force_y, t)
 
-		var knockback_direction = (global_position - _player.global_position).normalized()
+		var knockback_direction := (global_position - _player.global_position).normalized()
 		_knockback_velocity.x = knockback_direction.x * knockback_force_x
 		_knockback_velocity.y = knockback_direction.y * knockback_force_y
 
@@ -695,18 +697,18 @@ func _laser_warning_routine() -> void:
 
 	# Fire lasers at player position
 	$Sprite2D.play("laugh")
-	var nb_lasers = 3 + (GameState.difficulty_factor - 1.0)
+	var nb_lasers := 3 + (GameState.difficulty_factor - 1.0)
 	await _lasers.laser_warning_pattern(nb_lasers, 0.4)
 
 	# Wait for lasers to finish
-	var waiting_time = 1.5 * (1.0 - GameState.difficulty_factor / 10.0)
+	var waiting_time := 1.5 * (1.0 - GameState.difficulty_factor / 10.0)
 	await get_tree().create_timer(waiting_time).timeout
 	$Sprite2D.play("default")
 
 
 func _laser_sweep_routine() -> void:
 	# Determine sweep direction based on player position
-	var sweep_direction = 1 if _player.global_position.x < global_position.x else -1
+	var sweep_direction := 1 if _player.global_position.x < global_position.x else -1
 
 	# Focus animation
 	$Sprite2D.play("focus")
@@ -718,14 +720,14 @@ func _laser_sweep_routine() -> void:
 	_lasers.laser_sweep_pattern(sweep_direction, 200.0)
 
 	# Wait for laser to finish
-	var waiting_time = 1.5 * (1.0 - GameState.difficulty_factor / 10.0)
+	var waiting_time := 1.5 * (1.0 - GameState.difficulty_factor / 10.0)
 	await get_tree().create_timer(waiting_time).timeout
 	$Sprite2D.play("default")
 
 
 func _laser_cage_routine() -> void:
 	# Run towards center
-	var center_direction = sign(0.0 - global_position.x)
+	var center_direction: float = sign(0.0 - global_position.x)
 	if abs(global_position.x) > 100:
 		await _run(center_direction, 200.0, 0.2, 0.3, 0.4, true)
 
@@ -739,7 +741,7 @@ func _laser_cage_routine() -> void:
 	await _lasers.laser_cage_pattern()
 
 	# Wait for cage to finish
-	var waiting_time = 0.6 * (1.0 - GameState.difficulty_factor / 10.0)
+	var waiting_time := 0.6 * (1.0 - GameState.difficulty_factor / 10.0)
 	await get_tree().create_timer(waiting_time).timeout
 	$Sprite2D.play("default")
 
@@ -751,8 +753,8 @@ func _schlassage_routine():
 
 	$Sprite2D.play("shout")
 
-	var coroutine_state = {"is_running": true}
-	var flip_sprite_coroutine = func(state):
+	var coroutine_state := {"is_running": true}
+	var flip_sprite_coroutine := func(state):
 		while state.is_running:
 			if global_position.x - _player.global_position.x > 0:  # Left
 				_schlass.scale.x = 1
@@ -766,7 +768,7 @@ func _schlassage_routine():
 
 	flip_sprite_coroutine.call_deferred(coroutine_state)
 
-	var focus_duration: float = 1.5 - 1.0 * (GameState.difficulty_factor - 1.0)
+	var focus_duration := 1.5 - 1.0 * (GameState.difficulty_factor - 1.0)
 	await get_tree().create_timer(focus_duration).timeout
 
 	coroutine_state.is_running = false
@@ -791,40 +793,41 @@ func _schlassage_routine():
 
 
 func _bubble_swarm_routine():
-	var bubble_spawn_coroutine = func():
+	var bubble_spawn_coroutine := func():
 		# Number of 100x100 pixels surfaces of bubble to spawn in total
-		var bubble_capital: int = 25 + 8 * (GameState.difficulty_factor - 1)
+		var bubble_capital := 25 + 8 * (GameState.difficulty_factor - 1)
 
 		# In difficulty 1:  [1.0-2.5]
 		# In difficulty 10: [2.5-4.0]
-		var speed_factor_range: Vector2 = Vector2(
+		var speed_factor_range := Vector2(
 			1.0 + 0.15 * (GameState.difficulty_factor - 1.0),
 			2.5 + 0.15 * (GameState.difficulty_factor - 1.0)
 		)
 		while bubble_capital > 0:
 			var bubble: Bubble = _bubble_scene.instantiate()
 
-			var r = randi() % 3
+			var r := randi() % 3
 
 			var bubble_size: Bubble.Size
-			if r == 0:
-				bubble_size = Bubble.Size.SMALL
-			elif r == 1:
-				bubble_size = Bubble.Size.MEDIUM
-			else:
-				bubble_size = Bubble.Size.LARGE
+			match r:
+				0:
+					bubble_size = Bubble.Size.SMALL
+				1:
+					bubble_size = Bubble.Size.MEDIUM
+				_:
+					bubble_size = Bubble.Size.LARGE
 			bubble_capital -= (r + 1) * 2  # 200x200 is 4 times bigger in surface than 100x100
 
-			var bubble_speed_factor = randf_range(speed_factor_range.x, speed_factor_range.y)
+			var bubble_speed_factor := randf_range(speed_factor_range.x, speed_factor_range.y)
 
 			bubble.init(bubble_size, bubble_speed_factor)
 
-			var bubble_side_size: Vector2 = bubble.get_hitbox_side()
+			var bubble_side_size := bubble.get_hitbox_side()
 
-			var spawn_x: float = randf_range(
+			var spawn_x := randf_range(
 				_left_wall.global_position.x, _right_wall.global_position.x - bubble_side_size.x / 2
 			)
-			var spawn_y: float = randf_range(
+			var spawn_y := randf_range(
 				_ceiling.global_position.y + 250, _ground.global_position.y - bubble_side_size.y / 2
 			)
 			bubble.global_position = Vector2(spawn_x, spawn_y)
@@ -863,6 +866,6 @@ func _on_foot_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]) and not _schlass_connected:
 		$AttackPatterns/Schlassage/HitSound.play()
 		_schlass_connected = true
-		var kick_force = 5000.0
-		var direction = -1.0 if global_position.x - _player.global_position.x > 0 else 1.0
+		var kick_force := 5000.0
+		var direction := -1.0 if global_position.x - _player.global_position.x > 0 else 1.0
 		_player.get_hurt(Vector2(kick_force * direction, 0))

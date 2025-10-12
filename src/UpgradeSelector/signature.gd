@@ -4,7 +4,7 @@ extends Line2D
 
 signal signature_point_added(point: Vector2)
 
-var _cancel_token: bool = false
+var _cancel_token := false
 
 
 func _ready():
@@ -19,7 +19,7 @@ func sign(speed_factor: float = 1.0) -> bool:
 	if _cancel_token:
 		return true
 
-	var points_to_draw = points.duplicate()
+	var points_to_draw := points.duplicate()
 	points = []
 	visible = true
 
@@ -28,7 +28,7 @@ func sign(speed_factor: float = 1.0) -> bool:
 	for i in range(points_to_draw.size()):
 		if _cancel_token:
 			return true
-		var point = points_to_draw[i]
+		var point := points_to_draw[i]
 		await get_tree().create_timer(0.05 / speed_factor).timeout
 		points = points_to_draw.slice(0, i + 1)
 		emit_signal("signature_point_added", global_position + point)

@@ -8,11 +8,11 @@ func format_currency(
 	currency_symbol: String = "$",
 	long_form: bool = false,
 ) -> String:
-	var regex = RegEx.new()
+	var regex := RegEx.new()
 	regex.compile("(?<=\\d)(?=(\\d{3})+(?!\\d))")
 
-	var suffix = ""
-	var value = amount
+	var suffix := ""
+	var value := amount
 
 	if not long_form:
 		if abs(amount) >= 1_000_000_000:

@@ -5,7 +5,7 @@ extends Control
 var nb_coins:
 	set = set_nb_coins
 
-var billionaire_net_worth:
+var billionaire_net_worth: int:
 	set = set_billionaire_net_worth
 
 @onready var coins_label: Label = $VBoxContainer/VBoxContainer/CoinNumber/CoinNumberValue
@@ -31,7 +31,7 @@ func set_dash_cooldown(value: int) -> void:
 
 
 func update_life(health):
-	var animation_show = false
+	var animation_show := false
 	for heart in hearts_container.get_children():
 		if health >= 2:
 			health -= 2
@@ -58,7 +58,7 @@ func _ready() -> void:
 
 
 func set_month(m: int):
-	var month_text
+	var month_text: String
 	match m:
 		0:
 			month_text = "JAN"

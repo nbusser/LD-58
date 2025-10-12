@@ -12,16 +12,16 @@ func add_coin(coin: Coin) -> void:
 
 func create_coin(spawn_position: Vector2, collectible_type: Collectible.CollectibleType) -> Coin:
 	# Reduce billionaire's net worth by the value of spawned collectible.
-	var collectible_value = Collectible.get_collectible_value(collectible_type)
+	var collectible_value := Collectible.get_collectible_value(collectible_type)
 	if collectible_value > 0:
 		_level.change_net_worth(collectible_value)
 
-	var coin = _coin_scene.instantiate()
+	var coin: Coin = _coin_scene.instantiate()
 	coin.init(spawn_position, collectible_type)
 	return coin
 
 
 func spawn_coin(spawn_position: Vector2, collectible_type: Collectible.CollectibleType) -> Coin:
-	var coin = create_coin(spawn_position, collectible_type)
+	var coin: Coin = create_coin(spawn_position, collectible_type)
 	add_coin(coin)
 	return coin

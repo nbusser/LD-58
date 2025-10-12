@@ -3,22 +3,22 @@ extends Camera2D
 # Screen shaking effect adapted from
 # https://shaggydev.com/2022/02/23/screen-shake-godot/
 # How quickly to move through the noise
-@export var noise_shake_speed: float = 30.0
+@export var noise_shake_speed := 30.0
 # Noise returns values in the range (-1, 1)
 # So this is how much to multiply the returned value by
-@export var noise_shake_strength: float = 60.0
+@export var noise_shake_strength := 60.0
 # Multiplier for lerping the shake strength to zero
-@export var shake_decay_rate: float = 5.0
+@export var shake_decay_rate := 5.0
 
-@export var noise_bg_shake_speed = 2
-@export var noise_bg_shake_strength = 30.0
+@export var noise_bg_shake_speed := 2
+@export var noise_bg_shake_strength := 30.0
 
 # Used to keep track of where we are in the noise
 # so that we can smoothly move through it
-var noise_i: float = 0.0
-var noise_bg_i: float = 0.0
+var noise_i := 0.0
+var noise_bg_i := 0.0
 
-var shake_strength: float = 0.0
+var shake_strength := 0.0
 
 @onready var player = $"../Player"
 @onready var billionaire = $"../Billionaire"

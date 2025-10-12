@@ -4,7 +4,7 @@ enum CollectibleType { DOLLAR_COIN, DOLLAR_BILL, BUNDLE_OF_CASH, MONEY_BAG, GOLD
 
 
 func get_collectible_value(collectible_type: CollectibleType) -> int:
-	var base_value = get_base_collectible_value(collectible_type)
+	var base_value := get_base_collectible_value(collectible_type)
 	if collectible_type == CollectibleType.BITCOIN:
 		return int(
 			(

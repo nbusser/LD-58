@@ -23,8 +23,8 @@ func _ready() -> void:
 
 
 func _on_slowmo_state_changed(is_active: bool) -> void:
-	var tscale = Engine.time_scale
-	var target = desaturate_strength * (1 / tscale) if is_active else 0.0
+	var tscale := Engine.time_scale
+	var target := desaturate_strength * (1 / tscale) if is_active else 0.0
 	_animate_to(target)
 
 

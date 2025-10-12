@@ -7,7 +7,7 @@ var _speed: float
 var _knockback_force: float
 var _collectible_type: Collectible.CollectibleType
 var _acceleration: float
-var _initialized = false
+var _initialized := false
 
 @onready var _sprite_container = %SpriteContainer
 @onready var _coins_manager: CoinsManager = $"../../CoinsManager"

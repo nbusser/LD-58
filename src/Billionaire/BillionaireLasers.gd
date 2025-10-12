@@ -1,15 +1,15 @@
 extends Node2D
 
-var max_lasers: int = 12
-var laser_size = 50.0
+var max_lasers := 12
+var laser_size := 50.0
 
-var progress_before_flash = 0.62
-var progress_flash = 0.8
+var progress_before_flash := 0.62
+var progress_flash := 0.8
 
 var laser_positions: PackedVector2Array
 var laser_states: PackedFloat32Array
 var active_lasers: Array[Dictionary] = []
-var limits: Rect2 = Rect2()
+var limits := Rect2()
 
 var focus_sounds: Array[AudioStreamPlayer2D] = []
 var beam_sounds: Array[AudioStreamPlayer2D] = []
@@ -35,23 +35,23 @@ func _ready():
 
 	# Load audio streams
 	for i in range(1, 6):
-		var path = "res://assets/sounds/laser_focus/focus_var_0%d.ogg" % i
+		var path := "res://assets/sounds/laser_focus/focus_var_0%d.ogg" % i
 		focus_audio_streams.append(load(path))
 
 	for i in range(3):
-		var path = "res://assets/sounds/laser_beam/beam_%d.ogg" % i
+		var path := "res://assets/sounds/laser_beam/beam_%d.ogg" % i
 		beam_audio_streams.append(load(path))
 
 	# Create audio players and collision areas for each laser slot
 	for i in range(max_lasers):
-		var focus_player = AudioStreamPlayer2D.new()
+		var focus_player := AudioStreamPlayer2D.new()
 		focus_player.name = "FocusSound%d" % i
 		focus_player.bus = "SFX"
 		focus_player.max_distance = 1500
 		add_child(focus_player)
 		focus_sounds.append(focus_player)
 
-		var beam_player = AudioStreamPlayer2D.new()
+		var beam_player := AudioStreamPlayer2D.new()
 		beam_player.name = "BeamSound%d" % i
 		beam_player.bus = "SFX"
 		beam_player.max_distance = 1500
@@ -59,7 +59,7 @@ func _ready():
 		beam_sounds.append(beam_player)
 
 		# Create Area2D for laser collision
-		var area = Area2D.new()
+		var area := Area2D.new()
 		area.name = "LaserArea%d" % i
 		area.collision_layer = 0  # Don't collide with anything
 		area.collision_mask = 1 << 4  # Collide with player layer 5
@@ -67,9 +67,9 @@ func _ready():
 		add_child(area)
 
 		# Create collision shape
-		var collision_shape = CollisionShape2D.new()
+		var collision_shape := CollisionShape2D.new()
 		collision_shape.name = "LaserCollision%d" % i
-		var rect = RectangleShape2D.new()
+		var rect := RectangleShape2D.new()
 		rect.size = Vector2(30, 100)  # Will be adjusted dynamically
 		collision_shape.shape = rect
 		collision_shape.disabled = true
@@ -89,7 +89,7 @@ func _ready():
 		limits.size.y = ground.global_position.y - ceiling.global_position.y
 	else:
 		# Fallback to viewport if boundaries not found
-		var viewport_size = get_viewport().size
+		var viewport_size: Vector2 = get_viewport().size
 		limits = Rect2(Vector2(-viewport_size.x / 2, -viewport_size.y / 2), viewport_size)
 
 	setup_laser_surface()
@@ -102,19 +102,19 @@ func setup_laser_surface():
 
 
 func _on_viewport_size_changed():
-	var viewport_size = get_viewport().size
+	var viewport_size: Vector2 = get_viewport().size
 	if laser_surface:
 		laser_surface.material.set_shader_parameter("resolution", viewport_size / 2)
 
 
 func _physics_process(delta):
-	var i = 0
+	var i := 0
 	for laser in active_lasers:
 		if i >= max_lasers:
 			print("Max lasers reached, skipping additional lasers", i)
 			break
 
-		var prev_timer = laser.timer
+		var prev_timer: float = laser.timer
 		laser.timer += delta
 
 		# Update positions
@@ -128,16 +128,16 @@ func _physics_process(delta):
 		if i < focus_sounds.size():
 			focus_sounds[i].global_position = laser.start
 		if i < beam_sounds.size():
-			var center = (laser.start + laser.end) / 2.0
+			var center: Vector2 = (laser.start + laser.end) / 2.0
 			beam_sounds[i].global_position = center
 
 		# Update collision shape position and size
 		if i < laser_areas.size() and i < laser_collision_shapes.size():
-			var area = laser_areas[i]
-			var collision_shape = laser_collision_shapes[i]
-			var center = (laser.start + laser.end) / 2.0
-			var length = laser.start.distance_to(laser.end)
-			var angle = (laser.end - laser.start).angle()
+			var area := laser_areas[i]
+			var collision_shape := laser_collision_shapes[i]
+			var center: Vector2 = (laser.start + laser.end) / 2.0
+			var length: float = laser.start.distance_to(laser.end)
+			var angle: float = (laser.end - laser.start).angle()
 
 			area.global_position = center
 			area.rotation = angle
@@ -160,10 +160,10 @@ func _physics_process(delta):
 		elif laser_progress < progress_flash:
 			laser_states[i] = laser_progress
 
-			var length = laser.start.distance_to(laser.end)
-			var dir = (laser.end - laser.start).normalized()
+			var length: float = laser.start.distance_to(laser.end)
+			var dir: Vector2 = (laser.end - laser.start).normalized()
 			# stretch the laser
-			var progress = clamp(
+			var progress: float = clamp(
 				(laser_progress - progress_before_flash) / (progress_flash - progress_before_flash),
 				0.0,
 				1.0
@@ -185,12 +185,12 @@ func _physics_process(delta):
 					laser_collision_shapes[i].disabled = false
 					laser.laser_index = i
 		else:
-			var fade_time = laser.timer - (laser.warning_duration + laser.active_duration)
-			var progress = fade_time * 4.
+			var fade_time: float = laser.timer - (laser.warning_duration + laser.active_duration)
+			var progress := fade_time * 4.
 			laser_states[i] = 1.0 + progress
 
-			var length = laser.start.distance_to(laser.end)
-			var dir = (laser.end - laser.start).normalized()
+			var length: float = laser.start.distance_to(laser.end)
+			var dir: Vector2 = (laser.end - laser.start).normalized()
 			laser_positions[i * 2] = laser.start + dir * length * min(progress, 1.0)
 
 			if progress > 1.0:
@@ -221,15 +221,15 @@ func update_shader_parameters():
 	if not laser_surface:
 		return
 
-	var screen_transform = get_viewport().canvas_transform
-	var screen_size = get_viewport().size
+	var screen_transform := get_viewport().canvas_transform
+	var screen_size: Vector2 = get_viewport().size
 
-	var converted_positions = PackedVector2Array()
+	var converted_positions := PackedVector2Array()
 	for i in range(laser_positions.size()):
-		var p = laser_positions[i]
+		var p := laser_positions[i]
 		converted_positions.append(screen_transform * p / Vector2(screen_size))
 
-	var active_count = min(active_lasers.size(), max_lasers)
+	var active_count: int = min(active_lasers.size(), max_lasers)
 	laser_surface.material.set_shader_parameter("laser_count", active_count)
 	laser_surface.material.set_shader_parameter("laser_points", converted_positions)
 	laser_surface.material.set_shader_parameter("laser_states", laser_states)
@@ -239,7 +239,7 @@ func _on_laser_hit_player(body: Node, laser_index: int) -> void:
 	if body == player:
 		# Find the laser by its index
 		var matching_laser = null
-		var current_index = 0
+		var current_index := 0
 		for laser in active_lasers:
 			if current_index == laser_index:
 				matching_laser = laser
@@ -248,11 +248,11 @@ func _on_laser_hit_player(body: Node, laser_index: int) -> void:
 
 		if matching_laser and not matching_laser.get("has_hit", false):
 			# Calculate bounce direction perpendicular to laser
-			var laser_dir = (matching_laser.end - matching_laser.start).normalized()
-			var to_player = player.global_position - matching_laser.start
-			var distance_along_laser = to_player.dot(laser_dir)
-			var closest_point = matching_laser.start + laser_dir * distance_along_laser
-			var bounce_dir = (player.global_position - closest_point).normalized()
+			var laser_dir: Vector2 = (matching_laser.end - matching_laser.start).normalized()
+			var to_player: Vector2 = player.global_position - matching_laser.start
+			var distance_along_laser := to_player.dot(laser_dir)
+			var closest_point: Vector2 = matching_laser.start + laser_dir * distance_along_laser
+			var bounce_dir: Vector2 = (player.global_position - closest_point).normalized()
 
 			# Apply bounce force and damage
 			player.get_hurt(Vector2(1200 * sign(bounce_dir.x), -100))
@@ -267,7 +267,7 @@ func _on_laser_hit_player(body: Node, laser_index: int) -> void:
 func add_laser(
 	start: Vector2, end: Vector2, warning_duration: float = 1.0, active_duration: float = 2.0
 ) -> Dictionary:
-	var laser = {
+	var laser := {
 		"start": start,
 		"end": end,
 		"warning_duration": warning_duration,
@@ -297,8 +297,8 @@ func clear_all_lasers():
 
 # Attack pattern: Warning lasers at player position
 func laser_warning_pattern(num_lasers: int = 3, delay_between: float = 0.3):
-	var base_x = player.global_position.x
-	var dir = sign(player.velocity.x)
+	var base_x := player.global_position.x
+	var dir: float = sign(player.velocity.x)
 	if dir == 0:
 		dir = 1 if randf() < 0.5 else -1
 	# Predictive aiming based on player velocity
@@ -308,9 +308,9 @@ func laser_warning_pattern(num_lasers: int = 3, delay_between: float = 0.3):
 	base_x = clamp(
 		base_x, limits.position.x + laser_size, limits.position.x + limits.size.x - laser_size
 	)
-	var interval = randf_range(80.0, 150.0)
+	var interval := randf_range(80.0, 150.0)
 	for i in range(num_lasers):
-		var x = base_x + i * interval * dir
+		var x := base_x + i * interval * dir
 		# Ensure lasers are within limits
 		if x < limits.position.x + laser_size or x > limits.position.x + limits.size.x - laser_size:
 			continue  # Skip lasers outside limits
@@ -323,10 +323,10 @@ func laser_warning_pattern(num_lasers: int = 3, delay_between: float = 0.3):
 
 # Attack pattern: Sweep across screen
 func laser_sweep_pattern(direction: int = 1, speed: float = 200.0):
-	var start_x = (
+	var start_x := (
 		limits.position.x + 50 if direction > 0 else limits.position.x + limits.size.x - 50
 	)
-	var laser = add_laser(
+	var laser := add_laser(
 		Vector2(start_x, limits.position.y),
 		Vector2(start_x, limits.position.y + limits.size.y),
 		0.8,
@@ -334,7 +334,7 @@ func laser_sweep_pattern(direction: int = 1, speed: float = 200.0):
 	)
 
 	laser.update_func = func(l: Dictionary, delta: float):
-		var new_x = l.start.x + direction * speed * delta
+		var new_x: float = l.start.x + direction * speed * delta
 		new_x = clamp(new_x, limits.position.x + 30, limits.position.x + limits.size.x - 30)
 		l.start.x = new_x
 		l.end.x = new_x
@@ -342,7 +342,7 @@ func laser_sweep_pattern(direction: int = 1, speed: float = 200.0):
 
 # Attack pattern: Laser cage around player
 func laser_cage_pattern():
-	var player_x = player.global_position.x
+	var player_x := player.global_position.x
 	player_x = clamp(player_x, limits.position.x + 200, limits.position.x + limits.size.x - 200)
 
 	# Left wall
@@ -363,21 +363,21 @@ func laser_cage_pattern():
 	await get_tree().create_timer(1.5).timeout
 
 	# Closing walls
-	var left_laser = add_laser(
+	var left_laser := add_laser(
 		Vector2(player_x - 300, limits.position.y),
 		Vector2(player_x - 300, limits.position.y + limits.size.y),
 		1.0,
 		2.0
 	)
-	var right_laser = add_laser(
+	var right_laser := add_laser(
 		Vector2(player_x + 300, limits.position.y),
 		Vector2(player_x + 300, limits.position.y + limits.size.y),
 		1.0,
 		2.0
 	)
 
-	var close_speed = 100.0
-	var update_closing = func(l: Dictionary, delta: float):
+	var close_speed := 100.0
+	var update_closing := func(l: Dictionary, delta: float):
 		if l == left_laser:
 			l.start.x = min(l.start.x + close_speed * delta, player_x - 50)
 			l.end.x = l.start.x

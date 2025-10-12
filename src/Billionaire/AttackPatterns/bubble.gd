@@ -7,9 +7,9 @@ enum Size { SMALL, MEDIUM, LARGE }
 
 @export_tool_button("Update Preview Size") var update_preview_size_action = _update_preview_size
 
-@export var bubble_size: Size = Size.SMALL
-@export var hitbox_side: int = 100
-@export var speed_factor: float = 2.5
+@export var bubble_size := Size.SMALL
+@export var hitbox_side := 100
+@export var speed_factor := 2.5
 
 var _bubble_anim_preview_frame_dict: Dictionary[Size, int] = {
 	Size.SMALL: 48, Size.MEDIUM: 49, Size.LARGE: 49
@@ -40,7 +40,7 @@ func _ready() -> void:
 	_sprite.sprite_frames = _bubble_anim_resource_dict[bubble_size]
 	_reset()
 
-	var new_shape: RectangleShape2D = RectangleShape2D.new()
+	var new_shape := RectangleShape2D.new()
 	new_shape.size = Vector2(hitbox_side, hitbox_side)
 	$Hitbox.shape = new_shape
 
@@ -97,6 +97,6 @@ func _update_preview_size() -> void:
 	_sprite.sprite_frames = _bubble_anim_resource_dict[bubble_size]
 	_sprite.frame = _bubble_anim_preview_frame_dict[bubble_size]
 
-	var new_shape: RectangleShape2D = RectangleShape2D.new()
+	var new_shape := RectangleShape2D.new()
 	new_shape.size = Vector2(hitbox_side, hitbox_side)
 	$Hitbox.shape = new_shape

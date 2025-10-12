@@ -27,9 +27,9 @@ const _PARRY_STATE_DURATION_FRAMES: Dictionary[State, int] = {
 	State.PARRY_READY: 30, State.PARRY_ACTIVE: 30, State.PARRY_RECOVER: 30
 }
 
-var _parry_state: State = State.NOT_PARRYING
+var _parry_state := State.NOT_PARRYING
 
-var _cancel_token: CancelToken = CancelToken.NOT_CANCELED
+var _cancel_token := CancelToken.NOT_CANCELED
 
 @onready var _sprite: AnimatedSprite2D = $"../Sprite"
 
@@ -74,7 +74,7 @@ func _play_parry_state(parry_state: State) -> CancelToken:
 # Plays the full process of parry stance.
 func _parying_stance() -> void:
 	# Routine ran when an attack was succesfully parried.
-	var active_parry_routine = func() -> void:
+	var active_parry_routine := func() -> void:
 		$ParrySound.play()
 		_sprite.modulate = Color("#37fcfc", 0.7)
 		# "Freeze" game for _PARRY_FREEZE_DURATION_FRAMES frames

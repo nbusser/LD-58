@@ -9,38 +9,38 @@ enum Direction { LEFT = -1, RIGHT = 1 }
 
 const BULLET_PROXIMITY_SLOWMO_NAME := "bullet_proximity"
 
-@export var is_dead_animation_playing = false
-@export var enable_gravity = true
+@export var is_dead_animation_playing := false
+@export var enable_gravity := true
 
 var ps: PlayerStats
 
-var is_dead = false
-var is_level_timeout = false
+var is_dead := false
+var is_level_timeout := false
 
-var is_in_billionaire = false
-var is_on_top_of_billionaire = false
+var is_in_billionaire := false
+var is_on_top_of_billionaire := false
 
-var intouchable = false
+var intouchable := false
 
-var direction = Direction.RIGHT
+var direction := Direction.RIGHT
 
-var previous_head_bounce = 0
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var previous_head_bounce := 0
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-var prev_velocity = Vector2(0, 0)
+var prev_velocity := Vector2(0, 0)
 
-var health = 10
+var health := 10
 
 var bullets_in_proximity: Array[Node2D] = []
 
-@onready var _hurt_sound = $SoundFx/HurtSound
+@onready var _hurt_sound: AudioStreamPlayer2D = $SoundFx/HurtSound
 @onready var _punch_area: Area2D = $PunchArea
 @onready var _smash_area: Area2D = $SmashArea
 @onready var _bullet_time_area: Area2D = $BulletTimeArea
 @onready var _hud: HUD = $"../../UI/HUD"
 @onready var _level: Node = $"../.."
 @onready var _camera: Node = $"../Camera2D"
-@onready var _original_scale = scale
+@onready var _original_scale := scale
 
 
 func _ready() -> void:
@@ -65,15 +65,15 @@ func init(ps_p: PlayerStats):
 
 
 func _physics_process(delta):
-	var horizontal_velocity = 0.
-	var vertical_velocity = 0.
-	var now = Time.get_unix_time_from_system()
+	var horizontal_velocity := 0.0
+	var vertical_velocity := 0.0
+	var now := Time.get_unix_time_from_system()
 
 	$JumpManager.try_jump()
 
 	if _can_move():
 		# Horizontal movement
-		var input_direction = Input.get_axis("move_left", "move_right")
+		var input_direction := Input.get_axis("move_left", "move_right")
 		if input_direction != 0:
 			direction = Direction.LEFT if input_direction == -1 else Direction.RIGHT
 		horizontal_velocity = (
@@ -113,7 +113,7 @@ func _physics_process(delta):
 		if abs(velocity.x) > abs(horizontal_velocity)
 		else horizontal_velocity
 	)
-	var gravity_value = gravity if enable_gravity else 0.0
+	var gravity_value := gravity if enable_gravity else 0.0
 	velocity = Vector2(horizontal_velocity, velocity.y + vertical_velocity + gravity_value * delta)
 
 	# Billionaire knockback and head bounce
@@ -204,10 +204,10 @@ func _die():
 		direction = Direction.RIGHT
 	velocity = Vector2.ZERO
 
-	var slow_factor = 0.7
+	var slow_factor := 0.7
 	$AnimationPlayer.play("die", slow_factor)
 
-	var slowmo_death_routine = func(): await $AnimationPlayer.animation_finished
+	var slowmo_death_routine := func(): await $AnimationPlayer.animation_finished
 	# if Globals.create_slowmo("death", dash_slow_factor):
 	# 	await $AnimationPlayer.animation_finished
 	# Globals.cancel_slowmo_if_exists("death")

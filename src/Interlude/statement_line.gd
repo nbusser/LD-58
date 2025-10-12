@@ -2,10 +2,10 @@ class_name StatementLine
 
 extends HBoxContainer
 
-var _collectible_type: Collectible.CollectibleType = Collectible.CollectibleType.DOLLAR_COIN
-var _quantity: int = 0
-var _value: int = 0
-var _unit_value: int = 0
+var _collectible_type := Collectible.CollectibleType.DOLLAR_COIN
+var _quantity := 0
+var _value := 0
+var _unit_value := 0
 
 @onready var icon: TextureRect = %Icon
 @onready var description_label: Label = %DescriptionLabel
