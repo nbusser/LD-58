@@ -62,7 +62,7 @@ func _ready() -> void:
 
 
 # Return a random attack pattern
-func _get_attack_pattern():
+func _get_attack_pattern() -> Option:
 	var theoretical_max_distance_x: float = abs(
 		_left_wall.position.x - $"../Borders/WallR".position.x
 	)
@@ -104,10 +104,10 @@ func _get_attack_pattern():
 	for attack_and_weight in attacks_and_weights:
 		cumulative += attack_and_weight.weight
 		if r <= cumulative:
-			return attack_and_weight.attack
+			return Option.Some(attack_and_weight.attack)
 
 	print("NO ATTACK AVAILABLE !")
-	return null
+	return Option.None()
 
 
 func _physics_process(delta: float) -> void:
@@ -564,10 +564,11 @@ func _on_idle_timer_timeout() -> void:
 		_idle_timer.start(randf_range(idle_range_seconds.x, idle_range_seconds.y))
 		return
 
-	var attack = _get_attack_pattern()
-	if attack != null:
-		print("Attack name: ", (attack as AttackPattern).attack_name)
-		await (attack as AttackPattern).call_routine()
+	var attack_option := _get_attack_pattern()
+	if attack_option.is_some():
+		var attack: AttackPattern = attack_option.unwrap()
+		print("Attack name: ", attack.attack_name)
+		await attack.call_routine()
 
 	_idle_timer.start(randf_range(idle_range_seconds.x, idle_range_seconds.y))
 
