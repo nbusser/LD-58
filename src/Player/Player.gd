@@ -93,7 +93,7 @@ func _physics_process(delta):
 
 		# Down dash
 		$DashDownManager.try_dash_down()
-		velocity += $DashDownManager.update(velocity.y)
+		velocity += $DashDownManager.get_dash_velocity()
 
 	# Wall sticking behavior
 	if ps.unlocked_wall_climbing:

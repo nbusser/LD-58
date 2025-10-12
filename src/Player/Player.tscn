@@ -264,6 +264,9 @@ script = ExtResource("15_5eax5")
 [node name="DashDownManager" type="Node2D" parent="."]
 script = ExtResource("15_lxp3e")
 
+[node name="Cooldown" type="Timer" parent="DashDownManager"]
+one_shot = true
+
 [node name="SoundFx" type="Node2D" parent="."]
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="SoundFx"]
