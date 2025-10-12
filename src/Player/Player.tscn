@@ -261,6 +261,9 @@ script = ExtResource("14_hovyp")
 [node name="DashManager" type="Node2D" parent="."]
 script = ExtResource("15_5eax5")
 
+[node name="Cooldown" type="Timer" parent="DashManager"]
+one_shot = true
+
 [node name="DashDownManager" type="Node2D" parent="."]
 script = ExtResource("15_lxp3e")
 
@@ -351,10 +354,10 @@ position = Vector2(0, -39.5833)
 shape = SubResource("CircleShape2D_6rxnr")
 
 [connection signal="player_is_hurt" from="." to="ParryManager" method="_on_player_player_is_hurt"]
+[connection signal="player_is_hurt" from="." to="DashManager" method="_on_player_player_is_hurt"]
 [connection signal="player_is_hurt" from="." to="DashDownManager" method="_on_player_player_is_hurt"]
 [connection signal="wall_sticked" from="." to="JumpManager" method="_on_player_wall_sticked"]
 [connection signal="punch_has_connected" from="AttackManager" to="." method="_on_attack_manager_punch_has_connected"]
-[connection signal="dashed" from="DashManager" to="." method="_on_dash_manager_dashed"]
 [connection signal="dashed_down" from="DashDownManager" to="JumpManager" method="_on_dash_down_manager_dashed_down"]
 [connection signal="animation_changed" from="Sprite" to="AttackManager" method="_on_sprite_animation_changed"]
 [connection signal="animation_finished" from="Sprite" to="AttackManager" method="_on_sprite_animation_finished"]

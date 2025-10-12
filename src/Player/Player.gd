@@ -89,7 +89,9 @@ func _physics_process(delta):
 		vertical_velocity += $JumpManager.update(delta)
 
 		# Horizontal dash
-		velocity += $DashManager.try_dash()
+		$DashManager.try_dash()
+		velocity += $DashManager.get_dash_velocity()
+		_hud.set_dash_cooldown(int($DashManager.get_dash_percentage_ready()))
 
 		# Down dash
 		$DashDownManager.try_dash_down()
@@ -303,7 +305,3 @@ func _on_bullet_time_area_exited(area: Area2D) -> void:
 
 		if ps and ps.unlocked_bullet_proximity_slowmo and bullets_in_proximity.is_empty():
 			Globals.cancel_slowmo_if_exists(BULLET_PROXIMITY_SLOWMO_NAME)
-
-
-func _on_dash_manager_dashed(dash_cooldown: float) -> void:
-	_hud.set_dash_cooldown(int(dash_cooldown))

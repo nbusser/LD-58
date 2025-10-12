@@ -1,7 +1,3 @@
-# WARNING
-# This class is jsut a rough port of logic form Player's physics process.
-# TODO: refactor this for a more clean code by removing timestamps logic for example.
-
 class_name DashDownManager
 
 extends Node2D
@@ -24,6 +20,10 @@ var _cancel_token: bool = false
 @onready var _player_stats: PlayerStats:
 	get():
 		return _player.ps
+
+
+func is_dashing() -> bool:
+	return _dash_down_state == State.DASHING
 
 
 # If we touch ground or got hurt for example.
