@@ -13,8 +13,8 @@ enum State { ON_GROUND, READY, DASHING, FINISHED }
 const _DASH_SLOWMO_NAME := "player_down_dash"
 
 var _dash_down_state: State = State.ON_GROUND
-var _dash_glide_window_start: float = INF
 
+var _dash_velocity_x: Helpers.OneTimeFloat = Helpers.OneTimeFloat.new(0.0)
 var _dash_velocity_y: Helpers.OneTimeFloat = Helpers.OneTimeFloat.new(0.0)
 
 var _cancel_token: bool = false
@@ -26,6 +26,7 @@ var _cancel_token: bool = false
 		return _player.ps
 
 
+# If we touch ground or got hurt for example.
 func _cancel_dash():
 	_cancel_token = true
 
@@ -37,20 +38,40 @@ func _dash_slow_mo():
 
 
 func _dash_down_routine():
+	_dash_down_state = State.DASHING
 	_cancel_token = false
 
 	emit_signal("dashed_down")
 	if _player_stats.unlocked_dash_bullet_time:
 		_dash_slow_mo.call_deferred()
 
-	_dash_down_state = State.DASHING
 	# Impulse value, only pollable once.
 	_dash_velocity_y = Helpers.OneTimeFloat.new(_player_stats.down_dash_speed)
 
 	# Cancelable dash.
-	var dash_timer = get_tree().create_timer(_player_stats.down_dash_duration)
+	var dash_timer: SceneTreeTimer = get_tree().create_timer(_player_stats.down_dash_duration)
+
+	var glide_window_timer: SceneTreeTimer = get_tree().create_timer(
+		_player_stats.dash_glide_window
+	)
+	var has_gliden: bool = false
+
 	while not _cancel_token and dash_timer.time_left > 0.0:
 		await get_tree().process_frame
+
+		# Handle glide: if player tap direction a short time after starting the dash, it can give an horizontal impulse.
+		if (
+			not has_gliden
+			and _player_stats.unlocked_dash_glide
+			and glide_window_timer.time_left > 0.0
+		):
+			if Input.is_action_just_pressed("move_left"):
+				# We give one time x impulse.
+				_dash_velocity_x = Helpers.OneTimeFloat.new(-_player_stats.glide_force)
+				has_gliden = true
+			elif Input.is_action_just_pressed("move_right"):
+				_dash_velocity_x = Helpers.OneTimeFloat.new(_player_stats.glide_force)
+				has_gliden = true
 
 	$Cooldown.start(_player_stats.dash_cooldown)
 
@@ -61,20 +82,10 @@ func _dash_down_routine():
 	)
 
 
+# Called every frame by the player.
+# The impulse is properly set asynchronously by _dash_down_routine coroutine.
 func get_dash_velocity() -> Vector2:
-	var dash_velocity: Vector2 = Vector2(0.0, _dash_velocity_y.consume())
-
-	# TODO: fix gliding logic
-	# if _dash_down_state == State.DASHING and _player_stats.unlocked_dash_glide and now - _dash_glide_window_start < _player_stats.dash_glide_window and (Input.is_action_just_pressed("move_left") or Input.is_action_just_pressed("move_right")):
-	# 	if _dash_glide_window_start == INF:
-	# 		_dash_glide_window_start = now
-
-	# 	if Input.is_action_just_pressed("move_left"):
-	# 		dash_velocity.x -= _player_stats.glide_force
-	# 	elif Input.is_action_just_pressed("move_right"):
-	# 		dash_velocity.x += _player_stats.glide_force
-
-	return dash_velocity
+	return Vector2(_dash_velocity_x.consume(), _dash_velocity_y.consume())
 
 
 func _process(_delta: float) -> void:
@@ -95,3 +106,7 @@ func try_dash_down() -> bool:
 		_dash_down_routine.call_deferred()
 		return true
 	return false
+
+
+func _on_player_player_is_hurt() -> void:
+	_cancel_dash()

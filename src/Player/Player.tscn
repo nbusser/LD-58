@@ -351,6 +351,7 @@ position = Vector2(0, -39.5833)
 shape = SubResource("CircleShape2D_6rxnr")
 
 [connection signal="player_is_hurt" from="." to="ParryManager" method="_on_player_player_is_hurt"]
+[connection signal="player_is_hurt" from="." to="DashDownManager" method="_on_player_player_is_hurt"]
 [connection signal="wall_sticked" from="." to="JumpManager" method="_on_player_wall_sticked"]
 [connection signal="punch_has_connected" from="AttackManager" to="." method="_on_attack_manager_punch_has_connected"]
 [connection signal="dashed" from="DashManager" to="." method="_on_dash_manager_dashed"]
