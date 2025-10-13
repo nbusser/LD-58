@@ -115,7 +115,7 @@ func _process(delta):
 	#var player_billionaire_dist = player.global_position - billionaire.global_position
 	# if player_billionaire_dist.length() < 800:
 	boss_indicator.visible = false
-	global_position = lerp(position, player.global_position, 100 * delta)
+	global_position = player.global_position
 	#var zoom_level = 2 - 1.4 * clamp(player_billionaire_dist.length() / 1000, 0., 1.)
 	#zoom = lerp(zoom, Vector2(zoom_level, zoom_level), 10 * delta)
 	#else:
