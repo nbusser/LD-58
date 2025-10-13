@@ -465,7 +465,8 @@ func _rain_routine() -> void:
 		var nb_slots: int = abs(min_x - max_x) / rain_bullet_interval_x
 
 		for wave in range(rain_nb_waves):
-			var shuffled_slots: Array[int] = range(nb_slots)
+			var shuffled_slots: Array[int]
+			shuffled_slots.assign(range(nb_slots))
 			shuffled_slots.shuffle()
 			var slot_index := 0
 			for bullet in range(rain_nb_bullets_per_waves):
