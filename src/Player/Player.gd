@@ -215,7 +215,10 @@ func _die():
 	_level.on_player_dies(slowmo_death_routine)
 
 
-func get_hurt(knockback_force):
+func get_hurt(
+	knockback_force,
+	collectible_type: Collectible.CollectibleType = Collectible.CollectibleType.DOLLAR_COIN
+):
 	if $ParryManager.try_parry():
 		return
 

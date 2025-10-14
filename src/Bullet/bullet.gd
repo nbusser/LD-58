@@ -31,6 +31,19 @@ func init(
 	_collectible_type = collectible_type
 	_acceleration = acceleration
 
+	for child in $SpriteContainer.get_children():
+		child.visible = false
+
+	match _collectible_type:
+		Collectible.CollectibleType.DOLLAR_BILL:
+			%DOLLAR_BILL.visible = true
+		Collectible.CollectibleType.MONEY_BAG:
+			%MONEY_BAG.visible = true
+		Collectible.CollectibleType.DOLLAR_COIN:
+			%DOLLAR_COIN.visible = true
+		_:
+			%GOLD_BAR.visible = true
+
 
 func _ready() -> void:
 	assert(_initialized, "init() must be called")
@@ -44,7 +57,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Globals.GROUPS_DICT[Globals.Groups.PLAYER]):
-		(body as Player).get_hurt(_knockback_force * _direction.normalized())
+		(body as Player).get_hurt(_knockback_force * _direction.normalized(), _collectible_type)
 	else:
 		_coins_manager.spawn_coin(self.global_position, _collectible_type)
 	queue_free()

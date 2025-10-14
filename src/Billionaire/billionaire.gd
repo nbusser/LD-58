@@ -151,16 +151,21 @@ func _spawn_bullet(
 	bullet_knockback: float,
 	bullet_speed: float,
 	bullet_scale_factor: float,
-	bullet_acceleration: float
+	bullet_acceleration: float,
+	collectible_type: Collectible.CollectibleType,
 ) -> void:
 	var bullet: Bullet = _bullet_scene.instantiate()
-	bullet.init(
-		bullet_position,
-		bullet_direction,
-		bullet_knockback,
-		bullet_speed,
-		bullet_scale_factor,
-		bullet_acceleration
+	(
+		bullet
+		. init(
+			bullet_position,
+			bullet_direction,
+			bullet_knockback,
+			bullet_speed,
+			bullet_scale_factor,
+			bullet_acceleration,
+			collectible_type,
+		)
 	)
 	_bullets.add_child(bullet)
 
@@ -256,13 +261,18 @@ func _air_attack_track_player_anim(io_state: Dictionary):
 
 
 # Shoot bullets in a cone
-func _shoot_cone(gunpoint: Vector2, nb_bullets: int, spread_deg: float = 30.0):
+func _shoot_cone(
+	gunpoint: Vector2,
+	nb_bullets: int,
+	spread_deg: float = 30.0,
+	collectible_type: Collectible.CollectibleType = Collectible.CollectibleType.GOLD_BAR
+):
 	var bullet_direction := (_player.global_position - global_position).normalized()
 	for i in range(nb_bullets):
 		var t := float(i) / float(nb_bullets - 1)
 		var angle := -spread_deg / 2 + t * spread_deg
 		var dir := bullet_direction.rotated(deg_to_rad(angle))
-		_spawn_bullet(gunpoint, dir, 800, 500.0, 1.0, 1)
+		_spawn_bullet(gunpoint, dir, 800, 500.0, 1.0, 1, collectible_type)
 
 	$AttackPatterns/JumpConeBullets/ShootSound.play_sound()
 
@@ -442,7 +452,15 @@ func _machinegun_routine() -> void:
 		var bullet_direction := (_player.global_position - gunpoint_position).normalized()
 
 		$AttackPatterns/Machinegun/ShootingSound.play()
-		_spawn_bullet(gunpoint_position, bullet_direction, 50, bullet_speed, 1.0, 0.0)
+		_spawn_bullet(
+			gunpoint_position,
+			bullet_direction,
+			50,
+			bullet_speed,
+			1.0,
+			0.0,
+			Collectible.CollectibleType.DOLLAR_BILL
+		)
 		await get_tree().create_timer(0.1).timeout
 
 	$Sprite2D.play("default")
@@ -477,7 +495,32 @@ func _rain_routine() -> void:
 
 				var bullet_position := Vector2(bullet_position_x, bullet_position_y)
 				_spawn_bullet(
-					bullet_position, Vector2.DOWN, 50, rain_bullet_speed, 1.0, rain_acceleration
+					bullet_position,
+					Vector2.DOWN,
+					50,
+					rain_bullet_speed,
+					1.0,
+					rain_acceleration * randf_range(0.9, 1.1),
+					(
+						[
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.GOLD_BAR,
+							Collectible.CollectibleType.GOLD_BAR,
+							Collectible.CollectibleType.GOLD_BAR,
+							(
+								Collectible.CollectibleType.MONEY_BAG
+								if GameState.difficulty_factor >= 6.0
+								else Collectible.CollectibleType.DOLLAR_COIN
+							),
+						]
+						. pick_random()
+					)
 				)
 			await get_tree().create_timer(rain_bullet_interval_duration).timeout
 
@@ -516,14 +559,34 @@ func _rain_carpet_bomb_routine() -> void:
 			)
 			for i: int in slot_range:
 				var bullet_position_x := min_x + (i * rain_bullet_interval_x)
-				var bullet_position := Vector2(bullet_position_x, spawn_y)
+				var bullet_position := Vector2(bullet_position_x, spawn_y + randf_range(-10, 20))
 				_spawn_bullet(
 					bullet_position,
 					Vector2.DOWN,
 					50,
 					rain_bullet_speed,
 					1.0,
-					rain_bullet_acceleration
+					rain_bullet_acceleration * randf_range(0.9, 1.1),
+					(
+						[
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.DOLLAR_COIN,
+							Collectible.CollectibleType.GOLD_BAR,
+							Collectible.CollectibleType.GOLD_BAR,
+							Collectible.CollectibleType.GOLD_BAR,
+							(
+								Collectible.CollectibleType.MONEY_BAG
+								if GameState.difficulty_factor >= 6.0
+								else Collectible.CollectibleType.DOLLAR_COIN
+							),
+						]
+						. pick_random()
+					)
 				)
 			await get_tree().create_timer(wave_interval_duration).timeout
 
